@@ -1,24 +1,11 @@
 @font-face {
-	src: url('../fonts/montserrat-reg.otf');
-	font-family: montserrat-reg;
+    src: url('../fonts/opensans-reg.ttf');
+    font-family: opensans;
 }
-@font-face {
-	src: url('../fonts/montserrat-thin.otf');
-	font-family: montserrat-thin;
-}
-@font-face {
-	src: url('../fonts/helvetica-bold.ttf');
-	font-family: helvetica-bold;
-}
-@font-face {
-	src: url('../fonts/helvetica.ttf');
-	font-family: helvetica;
-}
-
 /* SIDEBAR */
 
 .nav-link > p {
-	font-family: helvetica;
+	font-family: opensans;
 	font-size: 12px;
 	margin-left: 10px !important;
 }
@@ -48,7 +35,7 @@ body {
 	color: #7a7a7a;
 	font-size: 20px;
 	text-transform: capitalize;
-	font-family: montserrat-reg;
+	font-family: opensans;
 }
 .box {
 	background: #fff;
@@ -67,14 +54,14 @@ body {
 	color: #000;
 	font-size: 20px;
 	text-transform: capitalize;
-	font-family: helvetica;
+	font-family: opensans;
 }
 
 /* TABLE */
 /* EMPTY MESSAGE */
 .box-table > h5 {
 	text-align: center;
-	font-family: helvetica;
+	font-family: opensans;
 	font-size: 15px;
 }
 .box-table > .row:first-child {
@@ -98,7 +85,7 @@ body {
 .table td {
 	text-align: center;
 	vertical-align: middle;
-	font-family: helvetica;
+	font-family: opensans;
 	font-size: 12px;
 	color: #7a7a7a;
 	padding: .25rem .5rem;
@@ -172,7 +159,7 @@ body {
 	margin-bottom: 0;
 	text-transform: capitalize;
 	font-size: 20px;
-	font-family: helvetica;
+	font-family: opensans;
 	color: #fff;
 }
 .box > h3 {
@@ -190,13 +177,13 @@ body {
 	color: red;
 }
 .form-box .form-group > input {
-	font-family: helvetica;
+	font-family: opensans;
 	font-size: 15px;
 }
 .form-box > form button {
 	border: 0;
 	border-radius: 3px;
-	font-family: helvetica;
+	font-family: opensans;
 	padding: 5px 10px;
 	text-transform: capitalize;
 	margin-right: 3px;
@@ -214,14 +201,12 @@ body {
 	text-align: center;
 	color: #fff;
 	font-size: 15px;
-	font-family: helvetica;
+	font-family: opensans;
 	float: right;
 }
 .form-box form .row .col-6:first-child {
 	padding-right: 10px;
 }
-
-
 
 /* ALERT */
 .alert {
