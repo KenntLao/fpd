@@ -1,0 +1,27 @@
+/* Bottom left text */
+.bottom-left {
+	position: absolute;
+	bottom: 3px;
+	left: 16px;
+}
+.bottom-left h3{
+	color: white;
+}
+.see-more{
+	letter-spacing: .5px;
+	color: #FBD731FF;
+}
+.see-more:hover{
+	color: #fce682;
+}
+.zoom {
+	transition: transform 1s;
+}
+.zoom:hover {
+	-ms-transform: scale(1.5); /* IE 9 */
+	-webkit-transform: scale(1.5); /* Safari 3-8 */
+	transform: scale(1.1); 
+}
+.bg-redd{
+	background-color: #BC2325FF;
+}

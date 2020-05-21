@@ -1,0 +1,271 @@
+/* OVERRIDES */
+html {
+	font-size: 14px;
+}
+hr {
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+.content-wrapper {
+	min-height: auto !important;
+	padding-bottom: 2.5rem;
+}
+.swal2-popup.swal2-toast .swal2-title {
+	margin-left: 10px;
+}
+.card-header > .card-tools {
+	margin-top: -.25rem;
+	margin-bottom: -.25rem;
+}
+.card-title {
+	font-size: 1.4rem;
+}
+.table td, .table th {
+	padding: .3rem .5rem;
+}
+.modal-content {
+	border: 0;
+	border-radius: .5rem;
+}
+.modal-header {
+	border-top-left-radius: .5rem;
+	border-top-right-radius: .45rem;
+}
+.modal-footer {
+	justify-content: flex-end !important;
+}
+table thead th {
+	text-transform: uppercase;
+}
+.select2 {
+	width: 100%;
+}
+.select2-container--default .select2-selection--single {
+	padding: 4px 12px;
+}
+.content-header .breadcrumb {
+	font-size: 1.2rem;
+}
+.info-container {
+	display: none !important;
+}
+.bootstrap-duallistbox-container option {
+	padding: 5px;
+	border-bottom: 1px solid #eee;
+}
+.bootstrap-duallistbox-container option:last-child {
+	border-bottom: 0;
+}
+.bootstrap-duallistbox-container .btn-group {
+	display: none;
+}
+
+/* GENERAL */
+.clear {
+	clear: both;
+	display: block;
+}
+.btn-clear-roles {
+	text-transform: uppercase;
+}
+#loader {
+	display: none;
+}
+.overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 10000;
+	background: rgba(0,0,0,.75);
+}
+.loading {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 10001;
+}
+.loading img {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -50px;
+	margin-left: -50px;
+}
+
+/* TABLE DATA */
+.table.with-options tbody tr td:last-child a {
+	margin-right: 5px;
+}
+.table.with-options tbody tr td:last-child a:last-child {
+	margin-right: 0;
+}
+.table.with-options a {
+	width: 20px;
+}
+
+/* PERMISSIONS LIST */
+.permissions-list, .permissions-group {
+	margin: 0;
+	padding: 0;
+}
+.permissions-list li, .permissions-group li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.permissions-list > li {
+	float: left;
+	padding: 2rem;
+	border-right: 1px solid #eee;
+}
+.permissions-list > li:last-child {
+	border-right: 0;
+}
+.permissions-group > li {
+	margin-bottom: .5rem;
+}
+
+/* WIDTHS */
+.w25 {
+	width: 25px;
+}
+.w30 {
+	width: 30px;
+}
+.w35 {
+	width: 35px;
+}
+.w55 {
+	width: 55px;
+}
+.w100 {
+	width: 100px;
+}
+.w120 {
+	width: 120px;
+}
+.w150 {
+	width: 150px;
+}
+.w170 {
+	width: 170px;
+}
+.w200 {
+	width: 200px;
+}
+.w250 {
+    width: 250px;
+}
+.w30p {
+	width: 30%;
+}
+.w40p {
+	width: 40%;
+}
+.w350 {
+	width: 350px;
+}
+.w300 {
+	width: 300px;
+}
+.w75 {
+	width: 75px;
+}
+.w50pc {
+	width: 50%;
+}
+.w25pc {
+	width: 25%;
+}
+.w100pc {
+	width: 100%;
+}
+
+/* HEIGHTS */
+.mh500p {
+	max-height: 500px;
+}
+.h50 {
+    height: 50px;
+}
+
+.input-readonly {
+	background-color: #ffffff !important;
+}
+.notes {	
+	background-attachment: local;	
+	background-image:	
+			linear-gradient(to right, white 10px, transparent 10px),	
+			linear-gradient(to left, white 10px, transparent 10px),	
+			repeating-linear-gradient(white, white 30px, #ccc 30px, #ccc 31px, white 31px);	
+	line-height: 31px;	
+	padding: 8px 10px;
+}
+
+.th-centered {
+	text-align: center;
+}
+
+.pms-red{
+	background-color: #BC2325FF;
+}
+.sidebar-footer{
+	position: sticky; 
+	bottom: 0;
+	z-index: 999
+}
+.sidebar-footer-color{
+	background-color: #A91919FF;
+}
+.btn-ff6600{
+	background-color: #ff6600;
+	color: black;
+	border-color: #ff6600;
+}
+.certify-border {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+.login-box{
+	width: 380px;
+}
+
+.toast-reminder {
+    margin-top: 50px;
+}
+
+.toast-reminder > .toast-header {
+    background-color: #BC2325FF;
+    border-bottom: 0.5px;
+    color: white;
+}
+.toast-reminder > .toast-header > button {
+    color: white;
+}
+.toast-reminder > .toast-body {
+    background-color: white;
+}
+
+.reminder-list {
+    border-bottom: 1px solid #dee2e6;
+    min-height: 35px;
+}
+
+.btn-legend {
+    width: 20px;
+    height: 20px;
+}
+.btn-selected {
+    padding: 15px;
+    border: 2px solid #17a2b8;
+}
+.legend-label {
+    cursor: pointer;
+}

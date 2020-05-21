@@ -1,0 +1,795 @@
+ErrorDocument 404 /404.php
+
+RewriteEngine on
+
+# set max input variable
+php_value max_input_vars 100000
+
+# LOGIN ------------------------------------------------------------------------------------------------
+RewriteRule ^login functions/login/verifylog.php [NC,L]
+RewriteRule ^logout functions/login/logout.php [NC,L]
+RewriteRule ^user-login pages/users/user-login.php [NC,L]
+RewriteRule ^user-verifylog functions/login/user-verifylog.php [NC,L]
+
+# GENERAL ------------------------------------------------------------------------------------------------
+RewriteRule ^dashboard pages/dashboard.php [NC,L]
+RewriteRule ^system-log pages/system-log.php [NC,L]
+
+# HRIS ------------------------------------------------------------------------------------------------
+RewriteRule ^hris hris
+
+# SYSTEM FUNCTION --------------------------------------------------------------------------------------
+RewriteRule ^verify-attachment-extension functions/system/verify-attachment-extension.php [NC,L]
+RewriteRule ^update-notif-status functions/system/update-notification-status.php [NC,L]
+RewriteRule ^load-reminders functions/system/load-reminders.php [NC,L]
+RewriteRule ^clear-notifications functions/system/clear-notifications.php [NC,L]
+RewriteRule ^clear-reminders functions/system/clear-reminder.php [NC,L]
+RewriteRule ^render-reminders functions/system/update-reminders.php [NC,L]
+
+# OCCUPANTS ------------------------------------------------------------------------------------------------
+RewriteRule ^occupants pages/occupants/occupants.php [NC,L]
+RewriteRule ^occupant/([0-9]+) pages/occupants/occupant.php?id=$1 [NC,L]
+RewriteRule ^add-occupant/([0-9]+) pages/occupants/occupant-add.php?id=$1 [NC,L]
+RewriteRule ^add-occupant pages/occupants/occupant-add.php [NC,L]
+RewriteRule ^submit-add-occupant functions/occupants/occupant-add.php [NC,L]
+RewriteRule ^edit-occupant/([0-9]+) pages/occupants/occupant-edit.php?id=$1 [NC,L]
+RewriteRule ^sumbit-edit-occupant functions/occupants/occupant-edit.php [NC,L]
+RewriteRule ^delete-occupant functions/occupants/occupant-delete.php
+
+# CLIENTS ------------------------------------------------------------------------------------------------
+RewriteRule ^clients pages/clients/clients.php [NC,L]
+RewriteRule ^client/([0-9]+) pages/clients/client.php?id=$1 [NC,L]
+RewriteRule ^add-client pages/clients/client-add.php [NC,L]
+RewriteRule ^submit-add-client functions/clients/client-add.php [NC,L]
+RewriteRule ^edit-client/([0-9]+) pages/clients/client-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-client functions/clients/client-edit.php [NC,L]
+RewriteRule ^delete-client functions/clients/client-delete.php [NC,L]
+
+# TENANTS ------------------------------------------------------------------------------------------------
+RewriteRule ^tenants pages/tenants/tenants.php [NC,L]
+RewriteRule ^tenant/([0-9]+) pages/tenants/tenant.php?id=$1 [NC,L]
+RewriteRule ^add-tenant pages/tenants/tenant-add.php [NC,L]
+RewriteRule ^submit-add-tenant functions/tenants/tenant-add.php [NC,L]
+RewriteRule ^edit-tenant/([0-9]+) pages/tenants/tenant-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-tenant functions/tenants/tenant-edit.php [NC,L]
+RewriteRule ^delete-tenant functions/tenants/tenant-delete.php [NC,L]
+
+# UNIT OWNERS ------------------------------------------------------------------------------------------------
+RewriteRule ^unit-owners pages/unit-owners/unit-owners.php [NC,L]
+RewriteRule ^unit-owner/([0-9]+) pages/unit-owners/unit-owner.php?id=$1 [NC,L]
+RewriteRule ^add-unit-owner pages/unit-owners/unit-owner-add.php [NC,L]
+RewriteRule ^submit-add-unit-owner functions/unit-owners/unit-owner-add.php [NC,L]
+RewriteRule ^edit-unit-owner/([0-9]+) pages/unit-owners/unit-owner-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-unit-owner functions/unit-owners/unit-owner-edit.php [NC,L]
+RewriteRule ^delete-unit-owner functions/unit-owners/unit-owner-delete.php [NC,L]
+RewriteRule ^import-unit-owners functions/unit-owners/unit-owner-import.php [NC,L]
+
+# UNITS ------------------------------------------------------------------------------------------------
+RewriteRule ^unit/([0-9]+) pages/units/unit.php?id=$1 [NC,L]
+RewriteRule ^add-unit/([0-9]+)/([0-9]+) pages/units/unit-add.php?pid=$1&spid=$2 [NC,L]
+RewriteRule ^submit-add-unit functions/units/unit-add.php [NC,L]
+RewriteRule ^edit-unit/([0-9]+) pages/units/unit-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-unit functions/units/unit-edit.php [NC,L]
+RewriteRule ^delete-unit functions/units/unit-delete.php [NC,L]
+RewriteRule ^submit-unit-tenant-assign functions/units/unit-tenant-assign.php [NC,L]
+RewriteRule ^import-units functions/units/unit-import.php [NC,L]
+
+# UNITS END USER -----------------------------------------------------------------------------------
+RewriteRule ^add-unit-eu pages/units/unit-add-eu.php [NC,L]
+RewriteRule ^submit-unit-eu-add functions/units/unit-add-eu.php [NC,L]
+
+# TIME ------------------------------------------------------------------------------------------------
+RewriteRule ^time-in functions/time/time-in.php [QSA,L]
+RewriteRule ^time-out functions/time/time-out.php [QSA,L]
+
+# EMPLOYEES ------------------------------------------------------------------------------------------------
+RewriteRule ^employees pages/employees/employees.php [NC,L]
+RewriteRule ^employee/([0-9]+) pages/employees/employee.php?id=$1 [NC,L]
+RewriteRule ^employee-timesheet/([0-9]+) pages/employees/employee-timesheet.php?id=$1 [NC,L]
+RewriteRule ^add-employee pages/employees/employee-add.php [NC,L]
+RewriteRule ^submit-add-employee functions/employees/employee-add.php [NC,L]
+RewriteRule ^edit-employee/([0-9]+) pages/employees/employee-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-employee functions/employees/employee-edit.php [NC,L]
+RewriteRule ^delete-employee functions/employees/employee-delete.php [NC,L]
+RewriteRule ^load-employee-timesheet/([0-9]+)/([0-9]+) functions/employees/employee-timesheet-load.php?id=$1&yrmo=$2 [NC,L]
+
+# USERS ------------------------------------------------------------------------------------------------
+RewriteRule ^users pages/users/users.php [NC,L]
+RewriteRule ^user/([0-9]+) pages/users/user.php?id=$1 [NC,L]
+RewriteRule ^add-user pages/users/user-add.php [NC,L]
+RewriteRule ^submit-add-user functions/users/user-add.php [NC,L]
+RewriteRule ^edit-user/([0-9]+) pages/users/user-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-user functions/users/user-edit.php [NC,L]
+RewriteRule ^delete-user functions/users/user-delete.php [NC,L]
+
+# USER PORTAL ------------------------------------------------------------------------------------------------
+RewriteRule ^user-portal pages/user-portal/user-portal.php [NC,L]
+RewriteRule ^user-transactions pages/user-portal/user-transactions.php [NC,L]
+RewriteRule ^user-gate-pass-moveinout-requests pages/user-portal/user-gate-pass/user-gate-pass-moveinout-requests.php [NC,L]
+RewriteRule ^user-gate-pass-service-provider pages/user-portal/user-gate-pass/user-gate-pass-service-provider.php [NC,L]
+RewriteRule ^user-gate-pass-employee pages/user-portal/user-gate-pass/user-gate-pass-employee.php [NC,L]
+RewriteRule ^user-reservation-boardroom pages/user-portal/user-reservation/user-reservation-boardroom.php [NC,L]
+RewriteRule ^user-reservation-com pages/user-portal/user-reservation/user-reservation-com.php [NC,L]
+RewriteRule ^user-units pages/user-portal/my-units/my-units.php [NC,L]
+
+# USER SERVICE REQUEST - USER PORTAL -----------------------------------------------------------------------
+RewriteRule ^user-service-requests pages/user-portal/service-requests/service-requests.php [NC,L]
+RewriteRule ^user-service-request-add pages/user-portal/service-requests/user-service-request-add.php [NC,L]
+RewriteRule ^submit-user-service-request-add functions/user-portal/service-requests/user-service-request-add.php [NC,L]
+
+# USER MOVE IN/OUT REQUEST GATE PASS - USER PORTAL ------------------------------------------------
+RewriteRule ^user-move-inout-requests pages/user-portal/gate-pass/move-inout-requests/move-inout-requests.php [NC,L]
+RewriteRule ^user-move-inout-request-add pages/user-portal/gate-pass/move-inout-requests/move-inout-request-add.php [NC,L]
+RewriteRule ^submit-user-move-inout-request-add functions/user-portal/gate-pass/move-inout-requests/move-inout-request-add.php [NC,L]
+
+# USER BOARDROOM RESERVATION - USER PORTAL ------------------------------------------------------
+RewriteRule ^user-boardrooms pages/user-portal/reservations/boardrooms/boardrooms.php [NC,L]
+RewriteRule ^user-boardroom-add pages/user-portal/reservations/boardrooms/boardroom-add.php [NC,L]
+RewriteRule ^submit-user-boardroom-add functions/user-portal/reservations/boardrooms/boardroom-add.php [NC,L]
+
+# USER AMENITIES RESERVATION - USER PORTAL ---------------------------------------------------------
+RewriteRule ^user-amenities pages/user-portal/reservations/amenities/amenities.php [NC,L]
+RewriteRule ^user-amenity-add pages/user-portal/reservations/amenities/amenity-add.php [NC,L]
+RewriteRule ^submit-user-amenity-add functions/user-portal/reservations/amenities/amenity-add.php [NC,L]
+
+# ROLES ------------------------------------------------------------------------------------------------
+RewriteRule ^roles pages/roles/roles.php [NC,L]
+RewriteRule ^role/([0-9]+) pages/roles/role.php?id=$1 [NC,L]
+RewriteRule ^add-role pages/roles/role-add.php [NC,L]
+RewriteRule ^submit-add-role functions/roles/role-add.php [NC,L]
+RewriteRule ^edit-role/([0-9]+) pages/roles/role-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-role functions/roles/role-edit.php [NC,L]
+RewriteRule ^delete-role functions/roles/role-delete.php [NC,L]
+
+# DEPARTMENTS ------------------------------------------------------------------------------------------------
+RewriteRule ^departments pages/departments/departments.php [NC,L]
+RewriteRule ^department/([0-9]+) pages/departments/department.php?id=$1 [NC,L]
+RewriteRule ^add-department pages/departments/department-add.php [NC,L]
+RewriteRule ^submit-add-department functions/departments/department-add.php [NC,L]
+RewriteRule ^edit-department/([0-9]+) pages/departments/department-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-department functions/departments/department-edit.php [NC,L]
+RewriteRule ^delete-department functions/departments/department-delete.php [NC,L]
+
+# PROPERTIES ------------------------------------------------------------------------------------------------
+RewriteRule ^properties pages/properties/properties.php [NC,L]
+RewriteRule ^property/([0-9]+) pages/properties/property.php?id=$1 [NC,L]
+RewriteRule ^property-sub-properties/([0-9]+) pages/properties/property-sub-properties.php?id=$1 [NC,L]
+RewriteRule ^property-employees/([0-9]+) pages/properties/property-employees.php?id=$1 [NC,L]
+RewriteRule ^add-property pages/properties/property-add.php [NC,L]
+RewriteRule ^submit-add-property functions/properties/property-add.php [NC,L]
+RewriteRule ^edit-property/([0-9]+) pages/properties/property-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-property functions/properties/property-edit.php [NC,L]
+RewriteRule ^delete-property functions/properties/property-delete.php [NC,L]
+RewriteRule ^property-manage-employees/([0-9]+)/([0-9,]+) pages/properties/property-manage-employees.php?id=$1&$eid=$2 [NC,L]
+RewriteRule ^property-summary/([0-9]+) pages/properties/property-summary.php?id=$1 [NC,L]
+
+# SUB PROPERTIES ------------------------------------------------------------------------------------------------
+RewriteRule ^sub-property-units/([0-9]+) pages/properties/sub-property-units.php?id=$1 [QSA,L]
+RewriteRule ^sub-property/([0-9]+) pages/properties/sub-property.php?id=$1 [NC,L]
+RewriteRule ^add-sub-property/([0-9]+) pages/properties/sub-property-add.php?id=$1 [NC,L]
+RewriteRule ^submit-add-sub-property functions/properties/sub-property-add.php [NC,L]
+RewriteRule ^edit-sub-property/([0-9]+) pages/properties/sub-property-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-sub-property functions/properties/sub-property-edit.php [NC,L]
+RewriteRule ^delete-sub-property functions/properties/sub-property-delete.php [NC,L]
+
+# SETTINGS ------------------------------------------------------------------------------------------------
+RewriteRule ^settings pages/settings.php [NC,L]
+RewriteRule ^change-language/([0-9]+) functions/settings/change-language.php?id=$1 [QSA,L]
+RewriteRule ^update-password functions/settings/change-password.php [NC,L]
+
+# TASKS
+RewriteRule ^add-task pages/tasks/task-add.php [NC,L]
+RewriteRule ^calendar pages/tasks/task-calendar.php [NC,L]
+RewriteRule ^submit-add-task functions/tasks/task-add.php [NC,L]
+
+# WORK ORDER --------------------------------------------------------------
+RewriteRule ^add-work-order pages/tasks/work-order/work-order-add.php [NC,L]
+RewriteRule ^submit-add-work-order functions/tasks/work-order/work-order-add.php [NC,L]
+RewriteRule ^work-orders pages/tasks/work-order/work-orders.php [NC,L]
+RewriteRule ^work-order-options functions/tasks/work-order/work-order-add-options.php [NC,L]
+RewriteRule ^assign-work-order/([0-9]+) pages/tasks/work-order/work-order-assign.php?id=$1 [NC,L]
+RewriteRule ^submit-assign-work-order functions/tasks/work-order/work-order-assign.php [NC,L]
+
+# COLLECTIONS ---------------------------------------------------------------------------
+RewriteRule ^collections pages/tasks/collections/collections.php [NC,L]
+# DAILY COLLECTION --------------------------------------
+RewriteRule ^daily-collections pages/tasks/collections/daily-collection/daily-collections.php [NC,L]
+RewriteRule ^add-daily-collection pages/tasks/collections/daily-collection/daily-collection-add.php [NC,L]
+RewriteRule ^daily-collection-unit-options functions/tasks/collections/daily-collections/daily-collection-units.php [NC,L]
+RewriteRule ^submit-add-daily-collection functions/tasks/collections/daily-collections/daily-collection-add.php [NC,L]
+RewriteRule ^edit-daily-collection/([0-9]+) pages/tasks/collections/daily-collection/daily-collection-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-daily-collection functions/tasks/collections/daily-collections/daily-collection-edit.php [NC,L]
+RewriteRule ^delete-daily-collection functions/tasks/collections/daily-collections/daily-collection-delete.php [NC,L]
+RewriteRule ^daily-collection/([0-9]+) pages/tasks/collections/daily-collection/daily-collection.php?id=$1 [NC,L]
+RewriteRule ^update-daily-collection-status functions/tasks/collections/daily-collections/daily-collection-update-status.php [NC,L]
+RewriteRule ^render-collection-tenants functions/tasks/collections/daily-collections/daily-collection-render-tenants.php [NC,L]
+# ON HAND COLLECTIONS ------------------------------------
+RewriteRule ^on-hand-collections pages/tasks/collections/on-hand-collection/on-hand-collections.php [NC,L]
+RewriteRule ^add-on-hand-collections pages/tasks/collections/on-hand-collection/on-hand-collection-add.php [NC,L]
+RewriteRule ^submit-add-on-hand-collection functions/tasks/collections/on-hand-collection/on-hand-collection-add.php [NC,L]
+RewriteRule ^edit-on-hand-collection/([0-9]+) pages/tasks/collections/on-hand-collection/on-hand-collection-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-on-hand-collection functions/tasks/collections/on-hand-collection/on-hand-collection-edit.php [NC,L]
+RewriteRule ^on-hand-collection/([0-9]+) pages/tasks/collections/on-hand-collection/on-hand-collection.php?id=$1 [NC,L]
+RewriteRule ^approve-on-han-collection functions/tasks/collections/on-hand-collection/on-hand-collection-approve.php [NC,L]
+# CHECK VOUCHERS -----------------------------------------
+RewriteRule ^check-vouchers pages/tasks/collections/check-vouchers/check-vouchers.php [NC,L]
+RewriteRule ^add-check-voucher pages/tasks/collections/check-vouchers/check-voucher-add.php [NC,L]
+RewriteRule ^submit-add-check-voucher functions/tasks/collections/check-vouchers/check-voucher-add.php [NC,L]
+RewriteRule ^edit-check-voucher/([0-9]+) pages/tasks/collections/check-vouchers/check-voucher-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-check-voucher functions/tasks/collections/check-vouchers/check-voucher-edit.php [NC,L]
+RewriteRule ^check-voucher/([0-9]+) pages/tasks/collections/check-vouchers/check-voucher.php?id=$1 [NC,L]
+# COLLECTION REPORTS -------------------------------------
+RewriteRule ^daily-collection-reports pages/tasks/collections/daily-collection-reports/daily-collection-reports.php [NC,L]
+RewriteRule ^daily-collection-report-add pages/tasks/collections/daily-collection-reports/daily-collection-report-add.php [NC,L]
+RewriteRule ^render-daily-collections functions/tasks/collections/daily-collection-reports/daily-collection-report-render-collections.php [NC,L]
+RewriteRule ^submit-daily-collection-report-add functions/tasks/collections/daily-collection-reports/daily-collection-report-add.php [NC,L]
+RewriteRule ^daily-collection-report-edit/([0-9]+) pages/tasks/collections/daily-collection-reports/daily-collection-report-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-collection-report functions/tasks/collections/daily-collection-reports/daily-collection-report-edit.php [NC,L]
+RewriteRule ^daily-collection-report/([0-9]+) pages/tasks/collections/daily-collection-reports/daily-collection-report.php?id=$1 [NC,L]
+RewriteRule ^update-daily-collection-report-status functions/tasks/collections/daily-collection-reports/daily-collection-report-update-status.php [NC,L]
+# DAILY DEPOSIT ------------------------------------------
+RewriteRule ^daily-deposit-list pages/tasks/collections/daily-deposit/daily-deposit-list.php [NC,L]
+RewriteRule ^daily-deposit/([0-9]+) pages/tasks/collections/daily-deposit/daily-deposit.php?id=$1 [NC,L]
+RewriteRule ^add-daily-deposit/([0-9a-z_-]+)-([0-9]+) pages/tasks/collections/daily-deposit/daily-deposit-add.php?date=$1&id=$2 [NC,L]
+RewriteRule ^submit-add-daily-deposit functions/tasks/collections/daily-deposit/daily-deposit-add.php [NC,L]
+RewriteRule ^edit-daily-deposit/([0-9]+) pages/tasks/collections/daily-deposit/daily-deposit-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-daily-deposit functions/tasks/collections/daily-deposit/daily-deposit-edit.php [NC,L]
+RewriteRule ^update-daily-deposit-status functions/tasks/collections/daily-deposit/daily-deposit-update-status.php [NC,L]
+# UNDEPOSITED ---------------------------------------------
+RewriteRule ^undeposited/([0-9a-z-_]+)-([0-9]+) pages/tasks/collections/undeposited/undeposited.php?date=$1&id=$2 [NC,L]
+RewriteRule ^undeposited-list pages/tasks/collections/undeposited/undeposited-list.php [NC,L]
+RewriteRule ^render-total-undeposited functions/tasks/collections/undeposited/undeposited-update-total.php [NC,L]
+RewriteRule ^undeposited-summary-list pages/tasks/collections/undeposited/undeposited-summary-list.php [NC,L]
+RewriteRule ^undeposited-summary/([0-9]+) pages/tasks/collections/undeposited/undeposited-summary.php?id=$1 [NC,L]
+# PDC MONITORING -------------------------------------------
+RewriteRule ^pdc-monitoring-list pages/tasks/collections/pdc-monitoring/pdc-monitoring-list.php [NC,L]
+RewriteRule ^add-pdc-monitoring/([0-9]+) pages/tasks/collections/pdc-monitoring/pdc-monitoring-add.php?id=$1 [NC,L]
+RewriteRule ^update-pdc-monitoring functions/tasks/collections/pdc-monitoring/pdc-monitoring-edit.php [NC,L]
+# UNIDENTIFIED ---------------------------------------------
+RewriteRule ^unidentified-list pages/tasks/collections/unidentified/unidentified-list.php [NC,L]
+RewriteRule ^unidentified/([0-9]+) pages/tasks/collections/unidentified/unidentified.php?id=$1 [NC,L]
+RewriteRule ^update-unidentified-status functions/tasks/collections/unidentified/unidentified-update-status.php [NC,L]
+RewriteRule ^add-unidentified/([0-9]+) pages/tasks/collections/unidentified/unidentified-add.php?id=$1 [NC,L]
+RewriteRule ^submit-add-unidentified functions/tasks/collections/unidentified/unidentified-add.php [NC,L]
+# CANCELLED OR ---------------------------------------------
+RewriteRule ^cancelled-collections pages/tasks/collections/cancelled/cancelled-collections.php [NC,L]
+RewriteRule ^cancel-collection functions/tasks/collections/cancelled/cancelled-add.php [NC,L]
+RewriteRule ^cancelled-collection/([0-9]+) pages/tasks/collections/cancelled/cancelled-collection.php?id=$1 [NC,L]
+RewriteRule ^update-cancelled-collection-status functions/tasks/collections/cancelled/cancelled-update-status.php [NC,L]
+
+# PDC ------------------------------------------
+RewriteRule ^pdc-list pages/tasks/collections/pdc/pdc-list.php [NC,L]
+RewriteRule ^add-pdc/([0-9a-z_-]+)-([0-9]+) pages/tasks/collections/pdc/pdc-add.php?date=$1&id=$2 [NC,L]
+RewriteRule ^pdc pages/tasks/collections/pdc/pdc.php [NC,L]
+
+# JOB ORDER ---------------------------------------------------------------
+RewriteRule ^job-orders pages/tasks/job-order/job-orders.php [NC,L]
+RewriteRule ^add-job-order pages/tasks/job-order/job-order-add.php [NC,L]
+RewriteRule ^submit-add-job-order functions/tasks/job-order/job-order-add.php [NC,L]
+RewriteRule ^job-order-options functions/tasks/job-order/job-order-add-options.php [NC,L]
+RewriteRule ^assign-job-order/([0-9]+) pages/tasks/job-order/job-order-assign.php?id=$1 [NC,L]
+RewriteRule ^submit-assign-job-order functions/tasks/job-order/job-order-assign.php [NC,L]
+
+# INSPECTIONS -------------------------------------------------------------
+RewriteRule ^inspections pages/tasks/inspections/inspections.php [NC,L]
+RewriteRule ^inspection-sheet pages/tasks/inspections/inspection-sheet.php [NC,L]
+RewriteRule ^inspection-categories pages/tasks/inspections/inspection-categories.php [NC,L]
+RewriteRule ^inspection-types/([0-9]+) pages/tasks/inspections/inspection-types.php?id=$1 [NC,L]
+
+# FCU MONTHLY INSPECTIONS -------------------------------------------------------------------------
+RewriteRule ^fcu-monthly-inspection-list pages/tasks/inspections/FCU/fcu-monthly-inspection-list.php [NC,L]
+RewriteRule ^add-fcu-inspection pages/tasks/inspections/FCU/inspection-fcu-add.php [NC,L]
+RewriteRule ^submit-add-fcu-inspection functions/tasks/inspections/FCU/inspection-fcu-add.php [NC,L]
+RewriteRule ^fcu-inspection/([0-9]+) pages/tasks/inspections/FCU/inspection-fcu.php?id=$1 [NC,L]
+
+# ENGINEERING INSPECTIONS -------------------------------------------------------------------------
+RewriteRule ^submit-add-engineering-inspection functions/tasks/inspections/engineering/engineering-inspection-add.php [NC,L]
+
+RewriteRule ^add-general-inspection-sheet pages/tasks/inspections/engineering/general/general-inspection-sheet-add.php [NC,L]
+RewriteRule ^general-inspection-list pages/tasks/inspections/engineering/general/general-inspection-list.php [NC,L]
+RewriteRule ^general-inspection-sheet/([0-9]+) pages/tasks/inspections/engineering/general/general-inspection-sheet.php?id=$1 [NC,L]
+
+RewriteRule ^add-proper-installation-inspection-sheet pages/tasks/inspections/engineering/proper-installation/proper-installation-inspection-sheet-add.php [NC,L]
+RewriteRule ^proper-installation-inspection-list pages/tasks/inspections/engineering/proper-installation/proper-installation-inspection-list.php [NC,L]
+RewriteRule ^proper-installation-inspection-sheet/([0-9]+) pages/tasks/inspections/engineering/proper-installation/proper-installation-inspection-sheet.php?id=$1 [NC,L]
+
+RewriteRule ^add-supply-voltage-inspection-sheet pages/tasks/inspections/engineering/supply-voltage/supply-voltage-inspection-sheet-add.php [NC,L]
+RewriteRule ^supply-voltage-inspection-list pages/tasks/inspections/engineering/supply-voltage/supply-voltage-inspection-list.php [NC,L]
+RewriteRule ^supply-voltage-inspection-sheet/([0-9]+) pages/tasks/inspections/engineering/supply-voltage/supply-voltage-inspection-sheet.php?id=$1 [NC,L]
+
+RewriteRule ^add-power-inspection-sheet pages/tasks/inspections/engineering/power/power-inspection-sheet-add.php [NC,L]
+RewriteRule ^power-inspection-list pages/tasks/inspections/engineering/power/power-inspection-list.php [NC,L]
+RewriteRule ^power-inspection-sheet/([0-9]+) pages/tasks/inspections/engineering/power/power-inspection-sheet.php?id=$1 [NC,L]
+
+# BM INSPECTIONS
+RewriteRule ^add-bm-inspection pages/tasks/inspections/BM/inspection-bm-add.php [NC,L]
+RewriteRule ^submit-add-bm-checklist functions/tasks/inspections/BM/inspection-bm-checklist-add.php [NC,L]
+RewriteRule ^bm-inspections pages/tasks/inspections/BM/inspection-bm-list.php [NC,L]
+RewriteRule ^edit-bm-inspection/([0-9]+) pages/tasks/inspections/BM/inspection-bm-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-bm-checklist functions/tasks/inspections/BM/inspection-bm-checklist-edit.php [NC,L]
+
+#FIRE EXTINGUISHER INSPECTION CHECKLIST ----------------------------------------------
+RewriteRule ^add-fire-extinguisher-inspection-checklist pages/tasks/inspections/fire-extinguisher/fire-extinguisher-inspection-checklist-add.php [NC,L]
+RewriteRule ^submit-add-fire-extinguisher-inspection functions/tasks/inspections/fire-extinguisher/fire-extinguisher-inspection-checklist-add.php [NC,L]
+RewriteRule ^fire-extinguisher-inspection-list pages/tasks/inspections/fire-extinguisher/fire-extinguisher-inspection-list.php [NC,L]
+RewriteRule ^fire-extinguisher-inspection-checklist/([0-9]+) pages/tasks/inspections/fire-extinguisher/fire-extinguisher-inspection-checklist.php?id=$1 [NC,L]
+
+# EMERGENCY LIGHT INSPECTION CHECKLIST ----------------------------------------------
+RewriteRule ^emergency-light-inspection-list pages/tasks/inspections/emergency-light/emergency-light-inspection-list.php [NC,L]
+RewriteRule ^add-emergency-light-inspection-checklist pages/tasks/inspections/emergency-light/emergency-light-inspection-checklist-add.php [NC,L]
+RewriteRule ^submit-add-emergency-light-inspection-checklist functions/tasks/inspections/emergency-light/emergency-light-inspection-checklist-add.php [NC,L]
+RewriteRule ^emergency-light-inspection-checklist/([0-9]+) pages/tasks/inspections/emergency-light/emergency-light-inspection-checklist.php?id=$1 [NC,L]
+
+# PREVENTIVE MAINTENANCE --------------------------------------------------
+RewriteRule ^preventive-maintenances pages/tasks/preventive-maintenance/preventive-maintenance.php [NC,L]
+RewriteRule ^add-preventive-maintenance/([0-9]+) pages/tasks/preventive-maintenance/preventive-maintenance-add.php?id=$1 [NC,L]
+RewriteRule ^preventive-maintenance-equipment-options functions/tasks/preventive-maintenance/preventive-maintenance-equipment-options.php [NC,L]
+RewriteRule ^submit-add-preventive-maintenance functions/tasks/preventive-maintenance/preventive-maintenance-add.php [NC,L]
+RewriteRule ^frequency-preventive-maintenance/([0-9]+) pages/tasks/preventive-maintenance/preventive-maintenance-frequency-form.php?id=$1 [NC,L]
+RewriteRule ^preventive-maintenance-form/([0-9]+) pages/tasks/preventive-maintenance/preventive-maintenance-form.php?id=$1 [NC,L]
+RewriteRule ^add-item-to-check functions/tasks/preventive-maintenance/preventive-maintenance-add-item.php [NC,L]
+RewriteRule ^check-item-preventive-maintenance functions/tasks/preventive-maintenance/preventive-maintenance-check.php [NC,L]
+RewriteRule ^submit-preventive-maintenance-checklist functions/tasks/preventive-maintenance/preventive-maintenance-save-checklist.php [NC,L]
+RewriteRule ^edit-preventive-maintenance/([0-9]+) pages/tasks/preventive-maintenance/preventive-maintenance-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-preventive-maintenance functions/tasks/preventive-maintenance/preventive-maintenance-edit.php [NC,L]
+RewriteRule ^submit-preventive-maintenance-findings-and-remarks functions/tasks/preventive-maintenance/preventive-maintenance-save-findings-and-remarks.php [NC,L]
+
+# PROSPECTING --------------------------------------------------------------
+RewriteRule ^prospecting-departments pages/prospecting/prospecting-departments.php [NC,L]
+RewriteRule ^prospecting-list/([0-9]+) pages/prospecting/prospecting-list.php?id=$1 [NC,L]
+RewriteRule ^submit-add-prospecting functions/prospecting/prospecting-add.php [NC,L]
+RewriteRule ^submit-edit-prospecting functions/prospecting/prospecting-edit.php [NC,L]
+RewriteRule ^edit-prospecting/([0-9]+) pages/prospecting/prospecting-edit.php?id=$1 [NC,L]
+RewriteRule ^prospect-activities/([0-9]+) pages/prospecting/prospecting-activities.php?id=$1 [NC,L]
+RewriteRule ^save-prospecting-activity functions/prospecting/prospecting-activity-save.php [NC,L]
+RewriteRule ^load-prospect-activities functions/prospecting/prospecting-load-activities.php [NC,L]
+RewriteRule ^day-count-prospecting-activities functions/prospecting/prospecting-activity-day-count.php [NC,L]
+RewriteRule ^send-to-hr functions/prospecting/prospecting-send-to-hr.php [NC,L]
+RewriteRule ^add-prospect-activity-remarks functions/prospecting/prospecting-activity-remarks.php [NC,L]
+RewriteRule ^delete-prospecting-activity-attachment functions/prospecting/prospecting-activity-delete-attachment.php [NC,L]
+
+# BDMD PROSPECTING -----------------------------------------------------------
+RewriteRule ^add-prospecting-bdmd pages/prospecting/prospecting-bdmd-add.php [NC,L]
+
+# ESD PROSPECTING --------------------------------------------------------------
+RewriteRule ^add-prospecting-esd pages/prospecting/prospecting-esd-add.php [NC,L]
+
+# POD PROSPECTING --------------------------------------------------------------
+RewriteRule ^add-prospecting-pod pages/prospecting/POD/prospecting-pod-add.php [NC,L]
+
+# NOTICE TO PROCEED --------------------------------------------------------------
+RewriteRule ^notice-to-proceed-list pages/notice-to-proceed/notice-to-proceed-list.php [NC,L]
+RewriteRule ^add-notice-to-proceed pages/notice-to-proceed/notice-to-proceed-add.php [NC,L]
+RewriteRule ^submit-add-notice-to-proceed functions/notice-to-proceed/notice-to-proceed-add.php [NC,L]
+RewriteRule ^edit-notice-to-proceed/([0-9]+) pages/notice-to-proceed/notice-to-proceed-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-notice-to-proceed functions/notice-to-proceed/notice-to-proceed-edit.php [NC,L]
+RewriteRule ^notice-to-proceed/([0-9]+) pages/notice-to-proceed/notice-to-proceed.php?id=$1 [NC,L]
+RewriteRule ^delete-notice-to-proceed functions/notice-to-proceed/notice-to-proceed-delete.php
+RewriteRule ^print-notice-to-proceed pages/notice-to-proceed/notice-to-proceed-print.php [NC,L]
+
+# NOTICE OF NEW INSTRUCTIONS --------------------------------------------------------------
+RewriteRule ^notice-of-new-instructions pages/notice-of-new-instructions/notice-of-new-instructions.php? [NC,L]
+RewriteRule ^add-notice-of-new-instruction pages/notice-of-new-instructions/notice-of-new-instruction-add.php [NC,L]
+RewriteRule ^edit-notice-of-new-instruction/([0-9]+) pages/notice-of-new-instructions/edit-notice-of-new-instruction.php?id=$1 [NC,L]
+RewriteRule ^submit-add-notice-of-new-instruction functions/notice-of-new-instructions/notice-of-new-instruction-add.php [NC,L]
+RewriteRule ^update-status-nni functions/notice-of-new-instructions/notice-of-new-instruction-update-status.php [NC,L]
+RewriteRule ^update-departments-status functions/notice-of-new-instructions/notice-of-new-instruction-update-departments.php [NC,L]
+RewriteRule ^check-position functions/notice-of-new-instructions/notice-of-new-instruction-check-position.php [NC,L]
+RewriteRule ^edit-nni/([0-9]+) pages/notice-of-new-instructions/nni-edit.php?id=$1 [NC,L]
+
+# FPD CONTRACT --------------------------------------------------------------
+RewriteRule ^contract-list pages/contract/fpd-contract/contract-list.php [NC,L]
+RewriteRule ^contract/([0-9]+) pages/contract/fpd-contract/contract.php?id=$1 [NC,L]
+RewriteRule ^add-contract pages/contract/fpd-contract/contract-add.php [NC,L]
+RewriteRule edit-contract/([0-9]+) pages/contract/fpd-contract/contract-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-add-contract functions/contract/fpd-contract/contract-add.php [NC,L]
+RewriteRule ^submit-edit-contract functions/contract/fpd-contract/contract-edit.php [NC,L]
+RewriteRule ^delete-contract functions/contract/fpd-contract/contract-delete.php [NC,L]
+
+# OPERATION CONTRACTS ------------------------------------------------------
+RewriteRule ^doc-management-contracts pages/contract/contracts/contracts.php [NC,L]
+RewriteRule ^doc-contract-list/([0-9]+) pages/contract/contracts/contract-list.php?id=$1 [NC,L]
+RewriteRule ^add-doc-contract/([0-9]+) pages/contract/contracts/contract-add.php?id=$1 [NC,L]
+RewriteRule ^submit-add-doc-contract functions/contract/contracts/contract-add.php [NC,L]
+RewriteRule ^edit-doc-contract/([0-9]+) pages/contract/contracts/contract-edit.php?id=$1 [NC,L]
+
+# DOWNPAYMENT -------------------------------------------------------------
+RewriteRule ^downpayments pages/downpayments/downpayments.php [NC,L]
+RewriteRule ^add-downpayment pages/downpayments/downpayment-add.php [NC,L]
+RewriteRule ^submit-add-downpayment functions/downpayments/downpayment-add.php [NC,L]
+RewriteRule ^edit-downpayment/([0-9]+) pages/downpayments/downpayment-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-downpayment functions/downpayments/downpayment-edit.php [NC,L]
+RewriteRule ^downpayment/([0-9]+) pages/downpayments/downpayment.php?id=$1 [NC,L]
+RewriteRule ^delete-downpayment functions/downpayments/downpayment-delete.php [NC,L]
+
+# PRF -------------------------------------------------------------
+RewriteRule ^prf-list pages/prf/prf-list.php [NC,L]
+RewriteRule ^prf/([0-9]+) pages/prf/prf.php?id=$1 [NC,L]
+RewriteRule ^add-prf pages/prf/prf-add.php [NC,L]
+RewriteRule ^edit-prf/([0-9]+) pages/prf/prf-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-add-prf functions/prf/prf-add.php [NC,L]
+RewriteRule ^submit-edit-prf functions/prf/prf-edit.php [NC,L]
+RewriteRule ^delete-prf functions/prf/prf-delete.php [NC,L]
+
+#EQUIPMENTS
+RewriteRule ^add-equipment pages/equipments/equipment-add.php [NC,L]
+RewriteRule ^submit-add-equipment functions/equipments/equipment-add.php [NC,L]
+
+# PRE OPERATION AUDIT ---------------------------------------------
+RewriteRule ^pre-operation-audit-departments pages/pre-operation-audit/pre-operation-audit-departments.php [NC,L]
+RewriteRule ^pre-operation-audit-approve functions/pre-operation-audit/pre-operation-audit-update-status.php [NC,L]
+RewriteRule ^pre-operation-audit-auto-save functions/pre-operation-audit/pre-operation-audit-auto-save.php [NC,L]
+# QEHS ---------------
+RewriteRule ^add-pre-operation-audit pages/pre-operation-audit/QEHS/pre-operation-audit-add.php [NC,L]
+RewriteRule ^pre-operation-audit-checklist/([0-9]+) pages/pre-operation-audit/QEHS/pre-operation-audit-checklist.php?id=$1 [NC,L]
+RewriteRule ^edit-pre-operation-audit-checklist/([0-9]+) pages/pre-operation-audit/QEHS/pre-operation-audit-checklist-edit.php?id=$1 [NC,L]
+RewriteRule ^pre-operation-audits pages/pre-operation-audit/QEHS/pre-operation-audits.php [NC,L]
+RewriteRule ^submit-add-pre-operation-audit functions/pre-operation-audit/QEHS/pre-operation-audit-add.php [NC,L]
+RewriteRule ^check-pre-operation-audit functions/pre-operation-audit/QEHS/pre-operation-audit-check.php [NC,L]
+RewriteRule ^submit-save-pre-operation-audit functions/pre-operation-audit/QEHS/pre-operation-audit-edit.php [NC,L]
+RewriteRule ^render-pre-operation-audit-qehs-comment functions/pre-operation-audit/QEHS/pre-operation-audit-render-comments.php [NC,L]
+# TSA -----------------
+RewriteRule ^add-tsa-pre-operation-audit pages/pre-operation-audit/TSA/pre-operation-audit-tsa-add.php [NC,L]
+RewriteRule ^submit-add-tsa-pre-operation-audit functions/pre-operation-audit/TSA/pre-operation-audit-tsa-add.php [NC,L]
+RewriteRule ^pre-operation-audit-tsa-list pages/pre-operation-audit/TSA/pre-operation-audit-tsa-list.php [NC,L]
+RewriteRule ^edit-tsa-pre-operation-audit/([0-9]+) pages/pre-operation-audit/TSA/pre-operation-audit-tsa-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-tsa-pre-operation-audit functions/pre-operation-audit/TSA/pre-operation-audit-tsa-edit.php [NC,L]
+RewriteRule ^tsa-report-findings/([0-9]+) pages/pre-operation-audit/TSA/pre-operation-audit-tsa-report-findings.php?id=$1 [NC,L]
+RewriteRule ^delete-tsa-pre-operation-audit functions/pre-operation-audit/TSA/pre-operation-audit-tsa-delete.php [NC,L]
+RewriteRule ^delete-pre-operation-audit-tsa-row functions/pre-operation-audit/TSA/pre-operation-audit-delete-row.php [NC,L]
+
+# PAD -----------------
+RewriteRule ^pre-operation-audit-pad-list pages/pre-operation-audit/PAD/pre-operation-audit-pad-list.php [NC,L]
+RewriteRule ^pre-operation-audit-pad-categories pages/pre-operation-audit/PAD/pre-operation-audit-pad-categories.php [NC,L]
+#CHECKLIST
+RewriteRule ^pad-pre-operation-audit-list pages/pre-operation-audit/PAD/checklist/pre-operation-audit-pad-list.php [NC,L]
+RewriteRule ^pad-pre-operation-audit-checklist/([0-9]+) pages/pre-operation-audit/PAD/checklist/pre-operation-audit-pad-checklist.php?id=$1 [NC,L]
+RewriteRule ^add-pad-pre-operation-audit pages/pre-operation-audit/PAD/checklist/pre-operation-audit-pad-checklist-add.php [NC,L]
+RewriteRule ^submit-add-pad-checklist-pre-operation-audit functions/pre-operation-audit/PAD/checklist/pre-operation-audit-pad-checklist-add.php [NC,L]
+RewriteRule ^edit-pad-pre-operation-audit/([0-9]+) pages/pre-operation-audit/PAD/checklist/pre-operation-audit-pad-checklist-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-pad-pre-operation-audit functions/pre-operation-audit/PAD/checklist/pre-operation-audit-pad-checklist-edit.php [NC,L]
+# PCC
+RewriteRule ^pad-pcc-pre-operation-audit-list pages/pre-operation-audit/PAD/PCC/pre-operation-audit-pad-pcc-list.php [NC,L]
+RewriteRule ^add-pcc-pre-operation-audit pages/pre-operation-audit/PAD/PCC/pre-operation-audit-pcc-add.php [NC,L]
+RewriteRule ^submit-add-pad-pcc-pre-operation-audit functions/pre-operation-audit/PAD/PCC/pre-operation-audit-pad-pcc-add.php [NC,L]
+RewriteRule ^edit-pcc-pre-operation-audit/([0-9]+) pages/pre-operation-audit/PAD/PCC/pre-operation-audit-pcc-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-pcc-pre-operation-audit functions/pre-operation-audit/PAD/PCC/pre-operation-audit-pad-pcc-edit.php [NC,L]
+# PCV
+RewriteRule ^pad-pcv-pre-operation-audit-list pages/pre-operation-audit/PAD/PCV/pre-operation-audit-pad-pcv-list.php [NC,L]
+RewriteRule ^add-pcv-pre-operation-audit pages/pre-operation-audit/PAD/PCV/pre-operation-audit-pcv-add.php [NC,L]
+RewriteRule ^submit-add-pcv-pre-operation-audit functions/pre-operation-audit/PAD/pre-operation-audit-pad-pcv-add.php [NC,L]
+RewriteRule ^edit-pcv-pre-operation-audit/([0-9]+) pages/pre-operation-audit/PAD/PCV/pre-operation-audit-pcv-edit.php?id=$1 [NC,L]
+# IAD -----------------
+RewriteRule ^pre-operation-audit-iad-list pages/pre-operation-audit/IAD/pre-operation-audit-iad-list.php [NC,L]
+RewriteRule ^pre-operation-audit-iad/([0-9]+) pages/pre-operation-audit/IAD/pre-operation-audit-iad.php?id=$1 [NC,L]
+RewriteRule ^pre-operation-audit-iad-categories pages/pre-operation-audit/IAD/pre-operation-audit-iad-categories.php [NC,L]
+RewriteRule ^submit-add-iad-collection-pre-operation-audit functions/pre-operation-audit/IAD/pre-operation-audit-iad-collection-add.php [NC,L]
+# ON HAND COLLECTION
+RewriteRule ^add-iad-on-hand-collection pages/pre-operation-audit/IAD/pre-operation-audit-iad-collection-add.php [NC,L]
+# PETTY CASH
+RewriteRule ^add-iad-petty-cash-pre-operation-audit pages/pre-operation-audit/IAD/pre-operation-audit-iad-petty-cash.php [NC,L]
+RewriteRule ^submit-add-iad-petty-cash-pre-operation-audit functions/pre-operation-audit/IAD/pre-operation-audit-iad-petty-cash-add.php [NC,L]
+
+# 30-60-90 DAYS
+RewriteRule ^30-60-90-day-plans pages/30-60-90-days/30-60-90-day-plans.php [NC,L]
+RewriteRule ^add-30-60-90-day-plan pages/30-60-90-days/30-60-90-day-plan-add.php [NC,L]
+RewriteRule ^submit-add-30-60-90-day-plan functions/30-60-90-days/30-60-90-day-plan-add.php [NC,L]
+RewriteRule ^edit-30-60-90-day-plan/([0-9]+) pages/30-60-90-days/30-60-90-day-plan-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-30-60-90-day-plan functions/30-60-90-days/30-60-90-day-plan-edit.php [NC,L]
+RewriteRule ^30-60-90-day-plan/([0-9]+) pages/30-60-90-days/30-60-90-day-plan.php?id=$1 [NC,L]
+
+# SERVICE REQUEST -----------------------------------------------------------------------
+RewriteRule ^service-requests pages/help-desk/service-requests/service-requests.php [NC,L]
+RewriteRule ^add-service-request pages/help-desk/service-requests/service-request-add.php [NC,L]
+RewriteRule ^submit-add-service-request functions/help-desk/service-requests/service-request-add.php [NC,L]
+RewriteRule ^service-request/([0-9]+) pages/help-desk/service-requests/service-request.php?id=$1 [NC,L]
+RewriteRule ^submit-assign-service-request functions/help-desk/service-requests/service-request-assign.php [NC,L]
+
+# VISITORS -----------------------------------------------------------------------
+RewriteRule ^visitors pages/help-desk/gate-pass/visitors/visitors.php [NC,L]
+RewriteRule ^add-visitor pages/help-desk/gate-pass/visitors/visitor-add.php [NC,L]
+RewriteRule ^submit-add-visitor functions/help-desk/gate-pass/visitors/visitor-add.php [NC,L]
+RewriteRule ^edit-visitor/([0-9]+) pages/help-desk/gate-pass/visitors/visitor-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-visitor functions/help-desk/gate-pass/visitors/visitor-edit.php [NC,L]
+RewriteRule ^visitor/([0-9]+) pages/help-desk/gate-pass/visitors/visitor.php?id=$1 [NC,L]
+RewriteRule ^delete-visitor functions/help-desk/gate-pass/visitors/visitor-delete.php [NC,L]
+RewriteRule ^print-visitors pages/help-desk/gate-pass/visitors/visitor-print-export.php?id=0 [NC,L]
+RewriteRule ^export-visitors pages/help-desk/gate-pass/visitors/visitor-print-export.php?id=1 [NC,L]
+
+# MOVE IN/OUT REQUESTS -----------------------------------------------------------------------
+RewriteRule ^move-inout-requests pages/help-desk/gate-pass/move-inout-requests/move-inout-requests.php [NC,L]
+RewriteRule ^move-inout-request/([0-9]+) pages/help-desk/gate-pass/move-inout-requests/move-inout-request.php?id=$1 [NC,L]
+RewriteRule ^add-move-inout-request pages/help-desk/gate-pass/move-inout-requests/move-inout-request-add.php [NC,L]
+RewriteRule ^submit-add-move-inout-request functions/help-desk/gate-pass/move-inout-requests/move-inout-request-add.php [NC,L]
+RewriteRule ^edit-move-inout-request/([0-9]+) pages/help-desk/gate-pass/move-inout-requests/move-inout-request-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-move-inout-request functions/help-desk/gate-pass/move-inout-requests/move-inout-request-edit.php [NC,L]
+RewriteRule ^delete-move-inout-request functions/help-desk/gate-pass/move-inout-requests/move-inout-request-delete.php [NC,L]
+
+# SERVICE PROVIDER -----------------------------------------------------------------------
+RewriteRule ^service-providers pages/help-desk/gate-pass/service-providers/service-providers.php [NC,L]
+RewriteRule ^add-service-provider pages/help-desk/gate-pass/service-providers/service-provider-add.php [NC,L]
+RewriteRule ^submit-add-service-provider functions/help-desk/gate-pass/service-providers/service-provider-add.php [NC,L]
+RewriteRule ^edit-service-provider/([0-9]+) pages/help-desk/gate-pass/service-providers/service-provider-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-service-provider functions/help-desk/gate-pass/service-providers/service-provider-edit.php [NC,L]
+RewriteRule ^delete-service-provider functions/help-desk/gate-pass/service-providers/service-provider-delete.php [NC,L]
+RewriteRule ^service-provider/([0-9]+) pages/help-desk/gate-pass/service-providers/service-provider.php?id=$1 [NC,L]
+
+# EMPLOYEE - GATE PASS -----------------------------------------------------------------------
+RewriteRule ^gate-pass-employees pages/help-desk/gate-pass/employees/employees.php [NC,L]
+RewriteRule ^add-gate-pass-employee pages/help-desk/gate-pass/employees/employee-add.php [NC,L]
+RewriteRule ^submit-add-gate-pass-employee functions/help-desk/gate-pass/employees/employee-add.php [NC,L]
+RewriteRule ^edit-gate-pass-employee/([0-9]+) pages/help-desk/gate-pass/employees/employee-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-gate-pass-employee functions/help-desk/gate-pass/employees/employee-edit.php [NC,L]
+RewriteRule ^gate-pass-employee/([0-9]+) pages/help-desk/gate-pass/employees/employee.php?id=$1 [NC,L]
+RewriteRule ^delete-gate-pass-employee functions/help-desk/gate-pass/employees/employee-delete.php [NC,L]
+RewriteRule ^print-pass-control-employees pages/help-desk/gate-pass/employees/employees-print-export.php?id=0 [NC,L]
+RewriteRule ^export-pass-control-employees pages/help-desk/gate-pass/employees/employees-print-export.php?id=1 [NC,L]
+
+# BOARDROOM - RESERVATION -----------------------------------------------------------------------
+RewriteRule ^boardrooms pages/help-desk/reservations/boardrooms/boardrooms.php [NC,L]
+RewriteRule ^add-boardroom pages/help-desk/reservations/boardrooms/boardroom-add.php [NC,L]
+RewriteRule ^submit-add-boardroom functions/help-desk/reservations/boardrooms/boardroom-add.php [NC,L]
+RewriteRule ^edit-boardroom/([0-9]+) pages/help-desk/reservations/boardrooms/boardroom-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-boardroom functions/help-desk/reservations/boardrooms/boardroom-edit.php [NC,L]
+RewriteRule ^delete-boardroom functions/help-desk/reservations/boardrooms/boardroom-delete.php [NC,L]
+RewriteRule ^boardroom/([0-9]+) pages/help-desk/reservations/boardrooms/boardroom.php?id=$1 [NC,L]
+
+# AMENITIES - RESERVATION -----------------------------------------------------------------------
+RewriteRule ^amenities pages/help-desk/reservations/amenities/amenities.php [NC,L]
+RewriteRule ^add-amenity pages/help-desk/reservations/amenities/amenity-add.php [NC,L]
+RewriteRule ^submit-add-amenity functions/help-desk/reservations/amenities/amenity-add.php [NC,L]
+RewriteRule ^edit-amenity/([0-9]+) pages/help-desk/reservations/amenities/amenity-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-amenity functions/help-desk/reservations/amenities/amenity-edit.php [NC,L]
+RewriteRule ^delete-amenity functions/help-desk/reservations/amenities/amenity-delete.php [NC,L]
+RewriteRule ^amenity/([0-9]+) pages/help-desk/reservations/amenities/amenity.php?id=$1 [NC,L]
+
+# MINUTES OF MEETINGS -----------------------------------------------------------------------
+RewriteRule ^minutes-of-meeting pages/minutes-of-meeting/minutes-of-meeting-list.php [NC,L]
+RewriteRule ^add-minutes-of-meeting pages/minutes-of-meeting/minutes-of-meeting-add.php [NC,L]
+RewriteRule ^submit-add-minutes-of-meeting functions/minutes-of-meeting/minutes-of-meeting-add.php [NC,L]
+RewriteRule ^edit-minutes-of-meeting/([0-9]+) pages/minutes-of-meeting/minutes-of-meeting-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-minutes-of-meeting functions/minutes-of-meeting/minutes-of-meeting-edit.php [NC,L]
+# OPERATION AUDIT -----------------------------------------------------------------------
+RewriteRule ^audits pages/audits/audits.php [NC,L]
+
+# OPERATION - TSA -----------------------------------------------------------------------
+RewriteRule ^operations-audit-tsa-list pages/audits/TSA/audit-tsa-list.php [NC,L]
+RewriteRule ^add-tsa-operations-audit pages/audits/TSA/operation-audit-tsa-add.php [NC,L]
+RewriteRule ^submit-add-tsa-operations-audit functions/audits/TSA/operation-audit-tsa-add.php [NC,L]
+RewriteRule ^edit-tsa-operations-audit/([0-9]+) pages/audits/TSA/operation-audit-tsa-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-tsa-operations-audit functions/audits/TSA/operation-audit-tsa-edit.php [NC,L]
+RewriteRule ^render-tsa-audit functions/audits/TSA/render-tsa.php [NC,L]
+RewriteRule ^tsa-operations-audit/([0-9]+) pages/audits/TSA/operation-audit-tsa.php?id=$1 [NC,L]
+RewriteRule ^delete-operations-audit-tsa functions/audits/TSA/operations-audit-tsa-delete.php [NC,L]
+RewriteRule ^delete-tsa-operations-audit-row functions/audits/TSA/operations-audit-delete-row.php [NC,L]
+
+RewriteRule ^operations-audit-approve functions/audits/operations-audit-update-status.php [NC,L]
+
+# OPERATION - PAD ------------------------------------------------------------------------
+RewriteRule ^operation-audit-pad-categories pages/audits/PAD/operation-audit-pad-categories.php [NC,L]
+RewriteRule ^operation-audit-pad-list pages/audits/PAD/operation-audit-pad-list.php [NC,L]
+RewriteRule ^add-pad-operation-audit pages/audits/PAD/operation-audit-pad-add.php [NC,L]
+RewriteRule ^submit-add-pad-operation-audit functions/audits/PAD/operation-audit-pad-add.php [NC,L]
+RewriteRule ^edit-pad-operation-audit/([0-9]+) pages/audits/PAD/operation-audit-pad-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-pad-operation-audit functions/audits/PAD/operation-audit-pad-edit.php [NC,L]
+
+# OPERATION - PAD - PCC ------------------------------------------------------------------
+RewriteRule ^add-pad-pcc-operation-audit pages/audits/PAD/PCC/operation-audit-pad-pcc-add.php [NC,L]
+RewriteRule ^submit-add-pad-pcc-operation-audit functions/audits/PAD/PCC/operation-audit-pad-pcc-add.php [NC,L]
+RewriteRule ^edit-pad-pcc-operation-audit/([0-9]+) pages/audits/PAD/PCC/operation-audit-pad-pcc-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-pad-pcc-operation-audit functions/audits/PAD/PCC/operation-audit-pad-pcc-edit.php [NC,L]
+
+# OPERATION - PAD - PCV ------------------------------------------------------------------
+RewriteRule ^add-pad-pcv-operation-audit pages/audits/PAD/PCV/operation-audit-pad-pcv-add.php [NC,L]
+RewriteRule ^submit-add-pad-pcv-operation-audit functions/audits/PAD/PCV/operation-audit-pad-pcv-add.php [NC,L]
+RewriteRule ^edit-pad-pcv-operation-audit/([0-9]+) pages/audits/PAD/PCV/operation-audit-pad-pcv-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-pad-pcv-operation-audit functions/audits/PAD/PCV/operation-audit-pad-pcv-edit.php [NC,L]
+
+# OPERATION - IAD ------------------------------------------------------------------------
+RewriteRule ^operations-audit-iad-categories pages/audits/IAD/operation-audit-iad-categories.php [NC,L]
+
+# OPERATION - IAD - ON HAND COLLECTION ---------------------------------------------------
+RewriteRule ^count-sheet-list pages/audits/IAD/on-hand-collection/count-sheet-list.php [NC,L]
+RewriteRule ^add-count-sheet pages/audits/IAD/on-hand-collection/count-sheet-add.php [NC,L]
+RewriteRule ^submit-add-count-sheet functions/audits/IAD/on-hand-collection/count-sheet-add.php [NC,L]
+RewriteRule ^edit-count-sheet/([0-9]+) pages/audits/IAD/on-hand-collection/count-sheet-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-count-sheet functions/audits/IAD/on-hand-collection/count-sheet-edit.php [NC,L]
+RewriteRule ^delete-undeposited-collection-row functions/audits/IAD/on-hand-collection/count-sheet-undeposited-delete-row.php [NC,L]
+RewriteRule ^count-sheet/([0-9]+) pages/audits/IAD/on-hand-collection/count-sheet.php?id=$1 [NC,L]
+RewriteRule ^update-count-sheet-status functions/audits/IAD/on-hand-collection/count-sheet-update-status.php [NC,L]
+
+# OPERATION - IAD - PETTY CASH -----------------------------------------------------------
+RewriteRule ^add-fund-count-sheet pages/audits/IAD/petty-cash/fund-count-sheet-add.php [NC,L]
+RewriteRule ^submit-add-fund-count-sheet functions/audits/IAD/petty-cash/fund-count-sheet-add.php [NC,L]
+RewriteRule ^fund-count-sheet-list pages/audits/IAD/petty-cash/fund-count-sheet-list.php [NC,L]
+RewriteRule ^edit-fund-count-sheet/([0-9]+) pages/audits/IAD/petty-cash/fund-count-sheet-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-fund-count-sheet functions/audits/IAD/petty-cash/fund-count-sheet-edit.php [NC,L]
+RewriteRule ^delete-advances-row functions/audits/IAD/petty-cash/fund-count-sheet-advances-delete-row.php [NC,L]
+RewriteRule ^delete-unreplenished-voucher-row functions/audits/IAD/petty-cash/fund-count-sheet-unreplenished-vouchers-delete-row.php [NC,L]
+RewriteRule ^fund-count-sheet/([0-9]+) pages/audits/IAD/petty-cash/fund-count-sheet.php?id=$1 [NC,L]
+RewriteRule ^update-fund-count-sheet-status functions/audits/IAD/petty-cash/fund-count-sheet-update-status.php [NC,L]
+
+# OPERATION - IAD - CORRECTIVE ACTION PLAN --------------------------------
+RewriteRule ^corrective-action-plan-list pages/audits/IAD/corrective-action-plan/corrective-action-plan-list.php [NC,L]
+RewriteRule ^add-corrective-action-plan pages/audits/IAD/corrective-action-plan/corrective-action-plan-add.php [NC,L]
+RewriteRule ^submit-add-corrective-action-plan functions/audits/IAD/corrective-action-plan/corrective-action-plan-add.php [NC,L]
+RewriteRule ^edit-corrective-action-plan/([0-9]+) pages/audits/IAD/corrective-action-plan/corrective-action-plan-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-corrective-action-plan functions/audits/IAD/corrective-action-plan/corrective-action-plan-edit.php [NC,L]
+RewriteRule ^delete-corrective-action-plan-row functions/audits/IAD/corrective-action-plan/corrective-action-plan-delete-row.php [NC,L]
+
+# PERMITS AND LICENCES -------------------------------------------------------
+RewriteRule ^permits-and-licences-list pages/permits-and-licences/permit-and-licences-list.php [NC,L]
+RewriteRule ^add-permits-and-licences pages/permits-and-licences/permit-and-licences-add.php?id=0 [NC,L]
+RewriteRule ^edit-permits-and-licences/([0-9]+) pages/permits-and-licences/permit-and-licences-add.php?id=$1 [NC,L]
+RewriteRule ^submit-add-permits-and-licences functions/permit-and-licences/permit-and-licences-add.php [NC,L]
+
+# PRE OPERATION - OTHER TASK --------------------------------------------------------
+RewriteRule ^add-activities-pre-operation-other-task/([0-9]+) pages/other-tasks/pre-operation-other-tasks/other-task-activities.php?id=$1 [NC,L]
+RewriteRule ^submit-add-activities-pre-operation-other-task functions/other-tasks/pre-operation-other-tasks/other-task-activities-add.php [NC,L]
+RewriteRule ^pre-operation-other-tasks pages/other-tasks/pre-operation-other-tasks/other-tasks.php [NC,L]
+RewriteRule ^add-pre-operation-other-task pages/other-tasks/pre-operation-other-tasks/other-task-add.php [NC,L]
+RewriteRule ^submit-add-pre-operation-other-task functions/other-tasks/pre-operation-other-tasks/other-task-add.php [NC,L]
+RewriteRule ^edit-pre-operation-other-task/([0-9]+) pages/other-tasks/pre-operation-other-tasks/other-task-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-pre-operation-other-task functions/other-tasks/pre-operation-other-tasks/other-task-edit.php [NC,L]
+RewriteRule ^delete-pre-operation-other-task functions/other-tasks/pre-operation-other-tasks/other-task-delete.php [NC,L]
+RewriteRule ^load-other-task-activities functions/other-tasks/other-task-load-activities.php [NC,L]
+RewriteRule ^save-action-taken functions/other-tasks/pre-operation-other-tasks/other-task-save-action-taken.php [NC,L]
+RewriteRule ^render-other-task-comments functions/other-tasks/other-task-render-comments.php [NC,L]
+
+# COMMENT
+RewriteRule ^add-comment functions/comments/comment-add.php [NC,L]
+
+# NOTIFICATIONS -----------------------------------------------------------------
+RewriteRule ^notifications pages/notifications/notifications.php [NC,L]
+
+# PROPOSALS ---------------------------------------------------------------------
+RewriteRule ^proposal-category pages/proposal/proposal-categories.php [NC,L]
+#ESD
+RewriteRule ^esd-proposals pages/proposal/ESD/proposal-list.php [NC,L]
+RewriteRule ^edit-esd-proposal/([0-9]+) pages/proposal/ESD/proposal-edit.php?id=$1 [NC,L]
+RewriteRule ^save-esd-proposal-letter functions/proposal/ESD/proposal-save.php [NC,L]
+RewriteRule ^submit-add-esd-generic-proposal functions/proposal/ESD/generic-proposal-add.php [NC,L]
+RewriteRule ^submit-add-esd-tsa-proposal functions/proposal/ESD/tsa-add.php [NC,L]
+RewriteRule ^submit-edit-esd-tsa-proposal functions/proposal/ESD/tsa-edit.php [NC,L]
+
+RewriteRule ^esd-proposal-types pages/proposal/ESD/proposal-esd-types.php [NC,L]
+RewriteRule ^esd-generic-proposal-print/([0-9]+) functions/proposal/ESD/generic-proposal-print.php?id=$1 [NC,L]
+RewriteRule ^esd-generic-tsa-proposal-print/([0-9]+) functions/proposal/ESD/generic-tsa-proposal-print.php?id=$1 [NC,L]
+RewriteRule ^esd-generic-list pages/proposal/ESD/proposal-generic-esd-list.php [NC,L]
+RewriteRule ^esd-generic-add pages/proposal/ESD/proposal-generic-esd-add.php [NC,L]
+RewriteRule ^edit-esd-generic-proposal/([0-9]+) pages/proposal/ESD/proposal-generic-esd-edit.php?id=$1 [NC,L]
+RewriteRule ^esd-generic-proposal/([0-9]+) pages/proposal/ESD/proposal-generic-esd.php?id=$1 [NC,L]
+RewriteRule ^update-esd-proposal-status functions/proposal/ESD/generic-proposal-update-status.php [NC,L]
+RewriteRule ^submit-edit-esd-generic-proposal functions/proposal/ESD/generic-proposal-edit.php [NC,L]
+
+
+# RewriteRule ^esd-pmcs-list pages/proposal/ESD/proposal-pmcs-esd-list.php [NC,L]
+# RewriteRule ^esd-pmcs-add pages/proposal/ESD/proposal-pmcs-add.php [NC,L]
+RewriteRule ^esd-tsa-proposal-add pages/proposal/ESD/proposal-tsa-add.php [NC,L]
+RewriteRule ^esd-tsa-list pages/proposal/ESD/proposal-tsa-list.php [NC,L]
+RewriteRule ^esd-tsa-edit/([0-9]+) pages/proposal/ESD/proposal-tsa-edit.php?id=$1 [NC,L]
+
+
+RewriteRule ^submit-add-esd-etspqa-proposa functions/proposal/ESD/etspqa-add.php [NC,L]
+RewriteRule ^esd-etspqa-proposal-add pages/proposal/ESD/proposal-etspqa-add.php [NC,L]
+RewriteRule ^esd-etspqa-list pages/proposal/ESD/proposal-etspqa-list.php [NC,L]
+RewriteRule ^esd-etspqa-edit/([0-9]+) pages/proposal/ESD/proposal-etspqa-edit.php?id=$1 [NC,L]
+
+RewriteRule ^esd-engineering-svcs-types pages/proposal/ESD/proposal-esd-engineering-services-types.php [NC,L]
+
+# ESD - AJAX
+RewriteRule ^ajax/esd-generic-proposal-get-values functions/proposal/ESD/ajax/esd-generic-proposal-get-values.php [NC,L]
+
+# BDMD PROPOSAL ------------------------------------------------------------
+
+RewriteRule ^bdmd-proposal-types pages/proposal/BDMD/proposal-bdmd-types.php [NC,L]
+RewriteRule ^add-bdmd-introductory-letter-proposal pages/proposal/BDMD/proposal-introductory-letter-add.php [NC,L]
+RewriteRule ^edit-bdmd-introductory-letter-proposal/([0-9]+) pages/proposal/BDMD/proposal-introductory-letter-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-add-bdd-introductory-letter-proposal functions/proposal/BDMD/proposal-introductory-letter-add.php [NC,L]
+RewriteRule ^bdmd-introductory-letters-list pages/proposal/BDMD/proposal-introductory-letter-list.php [NC,L]
+RewriteRule ^print-bdmd-introductory-letter-proposal/([0-9]+) functions/proposal/BDMD/proposal-introductory-letter-print.php?id=$1 [NC,L]
+
+RewriteRule ^bdmd-proposal-pmcs-add pages/proposal/BDMD/proposal-pmcs-add.php [NC,L]
+
+# LABOR COST -------------------------------------------------------------------
+RewriteRule ^labor-cost-category pages/proposal/BDMD/labor-cost/labor-cost-category.php [NC,L]
+RewriteRule ^get-labor-cost-position-data functions/proposal/BDMD/labor-cost/labor-cost-get-position-data.php [NC,L]
+RewriteRule ^preview-labor-cost/([0-9]+) pages/proposal/BDMD/labor-cost/labor-cost-preview.php?id=$1 [NC,L]
+RewriteRule ^preview-labor-cost-list pages/proposal/BDMD/labor-cost/labor-cost-preview-list.php [NC,L]
+# DIRECT ------------------------------
+RewriteRule ^labor-cost-list pages/proposal/BDMD/labor-cost/direct/labor-cost-list.php [NC,L]
+RewriteRule ^add-labor-cost pages/proposal/BDMD/labor-cost/direct/labor-cost-add.php [NC,L]
+RewriteRule ^submit-add-labor-cost functions/proposal/BDMD/labor-cost/direct/labor-cost-add.php [NC,L]
+RewriteRule ^edit-labor-cost/([0-9]+) pages/proposal/BDMD/labor-cost/direct/labor-cost-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-labor-cost functions/proposal/BDMD/labor-cost/direct/labor-cost-edit.php [NC,L]
+RewriteRule ^labor-cost/([0-9]+) pages/proposal/BDMD/labor-cost/direct/labor-cost.php?id=$1 [NC,L]
+RewriteRule ^labor-cost-new-version/([0-9]+) pages/proposal/BDMD/labor-cost/direct/labor-cost-add-version.php?id=$1 [NC,L]
+RewriteRule ^update-labor-cost-status functions/proposal/BDMD/labor-cost/direct/labor-cost-update-status.php [NC,L]
+RewriteRule ^delete-labor-cost-row functions/proposal/BDMD/labor-cost/direct/labor-cost-delete-row.php [NC,L]
+# OUTSOURCE ----------------------------
+RewriteRule ^outsource-labor-cost-list pages/proposal/BDMD/labor-cost/outsource/labor-cost-outsource-list.php [NC,L]
+RewriteRule ^add-outsource-labor-cost pages/proposal/BDMD/labor-cost/outsource/labor-cost-outsource-add.php [NC,L]
+RewriteRule ^submit-add-outsource-labor-cost functions/proposal/BDMD/labor-cost/outsource/labor-cost-outsource-add.php [NC,L]
+RewriteRule ^edit-outsource-labor-cost/([0-9]+) pages/proposal/BDMD/labor-cost/outsource/labor-cost-outsource-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-outsource-labor-cost functions/proposal/BDMD/labor-cost/outsource/labor-cost-outsource-edit.php [NC,L]
+RewriteRule ^outsource-labor-cost/([0-9]+) pages/proposal/BDMD/labor-cost/outsource/labor-cost-outsource.php?id=$1 [NC,L]
+RewriteRule ^new-labor-cost-outsource-version/([0-9]+) pages/proposal/BDMD/labor-cost/outsource/labor-cost-outsource-add-version.php?id=$1 [NC,L]
+RewriteRule ^update-outsource-labor-cost-status functions/proposal/BDMD/labor-cost/outsource/labor-cost-outsource-update-status.php [NC,L]
+RewriteRule ^delete-labor-cost-outsource-row functions/proposal/BDMD/labor-cost/outsource/labor-cost-outsource-delete-row.php [NC,L]
+
+# POD PROPOSAL -------------------------------------------------------------
+RewriteRule ^pod-proposals pages/proposal/POD/proposal-list.php [NC,L]
+RewriteRule ^pod-proposal-types pages/proposal/POD/proposal-pod-types.php [NC,L]
+RewriteRule ^add-pod-introductory-letter-proposal pages/proposal/POD/proposal-introductory-letter-add.php [NC,L]
+
+# INCIDENT REPORT ---------------------------------------------------------------------
+RewriteRule ^incident-reports pages/incident-report/incident-reports.php [NC,L]
+RewriteRule ^add-incident-report pages/incident-report/incident-report-add.php [NC,L]
+RewriteRule ^submit-add-incident-report functions/incident-report/incident-report-add.php [NC,L]
+
+# POST OPERATION AUDIT -------------------------------------------------------
+RewriteRule ^turnover-audits pages/post-operations/turnover-audit/turnover-audit-tsa-list.php [NC,L]
+RewriteRule ^turnover-audit-tsa-list pages/post-operations/turnover-audit/turnover-audit-tsa-list.php [NC,L]
+RewriteRule ^add-tsa-turnover-audit pages/post-operations/turnover-audit/turnover-audit-tsa-add.php [NC,L]
+RewriteRule ^turnover-audit-tsa/([0-9]+) pages/post-operations/turnover-audit/turnover-audit-tsa.php?id=$1 [NC,L]
+
+# POST OPERATION AUDIT TSA -----------------------------------------------------------
+RewriteRule ^submit-add-tsa-turnover-audit functions/post-operations/audits/TSA/turnover-audit-add.php [NC,L]
+
+# USER VISITOR GATE PASS - USER PORTAL ------------------------------------------------------
+RewriteRule ^user-visitors pages/user-portal/gate-pass/visitors/visitors.php [NC,L]
+RewriteRule ^user-visitor/([0-9]+) pages/user-portal/gate-pass/visitors/visitor.php?id=$1 [NC,L]
+RewriteRule ^user-visitor-add pages/user-portal/gate-pass/visitors/visitor-add.php [NC,L]
+RewriteRule ^submit-user-visitor-add functions/user-portal/gate-pass/visitors/visitor-add.php [NC,L]
+
+# CLUSTERS -----------------------------------------------------------------------------------
+RewriteRule ^clusters pages/clusters/clusters.php [NC,L]
+RewriteRule ^add-cluster pages/clusters/cluster-add.php [NC,L]
+RewriteRule ^submit-add-cluster functions/clusters/cluster-add.php [NC,L]
+RewriteRule ^edit-cluster/([0-9]+) pages/clusters/cluster-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-cluster functions/clusters/cluster-edit.php [NC,L]
+
+# CALIBRATION ---------------------------------------------------------------------------
+RewriteRule ^calibration-category pages/tasks/calibrations/calibration-category.php [NC,L]
+
+# CALIBRATION MONITORING ------------------------------------------------------------------------
+RewriteRule ^calibration-list pages/tasks/calibrations/calibration-monitoring/calibration-list.php [NC,L]
+RewriteRule ^add-calibration pages/tasks/calibrations/calibration-monitoring/calibration-add.php [NC,L]
+RewriteRule ^submit-add-calibration functions/tasks/calibrations/calibration-monitoring/calibration-add.php [NC,L]
+RewriteRule ^edit-calibration/([0-9]+) pages/tasks/calibrations/calibration-monitoring/calibration-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-calibration-monitoring functions/tasks/calibrations/calibration-monitoring/calibration-edit.php [NC,L]
+
+# CALIBRATION PLAN ------------------------------------------------------------------------
+RewriteRule ^calibration-plans pages/tasks/calibrations/calibration-plan/calibration-plans.php [NC,L]
+RewriteRule ^calibration-plan-add pages/tasks/calibrations/calibration-plan/calibration-plan-add.php [NC,L]
+RewriteRule ^submit-calibration-plan-add functions/tasks/calibrations/calibration-plan/calibration-add.php [NC,L]
+RewriteRule ^calibration-plan-edit/([0-9]+) pages/tasks/calibrations/calibration-plan/calibration-plan-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-calibration-plan-edit functions/tasks/calibrations/calibration-plan/calibration-plan-edit.php [NC,L]
+
+# MANAGEMENT REPORT -----------------------------------------------------------------------
+RewriteRule ^add-management-report pages/tasks/management-report/management-report-add.php [NC,L]
+
+# CONTRACT TERMINATED --------------------------------------------------------------
+RewriteRule ^contract-terminated-list pages/contract/contracts-terminated/contract-list.php [NC,L]
+RewriteRule ^contract-terminated/([0-9]+) pages/contract/contracts-terminated/contract.php?id=$1 [NC,L]
+
+# BILLING ADVICE -------------------------------------------------------------------
+RewriteRule ^add-billing-advice pages/billing-advice/billing-advice-add.php [NC,L]
+
+# MAIL LOGS -------------------------------------------------------------------
+RewriteRule ^mail-logs pages/help-desk/gate-pass/mail-logs/mail-logs.php [NC,L]
+RewriteRule ^add-mail-log pages/help-desk/gate-pass/mail-logs/mail-log-add.php [NC,L]
+RewriteRule ^submit-add-mail-log functions/help-desk/gate-pass/mail-logs/mail-log-add.php [NC,L]
+RewriteRule ^edit-mail-log/([0-9]+) pages/help-desk/gate-pass/mail-logs/mail-log-edit.php?id=$1 [NC,L]
+RewriteRule ^submit-edit-mail-log functions/help-desk/gate-pass/mail-logs/mail-log-edit.php [NC,L]
+RewriteRule ^delete-mail-log functions/help-desk/gate-pass/mail-logs/mail-log-delete.php [NC,L]
+RewriteRule ^mail-log/([0-9]+) pages/help-desk/gate-pass/mail-logs/mail-log.php?id=$1 [NC,L]
+
+# PHP OFFICE --------------------------
+RewriteRule ^phpoffice functions/proposal/ESD/generic-proposal-print.php [NC,L]
+
+# Property Handbook --------------------
+RewriteRule ^property-handbook assets/docxt/property-handbook.pdf [NC,L]
+
+# DEPOSIT IN TRANSIT -------------------------------------------------------------------
+RewriteRule ^deposit-in-transit-list pages/tasks/collections/deposit-in-transit/deposit-in-transit-list.php [NC,L]

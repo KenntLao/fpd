@@ -1,0 +1,9 @@
+.property-card {
+	border-left: 15px solid #0069d9;
+}
+.sub-property-card {
+	border-left: 15px solid #6c757d;
+}
+.table-header-center th{
+	text-align: center;
+}

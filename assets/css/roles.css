@@ -1,0 +1,10 @@
+#permissions {
+	display: inline-block;
+	float: left;
+	height: 1px;
+	margin-top: -10px;
+	opacity: 0;
+}
+.permissions-list {
+	overflow: hidden;
+}

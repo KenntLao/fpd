@@ -1,0 +1,27 @@
+.header-bg-color{
+	background-color: #dc3545;
+}
+.hover-bgcard-red:hover{
+		background-color: #dc3545;
+}
+
+.hover-icon-white{
+	color: #343a40;
+}
+.hover-icon-white:hover{
+	color: white;
+	transition: 0.3s ease-out;
+}
+
+.text-hover-red p{
+		color: #343a40;
+}
+.text-hover-red:hover p{
+		color: #dc3545;
+}
+.footer {
+  background-color: #fff;
+  border-top: 1px solid #dee2e6;
+  color: #869099;
+  padding: 1rem;
+}

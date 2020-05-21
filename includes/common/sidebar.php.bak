@@ -1,0 +1,407 @@
+<aside class<aside class="main-sidebar sidebar-dark-white bg-danger elevation-4">
+  
+    <!-- LOGO -->
+    <a href="../../index3.html" class=" border-0">
+        <div class="container-fluid">
+            <div class="row">
+                <img src="/assets/images/Company Logo.png" alt="Raianseier" class="brand-image w30p elevation-3 mx-auto">
+            </div>
+        </div>
+    </a>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-3">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        
+                <!-- DASHBOARD -->
+                <li class="nav-item ">
+                    <a href="/dashboard" class="nav-link<?php if($page == 'dashboard') { echo ' active'; } ?>">
+                        <i class="nav-icon fas fa-list-ul"></i>
+                        <p><?php echo renderLang($dashboard_dashboard); ?></p>
+                    </a>
+                </li>
+
+                <!-- MY TASKS -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-edit nav-icon"></i>
+                        <p>My Tasks</p>
+                    </a>
+                </li>
+
+                <!-- CALENDAR -->
+                <li class="nav-item">
+                    <a href="/calendar" class="nav-link <?php echo $page == 'calendar' ? 'active' : ''; ?>">
+                        <i class="far fa-calendar-alt nav-icon"></i>
+                        <p>Calendar</p>
+                    </a>
+                </li>
+
+                <li class="nav-header font-weight-bold">Pre Operations</li>
+
+                <!-- CALENDAR -->
+                <li class="nav-item">
+                    <a href="/prospecting" class="nav-link<?php echo $page == 'prospecting' ? ' active' : '' ?>">
+                        <i class="fas fa-binoculars nav-icon"></i>
+                        <p><?php echo renderLang($prospecting); ?></p>
+                    </a>
+                </li>
+        
+                <!-- NOTICE TO PROCEED -->
+                <li class="nav-item">
+                    <a href="/notice-to-proceed" class="nav-link<?php echo $page == 'notice-to-proceed' ? ' active' : '' ?>">
+                        <i class="fas fa-file-signature nav-icon"></i>
+                        <p><?php echo renderLang($notice_to_proceed); ?></p>
+                    </a>
+                </li>
+
+                <!-- CONTRACT -->
+                <li class="nav-item">
+                    <a href="/contract" class="nav-link<?php echo $page == 'contract' ? ' active' : '' ?>">
+                        <i class="fas fa-file-contract nav-icon"></i>
+                        <p><?php echo renderLang($contract); ?></p>
+                    </a>
+                </li>
+
+                <!-- DOWNPAYMENT -->
+                <li class="nav-item">
+                    <a href="/downpayments" class="nav-link<?php echo $page == 'downpayments' ? ' active' : '' ?>">
+                        <i class="fas fa-coins nav-icon"></i>
+                        <p><?php echo renderLang($downpayment); ?></p>
+                    </a>
+                </li>
+
+                <!-- PRF -->
+                <li class="nav-item">
+                    <a href="/prf" class="nav-link<?php echo $page == 'prf' ? ' active' : '' ?>">
+                        <i class="fas fa-people-carry nav-icon"></i>
+                        <p><?php echo renderLang($prf); ?></p>
+                    </a>
+                </li>
+
+                <!-- PRE OPERATION AUDIT -->
+                <li class="nav-item">
+                    <a href="/pre-operation-audit-checklist" class="nav-link<?php echo $page == 'pre-operation-audit' ? ' active' : ''; ?>">
+                        <i class="fas fa-clipboard-check nav-icon"></i>
+                        <p><?php echo renderLang($pre_operation_audit); ?></p>
+                    </a>
+                </li>
+
+                <!-- 30-60-90 DAYS -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="far fa-calendar-alt nav-icon"></i>
+                        <p>30-60-90 Days</p>
+                    </a>
+                </li>
+
+                <li class="nav-item has-treeview <?php echo $page == 'clients' || $page == "properties" || $page == 'unit-add-eu' || $page == 'employee-timesheet' || $page == 'unit-owners' || $page == 'tenants' || $page == 'occupants' || $page == 'employees' || $page == 'departments' ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-hands"></i>
+                        <p>Property Profile
+                        <i class="fas fa-angle-left right"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview pl-3">
+
+                        <?php if(checkPermission('clients')) { ?>
+                        <!-- CLIENTS -->
+                        <li class="nav-item">
+                            <a href="/clients" class="nav-link<?php if($page == 'clients') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($clients_clients); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+
+                        <?php if(checkPermission('properties')) { ?>
+                        <!-- PROPERTIES -->
+                        <li class="nav-item">
+                            <a href="/properties" class="nav-link<?php if($page == 'properties') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($properties_properties); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+                    
+                        <?php if(checkPermission('unit-add-eu')) { ?>
+                        <!-- ADD UNIT -->
+                        <li class="nav-item">
+                            <a href="/add-unit-eu" class="nav-link<?php if($page == 'unit-add-eu') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($units_add_unit); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+        
+                        <?php if($_SESSION['sys_account_mode'] == 'employee') { ?>
+                        <!-- TIME SHEET -->
+                        <li class="nav-item">
+                            <a href="/employee-timesheet/<?php echo $_SESSION['sys_id'] ?>" class="nav-link<?php if($page == 'employee-timesheet') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($employees_time_sheet); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+
+                        <?php if(checkPermission('unit-owners')) { ?>
+                        <!-- UNIT OWNERS -->
+                        <li class="nav-item">
+                            <a href="/unit-owners" class="nav-link<?php if($page == 'unit-owners') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($unit_owners_unit_owners); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+
+                        <?php if(checkPermission('tenants')) { ?>
+                        <!-- TENANTS -->
+                        <li class="nav-item">
+                            <a href="/tenants" class="nav-link<?php if($page == 'tenants') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($tenants_tenants); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+
+                        <?php if(checkPermission('occupants')) { ?>
+                        <!-- OCCUPANTS -->
+                        <li class="nav-item">
+                            <a href="/occupants" class="nav-link<?php if($page == 'occupants') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($occupants_occupants); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+        
+                        <?php if(checkPermission('employees')) { ?>
+                        <!-- EMPLOYEES -->
+                        <li class="nav-item">
+                            <a href="/employees" class="nav-link<?php if($page == 'employees') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($employees_employees); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+
+                        <?php if(checkPermission('departments')) { ?>
+                        <!-- DEPARTMENT -->
+                        <li class="nav-item">
+                            <a href="/departments" class="nav-link<?php if($page == 'departments') { echo ' active'; } ?>">
+                                <p><?php echo renderLang($departments_departments); ?></p>
+                            </a>
+                        </li>
+                        <?php } ?>
+
+                    </ul>
+                </li>
+        
+                <li class="nav-header font-weight-bold">Operations</li>
+
+                <li class="nav-item has-treeview <?php echo $page == 'preventive-maintenance' || $page == 'job-order' || $page == 'inspections' || $page == 'work-orders' || $page == 'daily-collection' ? 'menu-open' : ''; ?>">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tasks"></i>
+                        <p>
+                            Task
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview pl-3">
+                        <li class="nav-item">
+                            <a href="/inspections" class="nav-link <?php echo $page == 'inspections' ? 'active' : ''; ?>">
+                                <p><?php echo renderLang($inspection); ?></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/preventive-maintenances" class="nav-link <?php echo $page == 'preventive-maintenance' ? 'active' : ''; ?>">
+                                <p><?php echo renderLang($preventive_maintenance); ?></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/job-orders" class="nav-link <?php echo $page == 'job-order' ? 'active' : ''; ?>">
+                                <p><?php echo renderLang($job_orders_job_order); ?></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/work-orders" class="nav-link <?php echo $page == 'work-orders' ? 'active' : ''; ?>">
+                                <p><?php echo renderLang($work_order); ?></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/add-daily-collection" class="nav-link <?php echo $page == 'daily-collection' ? 'active' : ''; ?>">
+                                <p>Daily Collection</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/inline.html" class="nav-link">
+                                <p>Audit</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/flot.html" class="nav-link">
+                                <p>Communications Management</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/inline.html" class="nav-link">
+                                <p>Permits & Licences</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/chartjs.html" class="nav-link">
+                                <p>Filling System</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-file-alt"></i>
+                        <p>
+                            Document Management
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview pl-3">
+                        <li class="nav-item">
+                            <a href="pages/charts/chartjs.html" class="nav-link">
+                                <p>201 Files</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/flot.html" class="nav-link">
+                                <p>Minutes of Meeting</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/inline.html" class="nav-link">
+                                <p>Board & AGMM</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/chartjs.html" class="nav-link">
+                                <p>Announcement/Memos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/flot.html" class="nav-link">
+                                <p>RSVP</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-header font-weight-bold">Post Operations</li>
+
+                <!-- COLLECT -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-hand-holding-usd nav-icon"></i>
+                        <p>Collect</p>
+                    </a>
+                </li>
+
+                <!-- TURNOVER AUDIT -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-sign-in-alt nav-icon"></i>
+                        <p>Turnover Audit</p>
+                    </a>
+                </li>
+
+                <li class="nav-header font-weight-bold">Report</li>
+
+              <!-- ACCOOUNTING -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-calculator nav-icon"></i>
+                        <p>Accounting</p>
+                    </a>
+                </li>
+
+                <!-- ADMIN -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="far fa-user-circle nav-icon"></i>
+                        <p>Admin</p>
+                    </a>
+                </li>
+
+                <li class="nav-header font-weight-bold">Help Desk</li>
+
+              <!-- COMPLAINTS -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-exclamation-circle nav-icon"></i>
+                        <p>Complaint</p>
+                    </a>
+                </li>
+
+                <!-- GATE PASS -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-ticket-alt nav-icon"></i>
+                        <p>Gate Pass</p>
+                    </a>
+                </li>
+
+                <!-- RESERVATION -->
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="far fa-calendar-minus nav-icon"></i>
+                        <p>Reservation</p>
+                    </a>
+                </li>
+
+                 <li class="nav-header font-weight-bold">Market Place</li>
+
+                 <li class="nav-header font-weight-bold">System</li>
+        
+                <?php if(checkPermission('users')) { ?>
+                <!-- USERS -->
+                <li class="nav-item">
+                    <a href="/users" class="nav-link<?php if($page == 'users') { echo ' active'; } ?>">
+                        <i class="nav-icon fas fa-user-secret"></i>
+                        <p><?php echo renderLang($users_users); ?></p>
+                    </a>
+                </li>
+                <?php } ?>
+
+                <?php if(checkPermission('roles')) { ?>
+                <!-- ROLES -->
+                <li class="nav-item">
+                    <a href="/roles" class="nav-link<?php if($page == 'roles') { echo ' active'; } ?>">
+                        <i class="nav-icon far fa-id-badge"></i>
+                        <p><?php echo renderLang($roles_roles); ?></p>
+                    </a>
+                </li>
+                <?php } ?>
+        
+                <?php if(checkPermission('system-log')) { ?>
+                <!-- ROLES -->
+                <li class="nav-item">
+                    <a href="/system-log" class="nav-link<?php if($page == 'system-log') { echo ' active'; } ?>">
+                        <i class="nav-icon fa fa-align-left"></i>
+                        <p><?php echo renderLang($system_log_title); ?></p>
+                    </a>
+                </li>
+                <?php } ?>
+
+            </ul>
+            <!-- /.sidebar-menu -->
+
+
+            <!-- SIDEBAR PROFILE -->
+            <div class="relative-bottom" >	
+                <div class="user-panel mb-5 pt-3 d-flex border-0">
+                    <div class="image">
+                        <img src="<?php echo $_SESSION['sys_photo']; ?>" class="img-circle elevation-4" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="/profile" class="d-block"><?php echo $_SESSION['sys_fullname']; ?></a>
+                        <p class="mb-0">admin</p>
+                    </div>
+                </div>	
+            </div>
+
+		</nav>
+        
+	</div>
+	<!-- /.sidebar -->
+</aside>

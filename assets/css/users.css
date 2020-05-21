@@ -1,0 +1,19 @@
+#role_ids {
+	display: inline-block;
+	float: left;
+	height: 1px;
+	margin-top: -10px;
+	opacity: 0;
+}
+.roles-list {
+	margin: 0 0 1rem;
+	padding: 0;
+}
+.roles-list li {
+	display: inline;
+	margin: 0 .5rem .5rem 0;
+	padding: 0;
+	text-align: left;
+	width: auto;
+	list-style: none;
+}
