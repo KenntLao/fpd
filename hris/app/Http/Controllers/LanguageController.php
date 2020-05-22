@@ -25,7 +25,7 @@ class LanguageController extends Controller
             $language->name = request('name');
             $language->description = request('description');
             $language->save();
-            return redirect('/pages/admin/qualifications/languages/index')->with('success', 'Language successfully added!');
+            return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -47,7 +47,7 @@ class LanguageController extends Controller
             $language->name = request('name');
             $language->description = request('description');
             $language->update();
-            return redirect('/pages/admin/qualifications/languages/index')->with('success', 'Language successfully updated!');
+            return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -56,7 +56,7 @@ class LanguageController extends Controller
     public function destroy(hris_languages $language)
     {
         $language->delete();
-        return redirect('/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');
+        return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');
     }
 
     protected function validatedData() 

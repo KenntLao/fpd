@@ -27,7 +27,7 @@ class SkillController extends Controller
             $skill->name = request('name');
             $skill->description = request('description');
             $skill->save();
-            return redirect('/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully added!');
+            return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -49,7 +49,7 @@ class SkillController extends Controller
             $skill->name = request('name');
             $skill->description = request('description');
             $skill->update();
-            return redirect('/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully updated!');
+            return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -58,7 +58,7 @@ class SkillController extends Controller
     public function destroy(hris_skills $skill)
     {
         $skill->delete();
-        return redirect('/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully deleted!');
+        return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully deleted!');
     }
 
     protected function validatedData() 

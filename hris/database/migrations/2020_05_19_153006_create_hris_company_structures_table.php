@@ -18,9 +18,9 @@ class CreateHrisCompanyStructuresTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('details');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->string('type');
-            $table->string('country');
+            $table->string('country')->nullable();
             $table->string('timezone');
             $table->string('parent_structure');
         });

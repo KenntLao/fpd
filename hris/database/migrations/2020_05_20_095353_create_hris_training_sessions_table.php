@@ -18,13 +18,13 @@ class CreateHrisTrainingSessionsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('course_id');
-            $table->string('details');
+            $table->string('details')->nullable();
             $table->dateTime('scheduled_time');
-            $table->date('assignment_due_date');
+            $table->date('assignment_due_date')->nullable();
             $table->string('delivery_method');
-            $table->string('delivery_location');
+            $table->string('delivery_location')->nullable();
             $table->string('attendance_type');
-            $table->string('attachment');
+            $table->string('attachment')->nullable();
             $table->string('training_cert_required');
         });
     }
