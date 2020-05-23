@@ -25,7 +25,7 @@ class EmploymentStatusController extends Controller
             $employmentStatus->name = request('name');
             $employmentStatus->description = request('description');
             $employmentStatus->save();
-            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully added!');
+            return redirect('/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -47,7 +47,7 @@ class EmploymentStatusController extends Controller
             $employmentStatus->name = request('name');
             $employmentStatus->description = request('description');
             $employmentStatus->update();
-            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully added!');
+            return redirect('/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -56,7 +56,7 @@ class EmploymentStatusController extends Controller
     public function destroy(hris_employment_statuses $employmentStatus)
     {
         $employmentStatus->delete();
-        return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully deleted!');
+        return redirect('/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully deleted!');
     }
 
     protected function validatedData() 

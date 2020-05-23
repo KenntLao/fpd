@@ -3,76 +3,82 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\hris_employee_training_sessions;
-use App\hris_training_sessions;
 
 class EmployeeTrainingSessionController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $employeeTrainingSessions = hris_employee_training_sessions::paginate(10);
-        return view('pages.admin.training.employeeTrainingSessions.index', compact('employeeTrainingSessions'));
+        //
     }
 
-    public function create(hris_employee_training_sessions $employeeTrainingSession)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $trainingSessions = hris_training_sessions::all();
-        return view('pages.admin.training.employeeTrainingSessions.create', compact('employeeTrainingSession', 'trainingSessions'));
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $employeeTrainingSession = new hris_employee_training_sessions();
-        if($this->validatedData()) {
-            $employeeTrainingSession->employee = request('employee');
-            $employeeTrainingSession->training_session = request('training_session');
-            $employeeTrainingSession->status = request('status');
-            $employeeTrainingSession->save();
-            return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee Training Session successfully added!');
-
-        } else {
-            return back()->withErrors($this->validatedData());
-        }
+        //
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-
+        //
     }
 
-    public function edit(hris_employee_training_sessions $employeeTrainingSession)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        $trainingSessions = hris_training_sessions::all();
-        return view('pages.admin.training.employeeTrainingSessions.edit', compact('employeeTrainingSession', 'trainingSessions'));
+        //
     }
 
-    public function update(hris_employee_training_sessions $employeeTrainingSession, Request $request)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        if($this->validatedData()) {
-            $employeeTrainingSession->employee = request('employee');
-            $employeeTrainingSession->training_session = request('training_session');
-            $employeeTrainingSession->status = request('status');
-            $employeeTrainingSession->update();
-            return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee Training Session successfully updated!');
-
-        } else {
-            return back()->withErrors($this->validatedData());
-        }
+        //
     }
 
-    public function destroy(hris_employee_training_sessions $employeeTrainingSession)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $employeeTrainingSession->delete();
-            return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee Training Session successfully deleted!');
+        //
     }
-
-    protected function validatedData() 
-    {
-        return request()->validate([
-            'employee' => 'required',
-            'training_session' => 'required',
-            'status' => 'required'
-        ]);
-    }
-
 }

@@ -56,7 +56,7 @@ class CandidateController extends Controller
                 $request->profile_image->move(public_path('assets/images/candidates/profile_image'), $imageName);
                 $request->resume->move(public_path('assets/images/candidates/resume'), $resume);
                 $candidate->save();
-                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully added!');
+                return redirect('/pages/recruitment/candidates/index')->with('success','Candidate successfully added!');
             } else {
                 return back()->withErrors($this->validatedData());
             }
@@ -113,10 +113,10 @@ class CandidateController extends Controller
                 $candidate->referees = request('referees');
                 $candidate->prefered_industry = request('prefered_industry');
                 $candidate->expected_salary = request('expected_salary');
-                $request->profile_image->move(public_path('assets/images/candidates/profile_image/'), $imageName);
-                $request->resume->move(public_path('assets/images/candidates/resume/'), $resume);
+                $request->profile_image->move(public_path('assets/images/candidates/profile_image'), $imageName);
+                $request->resume->move(public_path('assets/images/candidates/resume'), $resume);
                 $candidate->update();
-                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
+                return redirect('/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
             } else {
                 return back()->withErrors($this->validatedData());
             }
@@ -141,7 +141,7 @@ class CandidateController extends Controller
                 $candidate->prefered_industry = request('prefered_industry');
                 $candidate->expected_salary = request('expected_salary');
                 $candidate->update();
-                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
+                return redirect('/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
             } else {
                 return back()->withErrors($this->validatedData());
             }
@@ -162,7 +162,7 @@ class CandidateController extends Controller
             $old_file_2 = $pathResume . $candidate->resume;
             unlink($old_file_2);
         }
-        return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
+        return redirect('/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
     }
 
     protected function validatedData() {

@@ -4,103 +4,82 @@
 @section('content_header')
 @stop
 @section('content')
-@if (count($errors))
-<div class="alert alert-danger">
-	<strong>Whoops!</strong> There were some problems with your input.
-	<ul>
-		@foreach ($errors->all() as $error)
-		<li>{{ $error }}</li>
-		@endforeach
-	</ul>
-</div>
-@endif
-<div class="card">
-	<div class="card-header">
-		<h3 class="card-title">edit company structure</h3>
+<div class="row no-gutters">
+	<div class="col-12 offset-md-3 col-md-6 form-title">
+		<h3>add department</h3>
 	</div>
-	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/admin/company/update/{{$company->id}}" id="form">
-			@csrf
-			@method('PATCH')
-			<div class="row">
-				<div class="col-4">
-					<div class="form-group">
-						<label for="name">Name</label>
-						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" value="{{$company->name}}" name="name" required>
+	<div class="col-12 offset-md-3 col-md-6 box">
+		<div class="form-box">
+			<form class="form-horizontal" method="post" action="/pages/admin/company/update/{{$company->id}}">
+				@csrf
+				@method('PATCH')
+				<div class="form-group">
+					<label for="name">Name: <span>*</span></label>
+					<input class="form-control" type="text" value="{{$company->name}}" name="name" required>
+				</div>
+				<div class="form-group">
+					<label for="details">Details: <span>*</span></label>
+					<textarea class="form-control" name="details"required>{{$company->details}}</textarea>
+				</div>
+				<div class="form-group">
+					<label for="name">Address: </label>
+					<textarea class="form-control" name="address">{{$company->address}}</textarea>
+				</div>
+				<div class="row no-gutters">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="type">Type: <span>*</span></label>
+							<select class="form-control select2" name="type" required>
+								@foreach($types as $type)
+								<option value='{{$type->name}}' {{ $company->type == $type->name  ? 'selected' : '' }}>{{$type->name}}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<label for="country">Country</label>
+							<select class="form-control select2" name="country" required>
+								@foreach($countries as $country)
+								<option value='{{$country->name}}' {{ $company->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
+								@endforeach
+							</select>
+						</div>
 					</div>
 				</div>
-				<div class="col-4">
-					<div class="form-group">
-						<label for="details">Details</label>
-						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="details"required>{{$company->details}}</textarea>
+				<div class="row no-gutters">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="timezone">Time Zone: <span>*</span></label>
+							<select class="form-control select2" name="timezone" required>
+								@foreach($timezones as $timezone)
+								<option value="{{$timezone->name}}" {{ $company->timezone == $timezone->name  ? 'selected' : '' }}>{{$timezone->utc}} {{$timezone->name}}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<label for="type">Parent Structure: <span>*</span></label>
+							@if (count($companies) > 0)
+							<select class="form-control select2" name="parent_structure">
+								@foreach($companies as $company)
+								<option value="{{$company->name}}">{{$company->name}}</option>
+								@endforeach
+							</select>
+							@else
+							<select class="form-control select2" name="parent_structure">
+								<option value="None">None</option>
+							</select>
+							@endif
+							</select>
+						</div>
 					</div>
 				</div>
-				<div class="col-4">
-					<div class="form-group">
-						<label for="name">Address: </label>
-						<textarea class="form-control" name="address">{{$company->address}}</textarea>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-3">
-					<div class="form-group">
-						<label for="type">Type</label>
-						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="type" required>
-							@foreach($types as $type)
-							<option value='{{$type->name}}' {{ $company->type == $type->name  ? 'selected' : '' }}>{{$type->name}}</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-				<div class="col-3">
-					<div class="form-group">
-						<label for="country">Country</label>
-						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="country" required>
-							@foreach($countries as $country)
-							<option value='{{$country->name}}' {{ $company->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-				<div class="col-3">
-					<div class="form-group">
-						<label for="timezone">Time Zone</label>
-						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="timezone" required>
-							@foreach($timezones as $timezone)
-							<option value="{{$timezone->name}}" {{ $company->timezone == $timezone->name  ? 'selected' : '' }}>{{$timezone->utc}} {{$timezone->name}}</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-				<div class="col-3">
-					<div class="form-group">
-						<label for="type">Parent Structure</label>
-						<span class="badge badge-danger">Required</span>
-						@if (count($companies) > 0)
-						<select class="form-control select2" name="parent_structure">
-							@foreach($companies as $company)
-							<option value="{{$company->name}}">{{$company->name}}</option>
-							@endforeach
-						</select>
-						@else
-						<select class="form-control select2" name="parent_structure">
-							<option value="None">None</option>
-						</select>
-						@endif
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="card-footer text-right">
-		<a class="btn btn-default mr-1" href="/hris/pages/admin/company/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save company structure</button>
+				<a href="/pages/admin/company/index">Back</a>
+				<button type="submit">submit</button>
+			</form>
+		</div>
 	</div>
 </div>
 @stop
@@ -110,7 +89,7 @@
 @section('js')
 <script>
 $(document).ready(function() {
-$('.select2').select2();
+    $('.select2').select2();
 });
 </script>
 @stop
