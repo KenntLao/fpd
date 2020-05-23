@@ -68,7 +68,7 @@ class JobPositionController extends Controller
                 $jobPosition->display_type = request('display_type');
                 $jobPosition->save();
                 $request->image->move(public_path('assets/images/job_positions/'), $imageName);
-                return redirect('/pages/recruitment/jobPositions/index')->with('success','Job position successfully added!');
+                return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully added!');
             } else {
                 return back()->withErrors($this->validatedData());
             }
@@ -133,7 +133,7 @@ class JobPositionController extends Controller
                 $jobPosition->display_type = request('display_type');
                 $jobPosition->update();
                 $request->image->move(public_path('assets/images/job_positions/'), $imageName);
-                return redirect('/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
+                return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
 
             } else {
                 return back()->withErrors($this->validatedData());
@@ -166,7 +166,7 @@ class JobPositionController extends Controller
                 $jobPosition->closing_date = request('closing_date');
                 $jobPosition->display_type = request('display_type');
                 $jobPosition->update();
-                return redirect('/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
+                return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
             } else {
                 return back()->withErrors($this->validatedData());
             }
@@ -181,7 +181,7 @@ class JobPositionController extends Controller
             $old_file = $imagePath . $jobPosition->image;
             unlink($old_file);
         }
-        return redirect('/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
+        return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
     }
 
     protected function validatedData() 
