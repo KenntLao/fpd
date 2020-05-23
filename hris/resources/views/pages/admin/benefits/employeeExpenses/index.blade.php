@@ -52,7 +52,7 @@
 						<td>{{$employeeExpense->status}}</td>
 						<td>
 							<a href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/edit"><i class="fa fa-edit"></i></a>
-							<form action="/hris/pages/admin/benefits/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
+							<form action="/hris/pages/admin/expense/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
 								@csrf
 								@method('PATCH')
 								<input type="text" name="status" value="Approved" hidden>

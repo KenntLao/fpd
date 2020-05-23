@@ -45,7 +45,7 @@ class EmployeeExpenseController extends Controller
                 $employeeExpense->attachment_1 = $attachment_1;
                 $employeeExpense->attachment_2 = $attachment_2;
                 $employeeExpense->status = 'Pending';
-                $request->receipt->move(public_path('hassets/files/employee_expenses'), $receipt);
+                $request->receipt->move(public_path('assets/files/employee_expenses'), $receipt);
                 $request->attachment_1->move(public_path('assets/files/employee_expenses'), $attachment_1);
                 $request->attachment_2->move(public_path('assets/files/employee_expenses'), $attachment_2);
                 $employeeExpense->save();

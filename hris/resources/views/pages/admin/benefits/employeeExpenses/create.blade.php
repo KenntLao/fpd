@@ -19,7 +19,7 @@
 		<h3 class="card-title">add employee expense</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/admin/benefits/employeeExpenses" enctype="multipart/form-data" id="form">
+		<form class="form-horizontal" method="post" action="/pages/admin/benefits/employeeExpenses" enctype="multipart/form-data" id="form">
 			@csrf
 			<div class="row">
 				<div class="col-3">

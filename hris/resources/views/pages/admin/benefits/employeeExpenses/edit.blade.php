@@ -19,22 +19,21 @@
 		<h3 class="card-title">edit employee expense</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/admin/benefits/employeeExpenses/update/{{$employeeExpense->id}}" enctype="multipart/form-data" id="form">
+		<form class="form-horizontal" method="post" action="/pages/admin/benefits/employeeExpenses/update/{{$employeeExpenses->id}}" enctype="multipart/form-data" id="form">
 			@csrf
-			@method('PATCH')
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
 						<label for="employee">Employee</label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="employee" value="{{$employeeExpense->employee}}" required>
+						<input class="form-control" type="text" name="employee" value="{{$employeeExpenses->name}}" required>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label for="expense_date">Date</label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="date" value="{{$employeeExpense->expense_date}}" name="expense_date" required>
+						<input class="form-control" type="date" value="{{$employeeExpenses->epense_date}}" name="expense_date" required>
 					</div>
 				</div>
 				<div class="col-3">
@@ -57,16 +56,18 @@
 				<div class="col-3">
 					<div class="form-group">
 						<label for="ref_number">Transaction / Ref No.</label>
-						<input class="form-control" type="text" value="{{$employeeExpense->ref_number}}" name="ref_number">
+						<input class="form-control" type="text" name="ref_number">
 					</div>
 				</div>
+			</div>
+			<div class="row">
 			</div>
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
 						<label for="payee">Payee</label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="payee" value="{{$employeeExpense->payee}}" required>
+						<input class="form-control" type="text" name="payee" required>
 					</div>
 				</div>
 				<div class="col-3">
@@ -90,7 +91,7 @@
 					<div class="form-group">
 						<label for="notes">Notes</label>
 						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="notes" required>{{$employeeExpense->notes}}</textarea>
+						<textarea class="form-control" name="notes" required></textarea>
 					</div>
 				</div>
 			</div>
@@ -115,7 +116,7 @@
 				<div class="col-3">
 					<div class="form-group">
 						<label for="amount">Amount</label>
-						<input class="form-control" type="text" name="amount" value="{{$employeeExpense->amount}}" required>
+						<input class="form-control" type="text" name="amount" required>
 					</div>
 				</div>
 			</div>
@@ -142,7 +143,7 @@
 		</form>
 	</div>
 	<div class="card-footer text-right">
-		<a class="btn btn-default mr-1" href="/hris/pages/admin/benefits/employeeExpense/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
+		<a class="btn btn-default mr-1" href="/hris/pages/admin/benefits/employeeExpenses/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
 		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save employee expense</button>
 	</div>
 </div>
