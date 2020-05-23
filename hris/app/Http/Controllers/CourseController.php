@@ -32,7 +32,7 @@ class CourseController extends Controller
             $course->cost = request('cost');
             $course->status = request('status');
             $course->save();
-            return redirect('/pages/admin/training/courses/index')->with('success', 'Course successfully added!');
+            return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -61,7 +61,7 @@ class CourseController extends Controller
             $course->cost = request('cost');
             $course->status = request('status');
             $course->update();
-            return redirect('/pages/admin/training/courses/index')->with('success', 'Course successfully updated!');
+            return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -70,7 +70,7 @@ class CourseController extends Controller
     public function destroy(hris_courses $course)
     {
         $course->delete();
-        return redirect('/pages/admin/training/courses/index')->with('success', 'Course successfully deleted!');
+        return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully deleted!');
     }
 
     protected function validatedData()

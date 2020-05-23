@@ -40,7 +40,7 @@ class CompanyController extends Controller
             $company->timezone = request('timezone');
             $company->parent_structure = request('parent_structure');
             $company->save();
-            return redirect('/pages/admin/company/index')->with('success', 'Company Structure successfully added!');
+            return redirect('/hris/pages/admin/company/index')->with('success', 'Company Structure successfully added!');
 
         } else {
             return back()->withErrors($this->validatedData());
@@ -74,7 +74,7 @@ class CompanyController extends Controller
             $company->timezone = request('timezone');
             $company->parent_structure = request('parent_structure');
             $company->update();
-            return redirect('/pages/admin/company/index')->with('success', 'Company Structure successfully updated!');
+            return redirect('/hris/pages/admin/company/index')->with('success', 'Company Structure successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -85,7 +85,7 @@ class CompanyController extends Controller
     {
 
         $company->delete();
-        return redirect('/pages/admin/company/index')->with('success', 'Company Structure successfully deleted');
+        return redirect('/hris/pages/admin/company/index')->with('success', 'Company Structure successfully deleted');
 
     }
 

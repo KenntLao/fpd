@@ -14,7 +14,6 @@ if(isset($_COOKIE['sys_pms'])) {
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
 	
 	<!-- META -->
