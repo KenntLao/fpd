@@ -25,7 +25,7 @@ class EducationController extends Controller
             $education->name = request('name');
             $education->description = request('description');
             $education->save();
-            return redirect('/pages/admin/qualifications/educations/index')->with('success', 'Education successfully added!');
+            return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -47,7 +47,7 @@ class EducationController extends Controller
             $education->name = request('name');
             $education->description = request('description');
             $education->update();
-            return redirect('/pages/admin/qualifications/educations/index')->with('success', 'Education successfully updated!');
+            return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -56,7 +56,7 @@ class EducationController extends Controller
     public function destroy(hris_educations $education)
     {
         $education->delete();
-        return redirect('/pages/admin/qualifications/educations/index')->with('success', 'Education successfully deleted!');
+        return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully deleted!');
     }
 
     protected function validatedData() 

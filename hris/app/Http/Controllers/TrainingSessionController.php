@@ -42,7 +42,7 @@ class TrainingSessionController extends Controller
                 $trainingSession->training_cert_required = request('training_cert_required');
                 $request->attachment->move($path, $file);
                 $trainingSession->save();
-                return redirect('/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully added!');
+                return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully added!');
             }
         } else {
             return back()->withErrors($this->validatedData());
@@ -82,7 +82,7 @@ class TrainingSessionController extends Controller
                 $trainingSession->training_cert_required = request('training_cert_required');
                 $trainingSession->attachment->move(public_path('assets/files/training_session/'), $file);
                 $trainingSession->update();
-                return redirect('/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully updated!');
+                return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully updated!');
             } else {
                 return back()->withErrors($this->validatedData());
             }
@@ -97,7 +97,7 @@ class TrainingSessionController extends Controller
             $trainingSession->attendance_type = request('attendance_type');
             $trainingSession->training_cert_required = request('training_cert_required');
             $trainingSession->update();
-            return redirect('/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully updated!');
+            return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully updated!');
         }
     }
 
@@ -109,7 +109,7 @@ class TrainingSessionController extends Controller
             $old_file = $path . $trainingSession->attachment;
             unlink($old_file);
         }
-        return redirect('/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully deleted!');
+        return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully deleted!');
 
     }
 
