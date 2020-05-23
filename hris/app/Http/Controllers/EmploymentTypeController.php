@@ -25,7 +25,7 @@ class EmploymentTypeController extends Controller
         if ($this->validatedData()) {
             $employmentType->name = request('name');
             $employmentType->save();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully added!');
+            return redirect('/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
         }
@@ -49,7 +49,7 @@ class EmploymentTypeController extends Controller
         if ($this->validatedData()) {
             $employmentType->name = request('name');
             $employmentType->update();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully updated!');
+            return redirect('/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully updated!');
         } else {
             return back()->withErrors($this->validatedData);
         } 
@@ -58,7 +58,7 @@ class EmploymentTypeController extends Controller
     public function destroy(hris_employment_types $employmentType)
     {
         $employmentType->delete();
-        return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success','Employment type successfully deleted!');
+        return redirect('/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success','Employment type successfully deleted!');
     }
 
 

@@ -13,7 +13,7 @@
 @stop
 
 @section('css')
-<link rel="stylesheet" href="{{ URL::asset('/assets/css/admin_custom.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 
 @section('js')

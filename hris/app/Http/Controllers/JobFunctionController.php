@@ -41,7 +41,7 @@ class JobFunctionController extends Controller
         if ($this->validatedData()) {
             $jobFunction->name = request('name');
             $jobFunction->save();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully added!');
+            return redirect('/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
         }
@@ -82,7 +82,7 @@ class JobFunctionController extends Controller
         if ($this->validatedData()) {
             $jobFunction->name = request('name');
             $jobFunction->update();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully updated!');
+            return redirect('/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully updated!');
         } else {
             return back()->withErrors($this->validatedData);
         }  
@@ -91,7 +91,7 @@ class JobFunctionController extends Controller
     public function destroy(hris_job_functions $jobFunction)
     {
         $jobFunction->delete();
-        return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');
+        return redirect('/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');
     }
 
     protected function validatedData() 

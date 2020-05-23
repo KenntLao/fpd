@@ -27,7 +27,7 @@ class PayGradeController extends Controller
             $payGrade->min_salary = request('min_salary');
             $payGrade->max_salary = request('max_salary');
             $payGrade->save();
-            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully added!');
+            return redirect('/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -51,7 +51,7 @@ class PayGradeController extends Controller
             $payGrade->min_salary = request('min_salary');
             $payGrade->max_salary = request('max_salary');
             $payGrade->update();
-            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully updated!');
+            return redirect('/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -60,7 +60,7 @@ class PayGradeController extends Controller
     public function destroy(hris_pay_grades $payGrade)
     {
         $payGrade->delete();
-            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully deleted!');
+            return redirect('/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully deleted!');
     }
 
     protected function validatedData() {

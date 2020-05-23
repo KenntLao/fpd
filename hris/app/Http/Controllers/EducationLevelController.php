@@ -26,7 +26,7 @@ class EducationLevelController extends Controller
         if ($this->validatedData()) {
             $educationLevel->name = request('name');
             $educationLevel->save();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully added!');
+            return redirect('/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
         }
@@ -47,7 +47,7 @@ class EducationLevelController extends Controller
         if ($this->validatedData()) {
             $educationLevel->name = request('name');
             $educationLevel->update();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully updated!');
+            return redirect('/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully updated!');
         } else {
             return back()->withErrors($this->validatedData);
         } 
@@ -57,7 +57,7 @@ class EducationLevelController extends Controller
     {
         $educationLevel->delete();
 
-        return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
+        return redirect('/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
     }
 
     protected function validatedData()

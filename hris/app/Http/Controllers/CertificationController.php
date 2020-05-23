@@ -25,7 +25,7 @@ class CertificationController extends Controller
             $certification->name = request('name');
             $certification->description = request('description');
             $certification->save();
-            return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully added!');
+            return redirect('/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -47,7 +47,7 @@ class CertificationController extends Controller
             $certification->name = request('name');
             $certification->description = request('description');
             $certification->update();
-            return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully updated!');
+            return redirect('/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -56,7 +56,7 @@ class CertificationController extends Controller
     public function destroy(hris_certifications $certification)
     {
         $certification->delete();
-        return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully deleted!');
+        return redirect('/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully deleted!');
     }
 
     protected function validatedData() 
