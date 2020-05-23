@@ -4,88 +4,105 @@
 @section('content_header')
 @stop
 @section('content')
-<div class="row no-gutters">
-	<div class="col-12 offset-md-3 col-md-6 form-title">
-		<h3>add course</h3>
+@if (count($errors))
+<div class="alert alert-danger">
+    <strong>Whoops!</strong> There were some problems with your input.
+    <ul>
+    @foreach ($errors->all() as $error)
+    	<li>{{ $error }}</li>
+    @endforeach
+    </ul>
+</div>
+@endif
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">add course</h3>
 	</div>
-	<div class="col-12 offset-md-3 col-md-6 box">
-		<div class="form-box">
-			<form class="form-horizontal" method="post" action="/pages/admin/training/courses">
-				@csrf
-				<div class="row no-gutters">
-					<div class="col-6">
-						<div class="form-group">
-							<label for="code">Code: <span>*</span></label>
-							<input class="form-control" type="text" name="code" required>
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="form-group">
-							<label for="name">Name: <span>*</span></label>
-							<input class="form-control" type="text" name="name" required>
-						</div>
+	<div class="card-body">
+		<form class="form-horizontal" method="post" action="/hris/pages/admin/training/courses" id="form">
+			@csrf
+			<div class="row">
+				<div class="col-3">
+					<div class="form-group">
+						<label for="code">Code</label>
+						<span class="badge badge-danger">Required</span>
+						<input class="form-control" type="text" name="code" required>
 					</div>
 				</div>
-				<div class="row no-gutters">
-					<div class="col-6">
-						<div class="form-group">
-							<label for="coordinator">Coordinator: <span>*</span></label>
-							<select class="form-control select2" name="coordinator" required>
-								<option value="SocialConz Digital">SocialConz Digital</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="form-group">
-							<label for="trainer">Trainer: </label>
-							<input class="form-control" type="text" name="trainer">
-						</div>
+				<div class="col-3">
+					<div class="form-group">
+						<label for="name">Name</label>
+						<span class="badge badge-danger">Required</span>
+						<input class="form-control" type="text" name="name" required>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="trainer_details">Trainer Details: </label>
-					<textarea class="form-control" name="trainer_details"></textarea>
-				</div>
-				<div class="row no-gutters">
-					<div class="col-6">
-						<div class="form-group">
-							<label for="payment_type">Payment Type: <span>*</span></label>
-							<select class="form-control select2" name="payment_type" required>
-								<option value="Company Sponsored">Company Sponsored</option>
-								<option value="Paid by Employee">Paid by Employee</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="form-group">
-							<label for="currency">Currency: <span>*</span></label>
-							<select class="form-control select2" name="currency" required>
-								<option value="Philippine Peso">Philippine Peso</option>
-							</select>
-						</div>
+				<div class="col-3">
+					<div class="form-group">
+						<label for="coordinator">Coordinator</label>
+						<span class="badge badge-danger">Required</span>
+						<select class="form-control select2" name="coordinator" required>
+							<option value="SocialConz Digital">SocialConz Digital</option>
+						</select>
 					</div>
 				</div>
-				<div class="row no-gutters">
-					<div class="col-6">
-						<div class="form-group">
-							<label for="cost">Cost: <span>*</span></label>
-							<input class="form-control" type="text" name="cost" required>
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="form-group">
-							<label for="status">Status: <span>*</span></label>
-							<select class="form-control select2" name="status" required>
-								<option value="Active">Active</option>
-								<option value="Inactive">Inactive</option>
-							</select>
-						</div>
+				<div class="col-3">
+					<div class="form-group">
+						<label for="trainer">Trainer: </label>
+						<input class="form-control" type="text" name="trainer">
 					</div>
 				</div>
-				<a href="/pages/admin/training/courses/index">Back</a>
-				<button type="submit">submit</button>
-			</form>
-		</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group">
+						<label for="trainer_details">Trainer Details: </label>
+						<textarea class="form-control" name="trainer_details"></textarea>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-group">
+						<label for="payment_type">Payment Type</label>
+						<span class="badge badge-danger">Required</span>
+						<select class="form-control select2" name="payment_type" required>
+							<option value="Company Sponsored">Company Sponsored</option>
+							<option value="Paid by Employee">Paid by Employee</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-group">
+						<label for="currency">Currency</label>
+						<span class="badge badge-danger">Required</span>
+						<select class="form-control select2" name="currency" required>
+							<option value="Philippine Peso">Philippine Peso</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<div class="form-group">
+						<label for="cost">Cost</label>
+						<span class="badge badge-danger">Required</span>
+						<input class="form-control" type="text" name="cost" required>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-group">
+						<label for="status">Status</label>
+						<span class="badge badge-danger">Required</span>
+						<select class="form-control select2" name="status" required>
+							<option value="Active">Active</option>
+							<option value="Inactive">Inactive</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="card-footer text-right">
+		<a class="btn btn-default mr-1" href="/hris/pages/admin/training/courses/index"><i class="fa fa-arrow-left"></i> back</a>
+		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save course</button>
 	</div>
 </div>
 @stop

@@ -3,31 +3,27 @@
 @section('title', 'HRIS | Training Setup - Training Sessions')
 @section('content_header')
 <div class="row no-gutters">
-	<div class="col-12 offset-md-1 col-md-10 page-title">
+	<div class="col-12 page-title">
 		<h1>Training Setup</h1>
 	</div>
 </div>
 @stop
 @section('content')
-<div class="row no-gutters">
-	@if ($message = Session::get('success'))
-	<div class="alert alert-success alert-block">
-	    <button type="button" class="close" data-dismiss="alert">×</button>
-	    <p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
-	</div>
-	@endif
-	<div class="col-12 offset-md-1 col-md-10 box">
-		<div class="row no-gutters">
-			<div class="box-title">
-				<h3>Training Sessions</h3>
-			</div>
-			<div class="box-add">
-				<a href="/pages/admin/training/trainingSessions/create">add <i class="fa fa-plus"></i></a>
-			</div>
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
+</div>
+@endif
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">training sessions list</h3>
+		<div class="card-tools">
+			<a class="btn btn-danger btn-md" href="/hris/pages/admin/training/trainingSessions/create"><i class="fa fa-plus"></i> add training session</a>
 		</div>
-		<div class="box-table">
-			@if(count($trainingSessions) > 0)
-			<div class="row no-gutters">
+	</div>
+	<div class="card-body">
+		@if(count($trainingSessions) > 0)
 				<div class="table-responsive">
 					<table class="table table-hover table-bordered table-striped table-condensed">
 						<thead>
@@ -47,14 +43,14 @@
 							<tr>
 								<td>{{$trainingSession->name}}</td>
 								<td>{{$trainingSession->course->name}}</td>
-								<td>{{$trainingSession->scheduled_time}}</td>
+								<td>{{date("M d, Y - h:i:sa", strtotime($trainingSession->scheduled_time))}}</td>
 								<td>{{$trainingSession->course->status}}</td>
 								<td>{{$trainingSession->delivery_method}}</td>
 								<td>{{$trainingSession->attendance_type}}</td>
 								<td>{{$trainingSession->training_cert_required}}</td>
 								<td>
-									<a href="/pages/admin/training/trainingSessions/{{$trainingSession->id}}/edit"><i class="fa fa-edit"></i></a>
-									<form action="/pages/admin/training/trainingSessions/delete/{{$trainingSession->id}}" method="post">
+									<a href="/hris/pages/admin/training/trainingSessions/{{$trainingSession->id}}/edit"><i class="fa fa-edit"></i></a>
+									<form action="/hris/pages/admin/training/trainingSessions/delete/{{$trainingSession->id}}" method="post">
 										@csrf
 										@method('DELETE')
 										<button type="submit"><i class="fa fa-trash"></i></button>
@@ -65,11 +61,12 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
 			@else
-			<h5>No Data Available.</h5>
+			<h4>No data Available.</h4>
 			@endif
-		</div>
+	</div>
+	<div class="card-footer">
+		{{$trainingSessions->links()}}
 	</div>
 </div>
 @stop

@@ -29,7 +29,7 @@ class JobTitleController extends Controller
             $jobTitle->description = request('description');
             $jobTitle->specification = request('specification');
             $jobTitle->save();
-            return redirect('/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully added!');
+            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -54,7 +54,7 @@ class JobTitleController extends Controller
             $jobTitle->description = request('description');
             $jobTitle->specification = request('specification');
             $jobTitle->update();
-            return redirect('/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully updated!');
+            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -63,7 +63,7 @@ class JobTitleController extends Controller
     public function destroy(hris_job_titles $jobTitle)
     {
         $jobTitle->delete();
-        return redirect('/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully deleted!');
+        return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully deleted!');
     }
 
     protected function validatedData() {
