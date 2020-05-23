@@ -19,7 +19,9 @@
 
                 <!-- DASHBOARD -->
                 <li class="nav-item ">
-                    <a href="/dashboard" class="nav-link<?php if ($page == 'dashboard') { echo ' active'; } ?>">
+                    <a href="/dashboard" class="nav-link<?php if ($page == 'dashboard') {
+                                                            echo ' active';
+                                                        } ?>">
                         <i class="nav-icon fas fa-list-ul"></i>
                         <p><?php echo renderLang($dashboard_dashboard); ?></p>
                     </a>
@@ -34,7 +36,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="/hris" class="nav-link">
-                        <i class="fas fa-users"></i>
+                        <i class="fas nav-icon fa-users"></i>
                         <p>HRIS</p>
                     </a>
                 </li>

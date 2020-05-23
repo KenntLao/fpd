@@ -16,7 +16,7 @@ RewriteRule ^dashboard pages/dashboard.php [NC,L]
 RewriteRule ^system-log pages/system-log.php [NC,L]
 
 # HRIS ------------------------------------------------------------------------------------------------
-RewriteRule ^hris hris
+RewriteRule ^hris /hris
 
 # SYSTEM FUNCTION --------------------------------------------------------------------------------------
 RewriteRule ^verify-attachment-extension functions/system/verify-attachment-extension.php [NC,L]
