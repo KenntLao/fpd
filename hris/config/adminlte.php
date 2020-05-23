@@ -105,10 +105,10 @@ return [
     'classes_brand_text' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => '',
+    'classes_sidebar' => 'sidebar-light-primary',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => '',
-    'classes_topnav_nav' => 'navbar-expand-md navbar-white navbar-light',
+    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav_nav' => 'navbar-expand-md',
     'classes_topnav_container' => 'container',
 
     /*
@@ -211,126 +211,99 @@ return [
         'MAIN NAVIGATION',
         [
             'text' => 'Pages',
-            'url' => 'admin/hris/pages',
+            'url' => 'admin/pages',
             'icon' => 'fas fa-fw fa-file'
         ],
         'ADMINISTRATION',
         [
             'text' => 'Admin',
             'icon' => 'fas fa-fw fa-cubes',
+            'icon_color' => 'cyan',
             'submenu' => [
                 [   
                     'text' => 'Company Structure',
                     'icon' => 'fas fa-fw fa-building',
-                    'url' => '/hris/pages/admin/company/index',
+                    'url' => '/pages/admin/company/index',
+                    'icon_color' => 'cyan',
                 ],
                 [
                     'text' => 'Job Details Setup',
                     'icon' => 'fas fa-fw fa-columns',
+                    'icon_color' => 'cyan',
                     'submenu' => [
                         [
                             'text' => 'Job Titles',
                             'icon' => 'fas fa-fw fa-columns',
-                            'url' => '/hris/pages/admin/jobDetails/jobTitles/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/jobDetails/jobTitles/index'
                         ],
                         [
                             'text' => 'Pay Grades',
                             'icon' => 'fas fa-fw fa-columns',
-                            'url' => '/hris/pages/admin/jobDetails/payGrades/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/jobDetails/payGrades/index'
                         ],
                         [
                             'text' => 'Employment Status',
                             'icon' => 'fas fa-fw fa-columns',
-                            'url' => '/hris/pages/admin/jobDetails/employmentStatuses/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/jobDetails/employmentStatuses/index'
                         ],
                     ]
                 ],
                 [
                     'text' => 'Qualifications Setup',
                     'icon' => 'fas fa-fw fa-check-square',
+                    'icon_color' => 'cyan',
                     'submenu' => [
                         [
                             'text' => 'Skills',
                             'icon' => 'fas fa-fw fa-check-square',
-                            'url' => '/hris/pages/admin/qualifications/skills/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/qualifications/skills/index'
                         ],
                         [
                             'text' => 'Education',
                             'icon' => 'fas fa-fw fa-check-square',
-                            'url' => '/hris/pages/admin/qualifications/educations/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/qualifications/educations/index'
                         ],
                         [
                             'text' => 'Certifications',
                             'icon' => 'fas fa-fw fa-check-square',
-                            'url' => '/hris/pages/admin/qualifications/certifications/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/qualifications/certifications/index'
                         ],
                         [
                             'text' => 'Languages',
                             'icon' => 'fas fa-fw fa-check-square',
-                            'url' => '/hris/pages/admin/qualifications/languages/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/qualifications/languages/index'
                         ]
                     ]
                 ],
                 [
                     'text' => 'Training Setup',
                     'icon' => 'fas fa-fw fa-briefcase',
+                    'icon_color' => 'cyan',
                     'submenu' => [
                         [
                             'text' => 'Courses',
                             'icon' => 'fas fa-fw fa-briefcase',
-                            'url' => '/hris/pages/admin/training/courses/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/training/courses/index'
                         ],
                         [
                             'text' => 'Training Sessions',
                             'icon' => 'fas fa-fw fa-briefcase',
-                            'url' => '/hris/pages/admin/training/trainingSessions/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/training/trainingSessions/index'
                         ],
                         [
                             'text' => 'Employee Training Sessions',
                             'icon' => 'fas fa-fw fa-briefcase',
-                            'url' => '/hris/pages/admin/training/employeeTrainingSessions/index'
-                        ]
-                    ]
-                ],
-                [
-                    'text' => 'Properties Setup',
-                    'icon' => 'fas fa-fw fa-list-alt',
-                    'submenu' => [
-                        [
-                            'text' => 'Clients',
-                            'icon' => 'fas fa-fw fa-list-alt',
-                            'url' => '/hris/pages/admin/properties/clients/index'
-                        ],
-                        [
-                            'text' => 'Projects',
-                            'icon' => 'fas fa-fw fa-list-alt',
-                            'url' => '/hris/pages/admin/properties/projects/index'
-                        ],
-                        [
-                            'text' => 'Employee Projects',
-                            'icon' => 'fas fa-fw fa-list-alt',
-                            'url' => '/hris/pages/admin/properties/employeeProjects/index'
-                        ]
-                    ]
-                ],
-                [
-                    'text' => 'Benefits Administration',
-                    'icon' => 'fas fa-fw fa-bars',
-                    'submenu' => [
-                        [
-                            'text' => 'Expenses Categories',
-                            'icon' => 'fas fa-fw fa-bars',
-                            'url' => '/hris/pages/admin/benefits/expensesCategories/index'
-                        ],
-                        [
-                            'text' => 'Payment Methods',
-                            'icon' => 'fas fa-fw fa-bars',
-                            'url' => '/hris/pages/admin/benefits/paymentMethods/index'
-                        ],
-                        [
-                            'text' => 'Employee Expenses',
-                            'icon' => 'fas fa-fw fa-bars',
-                            'url' => '/hris/pages/admin/benefits/employeeExpenses/index'
+                            'icon_color' => 'teal',
+                            'url' => '/pages/admin/training/employeeTrainingSessions/index'
                         ]
                     ]
                 ]
@@ -340,41 +313,49 @@ return [
         [
             'text'    => 'Employees',
             'icon'    => 'fas fa-fw fa-users',
+            'icon_color' => 'indigo',
             'submenu' => [
                 [
                     'text' => 'Employees',
-                    'url'  => '/hris/pages/employees/employee/',
+                    'url'  => '/pages/employees/employee/',
                     'icon'    => 'fas fa-fw fa-users',
+                    'icon_color' => 'indigo',
                 ],
                 [
                     'text' => 'Employee History',
-                    'url'  => '/hris/pages/employee/employee_history/',
+                    'url'  => '/pages/employee/employee_history/',
                     'icon'    => 'fas fa-fw fa-history',
+                    'icon_color' => 'indigo',
                 ],
                 [
                     'text' => 'HR Form',
-                    'url'  => '/hris/pages/employee/hr_form/',
+                    'url'  => '/pages/employee/hr_form/',
                     'icon'    => 'fas fa-fw fa-folder',
+                    'icon_color' => 'indigo',
                 ],
                 [
                     'text' => 'Itenerary Request',
-                    'url'  => '/hris/pages/employee/itenerary_request/',
+                    'url'  => '/pages/employee/itenerary_request/',
                     'icon'    => 'fas fa-fw fa-plane-departure',
+                    'icon_color' => 'indigo',
                 ],
                 [
                     'text' => 'Monitor Attendance',
-                    'url'  => '/hris/pages/employee/monitor_attendance/',
+                    'url'  => '/pages/employee/monitor_attendance/',
                     'icon'    => 'fas fa-fw fa-clock',
+                    'icon_color' => 'indigo',
                 ],
                 [
                     'text' => 'Performance Review',
-                    'url'  => '/hris/pages/employee/performance_review/',
+                    'url'  => '/pages/employee/performance_review/',
                     'icon'    => 'fas fa-fw fa-chart-bar',
+                    'icon_color' => 'indigo',
                 ],
                 [
                     'text' => 'Document Management',
-                    'url'  => '/hris/pages/employee/document_management/',
+                    'url'  => '/pages/employee/document_management/',
                     'icon'    => 'fas fa-fw fa-file',
+                    'icon_color' => 'indigo',
                 ],
             ],
         ],
@@ -382,48 +363,57 @@ return [
         [
             'text'    => 'Recruitment',
             'icon' => 'fas fa-fw fa-th',
+            'icon_color' => 'red',
             'submenu' => [
                 [
                     'text'    => 'Recruitment Setup',
                     'url'     => '#',
                     'icon'    => 'fas fa-fw fa-random',
+                    'icon_color' => 'red',
                     'submenu' => [
                         [
                             'text'    => 'Benefits',
-                            'url'     => '/hris/pages/recruitment/recruitmentSetup/benefits/index',
+                            'url'     => '/pages/recruitment/recruitmentSetup/benefits/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'icon_color' => 'orange',
                         ],
                         [
                             'text' => 'Education Levels',
-                            'url'  => '/hris/pages/recruitment/recruitmentSetup/educationLevels/index',
+                            'url'  => '/pages/recruitment/recruitmentSetup/educationLevels/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'icon_color' => 'orange',
                         ],
                         [
                             'text' => 'Employment Types',
-                            'url'  => '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index',
+                            'url'  => '/pages/recruitment/recruitmentSetup/employmentTypes/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'icon_color' => 'orange',
                         ],
                         [
                             'text' => 'Experience Levels',
-                            'url'  => '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index',
+                            'url'  => '/pages/recruitment/recruitmentSetup/experienceLevels/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'icon_color' => 'orange',
                         ],
                         [
                             'text' => 'Job Functions',
-                            'url'  => '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index',
+                            'url'  => '/pages/recruitment/recruitmentSetup/jobFunctions/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'icon_color' => 'orange',
                         ],
                     ],
                 ],
                 [
                     'text' => 'Job Positions',
-                    'url'  => '/hris/pages/recruitment/jobPositions/index',
+                    'url'  => '/pages/recruitment/jobPositions/index',
                     'icon' => 'fas fa-fw fa-columns',
+                    'icon_color' => 'red',
                 ],
                 [
                     'text' => 'Candidates',
-                    'url'  => '/hris/pages/recruitment/candidates/index',
+                    'url'  => '/pages/recruitment/candidates/index',
                     'icon' => 'fas fa-fw fa-user-friends',
+                    'icon_color' => 'red',
                 ],
             ],
         ],

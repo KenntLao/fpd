@@ -4,60 +4,40 @@
 @section('content_header')
 @stop
 @section('content')
-@if (count($errors))
-<div class="alert alert-danger">
-	<strong>Whoops!</strong> There were some problems with your input.
-	<ul>
-		@foreach ($errors->all() as $error)
-		<li>{{ $error }}</li>
-		@endforeach
-	</ul>
-</div>
-@endif
-<div class="card">
-	<div class="card-header">
-		<h3 class="card-title">add job title</h3>
+<div class="row no-gutters">
+	<div class="col-12 offset-md-3 col-md-6 form-title">
+		<h3>edit job title</h3>
 	</div>
-	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/admin/jobDetails/jobTitles" id="form">
-			@csrf
-			<div class="row">
-				<div class="col-6">
-					<div class="form-group">
-						<label for="job_title_code">Job Title Code</label>
-						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="code" required>
+	<div class="col-12 offset-md-3 col-md-6 box">
+		<div class="form-box">
+			<form class="form-horizontal" method="post" action="/pages/admin/jobDetails/jobTitles">
+				@csrf
+				<div class="row no-gutters">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="job_title_code">Job Title Code: <span>*</span></label>
+							<input class="form-control" type="text" name="code" required>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<label for="job_title">Job Title: <span>*</span></label>
+							<input class="form-control" type="text" name="name" required>
+						</div>
 					</div>
 				</div>
-				<div class="col-6">
-					<div class="form-group">
-						<label for="job_title">Job Title</label>
-						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="name" required>
-					</div>
+				<div class="form-group">
+					<label for="description">Description: <span>*</span></label>
+					<textarea class="form-control" name="description" required></textarea>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-6">
-					<div class="form-group">
-						<label for="description">Description</label>
-						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="description" required></textarea>
-					</div>
+				<div class="form-group">
+					<label for="specification">Specification: <span>*</span></label>
+					<textarea class="form-control" name="specification" required></textarea>
 				</div>
-				<div class="col-6">
-					<div class="form-group">
-						<label for="specification">Specification</label>
-						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="specification" required></textarea>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="card-footer text-right">
-		<a class="btn btn-default mr-1" href="/hris/pages/admin/jobDetails/jobTitles/index"><i class="fa fa-arrow-left"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload"></i> save job title</button>
+				<a href="/pages/admin/jobDetails/jobTitles/index">Back</a>
+				<button type="submit">submit</button>
+			</form>
+		</div>
 	</div>
 </div>
 @stop
@@ -67,7 +47,7 @@
 @section('js')
 <script>
 $(document).ready(function() {
-$('.select2').select2();
+    $('.select2').select2();
 });
 </script>
 @stop

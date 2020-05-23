@@ -20,22 +20,22 @@ class CreateHrisCandidatesTable extends Migration
             $table->string('hiring_stage');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('profile_image')->nullable();
+            $table->string('profile_image');
             $table->string('gender');
-            $table->string('city')->nullable();
+            $table->string('city');
             $table->string('country');
             $table->string('telephone');
             $table->string('email');
             $table->string('resume');
-            $table->string('resume_headline')->nullable();
-            $table->string('profile_summary')->nullable();
-            $table->string('total_years_exp')->nullable();
-            $table->string('work_history')->nullable();
-            $table->string('education')->nullable();
-            $table->string('skills')->nullable();
-            $table->string('referees')->nullable();
+            $table->string('resume_headline');
+            $table->string('profile_summary');
+            $table->string('total_years_exp');
+            $table->string('work_history');
+            $table->string('education');
+            $table->string('skills');
+            $table->string('referees');
             $table->string('prefered_industry');
-            $table->string('expected_salary')->nullable();
+            $table->string('expected_salary');
         });
     }
 

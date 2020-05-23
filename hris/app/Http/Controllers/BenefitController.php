@@ -26,7 +26,7 @@ class BenefitController extends Controller
         if ($this->validatedData()) {
             $benefit->name = request('name');
             $benefit->save();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully added!');
+            return redirect('/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
         }
@@ -49,7 +49,7 @@ class BenefitController extends Controller
         if ($this->validatedData()) {
             $benefit->name = request('name');
             $benefit->update();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully updated!');
+            return redirect('/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully updated!');
         } else {
             return back()->withErrors($this->validatedData);
         } 
@@ -60,7 +60,7 @@ class BenefitController extends Controller
     {
         $benefit->delete();
 
-        return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success','Benefit successfully deleted!');
+        return redirect('/pages/recruitment/recruitmentSetup/benefits/index')->with('success','Benefit successfully deleted!');
     }
 
     protected function validatedData()

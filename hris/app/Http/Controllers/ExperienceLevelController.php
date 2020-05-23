@@ -26,7 +26,7 @@ class ExperienceLevelController extends Controller
         if ($this->validatedData()) {
             $experienceLevel->name = request('name');
             $experienceLevel->save();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level added!');
+            return redirect('/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level added!');
         } else {
             return back()->withErrors($this->validatedData);
         }
@@ -48,7 +48,7 @@ class ExperienceLevelController extends Controller
         if ($this->validatedData()) {
             $experienceLevel->name = request('name');
             $experienceLevel->update();
-            return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level updated!');
+            return redirect('/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level updated!');
         } else {
             return back()->withErrors($this->validatedData);
         }
@@ -57,7 +57,7 @@ class ExperienceLevelController extends Controller
     public function destroy(hris_experience_levels $experienceLevel)
     {
         $experienceLevel->delete();
-        return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success','Experience level deleted!');
+        return redirect('/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success','Experience level deleted!');
     }
 
     protected function validatedData()
