@@ -159,12 +159,15 @@ label, input, select, textarea {
 	width: 100% !important;
 }
 label:not(.form-check-label):not(.custom-file-label) {
+	font-size: 14px;
 	font-weight: bold;
 }
 .center {
 	padding: 0;
 }
 .badge {
+	font-size: 10px;
+	vertical-align: middle;
     font-weight: normal;
     font-family: opensans;
 }
