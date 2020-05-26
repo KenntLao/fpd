@@ -20,7 +20,8 @@
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/recruitment/jobPositions" enctype="multipart/form-data" id="form">
-			@csrf<div class="row">
+			@csrf
+			<div class="row">
 				<div class="col-4">
 					<div class="form-group">
 						<label class="mr-2"for="job_code">Job Code: </label>
@@ -81,16 +82,20 @@
 					<div class="form-group">
 						<label class="mr-2"for="short_description">Short Description: </label>
 						<span class="badge badge-danger">Field is required</span>
-						<textarea class="form-control required" name="short_description" required></textarea>
-						<p for="job_code" title="Enter Job Title"></p>
+						<div class="input">
+							<p class="placeholder">Enter short description</p>
+							<textarea class="form-control required" name="short_description" required></textarea>
+						</div>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="form-group">
 						<label class="mr-2"for="job_description">Job Description: </label>
 						<span class="badge badge-danger">Field is required</span>
-						<textarea class="form-control required" name="job_description" required></textarea>
-						<p for="job_code" title="Enter Job Title"></p>
+						<div class="input">
+							<p class="placeholder">Enter job description</p>
+							<textarea class="form-control required" name="job_description" required></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -98,7 +103,10 @@
 				<div class="col-6">
 					<div class="form-group">
 						<label class="mr-2"for="requirements">Requirements: </label>
-						<textarea class="form-control required" name="requirements"></textarea>
+						<div class="input">
+							<p class="placeholder">Enter job description</p>
+							<textarea class="form-control required" name="requirements"></textarea>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
@@ -135,14 +143,20 @@
 					<div class="form-group">
 						<label class="mr-2"for="city">City: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control required" type="text" name="city" required>
+						<div class="input">
+							<p class="placeholder">Enter city</p>
+							<input class="form-control required" type="text" name="city" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2"for="postal_code">Postal Code: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control required" type="text" name="postal_code" required>
+						<div class="input">
+							<p class="placeholder">Enter postal code</p>
+							<input class="form-control required" type="text" name="postal_code" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
@@ -248,19 +262,28 @@
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2"for="salary_min">Salary Min: </label>
-						<input class="form-control required" type="text" name="salary_min">
+						<div class="input">
+							<p class="placeholder">Enter salary minimum</p>
+							<input class="form-control required" type="text" name="salary_min">
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2"for="salary_max">Salary Max: </label>
-						<input class="form-control required" type="text" name="salary_max">
+						<div class="input">
+							<p class="placeholder">Enter salary maximum</p>
+							<input class="form-control required" type="text" name="salary_max">
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2"for="keywords">Keywords: </label>
-						<input class="form-control required" type="text" name="keywords">
+						<div class="input">
+							<p class="placeholder">Enter keywords</p>
+							<input class="form-control required" type="text" name="keywords">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -343,10 +366,10 @@ $(document).ready(function() {
 		obj.closest('.form-group').find('.badge').addClass('badge-danger').removeClass('badge-success').text('Field is required');
 		}
 	}
-	$("input").on("focus", function () {
+	$("input, textarea").on("focus", function () {
 		$(this).addClass("active").siblings(".placeholder").addClass("active");
 	});
-	$("input").on("blur", function () {
+	$("input, textarea").on("blur", function () {
 	
 		if (jQuery.trim($(this).val() ) == '' ) {
 			$(this).removeClass("active").siblings(".placeholder.active").removeClass("active");

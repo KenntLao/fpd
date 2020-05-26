@@ -149,7 +149,8 @@ label:not(.form-check-label):not(.custom-file-label) {
 }
 .badge-danger {
 	color: #DC3545;
-	background: none;
+	background: #ffa0a8;
+	border-radius: 0;
 }
 .badge-success {
 	color: #28A745;
@@ -158,6 +159,9 @@ label:not(.form-check-label):not(.custom-file-label) {
 }
 
 /* The required stuff */
+.form-horizontal > .row {
+	margin-bottom: 30px;
+}
 .form-group {
   position: relative;
 }
@@ -168,6 +172,8 @@ label:not(.form-check-label):not(.custom-file-label) {
   color: #999;
   top: 5px;
   pointer-events: none;
+  background: #fff;
+  left: 5px;
   transition: all 0.2s ease;
 }
 .form-group .placeholder.active {
@@ -176,17 +182,20 @@ label:not(.form-check-label):not(.custom-file-label) {
   top: -10px;
   color: #d8ba61;
 }
-.form-group input {
+.form-group input, .form-group textarea {
   position: relative;
 }
 .input {
 	position: relative;
 }
-.form-control {
+input.form-control, select.form-control {
 	border: 0;
 	border-bottom: 1px solid #ced4da;
 	border-radius: 0;
 	font-size: 15px;
+}
+textarea.form-control {
+	border-radius: 0;
 }
 .form-control:focus {
 	border-color: #d8ba61;
