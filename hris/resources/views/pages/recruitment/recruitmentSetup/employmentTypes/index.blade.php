@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">employment types list</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/recruitment/recruitmentSetup/employmentTypes/create"><i class="fa fa-plus"></i> add employment type</a>
+			<a class="btn btn-success btn-md" href="/hris/pages/recruitment/recruitmentSetup/employmentTypes/create"><i class="fa fa-plus"></i> add employment type</a>
 		</div>
 	</div>
 	<div class="card-body">

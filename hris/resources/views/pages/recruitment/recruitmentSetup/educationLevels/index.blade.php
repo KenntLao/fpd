@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">education levels list</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/recruitment/recruitmentSetup/educationLevels/create"><i class="fa fa-plus"></i> add education level</a>
+			<a class="btn btn-success btn-md" href="/hris/pages/recruitment/recruitmentSetup/educationLevels/create"><i class="fa fa-plus"></i> add education level</a>
 		</div>
 	</div>
 	<div class="card-body">

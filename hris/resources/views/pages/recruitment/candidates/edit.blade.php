@@ -25,16 +25,16 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label for="position_applied">Position Applied</label>
+						<label class="mr-2" for="position_applied">Position Applied: </label>
 						<span class="badge badge-danger">Required</span>
 						@if (count($jobPositions) > 0)
-						<select class="form-control select2" name="position_applied" required>
+						<select class="form-control required select2" name="position_applied" required>
 							@foreach($jobPositions as $jobPosition)
 							<option value='{{$jobPosition->job_title}}' {{ $jobPosition->job_title == $candidate->position_applied  ? 'selected' : '' }}>{{$jobPosition->job_title}}</option>
 							@endforeach
 						</select>
 						@else
-						<select class="form-control select2" name="position_applied" required>
+						<select class="form-control required select2" name="position_applied" required>
 							<option value="None">None</option>
 						</select>
 						@endif
@@ -42,9 +42,9 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="hiring_stage">Hiring Stage</label>
+						<label class="mr-2" for="hiring_stage">Hiring Stage: </label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="hiring_stage" required>
+						<select class="form-control required select2" name="hiring_stage" required>
 							<option value="Sourced" {{ $candidate->hiring_stage == 'Sourced'  ? 'selected' : '' }}>Sourced</option>
 							<option value="Hired" {{ $candidate->hiring_stage == 'Hired'  ? 'selected' : '' }}>Hired</option>
 							<option value="Archived" {{ $candidate->hiring_stage == 'Archived'  ? 'selected' : '' }}>Archived</option>
@@ -63,31 +63,37 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="first_name">First Name</label>
+						<label class="mr-2" for="first_name">First Name: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="first_name" value="{{ $candidate->first_name }}" required>
+						<div class="input">
+							<p class="placeholder">Enter first name</p>
+							<input class="form-control required" type="text" name="first_name" value="{{ $candidate->first_name }}" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="last_name">Last Name</label>
+						<label class="mr-2" for="last_name">Last Name: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="last_name" value="{{ $candidate->last_name }}" required>
+						<div class="input">
+							<p class="placeholder">Enter last name</p>
+							<input class="form-control required" type="text" name="last_name" value="{{ $candidate->last_name }}" required>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label for="profile_image">Profile Image</label>
-						<input class="form-control" type="file" name="profile_image">
+						<label class="mr-2" for="profile_image">Profile Image: </label>
+						<input class="form-control required" type="file" name="profile_image">
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="gender">Gender</label>
+						<label class="mr-2" for="gender">Gender: </label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="gender" required>
+						<select class="form-control required select2" name="gender" required>
 							<option value="Female" {{ $candidate->gender == 'Female'  ? 'selected' : '' }}>Female</option>
 							<option value="Male" {{ $candidate->gender == 'Male'  ? 'selected' : '' }}>Male</option>
 						</select>
@@ -95,15 +101,18 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="city">City</label>
-						<input class="form-control" type="text" name="city" value="{{ $candidate->city }}">
+						<label class="mr-2" for="city">City: </label>
+						<div class="input">
+							<p class="placeholder">Enter city</p>
+							<input class="form-control required" type="text" name="city" value="{{ $candidate->city }}">
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="country">Country</label>
+						<label class="mr-2" for="country">Country: </label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="country" required>
+						<select class="form-control required select2" name="country" required>
 							@foreach($countries as $country)
 							<option value='{{$country->name}}' {{ $candidate->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
 							@endforeach
@@ -114,65 +123,88 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="email">Email</label>
+						<label class="mr-2" for="email">Email Address: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="email" name="email" value="{{ $candidate->email }}" required>
+						<div class="input">
+							<p class="placeholder">Enter email address</p>
+							<input class="form-control required" type="email" name="email" value="{{ $candidate->email }}" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="telephone">Telephone</label>
+						<label class="mr-2" for="telephone">Telephone: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="telephone" value="{{ $candidate->telephone }}" required>
+						<div class="input">
+							<p class="placeholder">Enter telephone number</p>
+							<input class="form-control required" type="text" name="telephone" value="{{ $candidate->telephone }}" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="resume">Resume</label>
-						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="file" name="resume">
+						<label class="mr-2" for="resume">Resume: </label>
+						<input class="form-control required" type="file" name="resume">
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="resume_headline">Resume Headline</label>
-						<textarea class="form-control" name="resume_headline">{{ $candidate->resume_headline }}</textarea>
+						<label class="mr-2" for="resume_headline">Resume Headline: </label>
+						<div class="input">
+							<p class="placeholder">Enter resume headline</p>
+							<textarea class="form-control required" name="resume_headline">{{ $candidate->resume_headline }}</textarea>
+						</div>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="form-group">
-						<label for="profile_summary">Profile Summary</label>
-						<textarea class="form-control" name="profile_summary">{{ $candidate->profile_summary }}</textarea>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-6">
-					<div class="form-group">
-						<label for="total_years_exp">Total Years of Experience</label>
-						<textarea class="form-control" type="text" name="total_years_exp">{{ $candidate->total_years_exp }}</textarea>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="form-group">
-						<label for="work_history">Work History</label>
-						<textarea class="form-control" name="work_history">{{ $candidate->work_history }}</textarea>
+						<label class="mr-2" for="profile_summary">Profile Summary: </label>
+						<div class="input">
+							<p class="placeholder">Enter profile summary</p>
+							<textarea class="form-control required" name="profile_summary">{{ $candidate->profile_summary }}</textarea>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="education">Education</label>
-						<textarea class="form-control" name="education">{{ $candidate->education }}</textarea>
+						<label class="mr-2" for="total_years_exp">Total Years of Experience: </label>
+						<div class="input">
+							<p class="placeholder">Enter total years of experience</p>
+							<textarea class="form-control required" type="text" name="total_years_exp">{{ $candidate->total_years_exp }}</textarea>
+						</div>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="form-group">
-						<label for="skills">Skills</label>
-						<textarea class="form-control" name="skills">{{ $candidate->skills }}</textarea>
+						<label class="mr-2" for="work_history">Work History: </label>
+						<div class="input">
+							<p class="placeholder">Enter work history</p>
+							<textarea class="form-control required" name="work_history">{{ $candidate->work_history }}</textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group">
+						<label class="mr-2" for="education">Education: </label>
+						<div class="input">
+							<p class="placeholder">Enter education</p>
+							<textarea class="form-control required" name="education">{{ $candidate->education }}</textarea>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group">
+						<label class="mr-2" for="skills">Skills: </label>
+						<div class="input">
+							<p class="placeholder">Enter skills</p>
+							<textarea class="form-control required" name="skills">{{ $candidate->skills }}</textarea>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -180,21 +212,30 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="referees">Referees</label>
-						<textarea class="form-control" name="referees">{{ $candidate->referees }}</textarea>
+						<label class="mr-2" for="referees">Referees: </label>
+						<div class="input">
+							<p class="placeholder">Enter referees</p>
+							<textarea class="form-control required" name="referees">{{ $candidate->referees }}</textarea>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="prefered_industry">Prefered Industry</label>
+						<label class="mr-2" for="prefered_industry">Prefered Industry: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="prefered_industry" value="{{ $candidate->prefered_industry }}">
+						<div class="input">
+							<p class="placeholder">Enter prefered industry</p>
+							<input class="form-control required" type="text" name="prefered_industry" value="{{ $candidate->prefered_industry }}">
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="expected_salary">Expected Salary</label>
-						<input class="form-control" type="text" name="expected_salary" value="{{ $candidate->expected_salary }}">
+						<label class="mr-2" for="expected_salary">Expected Salary: </label>
+						<div class="input">
+							<p class="placeholder">Enter expected salary</p>
+							<input class="form-control required" type="text" name="expected_salary" value="{{ $candidate->expected_salary }}">
+						</div>
 					</div>
 				</div>
 			</div>

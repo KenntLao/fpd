@@ -54,7 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    //'asset_url' => env('ASSET_URL', null)
+    //'asset_url' => env('ASSET_URL', null) DEFAULT ASSET URL
     'asset_url' => 'http://fpd/hris/public',
 
     /*
@@ -68,7 +68,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    //'timezone' => 'UTC', DEFAULT TIMEZONE
+    'timezone' => 'Asia/Manila',
 
     /*
     |--------------------------------------------------------------------------
