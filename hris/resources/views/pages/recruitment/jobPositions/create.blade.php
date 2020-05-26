@@ -25,7 +25,7 @@
 				<div class="col-4">
 					<div class="form-group">
 						<label class="mr-2"for="job_code">Job Code: </label>
-						<span class="badge right badge-danger">Field is required</span>
+						<span class="badge right badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter job code</p>
 							<input class="form-control required" type="text" name="job_code" required>
@@ -36,7 +36,7 @@
 				<div class="col-4">
 					<div class="form-group">
 						<label class="mr-2"for="job_title">Job Title: </label>
-						<span class="badge badge-danger">Field is required</span>
+						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter job title</p>
 							<input class="form-control required" type="text" name="job_title" required>
@@ -69,7 +69,7 @@
 				<div class="col-5">
 					<div class="form-group">
 						<label class="mr-2"for="show_hiring_manager_name">Show Hiring Manager Name: </label>
-						<span class="badge badge-danger">Field is required</span>
+						<span class="badge badge-danger">Required</span>
 						<select class="form-control required select2" name="show_hiring_manager_name" required>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
@@ -81,7 +81,7 @@
 				<div class="col-6">
 					<div class="form-group">
 						<label class="mr-2"for="short_description">Short Description: </label>
-						<span class="badge badge-danger">Field is required</span>
+						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter short description</p>
 							<textarea class="form-control required" name="short_description" required></textarea>
@@ -91,7 +91,7 @@
 				<div class="col-6">
 					<div class="form-group">
 						<label class="mr-2"for="job_description">Job Description: </label>
-						<span class="badge badge-danger">Field is required</span>
+						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter job description</p>
 							<textarea class="form-control required" name="job_description" required></textarea>
@@ -361,9 +361,9 @@ $(document).ready(function() {
 			minlength = obj.attr('minlength');
 		}
 		if (obj.val().length >= minlength) {
-			obj.closest('.form-group').find('.badge').addClass('badge-success').removeClass('badge-danger').html('Input is valid');
+			obj.closest('.form-group').find('.badge').addClass('badge-success').removeClass('badge-danger');
 		} else {
-		obj.closest('.form-group').find('.badge').addClass('badge-danger').removeClass('badge-success').text('Field is required');
+		obj.closest('.form-group').find('.badge').addClass('badge-danger').removeClass('badge-success');
 		}
 	}
 	$("input, textarea").on("focus", function () {

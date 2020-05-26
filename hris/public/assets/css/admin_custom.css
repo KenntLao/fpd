@@ -128,7 +128,7 @@ body {
 
 
 /* FORMS */
-form {
+#form {
 	padding-top: 40px;
 }
 label, input, select, textarea {
@@ -146,16 +146,6 @@ label:not(.form-check-label):not(.custom-file-label) {
 .badge {
     font-weight: normal;
     font-family: avenir;
-}
-.badge-danger {
-	color: #DC3545;
-	background: #ffa0a8;
-	border-radius: 0;
-}
-.badge-success {
-	color: #28A745;
-	background: #7fff9b;
-	border-radius: 0;
 }
 
 /* The required stuff */
