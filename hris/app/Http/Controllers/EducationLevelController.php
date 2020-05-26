@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\hris_education_levels;
+use Illuminate\Support\Facades\Log;
 
 class EducationLevelController extends Controller
 {
@@ -26,6 +27,7 @@ class EducationLevelController extends Controller
         if ($this->validatedData()) {
             $educationLevel->name = request('name');
             $educationLevel->save();
+            Log::channel('educationLevels')->info('A new education level has been added. Id: ' .$educationLevel->id. '. Name: '. $educationLevel->name. '.');
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
@@ -47,6 +49,7 @@ class EducationLevelController extends Controller
         if ($this->validatedData()) {
             $educationLevel->name = request('name');
             $educationLevel->update();
+            Log::channel('educationLevels')->info('Education level id no.' .$educationLevel->id. ' has been updated. Name: '. $educationLevel->name. '.');
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully updated!');
         } else {
             return back()->withErrors($this->validatedData);
@@ -56,7 +59,7 @@ class EducationLevelController extends Controller
     public function destroy(hris_education_levels $educationLevel)
     {
         $educationLevel->delete();
-
+        Log::channel('educationLevels')->info('Education level id no.' .$educationLevel->id. ' has been deleted. Name: '. $educationLevel->name. '.');
         return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
     }
 

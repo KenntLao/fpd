@@ -7,33 +7,17 @@ use App\hris_job_functions;
 
 class JobFunctionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {   
         $jobFunctions = hris_job_functions::paginate(10);
         return view('pages.recruitment.recruitmentSetup.jobFunctions.index', compact('jobFunctions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(hris_job_functions $jobFunction)
     {
         return view('pages.recruitment.recruitmentSetup.jobFunctions.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $jobFunction = new hris_job_functions();
@@ -48,35 +32,16 @@ class JobFunctionController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+  
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(hris_job_functions $jobFunction)
     {
         return view('pages.recruitment.recruitmentSetup.jobFunctions.edit', compact('jobFunction'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(hris_job_functions $jobFunction, Request $request)
     {
         if ($this->validatedData()) {

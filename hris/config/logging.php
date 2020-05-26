@@ -102,7 +102,13 @@ return [
         //BENEFITS LOG
         'benefits' => [
           'driver' => 'single',
-          'path' => storage_path('logs/benefits.log'),
+          'path' => storage_path('logs/recruitment/recruitmentSetup/benefits.log'),
+          'level' => 'info',
+        ],
+        //EDUCATION LEVELS LOG
+        'educationLevels' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/recruitment/recruitmentSetup/educationLevels.log'),
           'level' => 'info',
         ],
     ],
