@@ -191,6 +191,20 @@ Route::patch('/hris/pages/admin/properties/employeeProjects/update/{employeeProj
 /* DELETE EMPLOYEE PROJECTS */
 Route::delete('/hris/pages/admin/properties/employeeProjects/delete/{employeeProject}', 'EmployeeProjectController@destroy');
 
+/* LEAVE SETTINGS PAGE */
+
+/* LEAVE GROUPS PAGE */
+Route::get('/hris/pages/admin/leave/leaveGroups/index', 'LeaveGroupController@index');
+/* ADD LEAVE GROUPS */
+Route::get('/hris/pages/admin/leave/leaveGroups/create', 'LeaveGroupController@create');
+Route::post('/hris/pages/admin/leave/leaveGroups', 'LeaveGroupController@store');
+/* EDIT LEAVE GROUPS */
+Route::get('/hris/pages/admin/leave/leaveGroups/{leaveGroup}/edit', 'LeaveGroupController@edit');
+/* UPDATE LEAVE GROUPS */
+Route::patch('/hris/pages/admin/leave/leaveGroups/update/{leaveGroup}', 'LeaveGroupController@update');
+/* DELETE LEAVE GROUPS */
+Route::delete('/hris/pages/admin/leave/leaveGroups/delete/{leaveGroup}', 'LeaveGroupController@destroy');
+
 /* BENEFITS ADMINISTRATION */
 
 /* EXPENSES CATEGORIES PAGE */

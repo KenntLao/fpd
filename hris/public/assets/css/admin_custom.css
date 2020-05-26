@@ -1,3 +1,8 @@
+/* FONTS */
+@font-face {
+	src: url("../fonts/avenir.otf");
+	font-family: avenir;
+}
 /* SIDEBAR */
 
 .nav-link > p {
@@ -5,21 +10,19 @@
 	margin-left: 10px !important;
 }
 .main-sidebar {
-	background: #BC2325;
+	background: #FFD140;
 }
-.nav-header, .brand-link {
-	color: #c2c7d0;
-}
-.nav-item > .nav-link, .has-treeview > .nav-item {
-	color: #c2c7d0;
+.nav-header, .brand-link, .nav-item > .nav-link, .has-treeview > .nav-item {
+	color: #041e42;
+	font-family: avenir;
 }
 .nav-item:hover > .nav-link, .has-treeview:hover > .nav-item {
-	color: #fff !important;
-	background: rgba(255,255,255,.1);
+	color: #000 !important;
+	background: rgba(255,255,255,.2);
 }
 .nav-item:hover > .nav-link.active, .nav-item > .nav-link.active {
-	color: #343a40 !important;
-	background: #fff;
+	color: #fff !important;
+	background: #041e42;
 }
 
 /* NAVBAR */
@@ -38,6 +41,7 @@ body {
 	color: #7a7a7a;
 	font-size: 20px;
 	text-transform: capitalize;
+	font-family: avenir;
 }
 
 /* TABLE */
@@ -46,9 +50,11 @@ body {
 .card-body > h4 {
 	text-align: center;
 	font-size: 15px;
+	font-family: avenir;
 }
 .card-tools > a {
 	text-transform: capitalize;
+	font-family: avenir;
 }
 .card-title {
 	font-size: 1.4rem;
@@ -122,20 +128,77 @@ body {
 
 
 /* FORMS */
+form {
+	padding-top: 40px;
+}
+label, input, select, textarea {
+	font-family: avenir;
+}
 .select2 {
 	width: 100% !important;
 }
-.form-group > label {
-	margin-right: 10px;
+label:not(.form-check-label):not(.custom-file-label) {
+	font-weight: bold;
+}
+.center {
+	padding: 0;
+}
+.badge {
+    font-weight: normal;
+    font-family: avenir;
+}
+.badge-danger {
+	color: #DC3545;
+	background: none;
+}
+.badge-success {
+	color: #28A745;
+	background: #7fff9b;
+	border-radius: 0;
+}
+
+/* The required stuff */
+.form-group {
+  position: relative;
+}
+.form-group .placeholder {
+  position: absolute;
+  z-index: 1;
+  padding: 5px 7px 0;
+  color: #999;
+  top: 5px;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+.form-group .placeholder.active {
+  font-size: 60%;
+  line-height: 1;
+  top: -10px;
+  color: #d8ba61;
+}
+.form-group input {
+  position: relative;
+}
+.input {
+	position: relative;
+}
+.form-control {
+	border: 0;
+	border-bottom: 1px solid #ced4da;
+	border-radius: 0;
 	font-size: 15px;
 }
-.form-group > input {
-	font-size: 15px;
+.form-control:focus {
+	border-color: #d8ba61;
+}
+.select2-container--default .select2-selection--single {
+	border: 0;
+	border-bottom: 1px solid #ced4da;
+	border-radius: 0;
 }
 .card-title, .card-footer > a, .card-footer > button {
 	text-transform: capitalize;
 }
-
 
 
 /* ALERT */
@@ -164,3 +227,4 @@ body {
 	color: #2ED79E;
 	margin-right: 5px;
 }
+

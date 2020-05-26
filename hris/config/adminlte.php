@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'NEXU - HRIS',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-1',
+    'logo' => '<b>Nexus </b>HRIS',
+    'logo_img' => null,
+    'logo_img_class' => null,
     'logo_img_xl' => null,
-    'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_xl_class' => null,
+    'logo_img_alt' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -208,12 +208,6 @@ return [
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
-        [
-            'text' => 'Pages',
-            'url' => 'admin/hris/pages',
-            'icon' => 'fas fa-fw fa-file'
-        ],
         'ADMINISTRATION',
         [
             'text' => 'Admin',
@@ -222,7 +216,7 @@ return [
                 [   
                     'text' => 'Company Structure',
                     'icon' => 'fas fa-fw fa-building',
-                    'url' => '/hris/pages/admin/company/index',
+                    'url' => '/hris/pages/admin/company/index'
                 ],
                 [
                     'text' => 'Job Details Setup',
@@ -231,17 +225,20 @@ return [
                         [
                             'text' => 'Job Titles',
                             'icon' => 'fas fa-fw fa-columns',
-                            'url' => '/hris/pages/admin/jobDetails/jobTitles/index'
+                            'url' => '/hris/pages/admin/jobDetails/jobTitles/index',
+                            'active' => ['/hris/pages/admin/jobDetails/jobTitles/create', '/hris/pages/admin/jobDetails/jobTitles/index', '/hris/pages/admin/jobDetails/jobTitles/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Pay Grades',
                             'icon' => 'fas fa-fw fa-columns',
-                            'url' => '/hris/pages/admin/jobDetails/payGrades/index'
+                            'url' => '/hris/pages/admin/jobDetails/payGrades/index',
+                            'active' => ['/hris/pages/admin/jobDetails/payGrades/create', '/hris/pages/admin/jobDetails/payGrades/index', '/hris/pages/admin/jobDetails/payGrades/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Employment Status',
                             'icon' => 'fas fa-fw fa-columns',
-                            'url' => '/hris/pages/admin/jobDetails/employmentStatuses/index'
+                            'url' => '/hris/pages/admin/jobDetails/employmentStatuses/index',
+                            'active' => ['/hris/pages/admin/jobDetails/employmentStatuses/create', '/hris/pages/admin/jobDetails/employmentStatuses/index', '/hris/pages/admin/jobDetails/employmentStatuses/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                     ]
                 ],
@@ -252,22 +249,26 @@ return [
                         [
                             'text' => 'Skills',
                             'icon' => 'fas fa-fw fa-check-square',
-                            'url' => '/hris/pages/admin/qualifications/skills/index'
+                            'url' => '/hris/pages/admin/qualifications/skills/index',
+                            'active' => ['/hris/pages/admin/qualifications/skills/create', '/hris/pages/admin/qualifications/skills/index', '/hris/pages/admin/qualifications/skills/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Education',
                             'icon' => 'fas fa-fw fa-check-square',
-                            'url' => '/hris/pages/admin/qualifications/educations/index'
+                            'url' => '/hris/pages/admin/qualifications/educations/index',
+                            'active' => ['/hris/pages/admin/qualifications/educations/create', '/hris/pages/admin/qualifications/educations/index', '/hris/pages/admin/qualifications/educations/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Certifications',
                             'icon' => 'fas fa-fw fa-check-square',
-                            'url' => '/hris/pages/admin/qualifications/certifications/index'
+                            'url' => '/hris/pages/admin/qualifications/certifications/index',
+                            'active' => ['/hris/pages/admin/qualifications/certifications/create', '/hris/pages/admin/qualifications/certifications/index', '/hris/pages/admin/qualifications/certifications/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Languages',
                             'icon' => 'fas fa-fw fa-check-square',
-                            'url' => '/hris/pages/admin/qualifications/languages/index'
+                            'url' => '/hris/pages/admin/qualifications/languages/index',
+                            'active' => ['/hris/pages/admin/qualifications/languages/create', '/hris/pages/admin/qualifications/languages/index', '/hris/pages/admin/qualifications/languages/*/edit', 'regex:@^content/[0-9]+$@']
                         ]
                     ]
                 ],
@@ -278,17 +279,20 @@ return [
                         [
                             'text' => 'Courses',
                             'icon' => 'fas fa-fw fa-briefcase',
-                            'url' => '/hris/pages/admin/training/courses/index'
+                            'url' => '/hris/pages/admin/training/courses/index',
+                            'active' => ['/hris/pages/admin/training/courses/create', '/hris/pages/admin/training/courses/index', '/hris/pages/admin/training/courses/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Training Sessions',
                             'icon' => 'fas fa-fw fa-briefcase',
-                            'url' => '/hris/pages/admin/training/trainingSessions/index'
+                            'url' => '/hris/pages/admin/training/trainingSessions/index',
+                            'active' => ['/hris/pages/admin/training/trainingSessions/create', '/hris/pages/admin/training/trainingSessions/index', '/hris/pages/admin/training/trainingSessions/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Employee Training Sessions',
                             'icon' => 'fas fa-fw fa-briefcase',
-                            'url' => '/hris/pages/admin/training/employeeTrainingSessions/index'
+                            'url' => '/hris/pages/admin/training/employeeTrainingSessions/index',
+                            'active' => ['/hris/pages/admin/training/employeeTrainingSessions/create', '/hris/pages/admin/training/employeeTrainingSessions/index', '/hris/pages/admin/training/employeeTrainingSessions/*/edit', 'regex:@^content/[0-9]+$@']
                         ]
                     ]
                 ],
@@ -299,17 +303,67 @@ return [
                         [
                             'text' => 'Clients',
                             'icon' => 'fas fa-fw fa-list-alt',
-                            'url' => '/hris/pages/admin/properties/clients/index'
+                            'url' => '/hris/pages/admin/properties/clients/index',
+                            'active' => ['/hris/pages/admin/properties/clients/create', '/hris/pages/admin/properties/clients/index', '/hris/pages/admin/properties/clients/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Projects',
                             'icon' => 'fas fa-fw fa-list-alt',
-                            'url' => '/hris/pages/admin/properties/projects/index'
+                            'url' => '/hris/pages/admin/properties/projects/index',
+                            'active' => ['/hris/pages/admin/properties/projects/create', '/hris/pages/admin/properties/projects/index', '/hris/pages/admin/training/properties/projects/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Employee Projects',
                             'icon' => 'fas fa-fw fa-list-alt',
-                            'url' => '/hris/pages/admin/properties/employeeProjects/index'
+                            'url' => '/hris/pages/admin/properties/employeeProjects/index',
+                            'active' => ['/hris/pages/admin/properties/employeeProjects/create', '/hris/pages/admin/properties/employeeProjects/index', '/hris/pages/admin/properties/employeeProjects/*/edit', 'regex:@^content/[0-9]+$@']
+                        ]
+                    ]
+                ],
+                [
+                    'text' => 'Leave Settings',
+                    'icon' => 'fas fa-fw fa-pause',
+                    'submenu' => [
+                        [
+                            'text' => 'Leave Types',
+                            'icon' => 'fas fa-fw fa-pause',
+                            'url' => '/hris/pages/admin/leave/types/index',
+                            'active' => ['/hris/pages/admin/leave/types/create', '/hris/pages/admin/leave/types/index', '/hris/pages/admin/leave/types/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Leave Period',
+                            'icon' => 'fas fa-fw fa-pause',
+                            'url' => '/hris/pages/admin/leave/period/index'
+                        ],
+                        [
+                            'text' => 'Work Week',
+                            'icon' => 'fas fa-fw fa-pause',
+                            'url' => '/hris/pages/admin/leave/workWeek/index'
+                        ],
+                        [
+                            'text' => 'Holidays',
+                            'icon' => 'fas fa-fw fa-pause',
+                            'url' => '/hris/pages/admin/leave/holidays/index'
+                        ],
+                        [
+                            'text' => 'Leave Rules',
+                            'icon' => 'fas fa-fw fa-pause',
+                            'url' => '/hris/pages/admin/leave/leaveRules/index'
+                        ],
+                        [
+                            'text' => 'Paid Time Off',
+                            'icon' => 'fas fa-fw fa-pause',
+                            'url' => '/hris/pages/admin/leave/paidTimeOff/index'
+                        ],
+                        [
+                            'text' => 'Leave Groups',
+                            'icon' => 'fas fa-fw fa-pause',
+                            'url' => '/hris/pages/admin/leave/leaveGroups/index'
+                        ],
+                        [
+                            'text' => 'Employee Leave List',
+                            'icon' => 'fas fa-fw fa-pause',
+                            'url' => '/hris/pages/admin/leave/employeeLeaveList/index'
                         ]
                     ]
                 ],
@@ -320,17 +374,20 @@ return [
                         [
                             'text' => 'Expenses Categories',
                             'icon' => 'fas fa-fw fa-bars',
-                            'url' => '/hris/pages/admin/benefits/expensesCategories/index'
+                            'url' => '/hris/pages/admin/benefits/expensesCategories/index',
+                            'active' => ['/hris/pages/admin/benefits/expensesCategories/create', '/hris/pages/admin/benefits/expensesCategories/index', '/hris/pages/admin/benefits/expensesCategories/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Payment Methods',
                             'icon' => 'fas fa-fw fa-bars',
-                            'url' => '/hris/pages/admin/benefits/paymentMethods/index'
+                            'url' => '/hris/pages/admin/benefits/paymentMethods/index',
+                            'active' => ['/hris/pages/admin/benefits/paymentMethods/create', '/hris/pages/admin/benefits/paymentMethods/index', '/hris/pages/admin/benefits/paymentMethods/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Employee Expenses',
                             'icon' => 'fas fa-fw fa-bars',
-                            'url' => '/hris/pages/admin/benefits/employeeExpenses/index'
+                            'url' => '/hris/pages/admin/benefits/employeeExpenses/index',
+                            'active' => ['/hris/pages/admin/benefits/employeeExpenses/create', '/hris/pages/admin/benefits/employeeExpenses/index', '/hris/pages/admin/benefits/employeeExpenses/*/edit', 'regex:@^content/[0-9]+$@']
                         ]
                     ]
                 ]
@@ -392,26 +449,31 @@ return [
                             'text'    => 'Benefits',
                             'url'     => '/hris/pages/recruitment/recruitmentSetup/benefits/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/benefits/create', '/hris/pages/recruitment/recruitmentSetup/benefits/index', '/hris/pages/recruitment/recruitmentSetup/benefits/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Education Levels',
                             'url'  => '/hris/pages/recruitment/recruitmentSetup/educationLevels/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/educationLevels/create', '/hris/pages/recruitment/recruitmentSetup/educationLevels/index', '/hris/pages/recruitment/recruitmentSetup/educationLevels/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Employment Types',
                             'url'  => '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/employmentTypes/create', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Experience Levels',
                             'url'  => '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/experienceLevels/create', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Job Functions',
                             'url'  => '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index',
                             'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/jobFunctions/create', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                     ],
                 ],
@@ -419,11 +481,13 @@ return [
                     'text' => 'Job Positions',
                     'url'  => '/hris/pages/recruitment/jobPositions/index',
                     'icon' => 'fas fa-fw fa-columns',
+                    'active' => ['/hris/pages/recruitment/jobPositions/create', '/hris/pages/recruitment/jobPositions/index', '/hris/pages/recruitment/jobPositions/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
                 [
                     'text' => 'Candidates',
                     'url'  => '/hris/pages/recruitment/candidates/index',
                     'icon' => 'fas fa-fw fa-user-friends',
+                    'active' => ['/hris/pages/recruitment/candidates/create', '/hris/pages/recruitment/candidates/index', '/hris/pages/recruitment/candidates/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
             ],
         ],
@@ -531,7 +595,7 @@ return [
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/orange/pace-theme-center-radar.min.css',
                 ],
                 [
                     'type' => 'js',
