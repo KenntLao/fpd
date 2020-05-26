@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1>Company Structure</h1>
+		<h1><i class="fas fa-fw fa-building "></i> Company Structure</h1>
 	</div>
 </div>
 @stop
@@ -73,6 +73,6 @@
 @stop
 @section('js')
 <script>
-console.log('Hi!');
+	console.log('Hi!');
 </script>
 @stop

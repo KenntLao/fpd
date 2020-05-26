@@ -49,7 +49,9 @@ body {
 	text-transform: capitalize;
 	font-family: opensans;
 }
-
+.page-title	> h1 i {
+	color: #FCBB6D;
+}
 /* BUTTON */
 .add-button {
 	background: #475C7A;
