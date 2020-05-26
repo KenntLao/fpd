@@ -212,18 +212,15 @@ return [
         [
             'text' => 'Admin',
             'icon' => 'fas fa-fw fa-cubes',
-            'icon_color' => 'primary',
             'submenu' => [
                 [   
                     'text' => 'Company Structure',
                     'icon' => 'fas fa-fw fa-building',
-                    'icon_color' => 'primary',
                     'url' => '/hris/pages/admin/company/index'
                 ],
                 [
                     'text' => 'Job Details Setup',
                     'icon' => 'fas fa-fw fa-columns',
-                    'icon_color' => 'primary',
                     'submenu' => [
                         [
                             'text' => 'Job Titles',
@@ -248,7 +245,6 @@ return [
                 [
                     'text' => 'Qualifications Setup',
                     'icon' => 'fas fa-fw fa-check-square',
-                    'icon_color' => 'primary',
                     'submenu' => [
                         [
                             'text' => 'Skills',
@@ -279,7 +275,6 @@ return [
                 [
                     'text' => 'Training Setup',
                     'icon' => 'fas fa-fw fa-briefcase',
-                    'icon_color' => 'primary',
                     'submenu' => [
                         [
                             'text' => 'Courses',
@@ -304,7 +299,6 @@ return [
                 [
                     'text' => 'Properties Setup',
                     'icon' => 'fas fa-fw fa-list-alt',
-                    'icon_color' => 'primary',
                     'submenu' => [
                         [
                             'text' => 'Clients',
@@ -329,7 +323,6 @@ return [
                 [
                     'text' => 'Leave Settings',
                     'icon' => 'fas fa-fw fa-pause',
-                    'icon_color' => 'primary',
                     'submenu' => [
                         [
                             'text' => 'Leave Types',
@@ -377,7 +370,6 @@ return [
                 [
                     'text' => 'Benefits Administration',
                     'icon' => 'fas fa-fw fa-bars',
-                    'icon_color' => 'primary',
                     'submenu' => [
                         [
                             'text' => 'Expenses Categories',
@@ -447,13 +439,11 @@ return [
         [
             'text'    => 'Recruitment',
             'icon' => 'fas fa-fw fa-th',
-            'icon_color' => 'indigo',
             'submenu' => [
                 [
                     'text'    => 'Recruitment Setup',
                     'url'     => '#',
                     'icon'    => 'fas fa-fw fa-random',
-                    'icon_color' => 'indigo',
                     'submenu' => [
                         [
                             'text'    => 'Benefits',
@@ -491,14 +481,12 @@ return [
                     'text' => 'Job Positions',
                     'url'  => '/hris/pages/recruitment/jobPositions/index',
                     'icon' => 'fas fa-fw fa-columns',
-                    'icon_color' => 'indigo',
                     'active' => ['/hris/pages/recruitment/jobPositions/create', '/hris/pages/recruitment/jobPositions/index', '/hris/pages/recruitment/jobPositions/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
                 [
                     'text' => 'Candidates',
                     'url'  => '/hris/pages/recruitment/candidates/index',
                     'icon' => 'fas fa-fw fa-user-friends',
-                    'icon_color' => 'indigo',
                     'active' => ['/hris/pages/recruitment/candidates/create', '/hris/pages/recruitment/candidates/index', '/hris/pages/recruitment/candidates/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
             ],

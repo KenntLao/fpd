@@ -1,7 +1,7 @@
 /* FONTS */
 @font-face {
-	src: url("../fonts/avenir.otf");
-	font-family: avenir;
+	src: url("../fonts/OpenSans-Regular.ttf");
+	font-family: opensans;
 }
 /* SIDEBAR */
 
@@ -10,19 +10,25 @@
 	margin-left: 10px !important;
 }
 .main-sidebar {
-	background: #FFD140;
+	background: #FCBB6D;
 }
-.nav-header, .brand-link, .nav-item > .nav-link, .has-treeview > .nav-item {
-	color: #041e42;
-	font-family: avenir;
+.nav-header {
+	color: #475C7A;
+}
+.brand-link, .nav-item > .nav-link, .has-treeview > .nav-item {
+	color: #fff;
+	text-transform: uppercase;
+	font-family: opensans;
 }
 .nav-item:hover > .nav-link, .has-treeview:hover > .nav-item {
-	color: #000 !important;
+	color: #475C7A !important;
 	background: rgba(255,255,255,.2);
+	border-radius: 0px
 }
 .nav-item:hover > .nav-link.active, .nav-item > .nav-link.active {
-	color: #fff !important;
-	background: #041e42;
+	color: #FCBB6D !important;
+	background: #475C7A;
+	border-radius: 0px;
 }
 
 /* NAVBAR */
@@ -41,23 +47,32 @@ body {
 	color: #7a7a7a;
 	font-size: 20px;
 	text-transform: capitalize;
-	font-family: avenir;
+	font-family: opensans;
 }
 
-/* TABLE */
+/* BUTTON */
+.add-button {
+	background: #475C7A;
+	color: #FCBB6D;
+	border-radius: 0px;
+}
+.add-button:hover {
+	background: #FCBB6D;
+	color: #475C7A;
+}
 
 /* EMPTY MESSAGE */
 .card-body > h4 {
 	text-align: center;
 	font-size: 15px;
-	font-family: avenir;
+	font-family: opensans;
 }
 .card-header > .card-tools {
 	margin-right: 0;
 }
 .card-tools > a {
 	text-transform: capitalize;
-	font-family: avenir;
+	font-family: opensans;
 }
 .card-title {
 	font-size: 1.4rem;
@@ -71,7 +86,7 @@ body {
 	vertical-align: middle;
 	text-align: center;
 	padding: .25rem .3rem;
-	font-family: avenir;
+	font-family: opensans;
 }
 .table {
 	margin-bottom: 0;
@@ -82,7 +97,7 @@ body {
 	font-size: 12px;
 	color: #7a7a7a;
 	padding: .25rem .5rem;
-	font-family: avenir;
+	font-family: opensans;
 }
 .table tbody td form {
 	display: inline-block;
@@ -118,7 +133,7 @@ body {
 }
 .page-link {
 	font-size: 12px;
-	font-family: avenir;
+	font-family: opensans;
 	color: #c2c7d0;
 }
 .page-link:hover {
@@ -138,7 +153,7 @@ body {
 	padding-top: 40px;
 }
 label, input, select, textarea {
-	font-family: avenir;
+	font-family: opensans;
 }
 .select2 {
 	width: 100% !important;
@@ -151,7 +166,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 }
 .badge {
     font-weight: normal;
-    font-family: avenir;
+    font-family: opensans;
 }
 
 /* The required stuff */
@@ -226,7 +241,7 @@ textarea.form-control {
 }
 .alert > p {
 	margin-bottom: 0;
-	font-family: avenir;
+	font-family: opensans;
 	color: #2ED79E;
 }
 .alert > p > i {

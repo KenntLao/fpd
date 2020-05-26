@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">company structure list</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/admin/company/create"><i class="fa fa-plus mr-1"></i> add company structure</a>
+			<a class="btn add-button btn-md" href="/hris/pages/admin/company/create"><i class="fa fa-plus mr-1"></i> add company structure</a>
 		</div>
 	</div>
 	<div class="card-body">
