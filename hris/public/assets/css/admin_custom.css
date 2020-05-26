@@ -72,7 +72,7 @@ body {
 .card-header {
 	border-radius: 0px;
 	background: #FCBB6D;
-	color: #475C7A;
+	color: #fff;
 }
 .card-header > .card-tools {
 	margin-right: 0;
