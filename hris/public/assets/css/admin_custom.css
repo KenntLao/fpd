@@ -67,6 +67,11 @@ body {
 	font-size: 15px;
 	font-family: opensans;
 }
+.card-header {
+	border-radius: 0px;
+	background: #FCBB6D;
+	color: #475C7A;
+}
 .card-header > .card-tools {
 	margin-right: 0;
 }
