@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">candidates list</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/recruitment/candidates/create"><i class="fa fa-plus mr-1"></i> add candidate</a>
+			<a class="btn btn-success btn-md" href="/hris/pages/recruitment/candidates/create"><i class="fa fa-plus mr-1"></i> add candidate</a>
 		</div>
 	</div>
 	<div class="card-body">

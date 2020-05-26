@@ -24,41 +24,38 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form-group">
-						<label class="mr-2"for="job_code">Job Code: </label>
+						<label class="mr-2" for="job_code">Job Code: </label>
 						<span class="badge right badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter job code</p>
 							<input class="form-control required" type="text" name="job_code" required>
 						</div>
-						<p for="job_code" title="Enter Job Code"></p>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form-group">
-						<label class="mr-2"for="job_title">Job Title: </label>
+						<label class="mr-2" for="job_title">Job Title: </label>
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter job title</p>
 							<input class="form-control required" type="text" name="job_title" required>
 						</div>
-						<p for="job_code" title="Enter Job Title"></p>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form-group">
-						<label class="mr-2"for="company_name">Company Name: </label>
+						<label class="mr-2" for="company_name">Company Name: </label>
 						<div class="input">
 							<p class="placeholder">Enter company name</p>
 							<input class="form-control required" type="text" name="company_name">
 						</div>
-						<p for="job_code" title="Enter Company Name"></p>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-5">
 					<div class="form-group">
-						<label class="mr-2"for="hiring_manager">Hiring Manager: </label>
+						<label class="mr-2" for="hiring_manager">Hiring Manager: </label>
 						<select class="form-control required select2" name="hiring_manager">
 							<option value="Not selected">Not selected</option>
 							<option value="John Doe">John Doe</option>
@@ -68,7 +65,7 @@
 				</div>
 				<div class="col-5">
 					<div class="form-group">
-						<label class="mr-2"for="show_hiring_manager_name">Show Hiring Manager Name: </label>
+						<label class="mr-2" for="show_hiring_manager_name">Show Hiring Manager Name: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required select2" name="show_hiring_manager_name" required>
 							<option value="Yes">Yes</option>
@@ -80,7 +77,7 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label class="mr-2"for="short_description">Short Description: </label>
+						<label class="mr-2" for="short_description">Short Description: </label>
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter short description</p>
@@ -90,7 +87,7 @@
 				</div>
 				<div class="col-6">
 					<div class="form-group">
-						<label class="mr-2"for="job_description">Job Description: </label>
+						<label class="mr-2" for="job_description">Job Description: </label>
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter job description</p>
@@ -102,7 +99,7 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label class="mr-2"for="requirements">Requirements: </label>
+						<label class="mr-2" for="requirements">Requirements: </label>
 						<div class="input">
 							<p class="placeholder">Enter job description</p>
 							<textarea class="form-control required" name="requirements"></textarea>
@@ -111,7 +108,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="benefits">Benefits: </label>
+						<label class="mr-2" for="benefits">Benefits: </label>
 						<span class="badge badge-danger">Required</span>
 						@if (count($benefits) > 0)
 						<select class="form-control required select2" name="benefits" required>
@@ -128,7 +125,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="country">Country: </label>
+						<label class="mr-2" for="country">Country: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required select2" name="country" required>
 							@foreach($countries as $country)
@@ -141,7 +138,7 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="city">City: </label>
+						<label class="mr-2" for="city">City: </label>
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter city</p>
@@ -151,7 +148,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="postal_code">Postal Code: </label>
+						<label class="mr-2" for="postal_code">Postal Code: </label>
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter postal code</p>
@@ -161,7 +158,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="department">Department: </label>
+						<label class="mr-2" for="department">Department: </label>
 						<select class="form-control required" name="department">
 							<option value="Selected">Select</option>
 							<option value="Lorem Ipsum 1">Lorem Ipsum 1</option>
@@ -171,7 +168,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="employment_type">Employment Type: </label>
+						<label class="mr-2" for="employment_type">Employment Type: </label>
 						@if (count($employmentTypes) > 0)
 						<select class="form-control required" name="employment_type">
 							@foreach($employmentTypes as $employmentType)
@@ -189,7 +186,7 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="experience_level">Experience Level: </label>
+						<label class="mr-2" for="experience_level">Experience Level: </label>
 						@if (count($experienceLevels) > 0)
 						<select class="form-control required" name="exp_level">
 							@foreach($experienceLevels as $experienceLevel)
@@ -205,7 +202,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="job_function">Job Function: </label>
+						<label class="mr-2" for="job_function">Job Function: </label>
 						@if (count($jobFunctions) > 0)
 						<select class="form-control required" name="job_function">
 							@foreach($jobFunctions as $jobFunction)
@@ -221,7 +218,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="education_level">Education Level: </label>
+						<label class="mr-2" for="education_level">Education Level: </label>
 						@if (count($educationLevels) > 0)
 						<select class="form-control required" name="education_level">
 							@foreach($educationLevels as $educationLevel)
@@ -237,7 +234,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="show_salary">Show Salary: </label>
+						<label class="mr-2" for="show_salary">Show Salary: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required" name="show_salary" required>
 							<option value="Yes">Yes</option>
@@ -249,7 +246,7 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="currency">Currency: </label>
+						<label class="mr-2" for="currency">Currency: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required" name="currency" required>
 							<option value="Not selected">Not Selected</option>
@@ -261,7 +258,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="salary_min">Salary Min: </label>
+						<label class="mr-2" for="salary_min">Salary Min: </label>
 						<div class="input">
 							<p class="placeholder">Enter salary minimum</p>
 							<input class="form-control required" type="text" name="salary_min">
@@ -270,7 +267,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="salary_max">Salary Max: </label>
+						<label class="mr-2" for="salary_max">Salary Max: </label>
 						<div class="input">
 							<p class="placeholder">Enter salary maximum</p>
 							<input class="form-control required" type="text" name="salary_max">
@@ -279,7 +276,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="keywords">Keywords: </label>
+						<label class="mr-2" for="keywords">Keywords: </label>
 						<div class="input">
 							<p class="placeholder">Enter keywords</p>
 							<input class="form-control required" type="text" name="keywords">
@@ -290,7 +287,7 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="status">Status: </label>
+						<label class="mr-2" for="status">Status: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required" name="status" required>
 							<option value="Active">Active</option>
@@ -301,19 +298,19 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="closing_date">Closing Date: </label>
+						<label class="mr-2" for="closing_date">Closing Date: </label>
 						<input class="form-control required" type="date" name="closing_date">
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="image">Image: </label>
+						<label class="mr-2" for="image">Image: </label>
 						<input type="file" name="image" class="form-control required">
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2"for="display_type">Display Type: </label>
+						<label class="mr-2" for="display_type">Display Type: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required" name="display_type" required>
 							<option value="Text Only">Text Only</option>
@@ -336,46 +333,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-	$('.select2').select2();
-		// validate required with minimum length
-	$('input.required, select.required, textarea.required').on('keyup change', function () {
-		checkRequired($(this));
-		var minlength = 1;
-		if ($(this).attr('minlength') != undefined) {
-			minlength = $(this).attr('minlength');
-		}
-		if ($(this).val().length >= minlength) {
-			$(this).closest('.form-group').find('.error-message').hide();
-			$(this).closest('.form-group').find('label').removeClass('text-danger');
-			$(this).closest('.form-group').find('label class="mr-2"i').remove();
-		}
-	});
-	$('input.required, select.required, textarea.required').each(function () {
-	checkRequired($(this));
-	});
-	function checkRequired(obj) {
-		var minlength = 1;
-		if (obj.attr('minlength') != undefined) {
-			minlength = obj.attr('minlength');
-		}
-		if (obj.val().length >= minlength) {
-			obj.closest('.form-group').find('.badge').addClass('badge-success').removeClass('badge-danger');
-		} else {
-		obj.closest('.form-group').find('.badge').addClass('badge-danger').removeClass('badge-success');
-		}
-	}
-	$("input, textarea").on("focus", function () {
-		$(this).addClass("active").siblings(".placeholder").addClass("active");
-	});
-	$("input, textarea").on("blur", function () {
-	
-		if (jQuery.trim($(this).val() ) == '' ) {
-			$(this).removeClass("active").siblings(".placeholder.active").removeClass("active");
-		};
-	
-	});
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

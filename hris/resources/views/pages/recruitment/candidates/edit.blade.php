@@ -210,7 +210,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-console.log('Hi!');
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop
