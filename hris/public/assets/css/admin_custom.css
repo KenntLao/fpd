@@ -188,6 +188,8 @@ label:not(.form-check-label):not(.custom-file-label) {
 }
 .form-group .placeholder {
   position: absolute;
+  background: #fff;
+  padding: 0 3px;
   z-index: 1;
   color: #999;
   top: 10px;

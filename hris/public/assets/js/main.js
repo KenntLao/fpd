@@ -46,16 +46,4 @@ $(document).ready(function() {
 	
 	});
 
-	function stateCheck($formControl) {
-		if($formControl.val().length > 0) {
-			$formControl.addClass('valid');
-		} else {
-			$formControl.removeClass('valid');
-		}
-	}
-
-	$('.form-control').on('focusout', function(){
-		stateCheck($(this));
-	});
-
 });
