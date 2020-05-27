@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\hris_candidates;
 use App\hris_job_positions;
 use App\hris_countries;
@@ -28,38 +29,35 @@ class CandidateController extends Controller
     {
 
         $candidate = new hris_candidates();
-
-        if ( $request->hasFile('profile_image') && $request->hasFile('resume') ) {
-            if($this->validatedData()) {
+        if($this->validatedData() && $request->hasFile('resume')) {
+            if ( $request->hasFile('profile_image') ) {
                 $imageName = time() . '.' . $request->profile_image->extension();
-                $resume = time() . '.' . $request->resume->extension();
-                $candidate->position_applied = request('position_applied');
-                $candidate->hiring_stage = request('hiring_stage');
-                $candidate->first_name = request('first_name');
-                $candidate->last_name = request('last_name');
                 $candidate->profile_image = $imageName;
-                $candidate->gender = request('gender');
-                $candidate->city = request('city');
-                $candidate->country = request('country');
-                $candidate->telephone = request('telephone');
-                $candidate->email = request('email');
-                $candidate->resume = $resume;
-                $candidate->resume_headline = request('resume_headline');
-                $candidate->profile_summary = request('profile_summary');
-                $candidate->total_years_exp = request('total_years_exp');
-                $candidate->work_history = request('work_history');
-                $candidate->education = request('education');
-                $candidate->skills = request('skills');
-                $candidate->referees = request('referees');
-                $candidate->prefered_industry = request('prefered_industry');
-                $candidate->expected_salary = request('expected_salary');
-                $request->profile_image->move(public_path('assets/images/candidates/profile_image'), $imageName);
-                $request->resume->move(public_path('assets/images/candidates/resume'), $resume);
-                $candidate->save();
-                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully added!');
-            } else {
-                return back()->withErrors($this->validatedData());
+                $request->profile_image->move(public_path('assets/files/candidates/profile_image'), $imageName);
             }
+            $resume = time() . '.' . $request->resume->extension();
+            $candidate->position_applied = request('position_applied');
+            $candidate->hiring_stage = request('hiring_stage');
+            $candidate->first_name = request('first_name');
+            $candidate->last_name = request('last_name');
+            $candidate->gender = request('gender');
+            $candidate->city = request('city');
+            $candidate->country = request('country');
+            $candidate->telephone = request('telephone');
+            $candidate->email = request('email');
+            $candidate->resume = $resume;
+            $candidate->resume_headline = request('resume_headline');
+            $candidate->profile_summary = request('profile_summary');
+            $candidate->total_years_exp = request('total_years_exp');
+            $candidate->work_history = request('work_history');
+            $candidate->education = request('education');
+            $candidate->skills = request('skills');
+            $candidate->referees = request('referees');
+            $candidate->prefered_industry = request('prefered_industry');
+            $candidate->expected_salary = request('expected_salary');
+            $request->resume->move(public_path('assets/files/candidates/resume'), $resume);
+            $candidate->save();
+            return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -79,72 +77,58 @@ class CandidateController extends Controller
 
     public function update(hris_candidates $candidate, Request $request)
     {
-        if ( $request->hasFile('profile_image') && $request->hasFile('resume') ) {
-            if($this->validatedData()) {
-                $pathCandidate = public_path('assets/images/candidates/profile_image/');
-                $pathResume = public_path('assets/images/candidates/resume/');
-                $imageName = time() . '.' . $request->profile_image->extension();
-                $resume = time() . '.' . $request->resume->extension();
+
+        if($this->validatedData()) {
+            if( $request->hasFile('profile_image') ) {
+                $pathCandidate = public_path('/assets/files/candidates/profile_image/');
                 if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
                     $old_file_1 = $pathCandidate . $candidate->profile_image;
                     unlink($old_file_1);
+                    $imageName = time() . '.' . $request->profile_image->extension();
+                    $candidate->profile_image = $imageName;
+                    $request->profile_image->move(public_path('/assets/files/candidates/profile_image/'), $imageName);
+                } else {
+                    $imageName = time() . '.' . $request->profile_image->extension();
+                    $candidate->profile_image = $imageName;
+                    $request->profile_image->move(public_path('/assets/files/candidates/profile_image/'), $imageName);
                 }
+            }
+            if( $request->hasFile('resume') ) {
+                $pathResume = public_path('assets/files/candidates/resume/');
                 if ($candidate->resume != '' && $candidate->resume != NULL) {
                     $old_file_2 = $pathResume . $candidate->resume;
                     unlink($old_file_2);
+                    $resume = time() . '.' . $request->resume->extension();
+                    $candidate->resume = $resume;
+                    $request->resume->move(public_path('assets/files/candidates/resume/'), $resume);
+                } else {
+                    $resume = time() . '.' . $request->resume->extension();
+                    $candidate->resume = $resume;
+                    $request->resume->move(public_path('assets/files/candidates/resume/'), $resume);
                 }
-                $candidate->position_applied = request('position_applied');
-                $candidate->hiring_stage = request('hiring_stage');
-                $candidate->first_name = request('first_name');
-                $candidate->last_name = request('last_name');
-                $candidate->profile_image = $imageName;
-                $candidate->gender = request('gender');
-                $candidate->city = request('city');
-                $candidate->country = request('country');
-                $candidate->telephone = request('telephone');
-                $candidate->email = request('email');
-                $candidate->resume = $resume;
-                $candidate->resume_headline = request('resume_headline');
-                $candidate->profile_summary = request('profile_summary');
-                $candidate->total_years_exp = request('total_years_exp');
-                $candidate->work_history = request('work_history');
-                $candidate->education = request('education');
-                $candidate->skills = request('skills');
-                $candidate->referees = request('referees');
-                $candidate->prefered_industry = request('prefered_industry');
-                $candidate->expected_salary = request('expected_salary');
-                $request->profile_image->move(public_path('assets/images/candidates/profile_image/'), $imageName);
-                $request->resume->move(public_path('assets/images/candidates/resume/'), $resume);
-                $candidate->update();
-                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
-            } else {
-                return back()->withErrors($this->validatedData());
             }
+            $candidate->position_applied = request('position_applied');
+            $candidate->hiring_stage = request('hiring_stage');
+            $candidate->first_name = request('first_name');
+            $candidate->last_name = request('last_name');
+            $candidate->gender = request('gender');
+            $candidate->city = request('city');
+            $candidate->country = request('country');
+            $candidate->telephone = request('telephone');
+            $candidate->email = request('email');
+            $candidate->resume_headline = request('resume_headline');
+            $candidate->profile_summary = request('profile_summary');
+            $candidate->total_years_exp = request('total_years_exp');
+            $candidate->work_history = request('work_history');
+            $candidate->education = request('education');
+            $candidate->skills = request('skills');
+            $candidate->referees = request('referees');
+            $candidate->prefered_industry = request('prefered_industry');
+            $candidate->expected_salary = request('expected_salary');
+            $candidate->update();
+            return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
         } else {
-            if($this->validatedData()) {
-                $candidate->position_applied = request('position_applied');
-                $candidate->hiring_stage = request('hiring_stage');
-                $candidate->first_name = request('first_name');
-                $candidate->last_name = request('last_name');
-                $candidate->gender = request('gender');
-                $candidate->city = request('city');
-                $candidate->country = request('country');
-                $candidate->telephone = request('telephone');
-                $candidate->email = request('email');
-                $candidate->resume_headline = request('resume_headline');
-                $candidate->profile_summary = request('profile_summary');
-                $candidate->total_years_exp = request('total_years_exp');
-                $candidate->work_history = request('work_history');
-                $candidate->education = request('education');
-                $candidate->skills = request('skills');
-                $candidate->referees = request('referees');
-                $candidate->prefered_industry = request('prefered_industry');
-                $candidate->expected_salary = request('expected_salary');
-                $candidate->update();
-                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
-            } else {
-                return back()->withErrors($this->validatedData());
-            }
+            return back()->withErrors($this->validatedData());
         }
 
     }
@@ -152,8 +136,8 @@ class CandidateController extends Controller
     public function destroy(hris_candidates $candidate)
     {
         $candidate->delete();
-        $pathCandidate = public_path('assets/images/candidates/profile_image/');
-        $pathResume = public_path('assets/images/candidates/resume/');
+        $pathCandidate = public_path('assets/files/candidates/profile_image/');
+        $pathResume = public_path('assets/files/candidates/resume/');
         if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
             $old_file_1 = $pathCandidate . $candidate->profile_image;
             unlink($old_file_1);

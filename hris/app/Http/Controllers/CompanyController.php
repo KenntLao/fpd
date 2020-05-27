@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\hris_company_structures;
 use App\hris_countries;
 use App\hris_time_zones;

@@ -1,3 +1,11 @@
+/* BROWSER SCROLLBAR */
+html::-webkit-scrollbar-thumb {
+	background: #FCBB6D;
+}
+html::-webkit-scrollbar {
+	background: #475C7A;
+	width: 7px;
+}
 /* FONTS */
 @font-face {
 	src: url("../fonts/OpenSans-Regular.ttf");
@@ -52,6 +60,7 @@ body {
 .page-title	> h1 i {
 	color: #FCBB6D;
 }
+
 /* BUTTON */
 .add-button {
 	background: #475C7A;
@@ -133,6 +142,10 @@ body {
 .btn-x {
 	background: #fd7e14 !important;
 }
+.td-error {
+	color: red;
+	font-weight: bold;
+}
 
 /* PAGINATION */
 .card-footer > nav {
@@ -179,7 +192,6 @@ label:not(.form-check-label):not(.custom-file-label) {
     font-family: opensans;
 }
 
-/* The required stuff */
 .form-horizontal > .row {
 	margin-bottom: 30px;
 }
@@ -188,19 +200,19 @@ label:not(.form-check-label):not(.custom-file-label) {
 }
 .form-group .placeholder {
   position: absolute;
-  z-index: 1;
-  padding: 5px 7px 0;
-  color: #999;
-  top: 5px;
-  pointer-events: none;
   background: #fff;
-  left: 5px;
+  padding: 0 3px;
+  z-index: 1;
+  color: #999;
+  top: 10px;
+  pointer-events: none;
+  left: 10px;
   transition: all 0.2s ease;
 }
 .form-group .placeholder.active {
   font-size: 60%;
   line-height: 1;
-  top: -10px;
+  top: -5px;
   color: #d8ba61;
 }
 .form-group input, .form-group textarea {

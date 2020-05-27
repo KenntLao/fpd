@@ -216,7 +216,8 @@ return [
                 [   
                     'text' => 'Company Structure',
                     'icon' => 'fas fa-fw fa-building',
-                    'url' => '/hris/pages/admin/company/index'
+                    'url' => '/hris/pages/admin/company/index',
+                    'active' => ['/hris/pages/admin/company/create', '/hris/pages/admin/company/index', '/hris/pages/admin/company/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
                 [
                     'text' => 'Job Details Setup',

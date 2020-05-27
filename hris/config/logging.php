@@ -99,16 +99,208 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
-        //BENEFITS LOG
+
+        //ADD CHANNELS FOR LOGS
+
+        //ADMIN
+
+        //COMPANY STRUCTURE LOGS
+
+        'company' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/company/company.log'),
+          'level' => 'info',
+        ],
+
+
+        //JOB DETAILS
+        //EMPLOYEMENT STATUSES LOGS
+
+        'employmentStatuses' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/jobDetails/employmentStatuses.log'),
+          'level' => 'info',
+        ],
+
+        //JOB TITLES LOGS
+
+        'jobTitles' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/jobDetails/jobTitles.log'),
+          'level' => 'info',
+        ],
+
+        //PAY GRADES LOGS
+
+        'payGrades' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/jobDetails/payGrades.log'),
+          'level' => 'info',
+        ],
+
+        //PROPERTIES SETUP
+        //CLIENTS LOGS
+
+        'clients' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/properties/clients.log'),
+          'level' => 'info',
+        ],
+
+        //EMPLOYEE PROJECTS LOGS
+
+        'employeeProjects' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/properties/employeeProjects.log'),
+          'level' => 'info',
+        ],
+
+        //PROJECTS LOGS
+
+        'projects' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/properties/projects.log'),
+          'level' => 'info',
+        ],
+
+        //QUALIFICATIONS SETUP
+        //CERTIFICATIONS LOGS
+
+        'certifications' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/qualifications/certifications.log'),
+          'level' => 'info',
+        ],
+
+        //EDUCATIONS LOGS
+
+        'educations' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/qualifications/educations.log'),
+          'level' => 'info',
+        ],
+
+        //LANGUAGES LOGS
+
+        'languages' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/qualifications/languages.log'),
+          'level' => 'info',
+        ],
+
+        //SKILLS LOGS
+
+        'skills' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/qualifications/skills.log'),
+          'level' => 'info',
+        ],
+
+        //TRAINING SETUP
+        //COURSES LOGS
+
+        'courses' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/training/courses.log'),
+          'level' => 'info',
+        ],
+
+        //EDUCATIONS LOGS
+
+        'employeeTrainingSessions' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/training/employeeTrainingSessions.log'),
+          'level' => 'info',
+        ],
+
+        //LANGUAGES LOGS
+
+        'trainingSessions' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/training/trainingSessions.log'),
+          'level' => 'info',
+        ],
+
+        //BENEFIT ADMINISTRATION
+        //EMPLOYEE EXPENSES LOGS
+
+        'employeeExpenses' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/benefits/employeeExpenses.log'),
+          'level' => 'info',
+        ],
+
+        //EXPENSES CATEGORIES LOGS
+
+        'expensesCategories' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/benefits/expensesCategories.log'),
+          'level' => 'info',
+        ],
+
+        //PAYMENT METHODS LOGS
+
+        'paymentMethods' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/admin/benefits/paymentMethods.log'),
+          'level' => 'info',
+        ],
+
+        //RECRUITMENT
+        //JOB POSITIONS LOGS
+
+        'jobPositions' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/recruitment/jobPositions.log'),
+            'level' => 'info'
+        ],
+        
+        //CANDIDATES LOGS
+
+        'candidates' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/recruitment/candidates.log'),
+            'level' => 'info'
+        ],
+
+        //RECRUITMENT SETUP
+        //BENEFITS LOGS
+
         'benefits' => [
           'driver' => 'single',
           'path' => storage_path('logs/recruitment/recruitmentSetup/benefits.log'),
           'level' => 'info',
         ],
-        //EDUCATION LEVELS LOG
+
+        //EDUCATION LEVELS LOGS
+
         'educationLevels' => [
           'driver' => 'single',
           'path' => storage_path('logs/recruitment/recruitmentSetup/educationLevels.log'),
+          'level' => 'info',
+        ],
+
+        //EMPLOYMENT TYPES LOGS
+
+        'employmentTypes' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/recruitment/recruitmentSetup/employmentTypes.log'),
+          'level' => 'info',
+        ],
+
+        //EXPERIENCE LEVELS LOGS
+
+        'experienceLevels' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/recruitment/recruitmentSetup/experienceLevels.log'),
+          'level' => 'info',
+        ],
+
+        //JOB FUNCTIONS LOGS
+
+        'jobFunctions' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/recruitment/recruitmentSetup/jobFunctions.log'),
           'level' => 'info',
         ],
     ],

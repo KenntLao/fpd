@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1>Training Setup</h1>
+		<h1><i class="fas fa-fw fa-list-alt"></i> Training Setup</h1>
 	</div>
 </div>
 @stop
@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">employee training sessions list</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/admin/training/employeeTrainingSessions/create"><i class="fa fa-plus mr-1"></i> add employee training</a>
+			<a class="btn add-button btn-md" href="/hris/pages/admin/training/employeeTrainingSessions/create"><i class="fa fa-plus mr-1"></i> add employee training</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -38,7 +38,12 @@
 					@foreach($employeeTrainingSessions as $employeeTrainingSession)
 					<tr>
 						<td>{{$employeeTrainingSession->employee}}</td>
-						<td>{{$employeeTrainingSession->training_session}}</td>
+						<td>
+							@if($employeeTrainingSession->training)
+							{{$employeeTrainingSession->training->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif</td>
 						<td>{{$employeeTrainingSession->status}}</td>
 						<td>
 							<a href="/hris/pages/admin/training/employeeTrainingSessions/{{$employeeTrainingSession->id}}/edit"><i class="fa fa-edit"></i></a>
@@ -54,7 +59,7 @@
 			</table>
 		</div>
 		@else
-		<h4>No Data Available.</h4>
+		<h4>No data available.</h4>
 		@endif
 	</div>
 	<div class="card-footer">

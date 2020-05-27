@@ -13,4 +13,9 @@ class hris_training_sessions extends Model
 		return $this->belongsTo('App\hris_courses');
 	}
 
+	public function employeeTrainingSessions() 
+	{
+		return $this->hasMany('App\hris_employee_training_sessions');
+	}
+
 }

@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1>Expenses Administration</h1>
+		<h1><i class="fas fa-fw fa-bars"></i> Expenses Administration</h1>
 	</div>
 </div>
 @stop
@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">employee expenses list</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/admin/benefits/employeeExpenses/create"><i class="fa fa-plus mr-1"></i> add employee expenses</a>
+			<a class="btn add-button btn-md" href="/hris/pages/admin/benefits/employeeExpenses/create"><i class="fa fa-plus mr-1"></i> add employee expenses</a>
 		</div>
 	</div>
 	<div class="card-body">

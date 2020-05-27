@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\hris_job_positions;
 use App\hris_benefits;
 use App\hris_employment_types;
@@ -37,41 +38,39 @@ class JobPositionController extends Controller
     public function store(Request $request)
     {
         $jobPosition = new hris_job_positions();
-        if ($request->hasFile('image')) {
-            if ($this->validatedData()) {
+        if ($this->validatedData()) {
+            if( $request->hasFile('image') ) {
                 $imageName = time() . '.' . $request->image->extension();
-                $jobPosition->job_code = request('job_code');
-                $jobPosition->job_title = request('job_title');
-                $jobPosition->company_name = request('company_name');
-                $jobPosition->hiring_manager = request('hiring_manager');
-                $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
-                $jobPosition->short_description = request('short_description');
-                $jobPosition->job_description = request('job_description');
-                $jobPosition->requirements = request('requirements');
-                $jobPosition->benefits = request('benefits');
-                $jobPosition->country = request('country');
-                $jobPosition->city = request('city');
-                $jobPosition->postal_code = request('postal_code');
-                $jobPosition->department = request('department');
-                $jobPosition->employment_type = request('employment_type');
-                $jobPosition->exp_level = request('exp_level');
-                $jobPosition->job_function = request('job_function');
-                $jobPosition->education_level = request('education_level');
-                $jobPosition->show_salary = request('show_salary');
-                $jobPosition->currency = request('currency');
-                $jobPosition->salary_min = request('salary_min');
-                $jobPosition->salary_max = request('salary_max');
-                $jobPosition->keywords = request('keywords');
-                $jobPosition->status = request('status');
-                $jobPosition->closing_date = request('closing_date');
                 $jobPosition->image = $imageName;
-                $jobPosition->display_type = request('display_type');
-                $jobPosition->save();
                 $request->image->move(public_path('assets/images/job_positions/'), $imageName);
-                return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully added!');
-            } else {
-                return back()->withErrors($this->validatedData());
             }
+            $jobPosition->job_code = request('job_code');
+            $jobPosition->job_title = request('job_title');
+            $jobPosition->company_name = request('company_name');
+            $jobPosition->hiring_manager = request('hiring_manager');
+            $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
+            $jobPosition->short_description = request('short_description');
+            $jobPosition->job_description = request('job_description');
+            $jobPosition->requirements = request('requirements');
+            $jobPosition->benefits = request('benefits');
+            $jobPosition->country = request('country');
+            $jobPosition->city = request('city');
+            $jobPosition->postal_code = request('postal_code');
+            $jobPosition->department = request('department');
+            $jobPosition->employment_type = request('employment_type');
+            $jobPosition->exp_level = request('exp_level');
+            $jobPosition->job_function = request('job_function');
+            $jobPosition->education_level = request('education_level');
+            $jobPosition->show_salary = request('show_salary');
+            $jobPosition->currency = request('currency');
+            $jobPosition->salary_min = request('salary_min');
+            $jobPosition->salary_max = request('salary_max');
+            $jobPosition->keywords = request('keywords');
+            $jobPosition->status = request('status');
+            $jobPosition->closing_date = request('closing_date');
+            $jobPosition->display_type = request('display_type');
+            $jobPosition->save();
+            return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -97,79 +96,51 @@ class JobPositionController extends Controller
 
     public function update(hris_job_positions $jobPosition, Request $request)
     {
-        if ($request->hasFile('image')) {
-            if ($this->validatedData()) {
+        if ($this->validatedData()) {
+            if ( $request->hasFile('image') ) {
                 $imagePath = public_path('assets/images/job_positions/');
                 if ($jobPosition->image != '' && $jobPosition->image != NULL) {
                     $old_file = $imagePath . $jobPosition->image;
                     unlink($old_file);
+                    $imageName = time() . '.' . $request->image->extension();
+                    $jobPosition->image = $imageName;
+                    $request->image->move(public_path('assets/images/job_positions/'), $imageName);
+                } else {
+                    $imageName = time() . '.' . $request->image->extension();
+                    $jobPosition->image = $imageName;
+                    $request->image->move(public_path('assets/images/job_positions/'), $imageName);
                 }
-                $imageName = time() . '.' . $request->image->extension();
-                $jobPosition->job_code = request('job_code');
-                $jobPosition->job_title = request('job_title');
-                $jobPosition->company_name = request('company_name');
-                $jobPosition->hiring_manager = request('hiring_manager');
-                $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
-                $jobPosition->short_description = request('short_description');
-                $jobPosition->job_description = request('job_description');
-                $jobPosition->requirements = request('requirements');
-                $jobPosition->benefits = request('benefits');
-                $jobPosition->country = request('country');
-                $jobPosition->city = request('city');
-                $jobPosition->postal_code = request('postal_code');
-                $jobPosition->department = request('department');
-                $jobPosition->employment_type = request('employment_type');
-                $jobPosition->exp_level = request('exp_level');
-                $jobPosition->job_function = request('job_function');
-                $jobPosition->education_level = request('education_level');
-                $jobPosition->show_salary = request('show_salary');
-                $jobPosition->currency = request('currency');
-                $jobPosition->salary_min = request('salary_min');
-                $jobPosition->salary_max = request('salary_max');
-                $jobPosition->keywords = request('keywords');
-                $jobPosition->status = request('status');
-                $jobPosition->closing_date = request('closing_date');
-                $jobPosition->image = $imageName;
-                $jobPosition->display_type = request('display_type');
-                $jobPosition->update();
-                $request->image->move(public_path('assets/images/job_positions/'), $imageName);
-                return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
+            }
+            $jobPosition->job_code = request('job_code');
+            $jobPosition->job_title = request('job_title');
+            $jobPosition->company_name = request('company_name');
+            $jobPosition->hiring_manager = request('hiring_manager');
+            $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
+            $jobPosition->short_description = request('short_description');
+            $jobPosition->job_description = request('job_description');
+            $jobPosition->requirements = request('requirements');
+            $jobPosition->benefits = request('benefits');
+            $jobPosition->country = request('country');
+            $jobPosition->city = request('city');
+            $jobPosition->postal_code = request('postal_code');
+            $jobPosition->department = request('department');
+            $jobPosition->employment_type = request('employment_type');
+            $jobPosition->exp_level = request('exp_level');
+            $jobPosition->job_function = request('job_function');
+            $jobPosition->education_level = request('education_level');
+            $jobPosition->show_salary = request('show_salary');
+            $jobPosition->currency = request('currency');
+            $jobPosition->salary_min = request('salary_min');
+            $jobPosition->salary_max = request('salary_max');
+            $jobPosition->keywords = request('keywords');
+            $jobPosition->status = request('status');
+            $jobPosition->closing_date = request('closing_date');
+            $jobPosition->display_type = request('display_type');
+            $jobPosition->update();
+            return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
 
-            } else {
-                return back()->withErrors($this->validatedData());
-            }
         } else {
-            if ($this->validatedData()) {
-                $jobPosition->job_code = request('job_code');
-                $jobPosition->job_title = request('job_title');
-                $jobPosition->company_name = request('company_name');
-                $jobPosition->hiring_manager = request('hiring_manager');
-                $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
-                $jobPosition->short_description = request('short_description');
-                $jobPosition->job_description = request('job_description');
-                $jobPosition->requirements = request('requirements');
-                $jobPosition->benefits = request('benefits');
-                $jobPosition->country = request('country');
-                $jobPosition->city = request('city');
-                $jobPosition->postal_code = request('postal_code');
-                $jobPosition->department = request('department');
-                $jobPosition->employment_type = request('employment_type');
-                $jobPosition->exp_level = request('exp_level');
-                $jobPosition->job_function = request('job_function');
-                $jobPosition->education_level = request('education_level');
-                $jobPosition->show_salary = request('show_salary');
-                $jobPosition->currency = request('currency');
-                $jobPosition->salary_min = request('salary_min');
-                $jobPosition->salary_max = request('salary_max');
-                $jobPosition->keywords = request('keywords');
-                $jobPosition->status = request('status');
-                $jobPosition->closing_date = request('closing_date');
-                $jobPosition->display_type = request('display_type');
-                $jobPosition->update();
-                return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
-            } else {
-                return back()->withErrors($this->validatedData());
-            }
+            return back()->withErrors($this->validatedData());
         }
     }
 

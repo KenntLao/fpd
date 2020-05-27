@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Training Setup - Employee Training Sessions')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-list-alt"></i> Training Setup</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -24,35 +29,33 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form-group">
-						<label for="employee">Employee</label>
+						<label class="mr-2" for="employee">Employee: </label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="employee" required>
+						<select class="form-control required select2" name="employee" required>
 							<option value="SocialConz Digital">SocialConz Digital</option>
 						</select>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form-group">
-						<label for="training_session">Training Session</label>
+						<label class="mr-2" for="training_session">Training Session: </label>
 						<span class="badge badge-danger">Required</span>
+						<select class="form-control required select2" name="training_session" required>
 						@if (count($trainingSessions) > 0)
-						<select class="form-control select2" name="training_session" required>
 							@foreach($trainingSessions as $trainingSession)
 							<option value="{{$trainingSession->name}}">{{$trainingSession->name}}</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control select2" name="training_session" required disabled>
 							<option value="None">None</option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form-group">
-						<label for="status">Status</label>
+						<label class="mr-2" for="status">Status: </label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="status" required>
+						<select class="form-control required select2" name="status" required>
 							<option value="Scheduled">Scheduled</option>
 							<option value="Attended">Attended</option>
 							<option value="Not Attended">Not Attended</option>
@@ -64,7 +67,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/training/employeeTrainingSessions/index">Back</a>
-		<button class="btn btn-primary" type="submit" form="form">save employee training</button>
+		<button class="btn btn-success" type="submit" form="form">save employee training</button>
 	</div>
 </div>
 @stop
@@ -72,9 +75,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-$('.select2').select2();
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

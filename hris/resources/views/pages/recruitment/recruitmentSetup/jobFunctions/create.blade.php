@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Recruitment Setup - Job Functions')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-random"></i> recruitment setup</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -24,9 +29,12 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="name">Name</label>
+						<label class="mr-2" for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="name" required>
+						<div class="input">
+							<p class="placeholder">Enter name</p>
+							<input class="form-control required" type="text" name="name" required>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -34,7 +42,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/recruitment/recruitmentSetup/jobFunctions/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save job function</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save job function</button>
 	</div>
 </div>
 @stop
@@ -42,7 +50,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-console.log('Hi!');
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

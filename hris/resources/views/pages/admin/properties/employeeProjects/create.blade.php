@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Properties Setup - Employee Projects')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-list-alt"></i> Properties Setup</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -24,34 +29,35 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form-group">
-						<label for="employee">Employee</label>
+						<label class="mr-2" for="employee">Employee: </label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="employee" required>
+						<select class="form-control required select2" name="employee" required>
 							<option value="SocialConz Digital">SocialConz Digital</option>
 						</select>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form-group">
-						<label for="project">Project</label>
+						<label class="mr-2" for="project">Project: </label>
 						<span class="badge badge-danger">Required</span>
+						<select class="form-control required select2" name="project" required>
 						@if (count($projects) > 0)
-						<select class="form-control select2" name="project" required>
 							@foreach($projects as $project)
 							<option value="{{$project->name}}">{{$project->name}}</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control select2" name="project" disabled>
 							<option value="None">None</option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form-group">
-						<label for="details">Details</label>
-						<textarea class="form-control" name="details"></textarea>
+						<label class="mr-2" for="details">Details: </label>
+						<div class="input">
+							<p class="placeholder">Enter details</p>
+							<textarea class="form-control required" name="details"></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -59,7 +65,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/properties/employeeProjects/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save employee project</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save employee project</button>
 	</div>
 </div>
 @stop
@@ -67,9 +73,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-$('.select2').select2();
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

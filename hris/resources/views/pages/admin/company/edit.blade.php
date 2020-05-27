@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Administration - Company Structure')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-building "></i> Company Structure</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -25,7 +30,7 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form-group">
-						<label for="name">Name</label>
+						<label for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control" type="text" value="{{$company->name}}" name="name" required>
 					</div>
@@ -108,9 +113,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-$('.select2').select2();
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

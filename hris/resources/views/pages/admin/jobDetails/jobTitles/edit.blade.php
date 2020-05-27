@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Job Details Setup - Job Titles')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-columns"></i> Job Details Setup</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -25,32 +30,44 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="job_title_code">Job Title Code</label>
+						<label class="mr-2" for="job_title_code">Job Title Code: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="code" value="{{$jobTitle->code}}" required>
+						<div class="input">
+							<p class="placeholder">Enter job title code</p>
+							<input class="form-control required" type="text" name="code" value="{{$jobTitle->code}}" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="form-group">
-						<label for="job_title">Job Title</label>
+						<label class="mr-2" for="job_title">Job Title: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="name" value="{{$jobTitle->name}}" required>
+						<div class="input">
+							<p class="placeholder">Enter job title</p>
+							<input class="form-control required" type="text" name="name" value="{{$jobTitle->name}}" required>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="description">Description</label>
+						<label class="mr-2" for="description">Description: </label>
 						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="description" required>{{$jobTitle->description}}</textarea>
+						<div class="input">
+							<p class="placeholder">Enter description</p>
+							<textarea class="form-control required" name="description" required>{{$jobTitle->description}}</textarea>
+						</div>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="form-group">
-						<label for="specification">Specification</label>
+						<label class="mr-2" for="specification">Specification: </label>
 						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="specification" required>{{$jobTitle->specification}}</textarea>
+						<div class="input">
+							<p class="placeholder">Enter specification</p>
+							<textarea class="form-control required" name="specification" required>{{$jobTitle->specification}}</textarea>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -58,7 +75,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/jobDetails/jobTitles/index"><i class="fa fa-arrow-left"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload"></i> save job title</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload"></i> save job title</button>
 	</div>
 </div>
 @stop
@@ -66,9 +83,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-$('.select2').select2();
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

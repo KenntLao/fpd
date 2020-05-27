@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Recruitment - Candidates')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-columns"></i> recruitment</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -27,17 +32,15 @@
 					<div class="form-group">
 						<label class="mr-2" for="position_applied">Position Applied: </label>
 						<span class="badge badge-danger">Required</span>
-						@if (count($jobPositions) > 0)
 						<select class="form-control required select2" name="position_applied" required>
+						@if (count($jobPositions) > 0)
 							@foreach($jobPositions as $jobPosition)
 							<option value='{{$jobPosition->job_title}}' {{ $jobPosition->job_title == $candidate->position_applied  ? 'selected' : '' }}>{{$jobPosition->job_title}}</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control required select2" name="position_applied" required>
 							<option value="None">None</option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 				<div class="col-3">
@@ -113,9 +116,13 @@
 						<label class="mr-2" for="country">Country: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required select2" name="country" required>
-							@foreach($countries as $country)
-							<option value='{{$country->name}}' {{ $candidate->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
-							@endforeach
+							@if(count($countries) > 0)
+								@foreach($countries as $country)
+								<option value='{{$country->name}}' {{ $candidate->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
 					</div>
 				</div>
@@ -243,7 +250,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/recruitment/candidates/index"><i class="fa fa-arrow-left mr-1"></i> Back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save candidate</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save candidate</button>
 	</div>
 </div>
 @stop

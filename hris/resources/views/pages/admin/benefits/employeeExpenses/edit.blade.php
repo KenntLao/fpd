@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Expense Administration - Employee Expenses')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-bars"></i> Expenses Administration</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -25,21 +30,21 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label for="employee">Employee</label>
+						<label for="employee">Employee: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control" type="text" name="employee" value="{{$employeeExpense->employee}}" required>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="expense_date">Date</label>
+						<label for="expense_date">Date: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control" type="date" value="{{$employeeExpense->expense_date}}" name="expense_date" required>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="payment_method">Payment Method</label>
+						<label for="payment_method">Payment Method: </label>
 						<span class="badge badge-danger">Required</span>
 						@if(count($paymentMethods) > 0)
 						<select class="form-control select2" name="payment_method" required>
@@ -56,7 +61,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="ref_number">Transaction / Ref No.</label>
+						<label for="ref_number">Transaction / Ref No.: </label>
 						<input class="form-control" type="text" value="{{$employeeExpense->ref_number}}" name="ref_number">
 					</div>
 				</div>
@@ -64,31 +69,29 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label for="payee">Payee</label>
+						<label for="payee">Payee: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control" type="text" name="payee" value="{{$employeeExpense->payee}}" required>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="payment_method">Expense Category</label>
+						<label for="payment_method">Expense Category: </label>
 						<span class="badge badge-danger">Required</span>
-						@if(count($expensesCategories) > 0)
 						<select class="form-control select2" name="expense_category" required>
+						@if(count($expensesCategories) > 0)
 							@foreach($expensesCategories as $expensesCategory)
 							<option value="{{$expensesCategory->name}}" {{ $employeeExpense->payment_method == $paymentMethod->name  ? 'selected' : '' }}>{{$expensesCategory->name}}</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control select2" name="expense_category" disabled>
 							<option value="None">None</option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="form-group">
-						<label for="notes">Notes</label>
+						<label for="notes">Notes: </label>
 						<span class="badge badge-danger">Required</span>
 						<textarea class="form-control" name="notes" required>{{$employeeExpense->notes}}</textarea>
 					</div>
@@ -97,24 +100,22 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label for="payment_method">Currency</label>
+						<label for="payment_method">Currency: </label>
 						<span class="badge badge-danger">Required</span>
-						@if(count($currencies) > 0)
 						<select class="form-control select2" name="currency" required>
+						@if(count($currencies) > 0)
 							@foreach($currencies as $currency)
 							<option value="{{$currency->code}}">{{$currency->name}} ({{$currency->code}})</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control select2" name="currency" disabled>
 							<option value="None">None</option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="amount">Amount</label>
+						<label for="amount">Amount: </label>
 						<input class="form-control" type="text" name="amount" value="{{$employeeExpense->amount}}" required>
 					</div>
 				</div>
@@ -151,9 +152,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-$('.select2').select2();
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

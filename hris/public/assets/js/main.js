@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$('.select2').select2();
     // validate required with minimum length
-    $('input.required, select.required').on('keyup change', function () {
+    $('input.required, select.required, textarea.required').on('keyup change', function () {
         checkRequired($(this));
         var minlength = 1;
         if ($(this).attr('minlength') != undefined) {
@@ -44,18 +44,6 @@ $(document).ready(function() {
 			$(this).removeClass("active").siblings(".placeholder.active").removeClass("active");
 		};
 	
-	});
-
-	function stateCheck($formControl) {
-		if($formControl.val().length > 0) {
-			$formControl.addClass('valid');
-		} else {
-			$formControl.removeClass('valid');
-		}
-	}
-
-	$('.form-control').on('focusout', function(){
-		stateCheck($(this));
 	});
 
 });
