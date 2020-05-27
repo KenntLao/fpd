@@ -66,6 +66,7 @@ body {
 	background: #475C7A;
 	color: #FCBB6D;
 	border-radius: 0px;
+	border: 1px solid #475C7A;
 }
 .add-button:hover {
 	background: #FCBB6D;

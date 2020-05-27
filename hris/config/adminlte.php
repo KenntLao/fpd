@@ -401,7 +401,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Employees',
-                    'url'  => '/hris/pages/employees/employee/',
+                    'url'  => '/hris/pages/employees/employee/index',
                     'icon'    => 'fas fa-fw fa-users',
                 ],
                 [

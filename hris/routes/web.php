@@ -243,7 +243,10 @@ Route::patch('/hris/pages/admin/benefits/employeeExpenses/update/{employeeExpens
 /* UPDATE EMPLOYEE EXPENSES STATUS*/
 Route::patch('/hris/pages/admin/benefits/employeeExpenses/updateStatus/{employeeExpense}', 'EmployeeExpenseController@updateStatus');
 /* DELETE EMPLOYEE EXPENSES */
-Route::delete('/hris/pages/admin/benefits/employeeExpenses/delete/{employeeExpense}', 'EmployeeExpenseController@destroy'); 
+Route::delete('/hris/pages/admin/benefits/employeeExpenses/delete/{employeeExpense}', 'EmployeeExpenseController@destroy');
+
+/* EMPLOYEE MANAGEMENT */
+Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
 
 /* BENEFITS PAGE */
 Route::get('/hris/pages/recruitment/recruitmentSetup/benefits/index', 'BenefitController@index');
@@ -256,6 +259,7 @@ Route::get('/hris/pages/recruitment/recruitmentSetup/benefits/{benefit}/edit', '
 Route::patch('/hris/pages/recruitment/recruitmentSetup/benefits/update/{benefit}', 'BenefitController@update');
 /* DELETE BENEFIT */
 Route::delete('/hris/pages/recruitment/recruitmentSetup/benefits/delete/{benefit}', 'BenefitController@destroy');
+
 
 /* EMPLOYMENT TYPES PAGE */
 Route::get('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index', 'EmploymentTypeController@index');
