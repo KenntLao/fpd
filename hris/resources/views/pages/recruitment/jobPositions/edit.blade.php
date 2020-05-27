@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Recruitment - Job Positions')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-columns"></i> recruitment</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -57,11 +62,10 @@
 				<div class="col-5">
 					<div class="form-group">
 						<label class="mr-2" for="hiring_manager">Hiring Manager:</label>
-						<select class="form-control required" name="hiring_manager">
-							<option value="{{$jobPosition->hiring_manager}}">{{$jobPosition->hiring_manager}}</option>
-							<option value="Not Selected">Not Selected</option>
-							<option value="John Doe">John Doe</option>
-							<option value="Jane Doe">Jane Doe</option>
+						<select class="form-control required select2" name="hiring_manager">
+							<option value="Not Selected" {{ $jobPosition->hiring_manager == 'Not Selected'  ? 'selected' : '' }}>Not Selected</option>
+							<option value="John Doe" {{ $jobPosition->hiring_manager == 'John Doe'  ? 'selected' : '' }}>John Doe</option>
+							<option value="Jane Doe"{{ $jobPosition->hiring_manager == 'Jane Doe'  ? 'selected' : '' }}>Jane Doe</option>
 						</select>
 					</div>
 				</div>
@@ -69,10 +73,9 @@
 					<div class="form-group">
 						<label class="mr-2" for="show_hiring_manager_name">Show Hiring Manager Name</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control required" name="show_hiring_manager_name" required>
-							<option value="{{$jobPosition->show_hiring_manager_name}}">{{$jobPosition->show_hiring_manager_name}}</option>
-							<option value="Yes">Yes</option>
-							<option value="No">No</option>
+						<select class="form-control required select2" name="show_hiring_manager_name" required>
+							<option value="Yes" {{ $jobPosition->show_hiring_manager_name == 'Yes'  ? 'selected' : '' }}>Yes</option>
+							<option value="No" {{ $jobPosition->show_hiring_manager_name == 'No'  ? 'selected' : '' }}>No</option>
 						</select>
 					</div>
 				</div>
@@ -113,30 +116,29 @@
 					<div class="form-group">
 						<label class="mr-2" for="benefits">Benefits</label>
 						<span class="badge badge-danger">Required</span>
-						@if (count($benefits) > 0)
-						<select class="form-control required" name="benefits" required>
-							@foreach($benefits as $benefit)
-							<option value="None">None</option>
-							<option value="{{$benefit->name}}">{{$benefit->name}}</option>
-							<option value="{{$jobPosition->benefits}}">{{$jobPosition->benefits}}</option>
-							@endforeach
+						<select class="form-control required select2" name="benefits" required>
+							@if (count($benefits) > 0)
+								@foreach($benefits as $benefit)
+								<option value="{{$benefit->name}}"  {{ $jobPosition->benefits == $benefit->name  ? 'selected' : '' }}>{{$benefit->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
-						@else
-						<select class="form-control required" name="benefits">
-							<option value="None">None</option>
-							<option value="{{$jobPosition->benefits}}">{{$jobPosition->benefits}}</option>
-						</select>
-						@endif
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="country">Country</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control required" name="country" required>
-							@foreach($countries as $country)
-							<option value='{{$country->name}}' {{ $jobPosition->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
-							@endforeach
+						<select class="form-control required select2" name="country" required>
+							@if(count($countries) > 0)
+								@foreach($countries as $country)
+								<option value='{{$country->name}}' {{ $jobPosition->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
 					</div>
 				</div>
@@ -146,42 +148,44 @@
 					<div class="form-group">
 						<label class="mr-2" for="city">City</label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control required" type="text" name="city" value="{{$jobPosition->city}}" required>
+						<div class="input">
+							<p class="placeholder">Enter city</p>
+							<input class="form-control required" type="text" name="city" value="{{$jobPosition->city}}" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="postal_code">Postal Code</label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control required" type="text" name="postal_code" value="{{$jobPosition->postal_code}}" required>
+						<div class="input">
+							 <p class="placeholder">Enter postal code</p>
+							<input class="form-control required" type="text" name="postal_code" value="{{$jobPosition->postal_code}}" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="department">Department</label>
-						<select class="form-control required" name="department">
-							<option value="Selected">Select</option>
-							<option value="{{$jobPosition->department}}" selected>{{$jobPosition->department}}</option>
-							<option value="Lorem Ipsum 1">Lorem Ipsum 1</option>
-							<option value="Lorem Ipsum 2">Lorem Ipsum 2</option>
+						<select class="form-control required select2" name="department">
+							<option value="None" {{ $jobPosition->department == 'None'  ? 'selected' : '' }}>None</option>
+							<option value="Lorem Ipsum 1" {{ $jobPosition->department == 'Lorem Ipsum 1'  ? 'selected' : '' }}>Lorem Ipsum 1</option>
+							<option value="Lorem Ipsum 2" {{ $jobPosition->department == 'None'  ? 'Lorem Ipsum 2' : '' }}>Lorem Ipsum 2</option>
 						</select>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="employment_type">Employment Type</label>
+						<select class="form-control required select2" name="employment_type">
 						@if (count($employmentTypes) > 0)
-						<select class="form-control required" name="employment_type">
 							@foreach($employmentTypes as $employmentType)
-							<option value="None">None</option>
 							<option value='{{$employmentType->name}}' {{ $jobPosition->employment_type == $employmentType->name  ? 'selected' : '' }}>{{$employmentType->name}}</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control required" name="employment_type">
 							<option value="None">None</option></option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 			</div>
@@ -189,62 +193,52 @@
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="experience_level">Experience Level</label>
+						<select class="form-control required select2" name="exp_level">
 						@if (count($experienceLevels) > 0)
-						<select class="form-control required" name="exp_level">
 							@foreach($experienceLevels as $experienceLevel)
-							<option value="None">None</option>
 							<option value='{{$experienceLevel->name}}' {{ $jobPosition->exp_level == $experienceLevel->name  ? 'selected' : '' }}>{{$experienceLevel->name}}</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control required" name="exp_level">
 							<option value="None">None</option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="job_function">Job Function</label>
+						<select class="form-control required select2" name="job_function">
 						@if (count($jobFunctions) > 0)
-						<select class="form-control required" name="job_function">
 							@foreach($jobFunctions as $jobFunction)
-							<option value="None">None</option>
 							<option value='{{$jobFunction->name}}' {{ $jobPosition->job_function == $jobFunction->name  ? 'selected' : '' }}>{{$jobFunction->name}}</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control required" name="job_function">
 							<option value="None">None</option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="education_level">Education Level</label>
+						<select class="form-control required select2" name="education_level">	
 						@if (count($educationLevels) > 0)
-						<select class="form-control required" name="education_level">
 							@foreach($educationLevels as $educationLevel)
-							<option value="None">None</option>
 							<option value='{{$educationLevel->name}}' {{ $jobPosition->education_level == $educationLevel->name  ? 'selected' : '' }}>{{$educationLevel->name}}</option>
 							@endforeach
-						</select>
 						@else
-						<select class="form-control required" name="education_level">
 							<option value="None">None</option>
-						</select>
 						@endif
+						</select>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="show_salary">Show Salary</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control required" name="show_salary" required>
-							<option value="Yes">Yes</option>
-							<option value="No">No</option>
-							<option value="{{$jobPosition->show_salary}}" selected>{{$jobPosition->show_salary}}</option>
+						<select class="form-control required select2" name="show_salary" required>
+							<option value="Yes" {{ $jobPosition->show_salary == 'Yes'  ? 'selected' : '' }}>Yes</option>
+							<option value="No" {{ $jobPosition->show_salary == 'No'  ? 'selected' : '' }}>No</option>
 						</select>
 					</div>
 				</div>
@@ -254,10 +248,14 @@
 					<div class="form-group">
 						<label class="mr-2" for="currency">Currency</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control required" name="currency" required>
-							@foreach($currencies as $currency)
-							<option value='{{$currency->name}}' {{ $jobPosition->currency == $currency->name  ? 'selected' : '' }}>{{$currency->name}}</option>
-							@endforeach
+						<select class="form-control required select2" name="currency" required>
+							@if(count($currencies) > 0)
+								@foreach($currencies as $currency)
+								<option value='{{$currency->name}}' {{ $jobPosition->currency == $currency->name  ? 'selected' : '' }}>{{$currency->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
 					</div>
 				</div>
@@ -294,11 +292,10 @@
 					<div class="form-group">
 						<label class="mr-2" for="status">Status</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control required" name="status" required>
-							<option value="Active">Active</option>
-							<option value="On hold">On Hold</option>
-							<option value="Closed">Closed</option>
-							<option value="{{$jobPosition->status}}" selected>{{$jobPosition->status}}</option>
+						<select class="form-control required select2" name="status" required>
+							<option value="Active" {{ $jobPosition->status == 'Active' ? 'selected' : '' }}>Active</option>
+							<option value="On hold" {{ $jobPosition->status == 'On hold' ? 'selected' : '' }}>On Hold</option>
+							<option value="Closed" {{ $jobPosition->status == 'Closed' ? 'selected' : '' }}>Closed</option>
 						</select>
 					</div>
 				</div>
@@ -318,12 +315,11 @@
 					<div class="form-group">
 						<label class="mr-2" for="display_type">Display Type</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control required" name="display_type" required>
-							<option value="Text Only">Text Only</option>
-							<option value="Image Only">Image Only</option>
-							<option value="Image and Full Text">Image and Full Text</option>
-							<option value="Image and Other Details">Image and Other Details</option>
-							<option value="{{$jobPosition->display_type}}" selected>{{$jobPosition->display_type}}</option>
+						<select class="form-control required select2" name="display_type" required>
+							<option value="Text Only" {{ $jobPosition->display_type == 'Text Only' ? 'selected' : '' }}>Text Only</option>
+							<option value="Image Only" {{ $jobPosition->display_type == 'Image Only' ? 'selected' : '' }}>Image Only</option>
+							<option value="Image and Full Text" {{ $jobPosition->display_type == 'Image and Full Text' ? 'selected' : '' }}>Image and Full Text</option>
+							<option value="Image and Other Details" {{ $jobPosition->display_type == 'Image and Other Details' ? 'selected' : '' }}>Image and Other Details</option>
 						</select>
 					</div>
 				</div>

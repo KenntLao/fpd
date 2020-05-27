@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$('.select2').select2();
     // validate required with minimum length
-    $('input.required, select.required').on('keyup change', function () {
+    $('input.required, select.required, textarea.required').on('keyup change', function () {
         checkRequired($(this));
         var minlength = 1;
         if ($(this).attr('minlength') != undefined) {

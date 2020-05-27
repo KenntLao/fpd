@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1>Properties Setup</h1>
+		<h1><i class="fas fa-fw fa-list-alt"></i> Properties Setup</h1>
 	</div>
 </div>
 @stop
@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">employee projects</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/admin/properties/employeeProjects/create"><i class="fa fa-plus mr-1"></i> add employee projects</a>
+			<a class="btn add-button btn-md" href="/hris/pages/admin/properties/employeeProjects/create"><i class="fa fa-plus mr-1"></i> add employee projects</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -52,7 +52,7 @@
 			</table>
 		</div>
 		@else
-		<h4>No data Available.</h4>
+		<h4>No data available.</h4>
 		@endif
 	</div>
 	<div class="card-footer">

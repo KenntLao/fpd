@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Recruitment - Candidates')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-columns"></i> recruitment</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -24,24 +29,22 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2" for="position_applied">Position Applied:</label>
+						<label class="mr-2" for="position_applied">Position Applied: </label>
 						<span class="badge badge-danger">Required</span>
-						@if (count($jobPositions) > 0)
 						<select class="form-control required select2" name="position_applied" required>
-							@foreach($jobPositions as $jobPosition)
-							<option value="{{$jobPosition->job_title}}">{{$jobPosition->job_title}}</option>
-							@endforeach
+							@if (count($jobPositions) > 0)
+								@foreach($jobPositions as $jobPosition)
+								<option value="{{$jobPosition->job_title}}">{{$jobPosition->job_title}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
-						@else
-						<select class="form-control required select2" name="position_applied" required>
-							<option value="None">None</option>
-						</select>
-						@endif
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2" for="hiring_stage">Hiring Stage:</label>
+						<label class="mr-2" for="hiring_stage">Hiring Stage: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required select2" name="hiring_stage" required>
 							<option value="Sourced">Sourced</option>
@@ -62,7 +65,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2" for="first_name">First Name:</label>
+						<label class="mr-2" for="first_name">First Name: </label>
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter first name</p>
@@ -72,7 +75,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2" for="last_name">Last Name:</label>
+						<label class="mr-2" for="last_name">Last Name: </label>
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Enter last name</p>
@@ -84,13 +87,13 @@
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2" for="profile_image">Profile Image:</label>
+						<label class="mr-2" for="profile_image">Profile Image: </label>
 						<input class="form-control required" type="file" name="profile_image">
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2" for="gender">Gender:</label>
+						<label class="mr-2" for="gender">Gender: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required select2" name="gender" required>
 							<option value="Female">Female</option>
@@ -100,7 +103,7 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label class="mr-2" for="city">City::</label>
+						<label class="mr-2" for="city">City: </label>
 						<div class="input">
 							<p class="placeholder">Enter city</p>
 							<input class="form-control required" type="text" name="city">
@@ -112,9 +115,13 @@
 						<label class="mr-2" for="country">Country:</label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required select2" name="country" required>
-							@foreach($countries as $country)
-							<option value='{{$country->name}}'>{{$country->name}}</option>
-							@endforeach
+							@if(count($countries) > 0)
+								@foreach($countries as $country)
+								<option value='{{$country->name}}'>{{$country->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
 					</div>
 				</div>

@@ -1,3 +1,11 @@
+/* BROWSER SCROLLBAR */
+html::-webkit-scrollbar-thumb {
+	background: #FCBB6D;
+}
+html::-webkit-scrollbar {
+	background: #475C7A;
+	width: 7px;
+}
 /* FONTS */
 @font-face {
 	src: url("../fonts/OpenSans-Regular.ttf");
@@ -52,6 +60,7 @@ body {
 .page-title	> h1 i {
 	color: #FCBB6D;
 }
+
 /* BUTTON */
 .add-button {
 	background: #475C7A;
@@ -133,6 +142,10 @@ body {
 .btn-x {
 	background: #fd7e14 !important;
 }
+.td-error {
+	color: red;
+	font-weight: bold;
+}
 
 /* PAGINATION */
 .card-footer > nav {
@@ -179,7 +192,6 @@ label:not(.form-check-label):not(.custom-file-label) {
     font-family: opensans;
 }
 
-/* The required stuff */
 .form-horizontal > .row {
 	margin-bottom: 30px;
 }

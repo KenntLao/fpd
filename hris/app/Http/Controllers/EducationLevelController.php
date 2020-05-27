@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\hris_education_levels;
 use Illuminate\Support\Facades\Log;
+use App\hris_education_levels;
 
 class EducationLevelController extends Controller
 {

@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Recruitment Setup - Job Functions')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-random"></i> recruitment setup</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))

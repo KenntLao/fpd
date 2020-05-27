@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Expense Administration - Expenses Categories')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-bars"></i> Expenses Administration</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -25,9 +30,12 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="name">Name</label>
+						<label class="mr-2" for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="name" value="{{$expensesCategory->name}}" required>
+						<div class="input">
+							<p class="placeholder">Enter name</p>
+							<input class="form-control" type="text" name="name" value="{{$expensesCategory->name}}" required>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -43,9 +51,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-$('.select2').select2();
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

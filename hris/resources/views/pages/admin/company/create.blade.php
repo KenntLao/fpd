@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Administration - Company Structure')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-building "></i> Company Structure</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -24,74 +29,93 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form-group">
-						<label for="name">Name</label>
+						<label class="mr-2" for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="name" required>
+						<div class="input">
+							<p class="placeholder">Enter name</p>
+							<input class="form-control required" type="text" name="name" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form-group">
-						<label for="details">Details</label>
+						<label class="mr-2" for="details">Details</label>
 						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="details" required></textarea>
+						<div class="input">
+							<p class="placeholder">Enter details</p>
+							<textarea class="form-control required" name="details" required></textarea>
+						</div>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="form-group">
-						<label for="name">Address: </label>
-						<textarea class="form-control" name="address"></textarea>
+						<label class="mr-2" for="name">Address: </label>
+						<div class="input">
+							<p class="placeholder">Enter address</p>
+							<textarea class="form-control required" name="address"></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
 					<div class="form-group">
-						<label for="type">Type</label>
+						<label class="mr-2" for="type">Type</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="type" required>
+						<select class="form-control required select2" name="type" required>
+							@if(count($types) > 0)
 							@foreach($types as $type)
 							<option value='{{$type->name}}'>{{$type->name}}</option>
 							@endforeach
+							@else
+							<option value='None'>None</option>
+							@endif
 						</select>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="country">Country</label>
+						<label class="mr-2" for="country">Country</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="country" required>
+						<select class="form-control required select2" name="country" required>
+							@if(count($countries) > 0)
 							@foreach($countries as $country)
 							<option value='{{$country->name}}'>{{$country->name}}</option>
 							@endforeach
+							@else
+							<option value='None'>None</option>
+							@endif
 						</select>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="timezone">Time Zone</label>
+						<label class="mr-2" for="timezone">Time Zone</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-control select2" name="timezone" required>
+						<select class="form-control required select2" name="timezone" required>
+							@if(count($timezones) > 0)
 							@foreach($timezones as $timezone)
 							<option value="{{$timezone->name}}">{{$timezone->utc}} {{$timezone->name}}</option>
 							@endforeach
+							@else
+							<option value='None'>None</option>
+							@endif
 						</select>
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
-						<label for="type">Parent Structure</label>
+						<label class="mr-2" for="type">Parent Structure</label>
 						<span class="badge badge-danger">Required</span>
-						@if (count($companies) > 0)
-						<select class="form-control select2" name="parent_structure">
+						<select class="form-control required select2" name="parent_structure" required>
+							@if (count($companies) > 0)
 							@foreach($companies as $company)
 							<option value="{{$company->name}}">{{$company->name}}</option>
 							@endforeach
+							@else
+							<option value='None'>None</option>
+							@endif
 						</select>
-						@else
-						<select class="form-control select2" name="parent_structure">
-							<option value="None">None</option>
-						</select>
-						@endif
 					</div>
 				</div>
 			</div>
@@ -99,7 +123,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/company/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save company structure</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save company structure</button>
 	</div>
 </div>
 @stop
@@ -107,9 +131,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-$('.select2').select2();
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop

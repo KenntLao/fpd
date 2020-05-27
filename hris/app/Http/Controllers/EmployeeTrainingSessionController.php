@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\hris_employee_training_sessions;
 use App\hris_training_sessions;
 
@@ -11,7 +12,9 @@ class EmployeeTrainingSessionController extends Controller
     public function index()
     {
         $employeeTrainingSessions = hris_employee_training_sessions::paginate(10);
-        return view('pages.admin.training.employeeTrainingSessions.index', compact('employeeTrainingSessions'));
+        $id = hris_employee_training_sessions::all()->get('id');
+        $training = hris_training_sessions::find($id);
+        return view('pages.admin.training.employeeTrainingSessions.index', compact('employeeTrainingSessions', 'training'));
     }
 
     public function create(hris_employee_training_sessions $employeeTrainingSession)

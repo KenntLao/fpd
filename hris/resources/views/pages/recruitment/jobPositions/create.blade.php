@@ -2,6 +2,11 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Recruitment - Job Positions')
 @section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-columns"></i> recruitment</h1>
+	</div>
+</div>
 @stop
 @section('content')
 @if (count($errors))
@@ -110,17 +115,13 @@
 					<div class="form-group">
 						<label class="mr-2" for="benefits">Benefits: </label>
 						<span class="badge badge-danger">Required</span>
-						@if (count($benefits) > 0)
 						<select class="form-control required select2" name="benefits" required>
-							@foreach($benefits as $benefit)
-							<option value="{{$benefit->name}}">{{$benefit->name}}</option>
-							@endforeach
+							@if(count($benefits) > 0)
+								<option value="{{$benefit->name}}">{{$benefit->name}}</option>
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
-						@else
-						<select class="form-control required select2" name="benefits">
-							<option value="None">None</option>
-						</select>
-						@endif
 					</div>
 				</div>
 				<div class="col-3">
@@ -128,9 +129,13 @@
 						<label class="mr-2" for="country">Country: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required select2" name="country" required>
-							@foreach($countries as $country)
-							<option value='{{$country->name}}'>{{$country->name}}</option>
-							@endforeach
+							@if(count($countries) > 0)
+								@foreach($countries as $country)
+								<option value='{{$country->name}}'>{{$country->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
 					</div>
 				</div>
@@ -159,7 +164,7 @@
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="department">Department: </label>
-						<select class="form-control required" name="department">
+						<select class="form-control required select2" name="department">
 							<option value="Selected">Select</option>
 							<option value="Lorem Ipsum 1">Lorem Ipsum 1</option>
 							<option value="Lorem Ipsum 2">Lorem Ipsum 2</option>
@@ -169,17 +174,15 @@
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="employment_type">Employment Type: </label>
-						@if (count($employmentTypes) > 0)
-						<select class="form-control required" name="employment_type">
-							@foreach($employmentTypes as $employmentType)
-							<option value="{{$employmentType->name}}">{{$employmentType->name}}</option>
-							@endforeach
+						<select class="form-control required select2" name="employment_type">
+							@if(count($employmentTypes) > 0)
+								@foreach($employmentTypes as $employmentType)
+								<option value="{{$employmentType->name}}">{{$employmentType->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
-						@else
-						<select class="form-control required" name="employment_type">
-							<option value="None">None</option>
-						</select>
-						@endif
 					</div>
 				</div>
 			</div>
@@ -187,49 +190,43 @@
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="experience_level">Experience Level: </label>
-						@if (count($experienceLevels) > 0)
 						<select class="form-control required" name="exp_level">
-							@foreach($experienceLevels as $experienceLevel)
-							<option value="{{$experienceLevel->name}}">{{$experienceLevel->name}}</option>
-							@endforeach
+							@if (count($experienceLevels) > 0)
+								@foreach($experienceLevels as $experienceLevel)
+								<option value="{{$experienceLevel->name}}">{{$experienceLevel->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
-						@else
-						<select class="form-control required" name="exp_level">
-							<option value="None">None</option>
-						</select>
-						@endif
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="job_function">Job Function: </label>
-						@if (count($jobFunctions) > 0)
 						<select class="form-control required" name="job_function">
-							@foreach($jobFunctions as $jobFunction)
-							<option value="{{$jobFunction->name}}">{{$jobFunction->name}}</option>
-							@endforeach
+							@if (count($jobFunctions) > 0)
+								@foreach($jobFunctions as $jobFunction)
+								<option value="{{$jobFunction->name}}">{{$jobFunction->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
-						@else
-						<select class="form-control required" name="job_function">
-							<option value="None">None</option>
-						</select>
-						@endif
 					</div>
 				</div>
 				<div class="col-3">
 					<div class="form-group">
 						<label class="mr-2" for="education_level">Education Level: </label>
-						@if (count($educationLevels) > 0)
 						<select class="form-control required" name="education_level">
-							@foreach($educationLevels as $educationLevel)
-							<option value="{{$educationLevel->name}}">{{$educationLevel->name}}</option>
-							@endforeach
+							@if (count($educationLevels) > 0)
+								@foreach($educationLevels as $educationLevel)
+								<option value="{{$educationLevel->name}}">{{$educationLevel->name}}</option>
+								@endforeach
+							@else
+								<option value="None">None</option>
+							@endif
 						</select>
-						@else
-						<select class="form-control required" name="education_level">
-							<option value="None">None</option>
-						</select>
-						@endif
 					</div>
 				</div>
 				<div class="col-3">
@@ -249,10 +246,13 @@
 						<label class="mr-2" for="currency">Currency: </label>
 						<span class="badge badge-danger">Required</span>
 						<select class="form-control required" name="currency" required>
-							<option value="Not selected">Not Selected</option>
-							@foreach($currencies as $currency)
-							<option value='{{$currency->name}}'>{{$currency->name}}</option>
-							@endforeach
+							@if(count($currencies) > 0)
+								@foreach($currencies as $currency)
+								<option value='{{$currency->name}}'>{{$currency->name}}</option>
+								@endforeach
+							@else 
+								<option value="None">None</option>
+							@endif
 						</select>
 					</div>
 				</div>

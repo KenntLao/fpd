@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1>Training Setup</h1>
+		<h1><i class="fas fa-fw fa-list-alt"></i> Training Setup</h1>
 	</div>
 </div>
 @stop
@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">training sessions list</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/admin/training/trainingSessions/create"><i class="fa fa-plus"></i> add training session</a>
+			<a class="btn add-button btn-md" href="/hris/pages/admin/training/trainingSessions/create"><i class="fa fa-plus"></i> add training session</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -42,9 +42,21 @@
 							@foreach($trainingSessions as $trainingSession)
 							<tr>
 								<td>{{$trainingSession->name}}</td>
-								<td>{{$trainingSession->course->name}}</td>
+								<td>
+									@if($trainingSession->course)
+									{{$trainingSession->course->name}}
+									@else
+									<span class="td-error">ERROR</span>
+									@endif
+								</td>
 								<td>{{date("M d, Y - h:i:sa", strtotime($trainingSession->scheduled_time))}}</td>
-								<td>{{$trainingSession->course->status}}</td>
+								<td>
+									@if($trainingSession->course)
+									{{$trainingSession->course->status}}
+									@else
+									<span class="td-error">ERROR</span>
+									@endif
+								</td>
 								<td>{{$trainingSession->delivery_method}}</td>
 								<td>{{$trainingSession->attendance_type}}</td>
 								<td>{{$trainingSession->training_cert_required}}</td>
@@ -62,7 +74,7 @@
 					</table>
 				</div>
 			@else
-			<h4>No data Available.</h4>
+			<h4>No data available.</h4>
 			@endif
 	</div>
 	<div class="card-footer">

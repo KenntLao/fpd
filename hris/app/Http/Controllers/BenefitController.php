@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\hris_benefits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\hris_benefits;
 
 class BenefitController extends Controller
 {
