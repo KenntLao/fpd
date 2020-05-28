@@ -27,7 +27,7 @@
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/training/trainingSessions" enctype="multipart/form-data" id="form">
 			@csrf
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="course">Course: </label>
 						<span class="badge badge-danger">Required</span>
@@ -52,7 +52,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="details">Details: </label>
 						<div class="input">
@@ -63,21 +63,21 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="scheduled_time">Scheduled Time: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control required" type="datetime-local" name="scheduled_time" required>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="assignment_due_date">Assignment Due Date: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control required" type="date" name="assignment_due_date" required>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="delivery_method">Delivery Method: </label>
 						<span class="badge badge-danger">Required</span>
@@ -88,7 +88,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="delivery_location">Delivery Location: </label>
 						<div class="input">
@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="attendance_type">Attendance Type: </label>
 						<span class="badge badge-danger">Required</span>
@@ -109,13 +109,13 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="attachment">Attachment: </label>
 						<input class="form-control required" type="file" name="attachment">
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="training_cert_required">Training Certificate Required: </label>
 						<span class="badge badge-danger">Required</span>

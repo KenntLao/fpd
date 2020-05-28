@@ -27,7 +27,7 @@
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/training/courses" id="form">
 			@csrf
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="code">Code: </label>
 						<span class="badge badge-danger">Required</span>
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="coordinator">Coordinator: </label>
 						<span class="badge badge-danger">Required</span>
@@ -56,7 +56,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="trainer">Trainer: </label>
 						<div class="input">
@@ -67,7 +67,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="trainer_details">Trainer Details: </label>
 						<div class="input">
@@ -76,7 +76,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="payment_type">Payment Type: </label>
 						<span class="badge badge-danger">Required</span>
@@ -86,7 +86,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="currency">Currency: </label>
 						<span class="badge badge-danger">Required</span>
@@ -97,7 +97,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="cost">Cost: </label>
 						<span class="badge badge-danger">Required</span>
@@ -107,7 +107,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="status">Status: </label>
 						<span class="badge badge-danger">Required</span>

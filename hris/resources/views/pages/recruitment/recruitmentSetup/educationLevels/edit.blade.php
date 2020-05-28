@@ -28,7 +28,7 @@
 			@csrf
 			@method('PATCH')
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label for="name">Name</label>
 						<span class="badge badge-danger">Required</span>

@@ -28,21 +28,21 @@
 			@csrf
 			@method('PATCH')
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control" type="text" value="{{$company->name}}" name="name" required>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label for="details">Details</label>
 						<span class="badge badge-danger">Required</span>
 						<textarea class="form-control" name="details"required>{{$company->details}}</textarea>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label for="name">Address: </label>
 						<textarea class="form-control" name="address">{{$company->address}}</textarea>
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="type">Type</label>
 						<span class="badge badge-danger">Required</span>
@@ -61,7 +61,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="country">Country</label>
 						<span class="badge badge-danger">Required</span>
@@ -72,7 +72,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="timezone">Time Zone</label>
 						<span class="badge badge-danger">Required</span>
@@ -83,7 +83,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="type">Parent Structure</label>
 						<span class="badge badge-danger">Required</span>

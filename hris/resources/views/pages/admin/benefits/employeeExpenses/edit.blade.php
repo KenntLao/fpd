@@ -28,21 +28,21 @@
 			@csrf
 			@method('PATCH')
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="employee">Employee: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control" type="text" name="employee" value="{{$employeeExpense->employee}}" required>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="expense_date">Date: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control" type="date" value="{{$employeeExpense->expense_date}}" name="expense_date" required>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="payment_method">Payment Method: </label>
 						<span class="badge badge-danger">Required</span>
@@ -59,7 +59,7 @@
 						@endif
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="ref_number">Transaction / Ref No.: </label>
 						<input class="form-control" type="text" value="{{$employeeExpense->ref_number}}" name="ref_number">
@@ -67,14 +67,14 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="payee">Payee: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control" type="text" name="payee" value="{{$employeeExpense->payee}}" required>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="payment_method">Expense Category: </label>
 						<span class="badge badge-danger">Required</span>
@@ -89,16 +89,19 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label for="notes">Notes: </label>
 						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="notes" required>{{$employeeExpense->notes}}</textarea>
+						<div class="input">
+							<p class="placeholder">Enter notes</p>
+							<textarea class="form-control" name="notes" required>{{$employeeExpense->notes}}</textarea>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="payment_method">Currency: </label>
 						<span class="badge badge-danger">Required</span>
@@ -113,7 +116,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label for="amount">Amount: </label>
 						<input class="form-control" type="text" name="amount" value="{{$employeeExpense->amount}}" required>
@@ -121,19 +124,19 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label for="receipt">Receipt: </label>
 						<input class="form-control" type="file" name="receipt">
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label for="attachment_1">Attachment #1: </label>
 						<input class="form-control" type="file" name="attachment_1">
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label for="attachment_2">Attachment #2: </label>
 						<input class="form-control" type="file" name="attachment_2">

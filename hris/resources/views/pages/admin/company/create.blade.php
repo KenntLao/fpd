@@ -27,7 +27,7 @@
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/company" id="form">
 			@csrf
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="details">Details</label>
 						<span class="badge badge-danger">Required</span>
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="name">Address: </label>
 						<div class="input">
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="type">Type</label>
 						<span class="badge badge-danger">Required</span>
@@ -73,7 +73,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="country">Country</label>
 						<span class="badge badge-danger">Required</span>
@@ -88,7 +88,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="timezone">Time Zone</label>
 						<span class="badge badge-danger">Required</span>
@@ -103,7 +103,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="type">Parent Structure</label>
 						<span class="badge badge-danger">Required</span>

@@ -306,7 +306,36 @@ textarea.form-control {
 .card-title, .card-footer > a, .card-footer > button {
 	text-transform: capitalize;
 }
+.tooltip-inner {
+  	background-color: #475C7A !important;
+  	color: #fff;
+}
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  	border-top-color: #475C7A !important;
+}
 
+.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^="right"] .arrow::before {
+  	border-right-color: #475C7A !important;
+}
+
+
+.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+  	border-bottom-color: #475C7A !important;
+}
+
+
+.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
+  	border-left-color: #475C7A !important;
+}
+.color-box {
+	position: absolute;
+	content: "";
+	height: 30px;
+	width: 30px;
+	bottom: 0;
+	right: 0;
+	border: 3px solid #e5e5e5;
+}
 
 /* ALERT */
 .alert {

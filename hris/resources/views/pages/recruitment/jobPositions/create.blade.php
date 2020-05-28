@@ -27,7 +27,7 @@
 		<form class="form-horizontal" method="post" action="/hris/pages/recruitment/jobPositions" enctype="multipart/form-data" id="form">
 			@csrf
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-4">
 					<div class="form-group">
 						<label class="mr-2" for="job_code">Job Code: </label>
 						<span class="badge right badge-danger">Required</span>
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-4">
 					<div class="form-group">
 						<label class="mr-2" for="job_title">Job Title: </label>
 						<span class="badge badge-danger">Required</span>
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-4">
 					<div class="form-group">
 						<label class="mr-2" for="company_name">Company Name: </label>
 						<div class="input">
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-5">
+				<div class="col-12 col-md-5">
 					<div class="form-group">
 						<label class="mr-2" for="hiring_manager">Hiring Manager: </label>
 						<select class="form-control required select2" name="hiring_manager">
@@ -68,7 +68,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-5">
+				<div class="col-12 col-md-5">
 					<div class="form-group">
 						<label class="mr-2" for="show_hiring_manager_name">Show Hiring Manager Name: </label>
 						<span class="badge badge-danger">Required</span>
@@ -80,7 +80,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="short_description">Short Description: </label>
 						<span class="badge badge-danger">Required</span>
@@ -90,7 +90,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="job_description">Job Description: </label>
 						<span class="badge badge-danger">Required</span>
@@ -102,7 +102,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="requirements">Requirements: </label>
 						<div class="input">
@@ -111,7 +111,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-3">
 					<div class="form-group">
 						<label class="mr-2" for="benefits">Benefits: </label>
 						<span class="badge badge-danger">Required</span>
@@ -124,7 +124,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-3">
 					<div class="form-group">
 						<label class="mr-2" for="country">Country: </label>
 						<span class="badge badge-danger">Required</span>
@@ -141,7 +141,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="city">City: </label>
 						<span class="badge badge-danger">Required</span>
@@ -151,7 +151,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="postal_code">Postal Code: </label>
 						<span class="badge badge-danger">Required</span>
@@ -161,7 +161,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="department">Department: </label>
 						<select class="form-control required select2" name="department">
@@ -171,7 +171,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="employment_type">Employment Type: </label>
 						<select class="form-control required select2" name="employment_type">
@@ -187,7 +187,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="experience_level">Experience Level: </label>
 						<select class="form-control required" name="exp_level">
@@ -201,7 +201,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="job_function">Job Function: </label>
 						<select class="form-control required" name="job_function">
@@ -215,7 +215,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="education_level">Education Level: </label>
 						<select class="form-control required" name="education_level">
@@ -229,7 +229,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="show_salary">Show Salary: </label>
 						<span class="badge badge-danger">Required</span>
@@ -241,7 +241,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="currency">Currency: </label>
 						<span class="badge badge-danger">Required</span>
@@ -256,7 +256,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="salary_min">Salary Min: </label>
 						<div class="input">
@@ -265,7 +265,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="salary_max">Salary Max: </label>
 						<div class="input">
@@ -274,7 +274,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="keywords">Keywords: </label>
 						<div class="input">
@@ -285,7 +285,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="status">Status: </label>
 						<span class="badge badge-danger">Required</span>
@@ -296,19 +296,19 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="closing_date">Closing Date: </label>
 						<input class="form-control required" type="date" name="closing_date">
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="image">Image: </label>
 						<input type="file" name="image" class="form-control required">
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="display_type">Display Type: </label>
 						<span class="badge badge-danger">Required</span>

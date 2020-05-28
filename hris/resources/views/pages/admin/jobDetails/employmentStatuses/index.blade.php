@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1>Job Details Setup</h1>
+		<h1><i class="fas fa-fw fa-columns"></i> Job Details Setup</h1>
 	</div>
 </div>
 @stop
@@ -19,7 +19,7 @@
 	<div class="card-header">
 		<h3 class="card-title">employment status list</h3>
 		<div class="card-tools">
-			<a class="btn btn-danger btn-md" href="/hris/pages/admin/jobDetails/employmentStatuses/create"><i class="fa fa-plus mr-1"></i> add employment status</a>
+			<a class="btn add-button btn-md" href="/hris/pages/admin/jobDetails/employmentStatuses/create"><i class="fa fa-plus mr-1"></i> add employment status</a>
 		</div>
 	</div>
 	<div class="card-body">

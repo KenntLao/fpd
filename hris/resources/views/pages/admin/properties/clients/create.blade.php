@@ -27,7 +27,7 @@
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/properties/clients" id="form">
 			@csrf
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="details">Details: </label>
 						<div class="input">
@@ -46,7 +46,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="details">Address: </label>
 						<div class="input">
@@ -57,7 +57,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="contact_number">Contact Number: </label>
 						<div class="input">
@@ -66,7 +66,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="email">Contact Email: </label>
 						<div class="input">
@@ -75,7 +75,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="company_url">Company URL: </label>
 						<div class="input">
@@ -86,7 +86,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="status">Status: </label>
 						<span class="badge badge-danger">Required</span>
@@ -96,7 +96,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="first_contact_date">First Contact Date: </label>
 						<input class="form-control required" type="date" name="first_contact_date">

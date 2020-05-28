@@ -28,7 +28,7 @@
 			@csrf
 			@method('PATCH')
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="position_applied">Position Applied: </label>
 						<span class="badge badge-danger">Required</span>
@@ -43,7 +43,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="hiring_stage">Hiring Stage: </label>
 						<span class="badge badge-danger">Required</span>
@@ -64,7 +64,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="first_name">First Name: </label>
 						<span class="badge badge-danger">Required</span>
@@ -74,7 +74,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="last_name">Last Name: </label>
 						<span class="badge badge-danger">Required</span>
@@ -86,13 +86,13 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="profile_image">Profile Image: </label>
 						<input class="form-control required" type="file" name="profile_image">
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="gender">Gender: </label>
 						<span class="badge badge-danger">Required</span>
@@ -102,7 +102,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="city">City: </label>
 						<div class="input">
@@ -111,7 +111,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="country">Country: </label>
 						<span class="badge badge-danger">Required</span>
@@ -138,7 +138,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="telephone">Telephone: </label>
 						<span class="badge badge-danger">Required</span>
@@ -148,7 +148,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="resume">Resume: </label>
 						<input class="form-control required" type="file" name="resume">
@@ -226,7 +226,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="prefered_industry">Prefered Industry: </label>
 						<span class="badge badge-danger">Required</span>
@@ -236,7 +236,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="expected_salary">Expected Salary: </label>
 						<div class="input">

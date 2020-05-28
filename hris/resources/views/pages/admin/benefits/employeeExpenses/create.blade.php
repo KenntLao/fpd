@@ -27,7 +27,7 @@
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/benefits/employeeExpenses" enctype="multipart/form-data" id="form">
 			@csrf
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="employee">Employee: </label>
 						<span class="badge badge-danger">Required</span>
@@ -37,14 +37,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="expense_date">Date: </label>
 						<span class="badge badge-danger">Required</span>
 						<input class="form-control required" type="date" name="expense_date" required>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="payment_method">Payment Method: </label>
 						<span class="badge badge-danger">Required</span>
@@ -59,7 +59,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="ref_number">Transaction / Ref No.: </label>
 						<div class="input">
@@ -70,7 +70,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="payee">Payee: </label>
 						<span class="badge badge-danger">Required</span>
@@ -80,7 +80,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="payment_method">Expense Category: </label>
 						<span class="badge badge-danger">Required</span>
@@ -95,16 +95,19 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="notes">Notes: </label>
 						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control required" name="notes" required></textarea>
+						<div class="input">
+							<p class="placeholder">Enter notes</p>
+							<textarea class="form-control required" name="notes" required></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="payment_method">Currency: </label>
 						<span class="badge badge-danger">Required</span>
@@ -119,7 +122,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-3">
+				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
 						<label class="mr-2" for="amount">Amount: </label>
 						<span class="badge badge-danger">Required</span>
@@ -131,19 +134,19 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="receipt">Receipt: </label>
 						<input class="form-control required" type="file" name="receipt">
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="attachment_1">Attachment #1: </label>
 						<input class="form-control required" type="file" name="attachment_1">
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="attachment_2">Attachment #2: </label>
 						<input class="form-control required" type="file" name="attachment_2">

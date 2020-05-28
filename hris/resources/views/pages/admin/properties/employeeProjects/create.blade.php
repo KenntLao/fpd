@@ -27,7 +27,7 @@
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/properties/employeeProjects" id="form">
 			@csrf
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="employee">Employee: </label>
 						<span class="badge badge-danger">Required</span>
@@ -36,7 +36,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="project">Project: </label>
 						<span class="badge badge-danger">Required</span>
@@ -51,7 +51,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="details">Details: </label>
 						<div class="input">

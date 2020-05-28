@@ -24,12 +24,11 @@
 		<h3 class="card-title">edit project</h3>
 	</div>
 	<div class="card-body">
-		
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/properties/projects/update/{{$project->id}}" id="form">
 			@csrf
 			@method('PATCH')
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="name">Name: </label>
 						<span class="badge badge-danger">Required</span>
@@ -39,7 +38,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="client">Client: </label>
 						<select class="form-control required select2" name="client">
@@ -53,7 +52,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-12 col-md-6 col-xl-4">
 					<div class="form-group">
 						<label class="mr-2" for="status">Status: </label>
 						<span class="badge badge-danger">Required</span>

@@ -194,6 +194,30 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     /* LEAVE SETTINGS PAGE */
 
+    /* LEAVE PERIODS PAGE */
+    Route::get('/hris/pages/admin/leave/leavePeriods/index', 'LeavePeriodController@index');
+    /* ADD LEAVE PERIODS */
+    Route::get('/hris/pages/admin/leave/leavePeriods/create', 'LeavePeriodController@create');
+    Route::post('/hris/pages/admin/leave/leavePeriods', 'LeavePeriodController@store');
+    /* EDIT LEAVE PERIODS */
+    Route::get('/hris/pages/admin/leave/leavePeriods/{leavePeriod}/edit', 'LeavePeriodController@edit');
+    /* UPDATE LEAVE PERIODS */
+    Route::patch('/hris/pages/admin/leave/leavePeriods/update/{leavePeriod}', 'LeavePeriodController@update');
+    /* DELETE LEAVE PERIODS */
+    Route::delete('/hris/pages/admin/leave/leavePeriods/delete/{leavePeriod}', 'LeavePeriodController@destroy');
+
+    /* LEAVE TYPES PAGE */
+    Route::get('/hris/pages/admin/leave/leaveTypes/index', 'LeaveTypeController@index');
+    /* ADD LEAVE TYPES */
+    Route::get('/hris/pages/admin/leave/leaveTypes/create', 'LeaveTypeController@create');
+    Route::post('/hris/pages/admin/leave/leaveTypes', 'LeaveTypeController@store');
+    /* EDIT LEAVE TYPES */
+    Route::get('/hris/pages/admin/leave/leaveTypes/{leaveType}/edit', 'LeaveTypeController@edit');
+    /* UPDATE LEAVE TYPES */
+    Route::patch('/hris/pages/admin/leave/leaveTypes/update/{leaveType}', 'LeaveTypeController@update');
+    /* DELETE LEAVE TYPES */
+    Route::delete('/hris/pages/admin/leave/leaveTypes/delete/{leaveType}', 'LeaveTypeController@destroy');
+
     /* LEAVE GROUPS PAGE */
     Route::get('/hris/pages/admin/leave/leaveGroups/index', 'LeaveGroupController@index');
     /* ADD LEAVE GROUPS */
@@ -205,6 +229,42 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::patch('/hris/pages/admin/leave/leaveGroups/update/{leaveGroup}', 'LeaveGroupController@update');
     /* DELETE LEAVE GROUPS */
     Route::delete('/hris/pages/admin/leave/leaveGroups/delete/{leaveGroup}', 'LeaveGroupController@destroy');
+
+    /* LEAVE GROUP EMPLOYEES PAGE */
+    Route::get('/hris/pages/admin/leave/leaveGroupEmployees/index', 'LeaveGroupEmployeeController@index');
+    /* ADD LEAVE GROUP EMPLOYEES */
+    Route::get('/hris/pages/admin/leave/leaveGroupEmployees/create', 'LeaveGroupEmployeeController@create');
+    Route::post('/hris/pages/admin/leave/leaveGroupEmployees', 'LeaveGroupEmployeeController@store');
+    /* EDIT LEAVE GROUP EMPLOYEES */
+    Route::get('/hris/pages/admin/leave/leaveGroupEmployees/{leaveGroupEmployee}/edit', 'LeaveGroupEmployeeController@edit');
+    /* UPDATE LEAVE GROUP EMPLOYEES */
+    Route::patch('/hris/pages/admin/leave/leaveGroupEmployees/update/{leaveGroupEmployee}', 'LeaveGroupEmployeeController@update');
+    /* DELETE LEAVE GROUP EMPLOYEES */
+    Route::delete('/hris/pages/admin/leave/leaveGroupEmployees/delete/{leaveGroupEmployee}', 'LeaveGroupEmployeeController@destroy');
+
+    /* WORK WEEK PAGE */
+    Route::get('/hris/pages/admin/leave/workWeeks/index', 'WorkWeekController@index');
+    /* ADD WORK WEEK */
+    Route::get('/hris/pages/admin/leave/workWeeks/create', 'WorkWeekController@create');
+    Route::post('/hris/pages/admin/leave/workWeeks', 'WorkWeekController@store');
+    /* EDIT WORK WEEK */
+    Route::get('/hris/pages/admin/leave/workWeeks/{workWeek}/edit', 'WorkWeekController@edit');
+    /* UPDATE WORK WEEK */
+    Route::patch('/hris/pages/admin/leave/workWeeks/update/{workWeek}', 'WorkWeekController@update');
+    /* DELETE WORK WEEK */
+    Route::delete('/hris/pages/admin/leave/workWeeks/delete/{workWeek}', 'WorkWeekController@destroy');
+
+    /* HOLIDAY PAGE */
+    Route::get('/hris/pages/admin/leave/holidays/index', 'HolidayController@index');
+    /* ADD HOLIDAY */
+    Route::get('/hris/pages/admin/leave/holidays/create', 'HolidayController@create');
+    Route::post('/hris/pages/admin/leave/holidays', 'HolidayController@store');
+    /* EDIT HOLIDAY */
+    Route::get('/hris/pages/admin/leave/holidays/{holiday}/edit', 'HolidayController@edit');
+    /* UPDATE HOLIDAY */
+    Route::patch('/hris/pages/admin/leave/holidays/update/{holiday}', 'HolidayController@update');
+    /* DELETE HOLIDAY */
+    Route::delete('/hris/pages/admin/leave/holidays/delete/{holiday}', 'HolidayController@destroy');
 
     /* BENEFITS ADMINISTRATION */
 

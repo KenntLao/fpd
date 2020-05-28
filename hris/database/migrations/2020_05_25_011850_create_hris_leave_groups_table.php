@@ -16,7 +16,7 @@ class CreateHrisLeaveGroupsTable extends Migration
         Schema::create('hris_leave_groups', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('details')->nullable();
         });
     }

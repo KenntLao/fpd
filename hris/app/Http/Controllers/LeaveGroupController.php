@@ -21,6 +21,16 @@ class LeaveGroupController extends Controller
 
     public function store(Request $request)
     {
+        $leaveGroup = new hris_leave_groups();
+        if ($this->validatedData()) {
+            $leaveGroup->name = request('name');
+            $leaveGroup->details = request('details');
+            $leaveGroup->save();
+            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave Group successfully added!');
+
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
 
     }
 
@@ -36,11 +46,26 @@ class LeaveGroupController extends Controller
 
     public function update(hris_leave_groups $leaveGroup, Request $request)
     {
+        if ($this->validatedData()) {
+            $leaveGroup->name = request('name');
+            $leaveGroup->details = request('details');
+            $leaveGroup->update();
+            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave Group successfully updated!');
 
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
     }
 
     public function destroy(hris_leave_groups $leaveGroup)
     {
-
+        $leaveGroup->delete();
+        return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave Group successfully deleted!');
+    }
+    protected function validatedData()
+    {
+        return request()->validate([
+            'name' => 'required'
+        ]);
     }
 }

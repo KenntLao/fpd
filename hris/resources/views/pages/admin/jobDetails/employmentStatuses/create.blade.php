@@ -22,18 +22,24 @@
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/jobDetails/employmentStatuses" id="form">
 			@csrf
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
-						<label for="name">Employment Status</label>
+						<label class="mr-2" for="name">Employment Status: </label>
 						<span class="badge badge-danger">Required</span>
-						<input class="form-control" type="text" name="name" required>
+						<div class="input">
+							<p class="placeholder">Enter employment status</p>
+							<input class="form-control required" type="text" name="name" required>
+						</div>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
-						<label for="description">Description</label>
+						<label class="mr-2" for="description">Description: </label>
 						<span class="badge badge-danger">Required</span>
-						<textarea class="form-control" name="description" required></textarea>
+						<div class="input">
+							<p class="placeholder">Enter description</p>
+							<textarea class="form-control required" name="description" required></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -41,7 +47,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/jobDetails/employmentStatuses/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save employment status</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save employment status</button>
 	</div>
 </div>
 @stop
@@ -49,9 +55,5 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
-<script>
-$(document).ready(function() {
-$('.select2').select2();
-});
-</script>
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop
