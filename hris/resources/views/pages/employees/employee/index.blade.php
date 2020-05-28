@@ -42,8 +42,8 @@
                     <tr>
                         <td></td>
                         <td>
-                            <a href="/hris/pages/admin/company/{{$company->id}}/edit"><i class="fa fa-edit"></i></a>
-                            <form action="/hris/pages/admin/company/delete/{{$company->id}}" method="post">
+                            <a href="/hris/pages/employees/employee/{{$employee->id}}/edit"><i class="fa fa-edit"></i></a>
+                            <form action="/hris/pages/employees/employee/delete/{{$employee->id}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"><i class="fa fa-trash"></i></button>
