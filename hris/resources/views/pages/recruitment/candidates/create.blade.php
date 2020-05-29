@@ -127,7 +127,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="email">Email Address:</label>
 						<span class="badge badge-danger">Required</span>
@@ -156,7 +156,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="resume_headline">Resume Headline:</label>
 						<div class="input">
@@ -165,7 +165,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="profile_summary">Profile Summary:</label>
 						<div class="input">
@@ -176,7 +176,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="total_years_exp">Total Years of Experience:</label>
 						<div class="input">
@@ -185,7 +185,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="work_history">Work History:</label>
 						<div class="input">
@@ -196,7 +196,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="education">Education:</label>
 						<div class="input">
@@ -205,7 +205,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="skills">Skills:</label>
 						<div class="input">
@@ -216,7 +216,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<div class="form-group">
 						<label class="mr-2" for="referees">Referees:</label>
 						<div class="input">

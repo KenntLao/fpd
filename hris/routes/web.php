@@ -396,6 +396,38 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE CANDIDATE */
     Route::delete('/hris/pages/recruitment/candidates/delete/{candidate}', 'CandidateController@destroy');
 
+    /* TIME MANAGEMENT */
+    /* PROJECT PAGE */
+    Route::get('/hris/pages/time/timeProjects/index', 'TimeProjectController@index');
+    /* ADD PROJECT */
+    Route::get('/hris/pages/time/timeProjects/create', 'TimeProjectController@create');
+    Route::post('/hris/pages/time/timeProjects', 'TimeProjectController@store');
+    /* EDIT PROJECT */
+    Route::get('/hris/pages/time/timeProjects/{timeProject}/edit', 'TimeProjectController@edit');
+    /* UPDATE PROJECT */
+    Route::patch('/hris/pages/time/timeProjects/update/{timeProject}', 'TimeProjectController@update');
+    /* DELETE PROJECT */
+    Route::delete('/hris/pages/time/timeProjects/delete/{timeProject}', 'TimeProjectController@destroy');
+
+    /* ATTENDANCES PAGE */
+    Route::get('/hris/pages/time/attendances/index', 'AttendanceController@index');
+    /* ADD ATTENDANCES */
+    Route::post('/hris/pages/time/attendances', 'AttendanceController@store');
+    /* UPDATE ATTENDANCES */
+    Route::patch('/hris/pages/time/attendances/update/{attendance}', 'AttendanceController@update');
+    /* DELETE ATTENDANCES */
+    Route::delete('/hris/pages/time/attendances/delete/{attendance}', 'AttendanceController@destroy');
+
+    /* TIME SHEETS PAGE */
+    Route::get('/hris/pages/time/timeSheets/index', 'TimeSheetController@index');
+
+    /* ATTENDANCE SHEETS PAGE */
+    Route::get('/hris/pages/time/attendanceSheets/index', 'AttendanceSheetController@index');
+
+    /* OVERTIME REQUESTS PAGE */
+    Route::get('/hris/pages/time/overtimeRequests/index', 'OvertimeRequestController@index');
+
+
     Route::get('/hris/', function () {
         return view('welcome');
     });

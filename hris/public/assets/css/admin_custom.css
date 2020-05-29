@@ -61,6 +61,14 @@ body {
 	color: #FCBB6D;
 }
 
+/* NAV TABS TABLE */
+.card-body .nav-tabs > .nav-item > .nav-link {
+	font-size: 12px;
+}
+.tab-content .card-tools {
+	float: right;
+}
+
 /* BUTTON */
 .add-button {
 	background: #475C7A;
@@ -127,6 +135,7 @@ body {
 .nav-tabs > .nav-item > .nav-link {
 	color: #FCBB6D !important;
 }
+
 .tab-content {
 	padding-top: 40px;
 }

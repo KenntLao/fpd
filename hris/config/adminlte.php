@@ -505,6 +505,40 @@ return [
                 ],
             ],
         ],
+        'TIME MANAGEMENT',
+        [
+            'text' => 'Time Management',
+            'icon' => 'fas fa-fw fa-hourglass-half',
+            'url' => '#',
+            'submenu' => [
+                [
+                    'text' => 'Projects',
+                    'url' => '/hris/pages/time/timeProjects/index',
+                    'icon' => 'fas fa-fw fa-project-diagram',
+                    'active' => ['/hris/pages/time/timeProjects/create', '/hris/pages/time/timeProjects/index', '/hris/pages/time/timeProjects/*/edit', 'regex:@^content/[0-9]+$@']
+                ],
+                [
+                    'text' => 'Attendance',
+                    'url' => '/hris/pages/time/attendances/index',
+                    'icon' => 'fas fa-fw fa-clock'
+                ],
+                [
+                    'text' => 'Time Sheets',
+                    'url' => '/hris/pages/time/timeSheets/index',
+                    'icon' => 'fas fa-fw fa-stopwatch',
+                ],
+                [
+                    'text' => 'Attendance Sheets',
+                    'url' => '/hris/pages/time/attendanceSheets/index',
+                    'icon' => 'fas fa-fw fa-calendar-check',
+                ],
+                [
+                    'text' => 'Overtime Request',
+                    'url' => '/hris/pages/time/overtimeRequests/index',
+                    'icon' => 'fas fa-fw fa-calendar-plus',
+                ],
+            ]
+        ]
     ],
 
     /*
