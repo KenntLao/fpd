@@ -627,7 +627,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="mr-2" for="visa_expire">Visa Expire Date</label>
+										<label class="mr-2" for="visa_expire">Visa Expiry Date</label>
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Visa Expire Date</p>
