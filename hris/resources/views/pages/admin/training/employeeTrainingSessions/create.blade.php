@@ -1,4 +1,3 @@
-{{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
 @section('title', 'HRIS | Training Setup - Employee Training Sessions')
 @section('content_header')

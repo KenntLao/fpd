@@ -24,7 +24,7 @@
 		<h3 class="card-title">Create Employee</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/employees/employee/" id="form">
+		<form class="form-horizontal" method="post" action="/hris/pages/employees/employee" enctype="multipart/form-data" id="form">
 			@csrf
 			<div class="row">
 				<div class="col-md-2 col-sm-12">
@@ -49,7 +49,7 @@
 								<span class="badge badge-danger">Required</span>
 								<div class="input">
 									<p class="placeholder">Employee Number</p>
-									<input class="form-control required" type="text" name="employee_number" required>
+									<input class="form-control required" type="text" name="employee_number" value="{{old('employee_number') ?? $employees->employee_number}}" required>
 								</div>
 							</div>
 						</div>
@@ -61,7 +61,7 @@
 								<span class="badge badge-danger">Required</span>
 								<div class="input">
 									<p class="placeholder">Employee First Name</p>
-									<input class="form-control required" type="text" name="fisrstname" required>
+									<input class="form-control required" type="text" name="firstname" value="{{old('firstname') ?? $employees->firstname}}" required>
 								</div>
 							</div>
 						</div>
@@ -70,7 +70,7 @@
 								<label class="mr-2" for="employee_middle_name">Employee Middle Name </label>
 								<div class="input">
 									<p class="placeholder">Employee Middle Name</p>
-									<input class="form-control required" type="text" name="middlename" required>
+									<input class="form-control required" type="text" name="middlename" value="{{old('middlename') ?? $employees->middlename}}">
 								</div>
 							</div>
 						</div>
@@ -80,7 +80,7 @@
 								<span class="badge badge-danger">Required</span>
 								<div class="input">
 									<p class="placeholder">Employee Last Name</p>
-									<input class="form-control required" type="text" name="lastname" required>
+									<input class="form-control required" type="text" name="lastname" value="{{old('lastname') ?? $employees->lastname}}" required>
 								</div>
 							</div>
 						</div>
@@ -92,7 +92,7 @@
 								<span class="badge badge-danger">Required</span>
 								<div class="input">
 									<p class="placeholder">Job Position</p>
-									<input class="form-control required" type="text" name="job_position" required>
+									<input class="form-control required" type="text" name="job_position" value="{{old('job_position') ?? $employees->job_position}}" required>
 								</div>
 							</div>
 						</div>
@@ -107,17 +107,16 @@
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Work Mobile</p>
-							<input class="form-control required" type="text" name="work_mobile" required>
+							<input class="form-control required" type="text" name="work_no" value="{{old('work_no') ?? $employees->work_no}}" required>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<label class="mr-2" for="work_email">Work Phone </label>
-						<span class="badge badge-danger">Required</span>
+						<label class="mr-2" for="work_phone">Work Phone </label>
 						<div class="input">
 							<p class="placeholder">Work Phone</p>
-							<input class="form-control required" type="email" name="work_phone" required>
+							<input class="form-control required" type="text" name="work_phone" value="{{old('work_phone') ?? $employees->work_phone}}">
 						</div>
 					</div>
 				</div>
@@ -127,7 +126,7 @@
 						<span class="badge badge-danger">Required</span>
 						<div class="input">
 							<p class="placeholder">Work Phone</p>
-							<input class="form-control required" type="email" name="work_email" required>
+							<input class="form-control required" type="email" name="work_email" value="{{old('work_email') ?? $employees->work_email}}" required>
 						</div>
 					</div>
 				</div>
@@ -135,20 +134,14 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="form-group">
-						<label class="mr-2" for="work_location">Work Location </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Work Location</p>
-							<input class="form-control required" type="text" name="work_location" required>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="form-group">
 						<label class="mr-2" for="department">Department </label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-group select2" name="department">
-							<option>--select one--</option>
+						<select class="form-control required select2" name="department" required>
+							<option disabled default selected>--select one--</option>
+							<option value="sample">sample</option>
+							<option value="sample">sample</option>
+							<option value="sample">sample</option>
+							<option value="sample">sample</option>
 						</select>
 					</div>
 				</div>
@@ -156,8 +149,12 @@
 					<div class="form-group">
 						<label class="mr-2" for="supervisor">Supervisor </label>
 						<span class="badge badge-danger">Required</span>
-						<select class="form-group select2" name="supervisor">
-							<option>--select one--</option>
+						<select class="form-control required select2" name="supervisor" required>
+							<option disabled default selected>--select one--</option>
+							<option value="sample">sample</option>
+							<option value="sample">sample</option>
+							<option value="sample">sample</option>
+							<option value="sample">sample</option>
 						</select>
 					</div>
 				</div>
@@ -181,7 +178,7 @@
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Work Address</p>
-											<input class="form-control required" type="text" name="work_address" required>
+											<input class="form-control required" type="text" name="work_address" value="{{old('work_address') ?? $employees->work_address}}" required>
 										</div>
 									</div>
 								</div>
@@ -190,30 +187,27 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label class="mr-2" for="sss">SSS </label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">SSS</p>
-											<input class="form-control required" type="text" name="sss" required>
+											<input class="form-control required" type="text" name="sss" value="{{old('sss') ?? $employees->sss}}">
 										</div>
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label class="mr-2" for="pagibig">Pag-ibig </label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Pag-ibig</p>
-											<input class="form-control required" type="text" name="pagibig" required>
+											<input class="form-control required" type="text" name="pagibig" value="{{old('pagibig') ?? $employees->pagibig}}">
 										</div>
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label class="mr-2" for="phic">PHIC </label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">PHIC</p>
-											<input class="form-control required" type="text" name="phic" required>
+											<input class="form-control required" type="text" name="phic" value="{{old('phic') ?? $employees->phic}}">
 										</div>
 									</div>
 								</div>
@@ -224,7 +218,7 @@
 										<label class="mr-2" for="joined_date">Joined Date </label>
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
-											<input class="form-control required" type="date" name="joined_date" required>
+											<input class="form-control required" type="date" name="joined_date" value="{{old('joined_date') ?? $employees->joined_date}}" required>
 										</div>
 									</div>
 								</div>
@@ -232,23 +226,19 @@
 									<div class="form-group">
 										<label class="mr-2" for="marital_status">Employment Status</label>
 										<span class="badge badge-danger">Required</span>
-										<div class="input">
-											<p class="placeholder">Employment Status</p>
-											<select class="form-control select2" name="employment_status" required>
-												<option value="regular">Regular</option>
-												<option value="co-terminus">Co-Terminus</option>
-												<option value="probationary">Probationary</option>
-												<option value="fixed-term">Fixed-Term</option>
-											</select>
-										</div>
+										<select class="form-control required select2" name="employment_status" required>
+											<option value="regular">Regular</option>
+											<option value="co-terminus">Co-Terminus</option>
+											<option value="probationary">Probationary</option>
+											<option value="fixed-term">Fixed-Term</option>
+										</select>
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label class="mr-2" for="termination_date">Termination Date </label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
-											<input class="form-control required" type="date" name="termination_date" required>
+											<input class="form-control required" type="date" name="termination_date" value="{{old('termination_date') ?? $employees->termination_date}}">
 										</div>
 									</div>
 								</div>
@@ -265,7 +255,7 @@
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Address</p>
-											<input class="form-control required" type="text" name="address" required>
+											<input class="form-control required" type="text" name="home_address" value="{{old('home_address') ?? $employees->home_address}}" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -273,7 +263,7 @@
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Email</p>
-											<input class="form-control required" type="email" name="email" required>
+											<input class="form-control required" type="email" name="private_email" value="{{old('private_email') ?? $employees->private_email}}" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -281,15 +271,14 @@
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Bank Account Number</p>
-											<input class="form-control required" type="text" name="bank_acc" required>
+											<input class="form-control required" type="text" name="bank_acc" value="{{old('bank_acc') ?? $employees->bank_acc}}" required>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="home_work_distance">Km Home-Work </label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Kilometer Home - Work</p>
-											<input class="form-control required" type="number" name="home_distance" required>
+											<input class="form-control required" type="number" name="home_distance" value="{{old('home_distance') ?? $employees->home_distance}}">
 										</div>
 									</div>
 									<div class="form-group">
@@ -298,15 +287,13 @@
 									<div class="form-group">
 										<label class="mr-2" for="marital_status">Marital Status </label>
 										<span class="badge badge-danger">Required</span>
-										<div class="input">
-											<p class="placeholder">Marital Status</p>
-											<select class="form-control select2" name="marital_status" required>
-												<option value="single">Single</option>
-												<option value="married">Married</option>
-												<option value="widower">Widower</option>
-												<option value="divorced">Divorced</option>
-											</select>
-										</div>
+										<select class="form-control required select2" name="marital_status" required>
+											<option disabled default selected>---select one---</option>
+											<option value="single">Single</option>
+											<option value="married">Married</option>
+											<option value="widower">Widower</option>
+											<option value="divorced">Divorced</option>
+										</select>
 									</div>
 									<div class="form-group">
 										<h3>Emergency</h3>
@@ -316,7 +303,7 @@
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Emergeny Contact</p>
-											<input class="form-control required" type="text" name="emergency_contact" required>
+											<input class="form-control required" type="text" name="emergency_contact" value="{{old('emergency_contact') ?? $employees->emergency_contact}}" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -324,7 +311,7 @@
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Emergeny Phone</p>
-											<input class="form-control required" type="text" name="emergency_phone" required>
+											<input class="form-control required" type="text" name="emergency_no" value="{{old('emergency_no') ?? $employees->emergency_no}}" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -333,21 +320,19 @@
 									<div class="form-group">
 										<label class="mr-2" for="marital_status">Certificate Level </label>
 										<span class="badge badge-danger">Required</span>
-										<div class="input">
-											<p class="placeholder">Certificate Level</p>
-											<select class="form-control select2" name="cert_level" required>
-												<option value="bachelor">bachelor</option>
-												<option value="master">Master</option>
-												<option value="doctoral">Doctoral</option>
-											</select>
-										</div>
+										<select class="form-control required select2" name="cert_level" required>
+											<option disabled default selected>---select one---</option>
+											<option value="bachelor">bachelor</option>
+											<option value="master">Master</option>
+											<option value="doctoral">Doctoral</option>
+										</select>
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="field_study">Field of Study</label>
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Field of Study</p>
-											<input class="form-control required" type="text" name="field_study" required>
+											<input class="form-control required" type="text" name="field_study" value="{{old('field_study') ?? $employees->field_study}}" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -355,7 +340,7 @@
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">School</p>
-											<input class="form-control required" type="text" name="school" required>
+											<input class="form-control required" type="text" name="school" value="{{old('school') ?? $employees->school}}" required>
 										</div>
 									</div>
 								</div>
@@ -366,8 +351,8 @@
 									<div class="form-group">
 										<label class="mr-2" for="nationality">Nationality </label>
 										<span class="badge badge-danger">Required</span>
-										<select class="form-control select2" name="nationality">
-											<option value="">-- select one --</option>
+										<select class="form-control required select2" name="nationality">
+											<option disabled default selected>-- select one --</option>
 											<option value="afghan">Afghan</option>
 											<option value="albanian">Albanian</option>
 											<option value="algerian">Algerian</option>
@@ -564,28 +549,24 @@
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="passport_no">Passport No. </label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Passport No.</p>
-											<input class="form-control required" type="text" name="passport_no" required>
+											<input class="form-control required" type="text" name="passport_no" value="{{old('passport_no') ?? $employees->passport_no}}">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="gender">Gender </label>
 										<span class="badge badge-danger">Required</span>
-										<div class="input">
-											<p class="placeholder">Gender</p>
-											<select class="form-control select2" name="gender" required>
-												<option value="male">Male</option>
-												<option value="female">Female</option>
-											</select>
-										</div>
+										<select class="form-control required select2" name="gender" required>
+											<option value="male">Male</option>
+											<option value="female">Female</option>
+										</select>
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="birthday">Date of Birth </label>
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
-											<input class="form-control required" type="date" name="birthday" required>
+											<input class="form-control required" type="date" name="birthday" value="{{old('birthday') ?? $employees->birthday}}" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -593,7 +574,7 @@
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Place of Birth</p>
-											<input class="form-control required" type="text" name="place_birth" required>
+											<input class="form-control required" type="text" name="place_birth" value="{{old('place_birth') ?? $employees->place_birth}}" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -601,10 +582,9 @@
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="dependant">Number of Children</label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Number of Children</p>
-											<input class="form-control required" type="number" name="dependant" required>
+											<input class="form-control required" type="number" name="dependant" min="0" value="{{old('dependant') ?? $employees->dependant}}">
 										</div>
 									</div>
 									<div class="form-group">
@@ -612,26 +592,23 @@
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="visa">Visa No.</label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Visa No.</p>
-											<input class="form-control required" type="number" name="visa" required>
+											<input class="form-control required" type="number" name="visa_no" value="{{old('visa_no') ?? $employees->visa_no}}">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="work_permit">Work Permit No.</label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Work Permit No.</p>
-											<input class="form-control required" type="number" name="work_permit" required>
+											<input class="form-control required" type="number" name="work_permit" value="{{old('work_permit') ?? $employees->work_permit}}">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="visa_expire">Visa Expiry Date</label>
-										<span class="badge badge-danger">Required</span>
 										<div class="input">
 											<p class="placeholder">Visa Expire Date</p>
-											<input class="form-control required" type="number" name="visa_expire" required>
+											<input class="form-control required" type="date" name="visa_expire" value="{{old('visa_expire') ?? $employees->visa_expire}}">
 										</div>
 									</div>
 								</div>

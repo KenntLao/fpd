@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	$('.select2').select2();
-    // validate required with minimum length
+
+	// validate required with minimum length
     $('input.required, select.required, textarea.required').on('keyup change', function () {
         checkRequired($(this));
         var minlength = 1;
@@ -24,10 +25,10 @@ $(document).ready(function() {
 		if (obj.attr('minlength') != undefined) {
 			minlength = obj.attr('minlength');
 		}
-		if (obj.val().length >= minlength) {
+		if (obj.val() != null && obj.val().length >= minlength) {
 			obj.closest('.form-group').find('.badge').addClass('badge-success').removeClass('badge-danger');
 		} else {
-		obj.closest('.form-group').find('.badge').addClass('badge-danger').removeClass('badge-success');
+			obj.closest('.form-group').find('.badge').addClass('badge-danger').removeClass('badge-success');
 		}
 	}
 	$('input, textarea').each(function() {

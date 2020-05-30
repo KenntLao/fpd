@@ -309,6 +309,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* EMPLOYEE MANAGEMENT */
     Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
     Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
+    Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
 
     /* BENEFITS PAGE */
     Route::get('/hris/pages/recruitment/recruitmentSetup/benefits/index', 'BenefitController@index');
