@@ -115,7 +115,7 @@ body {
 }
 .photo-overlay::before {
 	position: absolute;
-	left: 35%;
+	left: 30%;
 	top: 50%;
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);

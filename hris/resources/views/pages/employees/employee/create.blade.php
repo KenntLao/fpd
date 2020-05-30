@@ -199,10 +199,10 @@
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<label class="mr-2" for="pagibig">Pagibig </label>
+										<label class="mr-2" for="pagibig">Pag-ibig </label>
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
-											<p class="placeholder">Pagibig</p>
+											<p class="placeholder">Pag-ibig</p>
 											<input class="form-control required" type="text" name="pagibig" required>
 										</div>
 									</div>
