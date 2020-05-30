@@ -41,33 +41,64 @@
 
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="employee_number">Employee Number</label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Employee Number</p>
-							<input class="form-control required" type="text" name="employee_number" required>
+				<div class="col-md-7">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="mr-2" for="employee_number">Employee Number</label>
+								<span class="badge badge-danger">Required</span>
+								<div class="input">
+									<p class="placeholder">Employee Number</p>
+									<input class="form-control required" type="text" name="employee_number" required>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="mr-2" for="employee_name">Employee Name </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Employee Name</p>
-							<input class="form-control required" type="text" name="employee_name" required>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="mr-2" for="employee_first_name">Employee First Name </label>
+								<span class="badge badge-danger">Required</span>
+								<div class="input">
+									<p class="placeholder">Employee First Name</p>
+									<input class="form-control required" type="text" name="fisrstname" required>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="mr-2" for="employee_middle_name">Employee Middle Name </label>
+								<div class="input">
+									<p class="placeholder">Employee Middle Name</p>
+									<input class="form-control required" type="text" name="middlename" required>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="mr-2" for="employee_last_name">Employee Last Name </label>
+								<span class="badge badge-danger">Required</span>
+								<div class="input">
+									<p class="placeholder">Employee Last Name</p>
+									<input class="form-control required" type="text" name="lastname" required>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="mr-2" for="job_postion">Job Positions </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Job Position</p>
-							<input class="form-control required" type="text" name="job_position" required>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="mr-2" for="job_postion">Job Positions </label>
+								<span class="badge badge-danger">Required</span>
+								<div class="input">
+									<p class="placeholder">Job Position</p>
+									<input class="form-control required" type="text" name="job_position" required>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-4"></div>
+				<div class="col-5"></div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
@@ -151,6 +182,73 @@
 										<div class="input">
 											<p class="placeholder">Work Address</p>
 											<input class="form-control required" type="text" name="work_address" required>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="mr-2" for="sss">SSS </label>
+										<span class="badge badge-danger">Required</span>
+										<div class="input">
+											<p class="placeholder">SSS</p>
+											<input class="form-control required" type="text" name="sss" required>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="mr-2" for="pagibig">Pagibig </label>
+										<span class="badge badge-danger">Required</span>
+										<div class="input">
+											<p class="placeholder">Pagibig</p>
+											<input class="form-control required" type="text" name="pagibig" required>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="mr-2" for="phic">PHIC </label>
+										<span class="badge badge-danger">Required</span>
+										<div class="input">
+											<p class="placeholder">PHIC</p>
+											<input class="form-control required" type="text" name="phic" required>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="mr-2" for="joined_date">Joined Date </label>
+										<span class="badge badge-danger">Required</span>
+										<div class="input">
+											<input class="form-control required" type="date" name="joined_date" required>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="mr-2" for="marital_status">Employment Status</label>
+										<span class="badge badge-danger">Required</span>
+										<div class="input">
+											<p class="placeholder">Employment Status</p>
+											<select class="form-control select2" name="employment_status" required>
+												<option value="regular">Regular</option>
+												<option value="co-terminus">Co-Terminus</option>
+												<option value="probationary">Probationary</option>
+												<option value="fixed-term">Fixed-Term</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="mr-2" for="termination_date">Termination Date </label>
+										<span class="badge badge-danger">Required</span>
+										<div class="input">
+											<input class="form-control required" type="date" name="termination_date" required>
 										</div>
 									</div>
 								</div>
@@ -487,7 +585,6 @@
 										<label class="mr-2" for="birthday">Date of Birth </label>
 										<span class="badge badge-danger">Required</span>
 										<div class="input">
-											<p class="placeholder">Date of Birth</p>
 											<input class="form-control required" type="date" name="birthday" required>
 										</div>
 									</div>
@@ -511,7 +608,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<h3>Work Permint</h3>
+										<h3>Work Permit</h3>
 									</div>
 									<div class="form-group">
 										<label class="mr-2" for="visa">Visa No.</label>
@@ -538,9 +635,6 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="tab-pane" id="tabs-3" role="tabpanel">
-								<p>Third Panel</p>
 							</div>
 						</div>
 					</div>
