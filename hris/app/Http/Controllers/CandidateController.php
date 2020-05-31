@@ -21,7 +21,6 @@ class CandidateController extends Controller
     {   
         $jobPositions = hris_job_positions::all();
         $countries = hris_countries::all()->sortBy('name');
-        $candidate = hris_candidates::all();
         return view('pages.recruitment.candidates.create', compact('candidate', 'jobPositions', 'countries'));
     }
 

@@ -18,13 +18,13 @@ class CompanyController extends Controller
         return view('pages.admin.company.index', compact('companies'));
     }
 
-    public function create()
+    public function create(hris_company_structures $company)
     {
         $countries = hris_countries::all()->sortBy('name');
         $types = hris_company_types::all();
         $timezones = hris_time_zones::all()->sortBy('name');
         $companies = hris_company_structures::all();
-        return view('pages.admin.company.create', compact( 'companies', 'countries', 'timezones', 'types'));
+        return view('pages.admin.company.create', compact('company', 'companies', 'countries', 'timezones', 'types'));
     }
 
     public function store(Request $request)

@@ -20,29 +20,7 @@
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/jobDetails/employmentStatuses" id="form">
-			@csrf
-			<div class="row">
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="name">Employment Status: </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Enter employment status</p>
-							<input class="form-control required" type="text" name="name" required>
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="description">Description: </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Enter description</p>
-							<textarea class="form-control required" name="description" required></textarea>
-						</div>
-					</div>
-				</div>
-			</div>
+			@include('pages.admin.jobDetails.employmentStatuses.form')
 		</form>
 	</div>
 	<div class="card-footer text-right">

@@ -16,7 +16,7 @@ class JobFunctionController extends Controller
 
     public function create(hris_job_functions $jobFunction)
     {
-        return view('pages.recruitment.recruitmentSetup.jobFunctions.create');
+        return view('pages.recruitment.recruitmentSetup.jobFunctions.create', compact('jobFunction'));
     }
 
     public function store(Request $request)
