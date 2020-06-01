@@ -40,6 +40,7 @@
 				@foreach($leaveTypes as $leaveType)
 				<tr>
 					<td>{{$leaveType->id}}</td>
+					<td>{{$leaveType->name}}</td>
 					<td>{{$leaveType->leave_accrue}}</td>
 					<td>{{$leaveType->carried_forward}}</td>
 					<td>{{$leaveType->leaves_per_period}}</td>

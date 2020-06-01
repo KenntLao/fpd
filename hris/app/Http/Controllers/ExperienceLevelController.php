@@ -17,7 +17,7 @@ class ExperienceLevelController extends Controller
 
     public function create(hris_experience_levels $experienceLevel)
     {
-        return view('pages.recruitment.recruitmentSetup.experienceLevels.create');
+        return view('pages.recruitment.recruitmentSetup.experienceLevels.create', compact('experienceLevel'));
     }
 
     public function store(Request $request)

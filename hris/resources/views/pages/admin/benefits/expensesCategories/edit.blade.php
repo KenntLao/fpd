@@ -25,25 +25,13 @@
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/benefits/expensesCategories/update/{{$expensesCategory->id}}" id="form">
-			@csrf
 			@method('PATCH')
-			<div class="row">
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="name">Name: </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Enter name</p>
-							<input class="form-control" type="text" name="name" value="{{$expensesCategory->name}}" required>
-						</div>
-					</div>
-				</div>
-			</div>
+			@include('pages.admin.benefits.expensesCategories.form')
 		</form>
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/benefits/expensesCategories/index"><i class="fa fa-arrow-left"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save expenses category</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save expenses category</button>
 	</div>
 </div>
 @stop

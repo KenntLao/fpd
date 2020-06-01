@@ -25,33 +25,7 @@
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/leave/leaveGroupEmployees" id="form">
-			@csrf
-			<div class="row">
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="employee">Employee: </label>
-						<span class="badge badge-danger">Required</span>
-						<select class="form-control required select2" name="employee" required>
-							<option value="SocialConz Digital">SocialConz Digital</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="leave_group">Leave Group: </label>
-						<span class="badge badge-danger">Required</span>
-						<select class="form-control required select2" name="leave_group" required>
-							@if(count($leaveGroups) > 0)
-							@foreach($leaveGroups as $leaveGroup)
-							<option value="{{$leaveGroup->name}}">{{$leaveGroup->name}}</option>
-							@endforeach
-							@else
-							<option value="None">None</option>
-							@endif
-						</select>
-					</div>
-				</div>
-			</div>
+			@include('pages.admin.leave.leaveGroupEmployees.form')
 		</form>
 	</div>
 	<div class="card-footer text-right">

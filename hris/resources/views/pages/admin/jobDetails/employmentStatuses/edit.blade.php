@@ -20,28 +20,8 @@
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/jobDetails/employmentStatuses/update/{{$employmentStatus->id}}" id="form">
-			@csrf
 			@method('PATCH')
-			<div class="row">
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="name">Employment Status: </label>
-						<div class="input">
-							<p class="placeholder">Enter employment status</p>
-							<input class="form-control required" type="text" name="name" value="{{$employmentStatus->name}}" required>
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="description">Description: </label>
-						<div class="input">
-							<p class="placeholder">Enter description</p>
-							<textarea class="form-control required" name="description" required>{{$employmentStatus->description}}</textarea>
-						</div>
-					</div>
-				</div>
-			</div>
+			@include('pages.admin.jobDetails.employmentStatuses.form')
 		</form>
 	</div>
 	<div class="card-footer text-right">

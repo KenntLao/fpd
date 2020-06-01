@@ -16,7 +16,7 @@ class EmploymentTypeController extends Controller
 
     public function create(hris_employment_types $employmentType)
     {
-        return view('pages.recruitment.recruitmentSetup.employmentTypes.create');
+        return view('pages.recruitment.recruitmentSetup.employmentTypes.create', compact('employmentType'));
     }
 
     public function store(Request $request)

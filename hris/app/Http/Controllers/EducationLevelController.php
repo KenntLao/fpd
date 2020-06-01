@@ -17,7 +17,7 @@ class EducationLevelController extends Controller
 
     public function create(hris_education_levels $educationLevel)
     {
-        return view('pages.recruitment.recruitmentSetup.educationLevels.create');
+        return view('pages.recruitment.recruitmentSetup.educationLevels.create', compact('educationLevel'));
     }
 
     public function store(Request $request)

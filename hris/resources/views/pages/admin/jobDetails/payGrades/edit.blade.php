@@ -25,54 +25,13 @@
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/jobDetails/payGrades/update/{{$payGrade->id}}" id="form">
-			@csrf
 			@method('PATCH')
-			<div class="row">
-				<div class="col-12 col-md-6 col-xl-3">
-					<div class="form-group">
-						<label class="mr-2" for="name">Pay Grade Name: </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Enter pay grade</p>
-							<input class="form-control required" type="text" name="name" value="{{$payGrade->name}}" required>
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-md-6 col-xl-3">
-					<div class="form-group">
-						<label class="mr-2" for="currency">Currency: </label>
-						<span class="badge badge-danger">Required</span>
-						<select class="form-control required select2" name="currency" required>
-							<option value="Philippine Peso" selected>Philippine Peso</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-12 col-md-6 col-xl-3">
-					<div class="form-group">
-						<label class="mr-2" for="min_salary">Min Salary: </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Enter minimum salary</p>
-							<input class="form-control required" type="text" name="min_salary" value="{{$payGrade->min_salary}}" required>
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-md-6 col-xl-3">
-					<div class="form-group">
-						<label class="mr-2" for="max_salary">Max Salary: </label>
-						<span class="badge badge-danger">Required</span>
-						<div class="input">
-							<p class="placeholder">Enter maximum salary</p>
-							<input class="form-control required" type="text" name="max_salary" value="{{$payGrade->max_salary}}" required>
-						</div>
-					</div>
-				</div>
-			</div>
+			@include('pages.admin.jobDetails.payGrades.form')
 		</form>
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/jobDetails/payGrades/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-		<button class="btn btn-primary" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save pay grade</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save pay grade</button>
 	</div>
 </div>
 @stop

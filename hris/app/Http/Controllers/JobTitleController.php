@@ -14,9 +14,9 @@ class JobTitleController extends Controller
         return view('pages.admin.jobDetails.jobTitles.index', compact('jobTitles'));
     }
 
-    public function create(hris_job_titles $jobTitles)
+    public function create(hris_job_titles $jobTitle)
     {
-        return view('pages.admin.jobDetails.jobTitles.create', compact('jobTitles'));
+        return view('pages.admin.jobDetails.jobTitles.create', compact('jobTitle'));
     }
 
 

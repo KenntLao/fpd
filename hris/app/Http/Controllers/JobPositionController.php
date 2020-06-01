@@ -23,7 +23,7 @@ class JobPositionController extends Controller
         return view('pages.recruitment.jobPositions.index', compact('jobPositions'));
     }
 
-    public function create()
+    public function create(hris_job_positions $jobPosition)
     {
         $benefits = hris_benefits::all();
         $employmentTypes = hris_employment_types::all();
@@ -32,7 +32,7 @@ class JobPositionController extends Controller
         $jobFunctions = hris_job_functions::all();
         $countries = hris_countries::all()->sortBy('name');
         $currencies = hris_currencies::all()->sortBy('name');
-        return view('pages.recruitment.jobPositions.create', compact('benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions', 'countries', 'currencies'));
+        return view('pages.recruitment.jobPositions.create', compact('benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions', 'countries', 'currencies', 'jobPosition'));
     }
 
     public function store(Request $request)

@@ -16,7 +16,7 @@ class BenefitController extends Controller
 
     public function create(hris_benefits $benefit)
     {
-        return view('pages.recruitment.recruitmentSetup.benefits.create');
+        return view('pages.recruitment.recruitmentSetup.benefits.create', compact('benefit'));
     }
 
     public function store(Request $request)
