@@ -266,6 +266,18 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE HOLIDAY */
     Route::delete('/hris/pages/admin/leave/holidays/delete/{holiday}', 'HolidayController@destroy');
 
+    /* LEAVE RULES PAGE */
+    Route::get('/hris/pages/admin/leave/holidays/index', 'HolidayController@index');
+    /* ADD LEAVE RULES */
+    Route::get('/hris/pages/admin/leave/holidays/create', 'HolidayController@create');
+    Route::post('/hris/pages/admin/leave/holidays', 'HolidayController@store');
+    /* EDIT LEAVE RULES */
+    Route::get('/hris/pages/admin/leave/holidays/{holiday}/edit', 'HolidayController@edit');
+    /* UPDATE LEAVE RULES */
+    Route::patch('/hris/pages/admin/leave/holidays/update/{holiday}', 'HolidayController@update');
+    /* DELETE LEAVE RULES */
+    Route::delete('/hris/pages/admin/leave/holidays/delete/{holiday}', 'HolidayController@destroy');
+
     /* BENEFITS ADMINISTRATION */
 
     /* EXPENSES CATEGORIES PAGE */

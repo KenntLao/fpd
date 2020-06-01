@@ -404,7 +404,90 @@ return [
                             'active' => ['/hris/pages/admin/benefits/employeeExpenses/create', '/hris/pages/admin/benefits/employeeExpenses/index', '/hris/pages/admin/benefits/employeeExpenses/*/edit', 'regex:@^content/[0-9]+$@']
                         ]
                     ]
-                ]
+                ],
+                [
+                    'text' => 'Overtime Administration',
+                    'icon' => 'fas fa-fw fa-align-center',
+                    'submenu' => [
+                        [
+                            'text' => 'Categories',
+                            'icon' => 'fas fa-fw fa-align-center',
+                            'url' => '/hris/pages/admin/overtime/overtimeCategories/index',
+                            'active' => ['/hris/pages/admin/overtime/overtimeCategories/create', '/hris/pages/admin/overtime/overtimeCategories/index', '/hris/pages/admin/overtime/overtimeCategories/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Requests',
+                            'icon' => 'fas fa-fw fa-align-center',
+                            'url' => '/hris/pages/admin/overtime/overtimeRequests/index',
+                            'active' => ['/hris/pages/admin/overtime/overtimeRequests/create', '/hris/pages/admin/overtime/overtimeRequests/index', '/hris/pages/admin/overtime/overtimeRequests/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Employee Custom Fields',
+                    'icon' => 'fas fa-fw fa-ruler-horizontal',
+                    'submenu' => [
+                        [
+                            'text' => 'Field Names',
+                            'icon' => 'fas fa-fw fa-ruler-horizontal',
+                            'url' => '/hris/pages/admin/employee/employeeFieldNames/index',
+                            'active' => ['/hris/pages/admin/employee/employeeFieldNames/create', '/hris/pages/admin/employee/employeeFieldNames/index', '/hris/pages/admin/employee/employeeFieldNames/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Custom Fields',
+                            'icon' => 'fas fa-fw fa-ruler-horizontal',
+                            'url' => '/hris/pages/admin/employee/employeeCustomFields/index',
+                            'active' => ['/hris/pages/admin/employee/employeeCustomFields/create', '/hris/pages/admin/employee/employeeCustomFields/index', '/hris/pages/admin/employee/employeeCustomFields/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Company Loans',
+                    'icon' => 'fas fa-fw fa-money-check',
+                    'submenu' => [
+                        [
+                            'text' => 'Loan Types',
+                            'icon' => 'fas fa-fw fa-money-check',
+                            'url' => '/hris/pages/admin/loans/types/index',
+                            'active' => ['/hris/pages/admin/loans/types/create', '/hris/pages/admin/loans/types/index', '/hris/pages/admin/loans/types/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Employee Loans',
+                            'icon' => 'fas fa-fw fa-money-check',
+                            'url' => '/hris/pages/admin/loans/employeeLoans/index',
+                            'active' => ['/hris/pages/admin/loans/employeeLoans/create', '/hris/pages/admin/loans/employeeLoans/index', '/hris/pages/admin/loans/employeeLoans/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Company Assets',
+                    'icon' => 'fas fa-fw fa-archive',
+                    'submenu' => [
+                        [
+                            'text' => 'Asset Types',
+                            'icon' => 'fas fa-fw fa-archive',
+                            'url' => '/hris/pages/admin/assets/types/index',
+                            'active' => ['/hris/pages/admin/assets/types/create', '/hris/pages/admin/assets/types/index', '/hris/pages/admin/assets/types/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Assets',
+                            'icon' => 'fas fa-fw fa-archive',
+                            'url' => '/hris/pages/admin/assets/companyAssets/index',
+                            'active' => ['/hris/pages/admin/assets/companyAssets/create', '/hris/pages/admin/assets/companyAssets/index', '/hris/pages/admin/assets/companyAssets/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Custom Fields',
+                            'icon' => 'fas fa-fw fa-archive',
+                            'url' => '/hris/pages/admin/assets/assetCustomFields/index',
+                            'active' => ['/hris/pages/admin/assets/assetCustomFields/create', '/hris/pages/admin/assets/assetCustomFields/index', '/hris/pages/admin/assets/assetCustomFields/*/edit', 'regex:@^content/[0-9]+$@']
+                        ]
+                    ]
+                ],
+                [
+                    'text' => 'Audit Log',
+                    'icon' => 'fas fa-fw fa-compass',
+                    'url' => '/hris/pages/admin/auditLog/index'
+                ],
             ]
         ],
         'EMPLOYEE MANAGEMENT',
@@ -448,6 +531,218 @@ return [
                     'icon'    => 'fas fa-fw fa-file',
                 ],
             ],
+        ],
+        'ADMIN REPORTS',
+        [
+            'text' => 'Admin Reports',
+            'icon' => 'fas fa-fw fa-window-maximize',
+            'url' => '#'
+        ],
+        [
+            'text' => 'Report Files',
+            'icon' => 'fas fa-fw fa-file-export',
+            'url' => '#'
+        ],
+        'SYSTEM MANAGEMENT',
+        [
+            'text' => 'System',
+            'icon' => 'fas fa-fw fa-sliders-h',
+            'submenu' => [
+                [
+                    'text' => 'Settings',
+                    'icon' => 'fas fa-fw fa-cogs',
+                    'submenu' => [
+                        [
+                            'text' => 'Company',
+                            'icon' => 'fas fa-fw fa-cogs',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'System',
+                            'icon' => 'fas fa-fw fa-cogs',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Email',
+                            'icon' => 'fas fa-fw fa-cogs',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Leave / PTO',
+                            'icon' => 'fas fa-fw fa-cogs',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'LDAP',
+                            'icon' => 'fas fa-fw fa-cogs',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Attendance',
+                            'icon' => 'fas fa-fw fa-cogs',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Other',
+                            'icon' => 'fas fa-fw fa-cogs',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Users',
+                    'icon' => 'fas fa-fw fa-user',
+                    'submenu' => [
+                        [
+                            'text' => 'Users',
+                            'icon' => 'fas fa-fw fa-user',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'User Roles',
+                            'icon' => 'fas fa-fw fa-user',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Manage Modules',
+                    'icon' => 'fas fa-fw fa-folder-open',
+                    'submenu' => [
+                        [
+                            'text' => 'Usage',
+                            'icon' => 'fas fa-fw fa-folder-open',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Modules',
+                            'icon' => 'fas fa-fw fa-folder-open',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Manage Permissions',
+                    'icon' => 'fas fa-fw fa-unlock',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Manage Metadeta',
+                    'icon' => 'fas fa-fw fa-microchip',
+                    'submenu' => [
+                        [
+                            'text' => 'Countries',
+                            'icon' => 'fas fa-fw fa-microchip',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Provinces',
+                            'icon' => 'fas fa-fw fa-microchip',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Currency Types',
+                            'icon' => 'fas fa-fw fa-microchip',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Nationality',
+                            'icon' => 'fas fa-fw fa-microchip',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Ethnicity',
+                            'icon' => 'fas fa-fw fa-microchip',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Immigration Status',
+                            'icon' => 'fas fa-fw fa-microchip',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Data',
+                    'icon' => 'fas fa-fw fa-database',
+                    'submenu' => [
+                        [
+                            'text' => 'Data Importers',
+                            'icon' => 'fas fa-fw fa-database',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Data Import Files',
+                            'icon' => 'fas fa-fw fa-database',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+            ]
+        ],
+        'INSIGHTS',
+        [
+            'text' => 'Time and Management',
+            'icon' => 'fas fa-fw fa-user-clock',
+            'url' => '#'
+        ],
+        'PAYROLL',
+        [
+            'text' => 'Salary',
+            'icon' => 'fas fa-fw fa-file-archive',
+            'submenu' => [
+                [
+                    'text' => 'Salary Component Types',
+                    'icon' => 'fas fa-fw fa-money-check-alt',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Salary Components',
+                    'icon' => 'fas fa-fw fa-money-check-alt',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Employee Salary Components',
+                    'icon' => 'fas fa-fw fa-money-check-alt',
+                    'url' => '#'
+                ],
+            ]
+        ],
+        [
+            'text' => 'Payroll Reports',
+            'icon' => 'fas fa-fw fa-cogs',
+            'submenu' => [
+                [
+                    'text' => 'Company Payroll',
+                    'icon' => 'fas fa-fw fa-cogs',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Payroll Reports',
+                    'icon' => 'fas fa-fw fa-cogs',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Payroll Columns',
+                    'icon' => 'fas fa-fw fa-cogs',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Calculation Groups',
+                    'icon' => 'fas fa-fw fa-cogs',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Calculation Methods',
+                    'icon' => 'fas fa-fw fa-cogs',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Payslip Templates',
+                    'icon' => 'fas fa-fw fa-cogs',
+                    'url' => '#'
+                ],
+            ]
         ],
         'RECRUITMENT MANAGEMENT',
         [
@@ -505,6 +800,119 @@ return [
                 ],
             ],
         ],
+        'PERSONAL INFORMATION',
+        [
+            'text' => 'Personal Information',
+            'icon' => 'fas fa-fw fa-grip-horizontal',
+            'submenu' => [
+                [
+                    'text' => 'Dashboard',
+                    'icon' => 'fas fa-fw fa-desktop',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Basic Information',
+                    'icon' => 'fas fa-fw fa-user',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Qualifications',
+                    'icon' => 'fas fa-fw fa-graduation-cap',
+                    'submenu' => [
+                        [
+                            'text' => 'Skills',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Education',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Certifications',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Languages',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Dependents',
+                    'icon' => 'fas fa-fw fa-expand',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Emergency Contacts',
+                    'icon' => 'fas fa-fw fa-phone-square',
+                    'url' => '#'
+                ],
+            ]
+        ],
+        'LEAVE MANAGEMENT',
+        [
+            'text' => 'Leave Management',
+            'icon' => 'fas fa-fw fa-share-alt',
+            'submenu' => [
+                [
+                    'text' => 'Leave',
+                    'icon' => 'fas fa-fw fa-calendar-day',
+                    'submenu' => [
+                        [
+                            'text' => 'All My Leaves',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/all/index',
+                            'active' => ['/hris/pages/leaves/all/create', '/hris/pages/leaves/all/index', '/hris/pages/leaves/all/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Leave Entitlement',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/leaveEntitlements/index',
+                            'active' => ['/hris/pages/leaves/leaveEntitlements/create', '/hris/pages/leaves/leaveEntitlements/index', '/hris/pages/leaves/leaveEntitlements/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Approved Leave',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/approvedLeaves/index',
+                            'active' => ['/hris/pages/leaves/approvedLeaves/create', '/hris/pages/leaves/approvedLeaves/index', '/hris/pages/leaves/approvedLeaves/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Pending Leave',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/pendingLeaves/index',
+                            'active' => ['/hris/pages/leaves/pendingLeaves/create', '/hris/pages/leaves/pendingLeaves/index', '/hris/pages/leaves/pendingLeaves/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Subordinate Leave',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/subordinateLeaves/index',
+                            'active' => ['/hris/pages/leaves/subordinateLeaves/create', '/hris/pages/leaves/subordinateLeaves/index', '/hris/pages/leaves/subordinateLeaves/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Cancellation Requests',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/cancellationRequests/index',
+                            'active' => ['/hris/pages/leaves/cancellationRequests/create', '/hris/pages/leaves/cancellationRequests/index', '/hris/pages/leaves/cancellationRequests/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Approval Requests',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/approvalRequests/index',
+                            'active' => ['/hris/pages/leaves/approvalRequests/create', '/hris/pages/leaves/approvalRequests/index', '/hris/pages/leaves/approvalRequests/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                    ]
+                ], 
+                [
+                    'text' => 'Leave Calendar',
+                    'icon' => 'fas fa-fw fa-calendar-alt',
+                    'url' => '/hris/pages/leaves/calendar/index'
+                ]
+            ]
+        ],
         'TIME MANAGEMENT',
         [
             'text' => 'Time Management',
@@ -538,7 +946,161 @@ return [
                     'icon' => 'fas fa-fw fa-calendar-plus',
                 ],
             ]
-        ]
+        ],
+        'DOCUMENT MANAGEMENT',
+        [
+            'text' => 'Documents',
+            'icon' => 'fas fa-fw fa-file-alt',
+            'submenu' => [
+                [
+                    'text' => 'My Documents',
+                    'icon' => 'fas fa-fw fa-file',
+                    'submenu' => [
+                        [
+                            'text' => 'Company Documents',
+                            'icon' => 'fas fa-fw fa-file',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Personal Documents',
+                            'icon' => 'fas fa-fw fa-file',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'HR Forms',
+                    'icon' => 'fas fa-fw fa-file-word',
+                    'url' => '#'
+                ],
+            ]
+        ],
+        'COMPANY',
+        [
+            'text' => 'Staff Directory',
+            'icon' => 'fas fa-fw fa-user',
+            'url' => '#'
+        ],
+        'TRAINING MANAGEMENT',
+        [
+            'text' => 'Training',
+            'icon' => 'fas fa-fw fa-briefcase',
+            'submenu' => [
+                [
+                    'text' => 'My Training Sessions',
+                    'icon' => 'fas fa-fw fa-briefcase',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'All Training Sessions',
+                    'icon' => 'fas fa-fw fa-briefcase',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Training Sessions of Direct Reports',
+                    'icon' => 'fas fa-fw fa-briefcase',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Training Sessions Coordinated by Me',
+                    'icon' => 'fas fa-fw fa-briefcase',
+                    'url' => '#'
+                ],
+            ]
+        ],
+        'PERFORMANCE',
+        [
+            'text' => 'Reviews',
+            'icon' => 'fas fa-fw fa-bezier-curve',
+            'submenu' => [
+                [
+                    'text' => 'Self Assessments',
+                    'icon' => 'fas fa-fw fa-compress-arrows-alt',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Performance Reviews Coordinated by Me',
+                    'icon' => 'fas fa-fw fa-compress-arrows-alt',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Provide Feedback',
+                    'icon' => 'fas fa-fw fa-compress-arrows-alt',
+                    'url' => '#'
+                ],
+            ]
+        ],
+        'TRAVEL MANAGEMENT',
+        [
+            'text' => 'Itinerary',
+            'icon' => 'fas fa-fw fa-globe',
+            'submenu' => [
+                [
+                    'text' => 'Travel Requests',
+                    'icon' => 'fas fa-fw fa-plane-departure',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Subordinate Travel Requests',
+                    'icon' => 'fas fa-fw fa-plane-departure',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Travel Request Approval',
+                    'icon' => 'fas fa-fw fa-plane-departure',
+                    'url' => '#'
+                ],
+            ]
+        ],
+        'FINANCE MANAGEMENT',
+        [
+            'text' => 'Finance',
+            'icon' => 'fas fa-fw fa-calculator',
+            'submenu' => [
+                [
+                    'text' => 'Benefits',
+                    'icon' => 'fas fa-fw fa-bars',
+                    'submenu' => [
+                        [
+                            'text' => 'Expenses',
+                            'icon' => 'fas fa-fw fa-bars',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Subordinate Expenses',
+                            'icon' => 'fas fa-fw fa-bars',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Expenses Approval',
+                            'icon' => 'fas fa-fw fa-bars',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Salary',
+                    'icon' => 'fas fa-fw fa-calculator',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Loans',
+                    'icon' => 'fas fa-fw fa-money-check',
+                    'url' => '#'
+                ],
+            ]
+        ],
+        'USER REPORTS',
+        [
+            'text' => 'Reports',
+            'icon' => 'fas fa-fw fa-window-maximize',
+            'url' => '#'
+        ],
+        [
+            'text' => 'Reports Files',
+            'icon' => 'fas fa-fw fa-file-export',
+            'url' => '#'
+        ],
     ],
 
     /*

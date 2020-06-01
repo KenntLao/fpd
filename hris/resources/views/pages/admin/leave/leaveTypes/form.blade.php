@@ -18,6 +18,29 @@
 				<p class="placeholder">Enter leaves per period</p>
 				<input class="form-control required" type="text" name="leaves_per_period" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required maxlength="6" value="{{old('leaves_per_period') ?? $leaveType->leaves_per_period}}">
 			</div>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-1"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-1" tabindex="-1" role="dialog" aria-labelledby="tip-1" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>This is the number of leave days that can be applied by an employee per year (or the current leave period). If the leave period is less than a Year this is the number of leaves for the leave period.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -30,6 +53,29 @@
 				<option value="Yes" {{ $leaveType->supervisor_leave_assign == 'Yes'  ? 'selected' : '' }}>Yes</option>
 				<option value="No" {{ $leaveType->supervisor_leave_assign == 'No'  ? 'selected' : '' }}>No</option>
 			</select>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-2"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-2" tabindex="-1" role="dialog" aria-labelledby="tip-2" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>If [ Yes ] is selected, an Admin or a Manager is able to login as an employee (Please check switch employee concept explained in employee module) and apply this type of leaves behalf of the employee.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-12 col-md-6">
@@ -74,6 +120,29 @@
 				<option value="Yes" {{ $leaveType->leave_accrue == 'Yes'  ? 'selected' : '' }}>Yes</option>
 				<option value="No" {{ $leaveType->leave_accrue == 'No'  ? 'selected' : '' }}>No</option>
 			</select>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-3"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-3" tabindex="-1" role="dialog" aria-labelledby="tip-3" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>If an employee has some leave balance remaining in previous leave period, that amount will get add to the current leave period.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-12 col-md-6">
@@ -83,6 +152,29 @@
 			<div class="input">
 				<p class="placeholder">Enter percentage of leave carried forward</p>
 				<input class="form-control required" type="text" name="carried_forward_percentage" id="percentInput" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="{{old('carried_forward_percentage') ?? $leaveType->carried_forward_percentage}}" required>
+			</div>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-4"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-4" tabindex="-1" role="dialog" aria-labelledby="tip-4" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>If only a percentage of remaining leave days should be carried forward to next leave period. Should be between 0 to 100. Effective only when leave carry forwarding is enabled</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -95,6 +187,29 @@
 			<div class="input">
 				<p class="placeholder">Enter maximum carried forward amount</p>
 				<input class="form-control required" type="text" name="max_carried_forward_amount" maxlength="6" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="{{old('max_carried_forward_amount') ?? $leaveType->max_carried_forward_amount}}" required>
+			</div>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-5"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-5" tabindex="-1" role="dialog" aria-labelledby="tip-5" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>Maximum number of leave days which can be carried forwarded from one year to another. Set to 0 for unlimited.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -117,6 +232,29 @@
 				<option value="1 Year" {{ $leaveType->carried_forward_leave_availability == '1 Year'  ? 'selected' : '' }}>1 Year</option>
 				<option value="No Limit" {{ $leaveType->carried_forward_leave_availability == 'No Limit'  ? 'selected' : '' }}>No Limit</option>
 			</select>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-6"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-6" tabindex="-1" role="dialog" aria-labelledby="tip-6" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>For how many days carried forward leaves are available from start date of next leave period.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -129,6 +267,29 @@
 				<option value="Yes" {{ $leaveType->proportionate_on_joined_date == 'Yes'  ? 'selected' : '' }}>Yes</option>
 				<option value="No" {{ $leaveType->proportionate_on_joined_date == 'No'  ? 'selected' : '' }}>No</option>
 			</select>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-7"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-7" tabindex="-1" role="dialog" aria-labelledby="tip-7" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>Whether the available number of leaves should be calculated based on number of days employee work in a given leave period. (e.g if an employee joined in end of June, he/she will only get half of the number of leave days specified for given leave type.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-12 col-md-6">
@@ -139,6 +300,29 @@
 				<option value="Yes" {{ $leaveType->employee_leave_period == 'Yes'  ? 'selected' : '' }}>Yes</option>
 				<option value="No" {{ $leaveType->employee_leave_period == 'No'  ? 'selected' : '' }}>No</option>
 			</select>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-8"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-8" tabindex="-1" role="dialog" aria-labelledby="tip-8" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>When Yes is selected leave period for this type of leave will start from the joined date of each employee.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -151,6 +335,29 @@
 				<option value="Yes" {{ $leaveType->send_notification_emails == 'Yes'  ? 'selected' : '' }}>Yes</option>
 				<option value="No" {{ $leaveType->send_notification_emails == 'No'  ? 'selected' : '' }}>No</option>
 			</select>
+			<div class="info">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tip-9"><i class="fas fa-fw fa-info"></i></button>
+				<!-- Modal -->
+				<div class="modal fade" id="tip-9" tabindex="-1" role="dialog" aria-labelledby="tip-9" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Tip</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>Send leave emails or not. For some leave types you might not want to send email notifications.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-12 col-md-6">
