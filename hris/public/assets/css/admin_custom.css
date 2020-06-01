@@ -80,7 +80,11 @@ body {
 	background: #FCBB6D;
 	color: #475C7A;
 }
-
+/* TABLE IMAGE */
+.table-image-container {
+	display: inline-block;
+	left: 10%;
+}
 /* IMAGE PREVIEW */
 .image-preview-container {
 	position: relative;
@@ -375,3 +379,8 @@ textarea.form-control {
 	margin-right: 5px;
 }
 
+/* EMPLOYEE MANAGEMENT */
+.employee-info {
+	color: #FCBB6D;
+	text-transform: uppercase;
+}

@@ -1,10 +1,9 @@
-{{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
 @section('title', 'HRIS | Employees - Employee')
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-building "></i> Company Structure</h1>
+        <h1><i class="fas fa-fw fa-users "></i> Employee Management</h1>
     </div>
 </div>
 @stop
@@ -28,19 +27,30 @@
             <table class="table table-hover table-bordered table-striped table-condensed">
                 <thead>
                     <tr>
-                        <th>name</th>
-                        <th>address</th>
-                        <th>type</th>
-                        <th>country</th>
-                        <th>time zone</th>
-                        <th>parent structure</th>
-                        <th>actions</th>
+                        <th>Image</th>
+                        <th>Employee Number</th>
+                        <th>Name</th>
+                        <th>Mobile Phone</th>
+                        <th>Department</th>
+                        <th>Gender</th>
+                        <th>Supervisor</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($employees as $employee)
                     <tr>
-                        <td></td>
+                        <td>
+                            <div class="table-image-container">
+                                <img src="{{asset('assets/images/employees/employee_photos/')}}/{{$employee->employee_photo}}">
+                            </div>
+                        </td>
+                        <td><a href="/hris/pages/employees/employee/{{$employee->id}}">{{$employee->employee_number}}</a></td>
+                        <td><a href="/hris/pages/employees/employee/{{$employee->id}}">{{$employee->firstname}} {{$employee->middlename}} {{$employee->lastname}}</a></td>
+                        <td>{{$employee->work_no}}</td>
+                        <td>{{$employee->department}}</td>
+                        <td>{{$employee->gender}}</td>
+                        <td>{{$employee->supervisor}}</td>
                         <td>
                             <a href="/hris/pages/employees/employee/{{$employee->id}}/edit"><i class="fa fa-edit"></i></a>
                             <form action="/hris/pages/employees/employee/delete/{{$employee->id}}" method="post">
