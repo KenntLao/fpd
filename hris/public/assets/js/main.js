@@ -24,7 +24,7 @@ $(document).ready(function() {
 		if (obj.attr('minlength') != undefined) {
 			minlength = obj.attr('minlength');
 		}
-		if (obj.val().length >= minlength) {
+		if (obj.val() != null && obj.val().length >= minlength) {
 			obj.closest('.form-group').find('.badge').addClass('badge-success').removeClass('badge-danger');
 		} else {
 		obj.closest('.form-group').find('.badge').addClass('badge-danger').removeClass('badge-success');

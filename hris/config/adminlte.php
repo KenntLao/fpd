@@ -448,8 +448,8 @@ return [
                         [
                             'text' => 'Loan Types',
                             'icon' => 'fas fa-fw fa-money-check',
-                            'url' => '/hris/pages/admin/loans/types/index',
-                            'active' => ['/hris/pages/admin/loans/types/create', '/hris/pages/admin/loans/types/index', '/hris/pages/admin/loans/types/*/edit', 'regex:@^content/[0-9]+$@']
+                            'url' => '/hris/pages/admin/loans/loanTypes/index',
+                            'active' => ['/hris/pages/admin/loans/loanTypes/create', '/hris/pages/admin/loans/loanTypes/index', '/hris/pages/admin/loans/loanTypes/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Employee Loans',
@@ -467,7 +467,7 @@ return [
                             'text' => 'Asset Types',
                             'icon' => 'fas fa-fw fa-archive',
                             'url' => '/hris/pages/admin/assets/types/index',
-                            'active' => ['/hris/pages/admin/assets/types/create', '/hris/pages/admin/assets/types/index', '/hris/pages/admin/assets/types/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/assets/companyAssetTypes/create', '/hris/pages/admin/assets/companyAssetTypes/index', '/hris/pages/admin/assets/companyAssetTypes/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Assets',
