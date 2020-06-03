@@ -11,6 +11,28 @@ html::-webkit-scrollbar {
 	src: url("../fonts/OpenSans-Regular.ttf");
 	font-family: opensans;
 }
+
+
+/* USER NAV */
+.user-nav {
+	background: #FCBB6D;
+}
+.user-nav > .nav-link {
+	color: #fff !important;
+}
+.user-nav > .nav-link:hover {
+	color: #fff !important;
+	background: #475C7A !important;
+}
+.main-profile-photo {
+	display: inline-block;
+	
+}
+.main-profile-photo img {
+	width: 20px;
+	vertical-align: sub;
+}
+
 /* SIDEBAR */
 
 .nav-link > p {

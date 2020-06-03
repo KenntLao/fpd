@@ -14,9 +14,9 @@ class EmployeeController extends Controller
         return view('pages.employees.employee.index', compact('employees'));
     }
 
-    public function create(hris_employee $employees)
+    public function create(hris_employee $employee)
     {
-        return view('pages.employees.employee.create', compact('employees'));
+        return view('pages.employees.employee.create', compact('employee'));
     }
 
     public function store(Request $request, hris_employee $employees) {
@@ -81,7 +81,86 @@ class EmployeeController extends Controller
             return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully added!');   
         }else { // if data fails
                 return back()->withErrors($this->validatedData());
+        }
+    }
+
+    public function edit(hris_employee $employee){
+        return view('pages.employees.employee.edit', compact('employee'));
+    }
+
+    public function update(Request $request, hris_employee $employee){
+        if ($this->validatedData()) {
+            // check data if valid
+
+            // image path
+            $imagePath = public_path('assets/images/employees/employee_photos/');
+
+            // REMOVE OLD FILE
+            if ($employee->employee_photo != '' && $employee->employee_photo != NULL) {
+                $old_file = $imagePath . $employee->employee_photo;
+                unlink($old_file);
             }
+            if ($request->hasFile('employee_photo')) {
+                $imageName = time() . '.' . $request->employee_photo->extension();
+            }
+            // CREATE USERNAME
+            $employee_firstname = request('firstname');
+            if (request('middlename')) {
+                $employee_middlename = request('middlename');
+            } else {
+                $employee_middlename = '';
+            }
+            $employee_lastname = request('lastname');
+            $employee_number = request('employee_number');
+            $username = substr($employee_firstname, 0, 1) . substr($employee_middlename, 0, 1) . substr($employee_lastname, 0, 1) . $employee_number;
+            $password = Hash::make(1234);
+
+            $employee->employee_photo = $imageName;
+            $employee->employee_number = request('employee_number');
+            $employee->username = $username;
+            $employee->password = $password;
+            $employee->firstname = request('firstname');
+            $employee->middlename = request('middlename');
+            $employee->lastname = request('lastname');
+            $employee->job_position = request('job_position');
+            $employee->work_no = request('work_no');
+            $employee->work_phone = request('work_phone');
+            $employee->work_email = request('work_email');
+            $employee->department = request('department');
+            $employee->supervisor = request('supervisor');
+            $employee->work_address = request('work_address');
+            $employee->sss = request('sss');
+            $employee->pagibig = request('pagibig');
+            $employee->phic = request('phic');
+            $employee->joined_date = request('joined_date');
+            $employee->employment_status = request('employment_status');
+            $employee->termination_date = request('termination_date');
+            $employee->home_address = request('home_address');
+            $employee->private_email = request('private_email');
+            $employee->bank_acc = request('bank_acc');
+            $employee->home_distance = request('home_distance');
+            $employee->marital_status = request('marital_status');
+            $employee->emergency_contact = request('emergency_contact');
+            $employee->emergency_no = request('emergency_no');
+            $employee->cert_level = request('cert_level');
+            $employee->field_study = request('field_study');
+            $employee->school = request('school');
+            $employee->passport_no = request('passport_no');
+            $employee->gender = request('gender');
+            $employee->nationality = request('nationality');
+            $employee->birthday = request('birthday');
+            $employee->place_birth = request('place_birth');
+            $employee->dependant = request('dependant');
+            $employee->visa_no = request('visa_no');
+            $employee->work_permit = request('work_permit');
+            $employee->visa_expire = request('visa_expire');
+            $employee->update();
+            $request->employee_photo->move($imagePath, $imageName);
+
+            return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully updated!');
+        } else { // if data fails
+            return back()->withErrors($this->validatedData());
+        }
     }
 
     public function show(hris_employee $employee) {

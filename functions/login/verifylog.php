@@ -72,6 +72,7 @@ if(isset($_POST['submit-login'])) {
 					}
 				} else {
 					$_SESSION['sys_photo'] = 'hris/public/assets/images/employees/employee_photos/'.$data['employee_photo'];
+					$_SESSION['sys_hris_photo'] =  'assets/images/employees/employee_photos/'.$data['employee_photo'];
 				}
 				$_SESSION['sys_role_ids'] = $data['role_ids'];
 				//$_SESSION['sys_department_id'] = $data['department_id'];
