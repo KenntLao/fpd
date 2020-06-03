@@ -350,6 +350,30 @@ textarea.form-control {
 	right: 0;
 	border: 3px solid #e5e5e5;
 }
+.info {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.info > button {
+	padding: 5px 7px;
+	border-radius: 50%;
+	font-size: 14px;
+}
+.modal-header {
+	background: #fcbb6d;
+}
+.modal-title {
+	font-family: opensans;
+	color: #fff;
+}
+.modal-footer > button {
+	font-family: opensans;
+}
+.modal-body > p {
+	font-family: opensans;
+	text-indent: 30px;
+}
 
 /* ALERT */
 .alert {

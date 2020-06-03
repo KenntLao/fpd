@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHrisOvertimeRequestsTable extends Migration
+class CreateHrisTimeOvertimeRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateHrisOvertimeRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hris_overtime_requests', function (Blueprint $table) {
+        Schema::create('hris_time_overtime_requests', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateHrisOvertimeRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hris_overtime_requests');
+        Schema::dropIfExists('hris_time_overtime_requests');
     }
 }
