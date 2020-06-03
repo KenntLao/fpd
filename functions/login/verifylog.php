@@ -54,30 +54,30 @@ if(isset($_POST['submit-login'])) {
 		if(!$valid_credentials) { // else check in employees table
 			
 			$employee_upass = '';
-			$sql = $pdo->prepare("SELECT * FROM employees WHERE employee_id = :employee_id LIMIT 1");
-			$sql->bindParam(":employee_id",$uname);
+			$sql = $pdo->prepare("SELECT * FROM hris_employees WHERE username = :emp_uname LIMIT 1");
+			$sql->bindParam(":emp_uname",$uname);
 			$sql->execute();
 			while($data = $sql->fetch(PDO::FETCH_ASSOC)) {
-				$employee_upass = $data['upass'];
+				$employee_upass = $data['password'];
 				$id = $data['id'];
 				$_SESSION['sys_id'] = $data['id'];
 				$_SESSION['sys_firstname'] = $data['firstname'];
 				$_SESSION['sys_lastname'] = $data['lastname'];
 				$_SESSION['sys_fullname'] = $data['firstname'].' '.$data['lastname'];
-				if($data['photo'] == '') {
+				if($data['employee_photo'] == '') {
 					if($data['gender'] == 0) {
 						$_SESSION['sys_photo'] = '/dist/img/avatar2.png';
 					} else {
 						$_SESSION['sys_photo'] = '/dist/img/avatar5.png';
 					}
 				} else {
-					$_SESSION['sys_photo'] = '/assets/images/profile/'.$data['photo'];
+					$_SESSION['sys_photo'] = 'hris/public/assets/images/employees/employee_photos/'.$data['employee_photo'];
 				}
 				$_SESSION['sys_role_ids'] = $data['role_ids'];
-				$_SESSION['sys_department_id'] = $data['department_id'];
-				$_SESSION['sys_property_ids'] = explode($data['property_ids'],',');
-				$_SESSION['sys_language'] = $data['language'];
-				$_SESSION['sys_data_per_page'] = $data['data_per_page'];
+				//$_SESSION['sys_department_id'] = $data['department_id'];
+				//$_SESSION['sys_property_ids'] = explode($data['property_ids'],',');
+				//$_SESSION['sys_language'] = $data['language'];
+				//$_SESSION['sys_data_per_page'] = $data['data_per_page'];
 				$_SESSION['sys_account_mode'] = 'employee';
 				$status = $data['status'];
 			}
@@ -85,7 +85,7 @@ if(isset($_POST['submit-login'])) {
 			// check if password is valid from user data
 			if($upass != '' && $employee_upass != '') {
 				
-				if($upass == decryptStr($employee_upass)) {
+				if($upass == password_verify($upass,$employee_upass)) {
 					
 					// credential is valid
 					$valid_credentials = 1;
@@ -107,7 +107,7 @@ if(isset($_POST['submit-login'])) {
 
 					// check if remember me function is checked
 					if(isset($_POST['remember_me'])) {
-						// set cookie for login type (username or email) and password
+						// set cookie for .login type (username or email) and password
                         setcookie('sys_pms', $uname.'|'.$upass, time() + (86400 * 30), "/"); // set for 1 month
 					} else {
                         unsetCookie('sys_pms'); // remove cookie if not checked
@@ -171,7 +171,7 @@ if(isset($_POST['submit-login'])) {
 								$sql = $pdo->prepare("UPDATE users SET last_login=".$last_login." WHERE id=".$id);
 								break;
 							case 'employee':
-                                $sql = $pdo->prepare("UPDATE employees SET last_login=".$last_login." WHERE id=".$id);
+                                $sql = $pdo->prepare("UPDATE hris_employees SET last_login=".$last_login." WHERE id=".$id);
                                     // record to system log
                                     systemLog('login',$id,'login','');
 								break;
@@ -179,7 +179,7 @@ if(isset($_POST['submit-login'])) {
 						$sql->execute();
 						
 						// check if employee and if timed in
-						if($_SESSION['sys_account_mode'] == 'employee') {
+					/*	if($_SESSION['sys_account_mode'] == 'employee') {
 							
 							// check if employee is already logged in
 							$sql = $pdo->prepare("SELECT employee_id, time_in, time_out FROM time_logs WHERE employee_id = :employee_id AND time_out=0 LIMIT 1");
@@ -193,10 +193,9 @@ if(isset($_POST['submit-login'])) {
 							}
 							
 						}
-
+					*/
 						// redirect to dashboard
                         header('location: /dashboard');
-
 					} else { // else redirect to login page and display error details
 
 						// !NEED TRANSLATION
