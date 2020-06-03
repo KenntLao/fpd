@@ -8,6 +8,7 @@ use App\hris_employee_expenses;
 use App\hris_expenses_categories;
 use App\hris_payment_methods;
 use App\hris_currencies;
+use App\users;
 
 class EmployeeExpenseController extends Controller
 {
@@ -144,23 +145,29 @@ class EmployeeExpenseController extends Controller
 
     public function destroy(hris_employee_expenses $employeeExpense)
     {
-        $employeeExpense->delete();
-        $path1 = public_path('assets/files/employee_expenses/receipt/');
-        $path2 = public_path('assets/files/employee_expenses/attachment_1/');
-        $path3 = public_path('assets/files/employee_expenses/attachment_2/');
-        if ($employeeExpense->receipt != '' && $employeeExpense->receipt != NULL) {
-            $old_file = $path1 . $employeeExpense->receipt;
-            unlink($old_file);
+        $id = $_SESSION['sys_id'];
+        $upass = $this->decryptStr(users::find($id)->upass);
+        if ( $upass == request('upass') ) {
+            $employeeExpense->delete();
+            $path1 = public_path('assets/files/employee_expenses/receipt/');
+            $path2 = public_path('assets/files/employee_expenses/attachment_1/');
+            $path3 = public_path('assets/files/employee_expenses/attachment_2/');
+            if ($employeeExpense->receipt != '' && $employeeExpense->receipt != NULL) {
+                $old_file = $path1 . $employeeExpense->receipt;
+                unlink($old_file);
+            }
+            if ($employeeExpense->attachment_1 != '' && $employeeExpense->attachment_1 != NULL) {
+                $old_file = $path2 . $employeeExpense->attachment_1;
+                unlink($old_file);
+            }
+            if ($employeeExpense->attachment_2 != '' && $employeeExpense->attachment_2 != NULL) {
+                $old_file = $path3 . $employeeExpense->attachment_2;
+                unlink($old_file);
+            }
+            return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully deleted!');
+        } else {
+            return back()->withErrors(['Password does not match.']);
         }
-        if ($employeeExpense->attachment_1 != '' && $employeeExpense->attachment_1 != NULL) {
-            $old_file = $path2 . $employeeExpense->attachment_1;
-            unlink($old_file);
-        }
-        if ($employeeExpense->attachment_2 != '' && $employeeExpense->attachment_2 != NULL) {
-            $old_file = $path3 . $employeeExpense->attachment_2;
-            unlink($old_file);
-        }
-        return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully deleted!');
     }
 
     protected function validatedData()
@@ -175,6 +182,18 @@ class EmployeeExpenseController extends Controller
             'currency' => 'required',
             'amount' => 'required'
         ]);
+    }
+    // decrypt string
+    function decryptStr($str) {
+        $key = '4507';
+        $c = base64_decode($str);
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = substr($c,0,$ivlen);
+        $hmac = substr($c,$ivlen,$sha2len=32);
+        $ciphertext_raw = substr($c,$ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
+        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
+        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }

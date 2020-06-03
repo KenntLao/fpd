@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\hris_leave_groups;
 use App\hris_leave_types;
+use App\users;
 
 class LeaveTypeController extends Controller
 {
@@ -85,8 +86,14 @@ class LeaveTypeController extends Controller
 
     public function destroy(hris_leave_types $leaveType)
     {
-        $leaveType->delete();
-        return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully deleted!');
+        $id = $_SESSION['sys_id'];
+        $upass = $this->decryptStr(users::find($id)->upass);
+        if ( $upass == request('upass') ) {
+            $leaveType->delete();
+            return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully deleted!');
+        } else {
+            return back()->withErrors(['Password does not match.']);
+        }
     }
 
     protected function validatedData()
@@ -107,6 +114,18 @@ class LeaveTypeController extends Controller
             'send_notification_emails' => 'required',
             'leave_color' => 'required'
         ]);
+    }
+    // decrypt string
+    function decryptStr($str) {
+        $key = '4507';
+        $c = base64_decode($str);
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = substr($c,0,$ivlen);
+        $hmac = substr($c,$ivlen,$sha2len=32);
+        $ciphertext_raw = substr($c,$ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
+        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
+        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }
