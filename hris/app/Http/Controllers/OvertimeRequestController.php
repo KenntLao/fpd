@@ -88,6 +88,19 @@ class OvertimeRequestController extends Controller
             return back()->withErrors(['Password does not match.']);
         }
     }
+    public function updateStatus(hris_overtime_requests $overtimeRequest, Request $request)
+    {
+        $overtimeRequest->status = request('status');
+        $overtimeRequest->update();
+        return redirect('/hris/pages/admin/overtime/overtimeRequests/index')->with('success', 'Overtime Request status successfully updated!');
+    }
+
+    public function destroy(hris_overtime_requests $overtimeRequest)
+    {
+        $overtimeRequest->delete();
+        return redirect('/hris/pages/admin/overtime/overtimeRequests/index')->with('success', 'Overtime Request successfully deleted');
+    }
+
     protected function validatedData()
     {
         return request()->validate([
@@ -109,6 +122,5 @@ class OvertimeRequestController extends Controller
         $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
         if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
-
 
 }

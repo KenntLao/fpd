@@ -87,6 +87,11 @@
 									</div>
 								</div>
 							</div>
+							<form action="/hris/pages/admin/loans/employeeLoans/delete/{{$employeeLoan->id}}" method="post">
+								@csrf
+								@method('DELETE')
+								<button type="submit"><i class="fa fa-trash"></i></button>
+							</form>
 						</td>
 					</tr>
 					@endforeach

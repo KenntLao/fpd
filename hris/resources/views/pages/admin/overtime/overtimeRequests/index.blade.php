@@ -97,6 +97,11 @@
 									</div>
 								</div>
 							</div>
+							<form action="/hris/pages/admin/overtime/overtimeRequests/delete/{{$overtimeRequest->id}}" method="post">
+								@csrf
+								@method('DELETE')
+								<button type="submit"><i class="fa fa-trash"></i></button>
+							</form>
 						</td>
 					</tr>
 					@endforeach
