@@ -188,6 +188,7 @@ body {
 	border: 1px solid #c9ced6;
 }
 .table td {
+	vertical-align: middle;
 	text-align: center;
 	font-size: 12px;
 	color: #7a7a7a;
@@ -402,8 +403,18 @@ textarea.form-control {
 	color: #2ED79E;
 	margin-right: 5px;
 }
-
 /* EMPLOYEE MANAGEMENT */
+.clickable-info {
+	background: transparent !important;
+	color: #475C7A !important;
+}
+.clickable-info:hover {
+	color: #FCBB6D !important;	
+}
+.table-image-container img {
+	width: 50px;
+	height: 50px;
+}
 .employee-info {
 	color: #FCBB6D;
 	text-transform: uppercase;
