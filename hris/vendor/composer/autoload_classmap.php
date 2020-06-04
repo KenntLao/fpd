@@ -115,7 +115,6 @@ return array(
     'App\\hris_time_overtime_requests' => $baseDir . '/app/hris_time_overtime_requests.php',
     'App\\hris_time_projects' => $baseDir . '/app/hris_time_projects.php',
     'App\\hris_time_sheets' => $baseDir . '/app/hris_time_sheets.php',
-    'App\\hris_time_zones' => $baseDir . '/app/hris_time_zones.php',
     'App\\hris_training_sessions' => $baseDir . '/app/hris_training_sessions.php',
     'App\\hris_work_weeks' => $baseDir . '/app/hris_work_weeks.php',
     'App\\users' => $baseDir . '/app/users.php',

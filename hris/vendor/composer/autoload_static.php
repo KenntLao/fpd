@@ -587,7 +587,6 @@ class ComposerStaticInit6c181881bffc77215f481f707d408bf5
         'App\\hris_time_overtime_requests' => __DIR__ . '/../..' . '/app/hris_time_overtime_requests.php',
         'App\\hris_time_projects' => __DIR__ . '/../..' . '/app/hris_time_projects.php',
         'App\\hris_time_sheets' => __DIR__ . '/../..' . '/app/hris_time_sheets.php',
-        'App\\hris_time_zones' => __DIR__ . '/../..' . '/app/hris_time_zones.php',
         'App\\hris_training_sessions' => __DIR__ . '/../..' . '/app/hris_training_sessions.php',
         'App\\hris_work_weeks' => __DIR__ . '/../..' . '/app/hris_work_weeks.php',
         'App\\users' => __DIR__ . '/../..' . '/app/users.php',
