@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1><i class="fas fa-fw fa-list-alt"></i> Training Setup</h1>
+		<h1><i class="fas fa-fw fa-briefcase"></i> Training Setup</h1>
 	</div>
 </div>
 @stop
@@ -13,6 +13,12 @@
 <div class="alert alert-success alert-block">
 	<button type="button" class="close" data-dismiss="alert">×</button>
 	<p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
+</div>
+@endif
+@if($errors->any())
+<div class="alert alert-danger alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<p><i class="fas fa-fw fa-exclamation-circle"></i>{{$errors->first()}}</p>
 </div>
 @endif
 <div class="card">
@@ -24,58 +30,84 @@
 	</div>
 	<div class="card-body">
 		@if(count($trainingSessions) > 0)
-				<div class="table-responsive">
-					<table class="table table-hover table-bordered table-striped table-condensed">
-						<thead>
-							<tr>
-								<th>name</th>
-								<th>course</th>
-								<th>scheduled time</th>
-								<th>status</th>
-								<th>delivery method</th>
-								<th>attendance type</th>
-								<th>training certificate required</th>
-								<th>actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach($trainingSessions as $trainingSession)
-							<tr>
-								<td>{{$trainingSession->name}}</td>
-								<td>
-									@if($trainingSession->course)
-									{{$trainingSession->course->name}}
-									@else
-									<span class="td-error">ERROR</span>
-									@endif
-								</td>
-								<td>{{date("M d, Y - h:i:sa", strtotime($trainingSession->scheduled_time))}}</td>
-								<td>
-									@if($trainingSession->course)
-									{{$trainingSession->course->status}}
-									@else
-									<span class="td-error">ERROR</span>
-									@endif
-								</td>
-								<td>{{$trainingSession->delivery_method}}</td>
-								<td>{{$trainingSession->attendance_type}}</td>
-								<td>{{$trainingSession->training_cert_required}}</td>
-								<td>
-									<a href="/hris/pages/admin/training/trainingSessions/{{$trainingSession->id}}/edit"><i class="fa fa-edit"></i></a>
-									<form action="/hris/pages/admin/training/trainingSessions/delete/{{$trainingSession->id}}" method="post">
-										@csrf
-										@method('DELETE')
-										<button type="submit"><i class="fa fa-trash"></i></button>
-									</form>
-								</td>
-							</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
-			@else
-			<h4>No data available.</h4>
-			@endif
+		<div class="table-responsive">
+			<table class="table table-hover table-bordered table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>name</th>
+						<th>trainingSession</th>
+						<th>scheduled time</th>
+						<th>status</th>
+						<th>delivery method</th>
+						<th>attendance type</th>
+						<th>training certificate required</th>
+						<th>actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($trainingSessions as $trainingSession)
+					<tr>
+						<td>{{$trainingSession->name}}</td>
+						<td>
+							@if($trainingSession->trainingSession)
+							{{$trainingSession->trainingSession->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
+						<td>{{date("M d, Y - h:i:sa", strtotime($trainingSession->scheduled_time))}}</td>
+						<td>
+							@if($trainingSession->trainingSession)
+							{{$trainingSession->trainingSession->status}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
+						<td>{{$trainingSession->delivery_method}}</td>
+						<td>{{$trainingSession->attendance_type}}</td>
+						<td>{{$trainingSession->training_cert_required}}</td>
+						<td>
+							<a href="/hris/pages/admin/training/trainingSessions/{{$trainingSession->id}}/edit"><i class="fa fa-edit"></i></a>
+							<!-- Button trigger modal -->
+							<button type="button" data-toggle="modal" data-target="#modal-{{$trainingSession->id}}"><i class="fa fa-trash"></i></button>
+							<!-- Modal -->
+							<div class="modal fade" id="modal-{{$trainingSession->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-{{$trainingSession->id}}" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Delete Confirmation</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<p>Are you sure you want to delete?</p>
+											<hr>
+											<form action="/hris/pages/admin/training/trainingSessions/delete/{{$trainingSession->id}}" method="post" id="form-{{$trainingSession->id}}">
+												@csrf
+												@method('DELETE')
+												<div class="form-group">
+													<label for="upass">Enter Password: </label>
+													<input class="form-control" type="password" name="upass" required>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer">
+											<button class="btn btn-danger" type="submit" form="form-{{$trainingSession->id}}"><i class="fa fa-check"></i> Confirm Delete</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+		@else
+		<h4>No data available.</h4>
+		@endif
 	</div>
 	<div class="card-footer">
 		{{$trainingSessions->links()}}

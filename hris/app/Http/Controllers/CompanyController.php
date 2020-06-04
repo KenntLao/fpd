@@ -8,6 +8,7 @@ use App\hris_company_structures;
 use App\hris_countries;
 use App\hris_time_zones;
 use App\hris_company_types;
+use App\users;
 
 class CompanyController extends Controller
 {
@@ -84,9 +85,14 @@ class CompanyController extends Controller
 
     public function destroy(hris_company_structures $company)
     {
-
-        $company->delete();
-        return redirect('/hris/pages/admin/company/index')->with('success', 'Company Structure successfully deleted');
+        $id = $_SESSION['sys_id'];
+        $upass = $this->decryptStr(users::find($id)->upass);
+        if ( $upass == request('upass') ) {
+            $company->delete();
+            return redirect('/hris/pages/admin/company/index')->with('success', 'Company Structure successfully deleted');
+        } else {
+            return back()->withErrors(['Password does not match.']);
+        }
 
     }
 
@@ -103,5 +109,17 @@ class CompanyController extends Controller
 
         ]);
 
+    }
+    // decrypt string
+    function decryptStr($str) {
+        $key = '4507';
+        $c = base64_decode($str);
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = substr($c,0,$ivlen);
+        $hmac = substr($c,$ivlen,$sha2len=32);
+        $ciphertext_raw = substr($c,$ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
+        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
+        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 }

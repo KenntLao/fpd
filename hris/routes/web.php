@@ -266,6 +266,18 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE HOLIDAY */
     Route::delete('/hris/pages/admin/leave/holidays/delete/{holiday}', 'HolidayController@destroy');
 
+    /* LEAVE RULES PAGE */
+    Route::get('/hris/pages/admin/leave/leaveRules/index', 'LeaveRuleController@index');
+    /* ADD LEAVE RULES */
+    Route::get('/hris/pages/admin/leave/leaveRules/create', 'LeaveRuleController@create');
+    Route::post('/hris/pages/admin/leave/leaveRules', 'LeaveRuleController@store');
+    /* EDIT LEAVE RULES */
+    Route::get('/hris/pages/admin/leave/leaveRules/{leaveRule}/edit', 'LeaveRuleController@edit');
+    /* UPDATE LEAVE RULES */
+    Route::patch('/hris/pages/admin/leave/leaveRules/update/{leaveRule}', 'LeaveRuleController@update');
+    /* DELETE LEAVE RULES */
+    Route::delete('/hris/pages/admin/leave/leaveRules/delete/{leaveRule}', 'LeaveRuleController@destroy');
+
     /* BENEFITS ADMINISTRATION */
 
     /* EXPENSES CATEGORIES PAGE */
@@ -306,9 +318,65 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE EMPLOYEE EXPENSES */
     Route::delete('/hris/pages/admin/benefits/employeeExpenses/delete/{employeeExpense}', 'EmployeeExpenseController@destroy');
 
+    /* OVERTIME ADMINISTRATION */
+
+    /* OVERTIME CATEGORIES PAGE */
+    Route::get('/hris/pages/admin/overtime/overtimeCategories/index', 'OvertimeCategoryController@index');
+    /* ADD OVERTIME CATEGORIES */
+    Route::get('/hris/pages/admin/overtime/overtimeCategories/create', 'OvertimeCategoryController@create');
+    Route::post('/hris/pages/admin/overtime/overtimeCategories', 'OvertimeCategoryController@store');
+    /* EDIT OVERTIME CATEGORIES */
+    Route::get('/hris/pages/admin/overtime/overtimeCategories/{overtimeCategory}/edit', 'OvertimeCategoryController@edit');
+    /* UPDATE OVERTIME CATEGORIES */
+    Route::patch('/hris/pages/admin/overtime/overtimeCategories/update/{overtimeCategory}', 'OvertimeCategoryController@update');
+    /* DELETE OVERTIME CATEGORIES */
+    Route::delete('/hris/pages/admin/overtime/overtimeCategories/delete/{overtimeCategory}', 'OvertimeCategoryController@destroy');
+
+    /* OVERTIME REQUESTS PAGE */
+    Route::get('/hris/pages/admin/overtime/overtimeRequests/index', 'OvertimeRequestController@index');
+    /* ADD OVERTIME REQUESTS */
+    Route::get('/hris/pages/admin/overtime/overtimeRequests/create', 'OvertimeRequestController@create');
+    Route::post('/hris/pages/admin/overtime/overtimeRequests', 'OvertimeRequestController@store');
+    /* EDIT OVERTIME REQUESTS */
+    Route::get('/hris/pages/admin/overtime/overtimeRequests/{overtimeRequest}/edit', 'OvertimeRequestController@edit');
+    /* UPDATE OVERTIME REQUESTS */
+    Route::patch('/hris/pages/admin/overtime/overtimeRequests/update/{overtimeRequest}', 'OvertimeRequestController@update');
+    /* UPDATE OVERTIME REQUESTS STATUS*/
+    Route::patch('/hris/pages/admin/overtime/overtimeRequests/updateStatus/{overtimeRequest}', 'OvertimeRequestController@updateStatus');
+    /* DELETE OVERTIME REQUESTS */
+    Route::delete('/hris/pages/admin/overtime/overtimeRequests/delete/{overtimeRequest}', 'OvertimeRequestController@destroy');
+
+    /* COMPANY LOANS */
+
+    /* LOAN TYPES PAGE */
+    Route::get('/hris/pages/admin/loans/loanTypes/index', 'CompanyLoanTypeController@index');
+    /* ADD LOAN TYPES */
+    Route::get('/hris/pages/admin/loans/loanTypes/create', 'CompanyLoanTypeController@create');
+    Route::post('/hris/pages/admin/loans/loanTypes', 'CompanyLoanTypeController@store');
+    /* EDIT LOAN TYPES */
+    Route::get('/hris/pages/admin/loans/loanTypes/{loanType}/edit', 'CompanyLoanTypeController@edit');
+    /* UPDATE LOAN TYPES */
+    Route::patch('/hris/pages/admin/loans/loanTypes/update/{loanType}', 'CompanyLoanTypeController@update');
+    /* DELETE LOAN TYPES */
+    Route::delete('/hris/pages/admin/loans/loanTypes/delete/{loanType}', 'CompanyLoanTypeController@destroy');
+
+    /* EMPLOYEE LOANS PAGE */
+    Route::get('/hris/pages/admin/loans/employeeLoans/index', 'EmployeeLoanController@index');
+    /* ADD EMPLOYEE LOANS */
+    Route::get('/hris/pages/admin/loans/employeeLoans/create', 'EmployeeLoanController@create');
+    Route::post('/hris/pages/admin/loans/employeeLoans', 'EmployeeLoanController@store');
+    /* EDIT EMPLOYEE LOANS */
+    Route::get('/hris/pages/admin/loans/employeeLoans/{employeeLoan}/edit', 'EmployeeLoanController@edit');
+    /* UPDATE EMPLOYEE LOANS */
+    Route::patch('/hris/pages/admin/loans/employeeLoans/update/{employeeLoan}', 'EmployeeLoanController@update');
+    /* DELETE EMPLOYEE LOANS */
+    Route::delete('/hris/pages/admin/loans/employeeLoans/delete/{employeeLoan}', 'EmployeeLoanController@destroy');
+
+
     /* EMPLOYEE MANAGEMENT */
     Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
     Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
+    Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
     Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
 
     /* BENEFITS PAGE */
@@ -426,7 +494,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::get('/hris/pages/time/attendanceSheets/index', 'AttendanceSheetController@index');
 
     /* OVERTIME REQUESTS PAGE */
-    Route::get('/hris/pages/time/overtimeRequests/index', 'OvertimeRequestController@index');
+    Route::get('/hris/pages/time/overtimeRequests/index', 'TimeOvertimeRequestController@index');
 
 
     Route::get('/hris/', function () {

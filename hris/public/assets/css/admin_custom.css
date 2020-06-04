@@ -20,6 +20,16 @@ html::-webkit-scrollbar {
 .main-sidebar {
 	background: #FCBB6D;
 }
+.sidebar {
+	height: calc(100vh - (3.5rem + 1px));
+}
+.sidebar::-webkit-scrollbar-thumb {
+	background: #e0a869;
+}
+.sidebar::-webkit-scrollbar {
+	background: #475C7A;
+	width: 5px;
+}
 .nav-header {
 	color: #475C7A;
 }
@@ -80,7 +90,11 @@ body {
 	background: #FCBB6D;
 	color: #475C7A;
 }
-
+/* TABLE IMAGE */
+.table-image-container {
+	display: inline-block;
+	left: 10%;
+}
 /* IMAGE PREVIEW */
 .image-preview-container {
 	position: relative;
@@ -184,6 +198,7 @@ body {
 	border: 1px solid #c9ced6;
 }
 .table td {
+	vertical-align: middle;
 	text-align: center;
 	font-size: 12px;
 	color: #7a7a7a;
@@ -193,14 +208,14 @@ body {
 .table tbody td form {
 	display: inline-block;
 }
-.table td a {
+.table td > a {
 	background: #007BFF;
 	color: #fff;
 	padding: 3px 5px;
 	font-size: 12px;
 	border-radius: 3px;
 }
-.table td button {
+.table td > button {
 	background: #EF5350;
 	color: #fff;
 	padding: 3px 5px;
@@ -212,9 +227,21 @@ body {
 	display: inline-block;
 }
 .btn-check {
+	display: inline-block;
+	color: #fff;
+	padding: 3px 5px;
+	border: 0;
+	border-radius: 3px;
+	font-size: 12px;
 	background: #2ED79E !important;
 }
 .btn-x {
+	display: inline-block;
+	color: #fff;
+	padding: 3px 5px;
+	border: 0;
+	border-radius: 3px;
+	font-size: 12px;
 	background: #fd7e14 !important;
 }
 .td-error {
@@ -346,6 +373,31 @@ textarea.form-control {
 	right: 0;
 	border: 3px solid #e5e5e5;
 }
+.info {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.info > button {
+	padding: 5px 7px;
+	border-radius: 50%;
+	font-size: 14px;
+}
+.modal-header {
+	background: #fcbb6d;
+}
+.modal-title {
+	font-family: opensans;
+	color: #fff;
+}
+.modal-footer > button {
+	font-family: opensans;
+}
+.modal-body > p {
+	font-family: opensans;
+	text-indent: 30px;
+	font-size: 14px;
+}
 
 /* ALERT */
 .alert {
@@ -365,13 +417,37 @@ textarea.form-control {
 	top: 5px;
 	right: 10px;
 }
-.alert > p {
+.alert-success > p {
 	margin-bottom: 0;
 	font-family: opensans;
 	color: #2ED79E;
 }
-.alert > p > i {
+.alert-success > p > i {
 	color: #2ED79E;
 	margin-right: 5px;
 }
-
+.alert-danger > p {
+	margin-bottom: 0;
+	font-family: opensans;
+	color: #f77b85;
+}
+.alert-danger > p > i {
+	color: #f77b85;
+	margin-right: 5px;
+}
+/* EMPLOYEE MANAGEMENT */
+.clickable-info {
+	background: transparent !important;
+	color: #475C7A !important;
+}
+.clickable-info:hover {
+	color: #FCBB6D !important;	
+}
+.table-image-container img {
+	width: 50px;
+	height: 50px;
+}
+.employee-info {
+	color: #FCBB6D;
+	text-transform: uppercase;
+}

@@ -12,6 +12,7 @@ use App\hris_experience_levels;
 use App\hris_job_functions;
 use App\hris_countries;
 use App\hris_currencies;
+use App\users;
 
 class JobPositionController extends Controller
 {
@@ -146,13 +147,19 @@ class JobPositionController extends Controller
 
     public function destroy(hris_job_positions $jobPosition)
     {
-        $imagePath = public_path('assets/images/job_positions/');
-        $jobPosition->delete();
-        if ($jobPosition->image != '' && $jobPosition->image != NULL) {
-            $old_file = $imagePath . $jobPosition->image;
-            unlink($old_file);
+        $id = $_SESSION['sys_id'];
+        $upass = $this->decryptStr(users::find($id)->upass);
+        if ( $upass == request('upass') ) {
+            $imagePath = public_path('assets/images/job_positions/');
+            $jobPosition->delete();
+            if ($jobPosition->image != '' && $jobPosition->image != NULL) {
+                $old_file = $imagePath . $jobPosition->image;
+                unlink($old_file);
+            }
+            return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
+        } else {
+            return back()->withErrors(['Password does not match.']);
         }
-        return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
     }
 
     protected function validatedData() 
@@ -173,4 +180,17 @@ class JobPositionController extends Controller
             'display_type'=>'required'
         ]);
     }
+    // decrypt string
+    function decryptStr($str) {
+        $key = '4507';
+        $c = base64_decode($str);
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = substr($c,0,$ivlen);
+        $hmac = substr($c,$ivlen,$sha2len=32);
+        $ciphertext_raw = substr($c,$ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
+        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
+        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
+    }
+
 }

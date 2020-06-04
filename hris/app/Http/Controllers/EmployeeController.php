@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\hris_employee;
+
 class EmployeeController extends Controller
 {
 //
@@ -23,8 +25,22 @@ class EmployeeController extends Controller
             if ($request->hasFile('employee_photo')) {
                 $imageName = time() . '.' . $request->employee_photo->extension();
             }
+            // CREATE USERNAME
+            $employee_firstname = request('firstname');
+            if(request('middlename')){
+                $employee_middlename = request('middlename');
+            }else {
+                $employee_middlename = '';
+            }
+            $employee_lastname = request('lastname');
+            $employee_number = request('employee_number');
+            $username = substr($employee_firstname,0,1).substr($employee_middlename, 0, 1).substr($employee_lastname, 0, 1).$employee_number;
+            $password = Hash::make(1234);
+
             $employees->employee_photo = $imageName;
             $employees->employee_number = request('employee_number');
+            $employees->username = $username;
+            $employees->password = $password;
             $employees->firstname = request('firstname');
             $employees->middlename = request('middlename');
             $employees->lastname = request('lastname');
@@ -68,13 +84,17 @@ class EmployeeController extends Controller
             }
     }
 
+    public function show(hris_employee $employee) {
+        return view('pages.employees.employee.show',compact('employee'));
+    }
+
     protected function validatedData()
     {
         return request()->validate([
             'employee_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'employee_number' => 'required',
             'firstname' => 'required',
-            'middlename' => 'required',
+            'middlename' => 'nullable',
             'lastname' => 'required',
             'job_position' => 'required',
             'work_no' => 'required',

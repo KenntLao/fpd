@@ -91,7 +91,7 @@
 			<select class="form-control required select2" name="benefits" required>
 				@if(count($benefits) > 0)
 				<option value="None" {{ $jobPosition->benefits == 'None'  ? 'selected' : '' }}>None</option>
-				@foreach($benefits as benefit)
+				@foreach($benefits as $benefit)
 				<option value="{{$benefit->name}}" {{ $jobPosition->benefits == $benefit->name  ? 'selected' : '' }}>{{$benefit->name}}</option>
 				@endforeach
 				@else

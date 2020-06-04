@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use App\hris_candidates;
 use App\hris_job_positions;
 use App\hris_countries;
+use App\users;
 
 class CandidateController extends Controller
 {
@@ -134,18 +135,24 @@ class CandidateController extends Controller
 
     public function destroy(hris_candidates $candidate)
     {
-        $candidate->delete();
-        $pathCandidate = public_path('assets/files/candidates/profile_image/');
-        $pathResume = public_path('assets/files/candidates/resume/');
-        if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
-            $old_file_1 = $pathCandidate . $candidate->profile_image;
-            unlink($old_file_1);
+        $id = $_SESSION['sys_id'];
+        $upass = $this->decryptStr(users::find($id)->upass);
+        if ( $upass == request('upass') ) {
+            $candidate->delete();
+            $pathCandidate = public_path('assets/files/candidates/profile_image/');
+            $pathResume = public_path('assets/files/candidates/resume/');
+            if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
+                $old_file_1 = $pathCandidate . $candidate->profile_image;
+                unlink($old_file_1);
+            }
+            if ($candidate->resume != '' && $candidate->resume != NULL) {
+                $old_file_2 = $pathResume . $candidate->resume;
+                unlink($old_file_2);
+            }
+            return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
+        } else {
+            return back()->withErrors(['Password does not match.']);
         }
-        if ($candidate->resume != '' && $candidate->resume != NULL) {
-            $old_file_2 = $pathResume . $candidate->resume;
-            unlink($old_file_2);
-        }
-        return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
     }
 
     protected function validatedData() {
@@ -163,6 +170,18 @@ class CandidateController extends Controller
             'prefered_industry'=>'required'
         ]);
 
+    }
+    // decrypt string
+    function decryptStr($str) {
+        $key = '4507';
+        $c = base64_decode($str);
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = substr($c,0,$ivlen);
+        $hmac = substr($c,$ivlen,$sha2len=32);
+        $ciphertext_raw = substr($c,$ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
+        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
+        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }
