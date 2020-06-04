@@ -32,6 +32,7 @@ if(isset($_POST['submit-login'])) {
 			$_SESSION['sys_lastname'] = $data['lastname'];
 			$_SESSION['sys_fullname'] = $data['firstname'].' '.$data['lastname'];
 			$_SESSION['sys_photo'] = '/assets/images/profile/default.png';
+			$_SESSION['sys_hris_photo'] = '../../assets/images/profile/default.png';
 			$_SESSION['sys_role_ids'] = $data['role_ids'];
 			$_SESSION['sys_language'] = $data['language'];
 			$_SESSION['sys_data_per_page'] = $data['data_per_page'];

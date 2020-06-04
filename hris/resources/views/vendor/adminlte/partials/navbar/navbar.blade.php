@@ -34,7 +34,9 @@
         <li class="user-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="main-profile-photo">
-                    <img src="{{asset($_SESSION['sys_hris_photo'])}}" />
+                    @if($_SESSION['sys_hris_photo'])
+                    <img src="{{asset(($_SESSION['sys_hris_photo']))}}" />
+                    @endif
                 </div>
                 @php echo $_SESSION['sys_fullname'] @endphp
             </a>
