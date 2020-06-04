@@ -35,7 +35,7 @@
 				<thead>
 					<tr>
 						<th>name</th>
-						<th>trainingSession</th>
+						<th>course</th>
 						<th>scheduled time</th>
 						<th>status</th>
 						<th>delivery method</th>
@@ -49,16 +49,16 @@
 					<tr>
 						<td>{{$trainingSession->name}}</td>
 						<td>
-							@if($trainingSession->trainingSession)
-							{{$trainingSession->trainingSession->name}}
+							@if($trainingSession->course)
+							{{$trainingSession->course->name}}
 							@else
 							<span class="td-error">ERROR</span>
 							@endif
 						</td>
 						<td>{{date("M d, Y - h:i:sa", strtotime($trainingSession->scheduled_time))}}</td>
 						<td>
-							@if($trainingSession->trainingSession)
-							{{$trainingSession->trainingSession->status}}
+							@if($trainingSession->course)
+							{{$trainingSession->course->status}}
 							@else
 							<span class="td-error">ERROR</span>
 							@endif

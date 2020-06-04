@@ -43,13 +43,20 @@
 				<tbody>
 					@foreach($employeeTrainingSessions as $employeeTrainingSession)
 					<tr>
-						<td>{{$employeeTrainingSession->employee}}</td>
 						<td>
-							@if($employeeTrainingSession->training)
-							{{$employeeTrainingSession->training->name}}
+							@if($employeeTrainingSession->employee)
+							{{$employeeTrainingSession->employee->firstname}} {{$employeeTrainingSession->employee->lastname}}
 							@else
 							<span class="td-error">ERROR</span>
-							@endif</td>
+							@endif
+						</td>
+						<td>
+							@if($employeeTrainingSession->training_session)
+							{{$employeeTrainingSession->training_session->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>{{$employeeTrainingSession->status}}</td>
 						<td>
 							<a href="/hris/pages/admin/training/employeeTrainingSessions/{{$employeeTrainingSession->id}}/edit"><i class="fa fa-edit"></i></a>

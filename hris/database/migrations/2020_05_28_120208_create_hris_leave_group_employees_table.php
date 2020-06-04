@@ -16,8 +16,8 @@ class CreateHrisLeaveGroupEmployeesTable extends Migration
         Schema::create('hris_leave_group_employees', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee');
-            $table->string('leave_group');
+            $table->string('employee_id');
+            $table->string('leave_group_id');
         });
     }
 

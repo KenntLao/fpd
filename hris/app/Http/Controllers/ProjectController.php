@@ -27,7 +27,7 @@ class ProjectController extends Controller
         $project = new hris_projects();
         if($this->validatedData()) {
             $project->name = request('name');
-            $project->client = request('client');
+            $project->client_id = request('client_id');
             $project->details = request('details');
             $project->status = request('status');
             $project->save();
@@ -52,7 +52,7 @@ class ProjectController extends Controller
     {
         if($this->validatedData()) {
             $project->name = request('name');
-            $project->client = request('client');
+            $project->client_id = request('client_id');
             $project->details = request('details');
             $project->status = request('status');
             $project->update();

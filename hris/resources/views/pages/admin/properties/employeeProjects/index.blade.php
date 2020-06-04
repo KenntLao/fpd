@@ -42,8 +42,20 @@
 				<tbody>
 					@foreach($employeeProjects as $employeeProject)
 					<tr>
-						<td>{{$employeeProject->employee}}</td>
-						<td>{{$employeeProject->project}}</td>
+						<td>
+							@if($employeeProject->employee)
+							{{$employeeProject->employee->firstname}} {{$employeeProject->employee->lastname}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
+						<td>
+							@if($employeeProject->project)
+							{{$employeeProject->project->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>
 							<a href="/hris/pages/admin/properties/employeeProjects/{{$employeeProject->id}}/edit"><i class="fa fa-edit"></i></a>
 							<!-- Button trigger modal -->

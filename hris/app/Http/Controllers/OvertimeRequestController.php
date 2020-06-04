@@ -8,6 +8,7 @@ use App\hris_overtime_requests;
 use App\hris_overtime_categories;
 use App\hris_projects;
 use App\users;
+use App\hris_employee;
 
 class OvertimeRequestController extends Controller
 {
@@ -21,18 +22,19 @@ class OvertimeRequestController extends Controller
     {
         $overtimeCategories = hris_overtime_categories::all();
         $projects = hris_projects::all();
-        return view('pages.admin.overtime.overtimeRequests.create', compact('overtimeRequest', 'overtimeCategories', 'projects'));
+        $employees = hris_employee::all();
+        return view('pages.admin.overtime.overtimeRequests.create', compact('overtimeRequest', 'overtimeCategories', 'projects','employees'));
     }
 
     public function store(Request $request)
     {
         $overtimeRequest = new hris_overtime_requests();
         if($this->validatedData()) {
-            $overtimeRequest->employee = request('employee');
-            $overtimeRequest->category = request('category');
+            $overtimeRequest->employee_id = request('employee_id');
+            $overtimeRequest->category_id = request('category_id');
             $overtimeRequest->start_time = request('start_time');
             $overtimeRequest->end_time = request('end_time');
-            $overtimeRequest->project = request('project');
+            $overtimeRequest->project_id = request('project_id');
             $overtimeRequest->notes = request('notes');
             $overtimeRequest->status = 'Pending';
             $overtimeRequest->save();
@@ -51,17 +53,18 @@ class OvertimeRequestController extends Controller
     {
         $overtimeCategories = hris_overtime_categories::all();
         $projects = hris_projects::all();
-        return view('pages.admin.overtime.overtimeRequests.edit', compact('overtimeRequest', 'overtimeCategories', 'projects'));
+        $employees = hris_employee::all();
+        return view('pages.admin.overtime.overtimeRequests.edit', compact('overtimeRequest', 'overtimeCategories', 'projects', 'employees'));
     }
 
     public function update(hris_overtime_requests $overtimeRequest, Request $request)
     {
         if($this->validatedData()) {
-            $overtimeRequest->employee = request('employee');
-            $overtimeRequest->category = request('category');
+            $overtimeRequest->employee_id = request('employee_id');
+            $overtimeRequest->category_id = request('category_id');
             $overtimeRequest->start_time = request('start_time');
             $overtimeRequest->end_time = request('end_time');
-            $overtimeRequest->project = request('project');
+            $overtimeRequest->project_id = request('project_id');
             $overtimeRequest->notes = request('notes');
             $overtimeRequest->status = 'Pending';
             $overtimeRequest->update();
@@ -88,24 +91,12 @@ class OvertimeRequestController extends Controller
             return back()->withErrors(['Password does not match.']);
         }
     }
-    public function updateStatus(hris_overtime_requests $overtimeRequest, Request $request)
-    {
-        $overtimeRequest->status = request('status');
-        $overtimeRequest->update();
-        return redirect('/hris/pages/admin/overtime/overtimeRequests/index')->with('success', 'Overtime Request status successfully updated!');
-    }
-
-    public function destroy(hris_overtime_requests $overtimeRequest)
-    {
-        $overtimeRequest->delete();
-        return redirect('/hris/pages/admin/overtime/overtimeRequests/index')->with('success', 'Overtime Request successfully deleted');
-    }
 
     protected function validatedData()
     {
         return request()->validate([
-            'employee' => 'required',
-            'category' => 'required',
+            'employee_id' => 'required',
+            'category_id' => 'required',
             'start_time' => 'required',
             'end_time' => 'required'
         ]);

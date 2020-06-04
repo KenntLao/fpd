@@ -363,14 +363,14 @@
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="leave_group">Leave Group: </label>
-			<select class="form-control required select2" name="leave_group">
+			<select class="form-control required select2" name="leave_group_id">
 				@if(count($leaveGroups) > 0)
-				<option value="None" {{ $leaveType->leave_group == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($leaveGroups as $leaveGroup)
-				<option value="{{$leaveGroup->name}}" {{ $leaveType->leave_group == $leaveGroup->name  ? 'selected' : '' }}>{{$leaveGroup->name}}</option>
+				<option value="{{$leaveGroup->id}}" {{ $leaveType->leave_group == $leaveGroup->name  ? 'selected' : '' }}>{{$leaveGroup->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>

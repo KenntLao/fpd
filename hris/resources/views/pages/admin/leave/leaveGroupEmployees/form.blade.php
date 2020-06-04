@@ -4,8 +4,15 @@
 		<div class="form-group">
 			<label class="mr-2" for="employee">Employee: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="employee" required>
-				<option value="SocialConz Digital" {{ $leaveGroupEmployee->employee == 'SocialConz Digital'  ? 'selected' : '' }}>SocialConz Digital</option>
+			<select class="form-control required select2" name="employee_id" required>
+				@if (count($employees) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($employees as $employee)
+				<option value="{{$employee->id}}" {{ $leaveGroupEmployee->employee_id == $employee->id  ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
 			</select>
 		</div>
 	</div>
@@ -13,14 +20,14 @@
 		<div class="form-group">
 			<label class="mr-2" for="leave_group">Leave Group: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="leave_group" required>
+			<select class="form-control required select2" name="leave_group_id" required>
 				@if(count($leaveGroups) > 0)
-				<option value="None" {{ $leaveGroupEmployee->leave_group == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($leaveGroups as $leaveGroup)
-				<option value="{{$leaveGroup->name}}" {{ $leaveGroupEmployee->leave_group == $leaveGroup->name  ? 'selected' : '' }}>{{$leaveGroup->name}}</option>
+				<option value="{{$leaveGroup->id}}" {{ $leaveGroupEmployee->leave_group == $leaveGroup->name  ? 'selected' : '' }}>{{$leaveGroup->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>

@@ -13,14 +13,14 @@
 	<div class="col-12 col-md-6 col-xl-4">
 		<div class="form-group">
 			<label class="mr-2" for="client">Client: </label>
-			<select class="form-control required select2" name="client">
+			<select class="form-control required select2" name="client_id">
 				@if (count($clients) > 0)
-				<option value="None" {{ $project->client == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($clients as $client)
-				<option value="{{$client->name}}" {{ $project->client == $client->name  ? 'selected' : '' }}>{{$client->name}}</option>
+				<option value="{{$client->id}}" {{ $project->client == $client->name  ? 'selected' : '' }}>{{$client->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>

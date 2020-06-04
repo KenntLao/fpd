@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHrisCompanyTypesTable extends Migration
+class CreateHrisEmployeeProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateHrisCompanyTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('hris_company_types', function (Blueprint $table) {
+        Schema::create('hris_employee_projects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
+            $table->string('employee_id');
+            $table->string('project_id');
+            $table->string('details')->nullable();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateHrisCompanyTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hris_company_types');
+        Schema::dropIfExists('hris_employee_projects');
     }
 }

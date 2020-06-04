@@ -17,7 +17,7 @@ class CreateHrisProjectsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('client')->nullable();
+            $table->string('client_id')->nullable();
             $table->string('details')->nullable();
             $table->string('status');
         });

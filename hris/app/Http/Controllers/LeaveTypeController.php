@@ -39,7 +39,7 @@ class LeaveTypeController extends Controller
             $leaveType->proportionate_on_joined_date = request('proportionate_on_joined_date');
             $leaveType->employee_leave_period = request('employee_leave_period');
             $leaveType->send_notification_emails = request('send_notification_emails');
-            $leaveType->leave_group = request('leave_group');
+            $leaveType->leave_group_id = request('leave_group_id');
             $leaveType->leave_color = request('leave_color');
             $leaveType->save();
             return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully added!');
@@ -75,7 +75,7 @@ class LeaveTypeController extends Controller
             $leaveType->proportionate_on_joined_date = request('proportionate_on_joined_date');
             $leaveType->employee_leave_period = request('employee_leave_period');
             $leaveType->send_notification_emails = request('send_notification_emails');
-            $leaveType->leave_group = request('leave_group');
+            $leaveType->leave_group_id = request('leave_group_id');
             $leaveType->leave_color = request('leave_color');
             $leaveType->update();
             return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully updated!');

@@ -43,8 +43,20 @@
 				@foreach($leaveGroupEmployees as $leaveGroupEmployee)
 				<tr>
 					<td>{{$leaveGroupEmployee->id}}</td>
-					<td>{{$leaveGroupEmployee->employee}}</td>
-					<td>{{$leaveGroupEmployee->leave_group}}</td>
+					<td>
+						@if($leaveGroupEmployee->employee)
+						{{$leaveGroupEmployee->employee->firstname}} {{$leaveGroupEmployee->employee->lastname}}
+						@else
+						<span class="td-error">ERROR</span>
+						@endif
+					</td>
+					<td>
+						@if($leaveGroupEmployee->leave_group)
+						{{$leaveGroupEmployee->leave_group->name}}
+						@else
+						<span class="td-error">ERROR</span>
+						@endif
+					</td>
 					<td>
 						<a href="/hris/pages/admin/leave/leaveGroupEmployees/{{$leaveGroupEmployee->id}}/edit"><i class="fa fa-edit"></i></a>
 						<!-- Button trigger modal -->

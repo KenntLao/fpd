@@ -50,7 +50,7 @@
 					<td>{{$leaveType->leave_accrue}}</td>
 					<td>{{$leaveType->carried_forward}}</td>
 					<td>{{$leaveType->leaves_per_period}}</td>
-					<td>{{$leaveType->leave_group}}</td>
+					<td>{{$leaveType->leave_group->name}}</td>
 					<td>
 						<a href="/hris/pages/admin/leave/leaveTypes/{{$leaveType->id}}/edit"><i class="fa fa-edit"></i></a>
 						<!-- Button trigger modal -->

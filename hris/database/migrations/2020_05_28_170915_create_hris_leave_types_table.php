@@ -29,7 +29,7 @@ class CreateHrisLeaveTypesTable extends Migration
             $table->string('proportionate_on_joined_date');
             $table->string('employee_leave_period');
             $table->string('send_notification_emails');
-            $table->string('leave_group')->nullable();
+            $table->string('leave_group_id')->nullable();
             $table->string('leave_color');
         });
     }

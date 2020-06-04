@@ -14,10 +14,7 @@ class TrainingSessionController extends Controller
     {
 
         $trainingSessions = hris_training_sessions::paginate(10);
-        $id = hris_training_sessions::all()->get('id');
-        $courses = hris_courses::all();
-        $course = hris_courses::find($id);
-        return view('pages.admin.training.trainingSessions.index', compact('trainingSessions', 'courses', 'course'));
+        return view('pages.admin.training.trainingSessions.index', compact('trainingSessions'));
     }
 
     public function create(hris_training_sessions $trainingSession)

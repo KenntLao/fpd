@@ -77,11 +77,6 @@
 									</div>
 								</div>
 							</div>
-							<form action="/hris/pages/admin/loans/loanTypes/delete/{{$loanType->id}}" method="post">
-								@csrf
-								@method('DELETE')
-								<button type="submit"><i class="fa fa-trash"></i></button>
-							</form>
 						</td>
 					</tr>
 					@endforeach

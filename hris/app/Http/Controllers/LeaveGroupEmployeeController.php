@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\hris_leave_group_employees;
 use App\hris_leave_groups;
 use App\users;
+use App\hris_employee;
 
 class LeaveGroupEmployeeController extends Controller
 {
@@ -19,15 +20,16 @@ class LeaveGroupEmployeeController extends Controller
     public function create(hris_leave_group_employees $leaveGroupEmployee)
     {
         $leaveGroups = hris_leave_groups::all();
-        return view('pages.admin.leave.leaveGroupEmployees.create', compact('leaveGroupEmployee', 'leaveGroups'));
+        $employees = hris_employee::all();
+        return view('pages.admin.leave.leaveGroupEmployees.create', compact('leaveGroupEmployee', 'leaveGroups', 'employees'));
     }
 
     public function store(Request $request)
     {
         $leaveGroupEmployee = new hris_leave_group_employees();
         if ($this->validatedData()) {
-            $leaveGroupEmployee->employee = request('employee');
-            $leaveGroupEmployee->leave_group = request('leave_group');
+            $leaveGroupEmployee->employee_id = request('employee_id');
+            $leaveGroupEmployee->leave_group_id = request('leave_group_id');
             $leaveGroupEmployee->save();
             return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave Group Employee successfully added!');
         } else {
@@ -43,14 +45,15 @@ class LeaveGroupEmployeeController extends Controller
     public function edit(hris_leave_group_employees $leaveGroupEmployee)
     {
         $leaveGroups = hris_leave_groups::all();
-        return view('pages.admin.leave.leaveGroupEmployees.edit', compact('leaveGroupEmployee', 'leaveGroups'));
+        $employees = hris_employee::all();
+        return view('pages.admin.leave.leaveGroupEmployees.edit', compact('leaveGroupEmployee', 'leaveGroups', 'employees'));
     }
 
     public function update(hris_leave_group_employees $leaveGroupEmployee, Request $request)
     {
         if ($this->validatedData()) {
-            $leaveGroupEmployee->employee = request('employee');
-            $leaveGroupEmployee->leave_group = request('leave_group');
+            $leaveGroupEmployee->employee_id = request('employee_id');
+            $leaveGroupEmployee->leave_group_id = request('leave_group_id');
             $leaveGroupEmployee->update();
             return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave Group Employee successfully updated!');
         } else {
@@ -73,8 +76,8 @@ class LeaveGroupEmployeeController extends Controller
     protected function validatedData()
     {
         return request()->validate([
-            'employee' => 'required',
-            'leave_group' => 'required'
+            'employee_id' => 'required',
+            'leave_group_id' => 'required'
         ]);
     }
     // decrypt string

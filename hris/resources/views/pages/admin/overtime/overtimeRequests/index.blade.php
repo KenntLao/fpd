@@ -46,11 +46,29 @@
 				<tbody>
 					@foreach($overtimeRequests as $overtimeRequest)
 					<tr>
-						<td>{{$overtimeRequest->employee}}</td>
-						<td>{{$overtimeRequest->category}}</td>
+						<td>
+							@if($overtimeRequest->employee)
+							{{$overtimeRequest->employee->firstname}} {{$overtimeRequest->employee->lastname}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
+						<td>
+							@if($overtimeRequest->category)
+							{{$overtimeRequest->category->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>{{$overtimeRequest->start_time}}</td>
 						<td>{{$overtimeRequest->end_time}}</td>
-						<td>{{$overtimeRequest->project}}</td>
+						<td>
+							@if($overtimeRequest->project)
+							{{$overtimeRequest->project->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>{{$overtimeRequest->status}}</td>
 						<td>
 							<a href="/hris/pages/admin/overtime/overtimeRequests/{{$overtimeRequest->id}}/edit"><i class="fa fa-edit"></i></a>
@@ -97,11 +115,6 @@
 									</div>
 								</div>
 							</div>
-							<form action="/hris/pages/admin/overtime/overtimeRequests/delete/{{$overtimeRequest->id}}" method="post">
-								@csrf
-								@method('DELETE')
-								<button type="submit"><i class="fa fa-trash"></i></button>
-							</form>
 						</td>
 					</tr>
 					@endforeach

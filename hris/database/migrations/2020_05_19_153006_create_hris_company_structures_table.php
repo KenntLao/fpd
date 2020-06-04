@@ -22,7 +22,7 @@ class CreateHrisCompanyStructuresTable extends Migration
             $table->string('type');
             $table->string('country')->nullable();
             $table->string('timezone');
-            $table->string('parent_structure');
+            $table->string('parent_structure')->nullable();
         });
     }
 

@@ -4,8 +4,15 @@
 		<div class="form-group">
 			<label class="mr-2" for="employee">Employee: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="employee" required>
-				<option value="SocialConz Digital" {{ $employeeProject->employee == 'SocialConz Digital'  ? 'selected' : '' }}>SocialConz Digital</option>
+			<select class="form-control required select2" name="employee_id" required>
+				@if (count($employees) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($employees as $employee)
+				<option value="{{$employee->id}}" {{ $employeeProject->employee_id == $employee->id  ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
 			</select>
 		</div>
 	</div>
@@ -13,14 +20,14 @@
 		<div class="form-group">
 			<label class="mr-2" for="project">Project: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="project" required>
+			<select class="form-control required select2" name="project_id" required>
 				@if (count($projects) > 0)
-				<option value="None"{{ $employeeProject->project == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($projects as $project)
-				<option value="{{$project->name}}" {{ $employeeProject->project == $project->name  ? 'selected' : '' }}>{{$project->name}}</option>
+				<option value="{{$project->id}}" {{ $employeeProject->project == $project->name  ? 'selected' : '' }}>{{$project->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>

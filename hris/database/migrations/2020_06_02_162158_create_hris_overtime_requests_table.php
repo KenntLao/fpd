@@ -16,11 +16,11 @@ class CreateHrisOvertimeRequestsTable extends Migration
         Schema::create('hris_overtime_requests', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee');
-            $table->string('category');
+            $table->string('employee_id');
+            $table->string('category_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->string('project')->nullable();
+            $table->string('project_id')->nullable();
             $table->string('notes')->nullable();
             $table->string('status')->nullable();
         });

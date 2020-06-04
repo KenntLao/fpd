@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use App\hris_employee_projects;
 use App\hris_projects;
 use App\users;
+use App\hris_employee;
 
 class EmployeeProjectController extends Controller
 {
@@ -20,7 +21,8 @@ class EmployeeProjectController extends Controller
     public function create(hris_employee_projects $employeeProject)
     {
         $projects = hris_projects::all();
-        return view('pages.admin.properties.employeeProjects.create', compact('employeeProject','projects'));
+        $employees = hris_employee::all();
+        return view('pages.admin.properties.employeeProjects.create', compact('employeeProject','projects', 'employees'));
     }
 
 
@@ -28,8 +30,8 @@ class EmployeeProjectController extends Controller
     {
         $employeeProject = new hris_employee_projects();
         if($this->validatedData()) {
-            $employeeProject->employee = request('employee');
-            $employeeProject->project = request('project');
+            $employeeProject->employee_id = request('employee_id');
+            $employeeProject->project_id = request('project_id');
             $employeeProject->details = request('details');
             $employeeProject->save();
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted!');
@@ -46,14 +48,15 @@ class EmployeeProjectController extends Controller
     public function edit(hris_employee_projects $employeeProject)
     {
         $projects = hris_projects::all();
-        return view('pages.admin.properties.employeeProjects.edit', compact('employeeProject', 'projects'));
+        $employees = hris_employee::all();
+        return view('pages.admin.properties.employeeProjects.edit', compact('employeeProject', 'projects', 'employees'));
     }
 
     public function update(hris_employee_projects $employeeProject, Request $request)
     {
         if($this->validatedData()) {
-            $employeeProject->employee = request('employee');
-            $employeeProject->project = request('project');
+            $employeeProject->employee_id = request('employee_id');
+            $employeeProject->project_id = request('project_id');
             $employeeProject->details = request('details');
             $employeeProject->update();
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully updated!');
@@ -77,8 +80,8 @@ class EmployeeProjectController extends Controller
     protected function validatedData()
     {
         return request()->validate([
-            'employee' => 'required',
-            'project' => 'required'
+            'employee_id' => 'required',
+            'project_id' => 'required'
         ]);
     }
     // decrypt string

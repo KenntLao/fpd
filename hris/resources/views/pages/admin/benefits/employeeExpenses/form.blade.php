@@ -4,10 +4,16 @@
 		<div class="form-group">
 			<label class="mr-2" for="employee">Employee: </label>
 			<span class="badge badge-danger">Required</span>
-			<div class="input">
-				<p class="placeholder">Enter employee name</p>
-				<input class="form-control required" type="text" name="employee" value="{{old('employee') ?? $employeeExpense->employee}}" required>
-			</div>
+			<select class="form-control required select2" name="employee_id" required>
+				@if (count($employees) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($employees as $employee)
+				<option value="{{$employee->id}}" {{ $employeeExpense->employee_id == $employee->id  ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
+			</select>
 		</div>
 	</div>
 	<div class="col-12 col-md-6 col-xl-3">
@@ -21,14 +27,14 @@
 		<div class="form-group">
 			<label class="mr-2" for="payment_method">Payment Method: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="payment_method" required>
+			<select class="form-control required select2" name="payment_method_id" required>
 				@if(count($paymentMethods) > 0)
-				<option value="None" {{ $employeeExpense->payment_method == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($paymentMethods as $paymentMethod)
-				<option value="{{$paymentMethod->name}}" {{ $employeeExpense->payment_method == $paymentMethod->name  ? 'selected' : '' }}>{{$paymentMethod->name}}</option>
+				<option value="{{$paymentMethod->id}}" {{ $employeeExpense->payment_method == $paymentMethod->name  ? 'selected' : '' }}>{{$paymentMethod->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>
@@ -60,12 +66,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="expense_category" required>
 				@if(count($expensesCategories) > 0)
-				<option value="None" {{ $employeeExpense->expense_category == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($expensesCategories as $expensesCategory)
 				<option value="{{$expensesCategory->name}}" {{ $employeeExpense->expense_category == $expensesCategory  ? 'selected' : '' }}>{{$expensesCategory->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>
@@ -88,12 +94,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="currency" required>
 				@if(count($currencies) > 0)
-				<option value="None" {{ $employeeExpense->currency == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($currencies as $currency)
 				<option value="{{$currency->code}}" {{ $employeeExpense->currency == $currency->code  ? 'selected' : '' }}>{{$currency->name}} ({{$currency->code}})</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>

@@ -48,9 +48,21 @@
 				<tbody>
 					@foreach($employeeExpenses as $employeeExpense)
 					<tr>
-						<td>{{$employeeExpense->employee}}</td>
+						<td>
+							@if($employeeExpense->employee)
+							{{$employeeExpense->employee->firstname}} {{$employeeExpense->employee->lastname}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>{{$employeeExpense->expense_date}}</td>
-						<td>{{$employeeExpense->payment_method}}</td>
+						<td>
+							@if($employeeExpense->payment_method)
+							{{$employeeExpense->payment_method->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>{{$employeeExpense->payee}}</td>
 						<td>{{$employeeExpense->expense_category}}</td>
 						<td>{{$employeeExpense->amount}}</td>

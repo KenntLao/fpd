@@ -9,6 +9,7 @@ use App\hris_expenses_categories;
 use App\hris_payment_methods;
 use App\hris_currencies;
 use App\users;
+use App\hris_employee;
 
 class EmployeeExpenseController extends Controller
 {
@@ -23,7 +24,8 @@ class EmployeeExpenseController extends Controller
         $currencies = hris_currencies::all();
         $paymentMethods = hris_payment_methods::all();
         $expensesCategories = hris_expenses_categories::all();
-        return view('pages.admin.benefits.employeeExpenses.create', compact('employeeExpense', 'currencies', 'expensesCategories', 'paymentMethods'));
+        $employees = hris_employee::all();
+        return view('pages.admin.benefits.employeeExpenses.create', compact('employeeExpense', 'currencies', 'expensesCategories', 'paymentMethods', 'employees'));
     }
 
     public function store(Request $request)
@@ -45,9 +47,9 @@ class EmployeeExpenseController extends Controller
                 $employeeExpense->attachment_2 = $attachment_2;
                 $request->attachment_2->move(public_path('assets/files/employee_expenses/attachment_2/'), $attachment_2);
             }
-            $employeeExpense->employee = request('employee');
+            $employeeExpense->employee_id = request('employee_id');
             $employeeExpense->expense_date = request('expense_date');
-            $employeeExpense->payment_method = request('payment_method');
+            $employeeExpense->payment_method_id = request('payment_method_id');
             $employeeExpense->ref_number = request('ref_number');
             $employeeExpense->payee = request('payee');
             $employeeExpense->expense_category = request('expense_category');
@@ -72,7 +74,8 @@ class EmployeeExpenseController extends Controller
         $currencies = hris_currencies::all();
         $paymentMethods = hris_payment_methods::all();
         $expensesCategories = hris_expenses_categories::all();
-        return view('pages.admin.benefits.employeeExpenses.edit', compact('employeeExpense', 'currencies', 'expensesCategories', 'paymentMethods'));
+        $employees = hris_employee::all();
+        return view('pages.admin.benefits.employeeExpenses.edit', compact('employeeExpense', 'currencies', 'expensesCategories', 'paymentMethods', 'employees'));
     }
 
     public function update(hris_employee_expenses $employeeExpense, Request $request)
@@ -120,8 +123,8 @@ class EmployeeExpenseController extends Controller
                     $request->attachment_2->move(public_path('assets/files/employee_expenses/attachment_2/'), $attachment_2);
                 }
             }
-            $employeeExpense->employee = request('employee');
-            $employeeExpense->expense_date = request('expense_date');
+            $employeeExpense->employee_id = request('employee_id');
+            $employeeExpense->expense_date_id = request('expense_date_id');
             $employeeExpense->payment_method = request('payment_method');
             $employeeExpense->ref_number = request('ref_number');
             $employeeExpense->payee = request('payee');
@@ -173,9 +176,9 @@ class EmployeeExpenseController extends Controller
     protected function validatedData()
     {
         return request()->validate([
-            'employee' => 'required',
+            'employee_id' => 'required',
             'expense_date' => 'required',
-            'payment_method' => 'required',
+            'payment_method_id' => 'required',
             'payee' => 'required',
             'expense_category' => 'required',
             'notes' => 'required',

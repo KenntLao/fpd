@@ -43,7 +43,13 @@
 					@foreach($projects as $project)
 					<tr>
 						<td>{{$project->name}}</td>
-						<td>{{$project->client}}</td>
+						<td>
+							@if($project->client)
+							{{$project->client->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>
 							<a href="/hris/pages/admin/properties/projects/{{$project->id}}/edit"><i class="fa fa-edit"></i></a>
 							<!-- Button trigger modal -->

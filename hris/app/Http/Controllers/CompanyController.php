@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Log;
 use App\hris_company_structures;
 use App\hris_countries;
 use App\hris_time_zones;
-use App\hris_company_types;
 use App\users;
 
 class CompanyController extends Controller
@@ -22,10 +21,9 @@ class CompanyController extends Controller
     public function create(hris_company_structures $company)
     {
         $countries = hris_countries::all()->sortBy('name');
-        $types = hris_company_types::all();
         $timezones = hris_time_zones::all()->sortBy('name');
         $companies = hris_company_structures::all();
-        return view('pages.admin.company.create', compact('company', 'companies', 'countries', 'timezones', 'types'));
+        return view('pages.admin.company.create', compact('company', 'companies', 'countries', 'timezones'));
     }
 
     public function store(Request $request)
@@ -57,11 +55,10 @@ class CompanyController extends Controller
 
     public function edit(hris_company_structures $company)
     {
-        $types = hris_company_types::all();
         $countries = hris_countries::all();
         $timezones = hris_time_zones::all();
         $companies = hris_company_structures::all();
-        return view('pages.admin.company.edit', compact('company', 'types', 'countries', 'timezones', 'companies'));
+        return view('pages.admin.company.edit', compact('company', 'countries', 'timezones', 'companies'));
     }
 
     public function update(hris_company_structures $company, Request $request)
@@ -104,8 +101,7 @@ class CompanyController extends Controller
             'details'=>'required',
             'type'=>'required',
             'country'=>'required',
-            'timezone'=>'required',
-            'parent_structure'=>'required'
+            'timezone'=>'required'
 
         ]);
 

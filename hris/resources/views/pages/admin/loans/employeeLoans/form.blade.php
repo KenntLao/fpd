@@ -4,8 +4,15 @@
 		<div class="form-group">
 			<label class="mr-2" for="name">Employee: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="employee">
-				<option value="SocialConz Digital" {{ $employeeLoan->employee == 'SocialConz Digital'  ? 'selected' : '' }}>SocialConz Digital</option>
+			<select class="form-control required select2" name="employee_id" required>
+				@if (count($employees) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($employees as $employee)
+				<option value="{{$employee->id}}" {{ $employeeLoan->employee_id == $employee->id  ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
 			</select>
 		</div>
 	</div>
@@ -13,11 +20,11 @@
 		<div class="form-group">
 			<label class="mr-2" for="type">Loan Type: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="type" required>
+			<select class="form-control required select2" name="type_id" required>
 				@if(count($types) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($types as $type)
-				<option value="{{$type->name}}" {{ $employeeLoan->type == $type->name  ? 'selected' : '' }}>{{$type->name}}</option>
+				<option value="{{$type->id}}" {{ $employeeLoan->type == $type->name  ? 'selected' : '' }}>{{$type->name}}</option>
 				@endforeach
 				@else 
 				<option disabled default selected>--select one--</option>

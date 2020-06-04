@@ -7,29 +7,29 @@ use Illuminate\Support\Facades\Log;
 use App\hris_employee_training_sessions;
 use App\hris_training_sessions;
 use App\users;
+use App\hris_employee;
 
 class EmployeeTrainingSessionController extends Controller
 {
     public function index()
     {
         $employeeTrainingSessions = hris_employee_training_sessions::paginate(10);
-        $id = hris_employee_training_sessions::all()->get('id');
-        $training = hris_training_sessions::find($id);
-        return view('pages.admin.training.employeeTrainingSessions.index', compact('employeeTrainingSessions', 'training'));
+        return view('pages.admin.training.employeeTrainingSessions.index', compact('employeeTrainingSessions'));
     }
 
     public function create(hris_employee_training_sessions $employeeTrainingSession)
     {
+        $employees = hris_employee::all();
         $trainingSessions = hris_training_sessions::all();
-        return view('pages.admin.training.employeeTrainingSessions.create', compact('employeeTrainingSession', 'trainingSessions'));
+        return view('pages.admin.training.employeeTrainingSessions.create', compact('employeeTrainingSession', 'trainingSessions', 'employees'));
     }
 
     public function store(Request $request)
     {
         $employeeTrainingSession = new hris_employee_training_sessions();
         if($this->validatedData()) {
-            $employeeTrainingSession->employee = request('employee');
-            $employeeTrainingSession->training_session = request('training_session');
+            $employeeTrainingSession->employee_id = request('employee_id');
+            $employeeTrainingSession->training_session_id = request('training_session_id');
             $employeeTrainingSession->status = request('status');
             $employeeTrainingSession->save();
             return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee Training Session successfully added!');
@@ -46,15 +46,16 @@ class EmployeeTrainingSessionController extends Controller
 
     public function edit(hris_employee_training_sessions $employeeTrainingSession)
     {
+        $employees = hris_employee::all();
         $trainingSessions = hris_training_sessions::all();
-        return view('pages.admin.training.employeeTrainingSessions.edit', compact('employeeTrainingSession', 'trainingSessions'));
+        return view('pages.admin.training.employeeTrainingSessions.edit', compact('employeeTrainingSession', 'trainingSessions', 'employees'));
     }
 
     public function update(hris_employee_training_sessions $employeeTrainingSession, Request $request)
     {
         if($this->validatedData()) {
-            $employeeTrainingSession->employee = request('employee');
-            $employeeTrainingSession->training_session = request('training_session');
+            $employeeTrainingSession->employee_id = request('employee_id');
+            $employeeTrainingSession->training_session_id = request('training_session_id');
             $employeeTrainingSession->status = request('status');
             $employeeTrainingSession->update();
             return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee Training Session successfully updated!');
@@ -79,8 +80,8 @@ class EmployeeTrainingSessionController extends Controller
     protected function validatedData() 
     {
         return request()->validate([
-            'employee' => 'required',
-            'training_session' => 'required',
+            'employee_id' => 'required',
+            'training_session_id' => 'required',
             'status' => 'required'
         ]);
     }

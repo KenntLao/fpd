@@ -8,6 +8,7 @@ use App\hris_company_loan_types;
 use App\hris_employee_loans;
 use App\hris_currencies;
 use App\users;
+use App\hris_employee;
 
 class EmployeeLoanController extends Controller
 {
@@ -21,15 +22,16 @@ class EmployeeLoanController extends Controller
     {
         $types = hris_company_loan_types::all();
         $currencies = hris_currencies::all();
-        return view('pages.admin.loans.employeeLoans.create', compact('employeeLoan', 'types', 'currencies'));
+        $employees = hris_employee::all();
+        return view('pages.admin.loans.employeeLoans.create', compact('employeeLoan', 'types', 'currencies', 'employees'));
     }
 
     public function store(Request $request)
     {
         $employeeLoan = new hris_employee_loans();
         if($this->validatedData()) {
-            $employeeLoan->employee = request('employee');
-            $employeeLoan->type = request('type');
+            $employeeLoan->employee_id = request('employee_id');
+            $employeeLoan->type_id = request('type_id');
             $employeeLoan->loan_start_date = request('loan_start_date');
             $employeeLoan->last_installment_date = request('last_installment_date');
             $employeeLoan->loan_period = request('loan_period');
@@ -54,14 +56,15 @@ class EmployeeLoanController extends Controller
     {
         $types = hris_company_loan_types::all();
         $currencies = hris_currencies::all();
-        return view('pages.admin.loans.employeeLoans.edit', compact('employeeLoan', 'types', 'currencies'));
+        $employees = hris_employee::all();
+        return view('pages.admin.loans.employeeLoans.edit', compact('employeeLoan', 'types', 'currencies', 'employees'));
     }
 
     public function update(hris_employee_loans $employeeLoan, Request $request)
     {
         if($this->validatedData()) {
-            $employeeLoan->employee = request('employee');
-            $employeeLoan->type = request('type');
+            $employeeLoan->employee_id = request('employee_id');
+            $employeeLoan->type_id = request('type_id');
             $employeeLoan->loan_start_date = request('loan_start_date');
             $employeeLoan->last_installment_date = request('last_installment_date');
             $employeeLoan->loan_period = request('loan_period');
@@ -92,8 +95,8 @@ class EmployeeLoanController extends Controller
     protected function validatedData()
     {
         return request()->validate([
-            'employee' => 'required',
-            'type' => 'required',
+            'employee_id' => 'required',
+            'type_id' => 'required',
             'loan_start_date' => 'required',
             'last_installment_date' => 'required',
             'loan_period' => 'required',

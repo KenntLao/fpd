@@ -16,12 +16,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="course_id" required>
 				@if(count($courses) > 0)
-				<option value="None" {{ $course->id == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($courses as $course)
-				<option value="{{$course->id}}" {{ $course->id == $trainingSession->course_id  ? 'selected' : '' }}>{{$course->name}}</option>
+				<option value="{{$course->id}}" {{ $course->id == $trainingSession->course  ? 'selected' : '' }}>{{$course->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>

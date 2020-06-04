@@ -47,8 +47,20 @@
 				<tbody>
 					@foreach($employeeLoans as $employeeLoan)
 					<tr>
-						<td>{{$employeeLoan->employee}}</td>
-						<td>{{$employeeLoan->type}}</td>
+						<td>
+							@if($employeeLoan->employee)
+							{{$employeeLoan->employee->firstname}} {{$employeeLoan->employee->lastname}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
+						<td>
+							@if($employeeLoan->type)
+							{{$employeeLoan->type->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>{{$employeeLoan->loan_start_date}}</td>
 						<td>{{$employeeLoan->loan_period}}</td>
 						<td>{{$employeeLoan->currency}}</td>
@@ -87,11 +99,6 @@
 									</div>
 								</div>
 							</div>
-							<form action="/hris/pages/admin/loans/employeeLoans/delete/{{$employeeLoan->id}}" method="post">
-								@csrf
-								@method('DELETE')
-								<button type="submit"><i class="fa fa-trash"></i></button>
-							</form>
 						</td>
 					</tr>
 					@endforeach
