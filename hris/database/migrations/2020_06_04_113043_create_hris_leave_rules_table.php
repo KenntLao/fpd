@@ -24,6 +24,7 @@ class CreateHrisLeaveRulesTable extends Migration
             $table->string('exp_days');
             $table->string('department');
             $table->string('leave_period');
+            $table->string('default_per_year');
             $table->string('supervisor_leave_assign');
             $table->string('employee_can_apply');
             $table->string('apply_beyond_current');
