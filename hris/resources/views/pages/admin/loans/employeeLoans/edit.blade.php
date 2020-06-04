@@ -24,7 +24,7 @@
 		<h3 class="card-title">edit employee loan</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/admin/loans/employeeLoans/update/{{$loanType->id}}" id="form">
+		<form class="form-horizontal" method="post" action="/hris/pages/admin/loans/employeeLoans/update/{{$employeeLoan->id}}" id="form">
 			@method('PATCH')
 			@include('pages.admin.loans.employeeLoans.form')
 		</form>

@@ -377,6 +377,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     //add
     Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
     Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
+    Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
     Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
     //edit
     Route::get('/hris/pages/employees/employee/{employee}/edit', 'EmployeeController@edit');

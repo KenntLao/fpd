@@ -21,7 +21,7 @@
 @endif
 <div class="card">
 	<div class="card-header">
-		<h3 class="card-title">add leave types</h3>
+		<h3 class="card-title">add leave type</h3>
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/admin/leave/leaveTypes" id="form">

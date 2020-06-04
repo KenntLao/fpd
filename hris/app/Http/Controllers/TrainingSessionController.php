@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\hris_training_sessions;
 use App\hris_courses;
+use App\users;
 
 class TrainingSessionController extends Controller
 {
@@ -97,13 +98,19 @@ class TrainingSessionController extends Controller
 
     public function destroy(hris_training_sessions $trainingSession)
     {
-        $trainingSession->delete();
-        $path = public_path('assets/files/training_session/');
-        if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
-            $old_file = $path . $trainingSession->attachment;
-            unlink($old_file);
+        $id = $_SESSION['sys_id'];
+        $upass = $this->decryptStr(users::find($id)->upass);
+        if ( $upass == request('upass') ) {
+            $trainingSession->delete();
+            $path = public_path('assets/files/training_session/');
+            if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
+                $old_file = $path . $trainingSession->attachment;
+                unlink($old_file);
+            }
+            return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully deleted!');
+        } else {
+            return back()->withErrors(['Password does not match.']);
         }
-        return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training Session successfully deleted!');
 
     }
 
@@ -117,6 +124,18 @@ class TrainingSessionController extends Controller
             'attendance_type' => 'required',
             'training_cert_required' => 'required'
         ]);
+    }
+    // decrypt string
+    function decryptStr($str) {
+        $key = '4507';
+        $c = base64_decode($str);
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = substr($c,0,$ivlen);
+        $hmac = substr($c,$ivlen,$sha2len=32);
+        $ciphertext_raw = substr($c,$ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
+        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
+        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }

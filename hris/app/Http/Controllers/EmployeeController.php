@@ -167,6 +167,10 @@ class EmployeeController extends Controller
         return view('pages.employees.employee.show',compact('employee'));
     }
 
+    public function show(hris_employee $employee) {
+        return view('pages.employees.employee.show',compact('employee'));
+    }
+
     protected function validatedData()
     {
         return request()->validate([
