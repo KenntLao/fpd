@@ -19,9 +19,9 @@
 
         </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-10">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-5">
                 <div class="form-group">
                     <label class="mr-2" for="employee_number">Employee Number</label>
                     <span class="badge badge-danger">Required</span>
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-5">
                 <div class="form-group">
                     <label class="mr-2" for="job_postion">Job Positions </label>
                     <span class="badge badge-danger">Required</span>
@@ -76,7 +76,6 @@
             </div>
         </div>
     </div>
-    <div class="col-5"></div>
 </div>
 <div class="row">
     <div class="col-md-4">
