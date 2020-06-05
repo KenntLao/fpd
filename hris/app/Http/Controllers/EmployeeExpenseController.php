@@ -52,7 +52,7 @@ class EmployeeExpenseController extends Controller
             $employeeExpense->payment_method_id = request('payment_method_id');
             $employeeExpense->ref_number = request('ref_number');
             $employeeExpense->payee = request('payee');
-            $employeeExpense->expense_category = request('expense_category');
+            $employeeExpense->expense_category_id = request('expense_category_id');
             $employeeExpense->notes = request('notes');
             $employeeExpense->currency = request('currency');
             $employeeExpense->amount = request('amount');
@@ -128,7 +128,7 @@ class EmployeeExpenseController extends Controller
             $employeeExpense->payment_method = request('payment_method');
             $employeeExpense->ref_number = request('ref_number');
             $employeeExpense->payee = request('payee');
-            $employeeExpense->expense_category = request('expense_category');
+            $employeeExpense->expense_category_id = request('expense_category_id');
             $employeeExpense->notes = request('notes');
             $employeeExpense->currency = request('currency');
             $employeeExpense->amount = request('amount');
@@ -180,7 +180,7 @@ class EmployeeExpenseController extends Controller
             'expense_date' => 'required',
             'payment_method_id' => 'required',
             'payee' => 'required',
-            'expense_category' => 'required',
+            'expense_category_id' => 'required',
             'notes' => 'required',
             'currency' => 'required',
             'amount' => 'required'

@@ -4,13 +4,14 @@
 		<div class="form-group">
 			<label class="mr-2" for="position_applied">Position Applied: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="position_applied" required>
+			<select class="form-control required select2" name="job_position_id" required>
 				@if (count($jobPositions) > 0)
+				<option disabled default selected>--select one--</option>
 				@foreach($jobPositions as $jobPosition)
-				<option value="{{$jobPosition->job_title}}" {{ $candidate->position_applied == $jobPosition->job_title  ? 'selected' : '' }}>{{$jobPosition->job_title}}</option>
+				<option value="{{$jobPosition->id}}" {{ $candidate->job_position_id == $jobPosition->id  ? 'selected' : '' }}>{{$jobPosition->job_title}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>
@@ -89,12 +90,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="country" required>
 				@if(count($countries) > 0)
-				<option value="None" {{ $candidate->country == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($countries as $country)
 				<option value='{{$country->name}}' {{ $candidate->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>

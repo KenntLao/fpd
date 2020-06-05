@@ -17,5 +17,9 @@ class hris_employee_expenses extends Model
     {
     	return $this->belongsTo('App\hris_payment_methods');
     }
+    public function expense_category()
+    {
+    	return $this->belongsTo('App\hris_expenses_categories');
+    }
 
 }

@@ -21,7 +21,7 @@ class CreateHrisEmployeeExpensesTable extends Migration
             $table->string('payment_method_id');
             $table->string('ref_number')->nullable();
             $table->string('payee');
-            $table->string('expense_category');
+            $table->string('expense_category_id');
             $table->string('notes');
             $table->string('currency');
             $table->string('amount');

@@ -90,12 +90,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="benefits" required>
 				@if(count($benefits) > 0)
-				<option value="None" {{ $jobPosition->benefits == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($benefits as $benefit)
 				<option value="{{$benefit->name}}" {{ $jobPosition->benefits == $benefit->name  ? 'selected' : '' }}>{{$benefit->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>
@@ -106,12 +106,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="country" required>
 				@if(count($countries) > 0)
-				<option value="None" {{ $jobPosition->country == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($countries as $country)
 				<option value='{{$country->name}}' {{ $jobPosition->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>
@@ -228,12 +228,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required" name="currency" required>
 				@if(count($currencies) > 0)
-				<option value="None" {{ $jobPosition->currency == 'None'  ? 'selected' : '' }}>None</option>
+				<option disabled default selected>--select one--</option>
 				@foreach($currencies as $currency)
 				<option value='{{$currency->name}}' {{ $jobPosition->currency == $currency->name  ? 'selected' : '' }}>{{$currency->name}}</option>
 				@endforeach
 				@else
-				<option value="None">None</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>

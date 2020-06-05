@@ -64,11 +64,11 @@
 		<div class="form-group">
 			<label class="mr-2" for="payment_method">Expense Category: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="expense_category" required>
+			<select class="form-control required select2" name="expense_category_id" required>
 				@if(count($expensesCategories) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($expensesCategories as $expensesCategory)
-				<option value="{{$expensesCategory->name}}" {{ $employeeExpense->expense_category == $expensesCategory  ? 'selected' : '' }}>{{$expensesCategory->name}}</option>
+				<option value="{{$expensesCategory->id}}" {{ $employeeExpense->expense_category_id == $expensesCategory->id  ? 'selected' : '' }}>{{$expensesCategory->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>

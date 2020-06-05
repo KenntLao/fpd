@@ -27,14 +27,14 @@
 			<label class="mr-2" for="type">Type: </label>
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="type" required>
-					<option disabled default selected>--select one--</option>
-					<option value="Company">Company</option>
-					<option value="Head Office">Head Office</option>
-					<option value="Regional Office">Regional Office</option>
-					<option value="Department">Department</option>
-					<option value="Unit">Unit</option>
-					<option value="Sub Unit">Sub Unit</option>
-					<option value="Other">Other</option>
+				<option disabled default selected>--select one--</option>
+				<option value="Company" {{ $company->type == 'Company'  ? 'selected' : '' }}>Company</option>
+				<option value="Head Office"{{ $company->type == 'Head Office'  ? 'selected' : '' }}>Head Office</option>
+				<option value="Regional Office"{{ $company->type == 'Regional Office'  ? 'selected' : '' }}>Regional Office</option>
+				<option value="Department"{{ $company->type == 'Department'  ? 'selected' : '' }}>Department</option>
+				<option value="Unit"{{ $company->type == 'Unit'  ? 'selected' : '' }}>Unit</option>
+				<option value="Sub Unit"{{ $company->type == 'Sub Unit'  ? 'selected' : '' }}>Sub Unit</option>
+				<option value="Other"{{ $company->type == 'Other'  ? 'selected' : '' }}>Other</option>
 			</select>
 		</div>
 	</div>
@@ -44,12 +44,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="country" required>
 				@if(count($countries) > 0)
-					<option disabled default selected>--select one--</option>
-					@foreach($countries as $country)
-					<option value='{{$country->name}}' {{ $company->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
-					@endforeach
+				<option disabled default selected>--select one--</option>
+				@foreach($countries as $country)
+				<option value='{{$country->name}}' {{ $company->country == $country->name  ? 'selected' : '' }}>{{$country->name}}</option>
+				@endforeach
 				@else
-					<option disabled default selected>--select one--</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>
@@ -60,12 +60,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="timezone" required>
 				@if(count($timezones) > 0)
-					<option disabled default selected>--select one--</option>
-					@foreach($timezones as $timezone)
-					<option value="{{$timezone->name}}" {{ $company->timezone == $timezone->name  ? 'selected' : '' }}>{{$timezone->utc}} {{$timezone->name}}</option>
-					@endforeach
+				<option disabled default selected>--select one--</option>
+				@foreach($timezones as $timezone)
+				<option value="{{$timezone->name}}" {{ $company->timezone == $timezone->name  ? 'selected' : '' }}>{{$timezone->utc}} {{$timezone->name}}</option>
+				@endforeach
 				@else
-					<option disabled default selected>--select one--</option>
+				<option disabled default selected>--select one--</option>
 				@endif
 			</select>
 		</div>
@@ -74,15 +74,14 @@
 		<div class="form-group">
 			<label class="mr-2" for="type">Parent Structure: </label>
 			<select class="form-control select2" name="parent_structure">
-			@if (count($companies) > 0)
+				@if (count($companies) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($companies as $company_structure)
 				<option value="{{$company_structure->name}}" {{ $company->parent_structure == $company_structure->name  ? 'selected' : '' }}>{{$company_structure->name}}</option>
 				@endforeach
-			</select>
-			@else
+				@else
 				<option disabled default selected>--select one--</option>
-			@endif
+				@endif
 			</select>
 		</div>
 	</div>

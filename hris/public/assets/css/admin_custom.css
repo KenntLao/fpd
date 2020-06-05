@@ -236,20 +236,8 @@ body {
 	padding: .25rem .5rem;
 	font-family: opensans;
 }
-.td-action a {
-	background: #007BFF;
-	color: #fff;
-	padding: 3px 5px;
-	font-size: 12px;
-	border-radius: 3px;
-}
-.td-action button {
-	background: #EF5350;
-	color: #fff;
-	padding: 3px 5px;
-	border: 0;
-	border-radius: 3px;
-	font-size: 12px;
+.td-action {
+	width: 100px;
 }
 .td-action a, .td-action button{
 	display: inline-block;
@@ -271,6 +259,9 @@ body {
 	border-radius: 3px;
 	font-size: 12px;
 	background: #fd7e14 !important;
+}
+.btn-warning {
+	color: #fff !important;
 }
 .td-error {
 	color: red;

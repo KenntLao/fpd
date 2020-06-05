@@ -64,53 +64,40 @@
 							@endif
 						</td>
 						<td>{{$employeeExpense->payee}}</td>
-						<td>{{$employeeExpense->expense_category}}</td>
+						<td>
+							@if($employeeExpense->expense_category)
+							{{$employeeExpense->expense_category->name}}
+							@else
+							<span class="td-error">ERROR</span>
+							@endif
+						</td>
 						<td>{{$employeeExpense->amount}}</td>
 						<td>{{$employeeExpense->currency}}</td>
 						<td>{{$employeeExpense->status}}</td>
 						<td>
-							<a href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/edit"><i class="fa fa-edit"></i></a>
-							<form action="/hris/pages/admin/benefits/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
-								@csrf
-								@method('PATCH')
-								<input type="text" name="status" value="Approved" hidden>
-								<button class="btn-check" type="submit" title="Approve status."><i class="fa fa-check-square"></i></button>
-							</form>
-							<form action="/hris/pages/admin/benefits/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
-								@csrf
-								@method('PATCH')
-								<input type="text" name="status" value="Rejected" hidden>
-								<button class="btn-x" type="submit" title="Reject status."><i class="fa fa-window-close"></i></button>
-							</form>
-							<!-- Button trigger modal -->
-							<button type="button" data-toggle="modal" data-target="#modal-{{$employeeExpense->id}}"><i class="fa fa-trash"></i></button>
-							<!-- Modal -->
-							<div class="modal fade" id="modal-{{$employeeExpense->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-{{$employeeExpense->id}}" aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title">Delete Confirmation</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<p>Are you sure you want to delete?</p>
-											<hr>
-											<form action="/hris/pages/admin/benefits/employeeExpenses/delete/{{$employeeExpense->id}}" method="post" id="form-{{$employeeExpense->id}}">
-												@csrf
-												@method('DELETE')
-												<div class="form-group">
-													<label for="upass">Enter Password: </label>
-													<input class="form-control" type="password" name="upass" required>
-												</div>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button class="btn btn-danger" type="submit" form="form-{{$employeeExpense->id}}"><i class="fa fa-check"></i> Confirm Delete</button>
-											<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-										</div>
-									</div>
+							<div class="row no-gutters">
+								<div class="col-3">
+									<a class="btn btn-success btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+								</div>
+								<div class="col-3">
+									<form action="/hris/pages/admin/benefits/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
+										@csrf
+										@method('PATCH')
+										<input type="text" name="status" value="Approved" hidden>
+										<button class="btn btn-primary btn-sm" type="submit" title="Approve status."><i class="fas fa-fw fa-check-square"></i></button>
+									</form>
+								</div>
+								<div class="col-3">
+									<form action="/hris/pages/admin/benefits/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
+										@csrf
+										@method('PATCH')
+										<input type="text" name="status" value="Rejected" hidden>
+										<button class="btn btn-warning btn-sm" type="submit" title="Reject status."><i class="fas fa-fw fa-window-close"></i></button>
+									</form>
+								</div>
+								<div class="col-3">
+									<!-- Button trigger modal -->
+									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeExpense->id}}" data-name="Employee Expense no. {{$employeeExpense->id}}"><i class="fas fa-fw fa-trash"></i></button>
 								</div>
 							</div>
 						</td>
@@ -127,12 +114,55 @@
 		{{$employeeExpenses->links()}}
 	</div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Delete Confirmation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="data-name"></p>
+				<hr>
+				<form class="form-horizontal" method="post">
+					@csrf
+					@method('DELETE')
+					<div class="form-group">
+						<label for="upass">Enter Password: </label>
+						<input class="form-control" type="password" name="upass" required>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-danger" type="submit"><i class="fa fa-check"></i> Confirm Delete</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 @stop
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
 <script>
-console.log('Hi!');
+	$(document).ready(function(){
+		$('.delete-btn').on('click', function(){
+			var get = $('.add-button').attr('href');
+			var href = get.replace('create', 'delete');
+			var target = $(this).attr('data-target');
+			var modal_id = target.replace('#', '');
+			var id = target.replace('#modal-', '');
+			$('.modal').attr('id', modal_id);
+			$('.modal').attr('aria-labelledby', modal_id);
+			$('.form-horizontal').attr('action', href+'/'+id);
+			$('.form-horizontal').attr('id', 'form-'+id);
+			$('.modal-footer > button').attr('form', 'form-'+id);
+			var name = $(this).attr('data-name');
+			$('.data-name').text('Are you sure you want to delete '+name+'?');
+		});
+	});
 </script>
 @stop

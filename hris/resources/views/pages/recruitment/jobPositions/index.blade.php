@@ -52,37 +52,14 @@
 						<td>{{$jobPosition->job_description}}</td>
 						<td>{{$jobPosition->country}}</td>
 						<td>{{$jobPosition->department}}</td>
-						<td>
-							<a href="/hris/pages/recruitment/jobPositions/{{$jobPosition->id}}/edit"><i class="fa fa-edit"></i></a>
-							<!-- Button trigger modal -->
-							<button type="button" data-toggle="modal" data-target="#modal-{{$jobPosition->id}}"><i class="fa fa-trash"></i></button>
-							<!-- Modal -->
-							<div class="modal fade" id="modal-{{$jobPosition->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-{{$jobPosition->id}}" aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title">Delete Confirmation</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<p>Are you sure you want to delete?</p>
-											<hr>
-											<form action="/hris/pages/recruitment/jobPositions/delete/{{$jobPosition->id}}" method="post" id="form-{{$jobPosition->id}}">
-												@csrf
-												@method('DELETE')
-												<div class="form-group">
-													<label for="upass">Enter Password: </label>
-													<input class="form-control" type="password" name="upass" required>
-												</div>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button class="btn btn-danger" type="submit" form="form-{{$jobPosition->id}}"><i class="fa fa-check"></i> Confirm Delete</button>
-											<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-										</div>
-									</div>
+						<td class="td-action">
+							<div class="row no-gutters">
+								<div class="col-6">
+									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/jobPositions/{{$jobPosition->id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+								</div>
+								<div class="col-6">
+									<!-- Button trigger modal -->
+									<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$jobPosition->id}}" data-name="{{$jobPosition->job_title}}"><i class="fas fa-fw fa-trash"></i></button>
 								</div>
 							</div>
 						</td>
@@ -99,12 +76,55 @@
 		{{$jobPositions->links()}}
 	</div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Delete Confirmation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="data-name"></p>
+				<hr>
+				<form class="form-horizontal" method="post">
+					@csrf
+					@method('DELETE')
+					<div class="form-group">
+						<label for="upass">Enter Password: </label>
+						<input class="form-control" type="password" name="upass" required>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-danger" type="submit"><i class="fa fa-check"></i> Confirm Delete</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 @stop
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
 <script>
-console.log('Hi!');
+	$(document).ready(function(){
+		$('.delete-btn').on('click', function(){
+			var get = $('.add-button').attr('href');
+			var href = get.replace('create', 'delete');
+			var target = $(this).attr('data-target');
+			var modal_id = target.replace('#', '');
+			var id = target.replace('#modal-', '');
+			$('.modal').attr('id', modal_id);
+			$('.modal').attr('aria-labelledby', modal_id);
+			$('.form-horizontal').attr('action', href+'/'+id);
+			$('.form-horizontal').attr('id', 'form-'+id);
+			$('.modal-footer > button').attr('form', 'form-'+id);
+			var name = $(this).attr('data-name');
+			$('.data-name').text('Are you sure you want to delete '+name+'?');
+		});
+	});
 </script>
 @stop

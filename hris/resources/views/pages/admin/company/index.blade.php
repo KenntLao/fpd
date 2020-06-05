@@ -55,11 +55,11 @@
 						<td class="td-action">
 							<div class="row no-gutters">
 								<div class="col-6">
-									<a href="/hris/pages/admin/company/{{$company->id}}/edit"><i class="fa fa-edit"></i></a>
+									<a class="btn-success btn btn-sm" href="/hris/pages/admin/company/{{$company->id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
 								</div>
 								<div class="col-6">
 									<!-- Button trigger modal -->
-									<button class="delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$company->id}}"><i class="fa fa-trash"></i></button>
+									<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$company->id}}" data-name="{{$company->name}}"><i class="fas fa-fw fa-trash"></i></button>
 								</div>
 							</div>
 						</td>
@@ -86,7 +86,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>Are you sure you want to delete?</p>
+				<p class="data-name"></p>
 				<hr>
 				<form class="form-horizontal" method="post">
 					@csrf
@@ -122,6 +122,8 @@
 			$('.form-horizontal').attr('action', href+'/'+id);
 			$('.form-horizontal').attr('id', 'form-'+id);
 			$('.modal-footer > button').attr('form', 'form-'+id);
+			var name = $(this).attr('data-name');
+			$('.data-name').text('Are you sure you want to delete '+name+'?');
 		});
 	});
 </script>

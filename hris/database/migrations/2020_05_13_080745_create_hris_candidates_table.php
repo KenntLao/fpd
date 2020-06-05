@@ -16,7 +16,7 @@ class CreateHrisCandidatesTable extends Migration
         Schema::create('hris_candidates', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('position_applied');
+            $table->string('job_position_id');
             $table->string('hiring_stage');
             $table->string('first_name');
             $table->string('last_name');

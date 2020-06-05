@@ -16,11 +16,13 @@
 			<select class="form-control required select2" name="client_id">
 				@if (count($clients) > 0)
 				<option disabled default selected>--select one--</option>
+				<option value="" {{ $project->client_id == NULL  ? 'selected' : '' }}>None</option>
 				@foreach($clients as $client)
-				<option value="{{$client->id}}" {{ $project->client == $client->name  ? 'selected' : '' }}>{{$client->name}}</option>
+				<option value="{{$client->id}}" {{ $project->client_id == $client->id  ? 'selected' : '' }}>{{$client->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>
+				<option value="" {{ $project->client_id == NULL  ? 'selected' : '' }}>None</option>
 				@endif
 			</select>
 		</div>

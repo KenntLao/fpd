@@ -36,7 +36,7 @@ class CandidateController extends Controller
                 $request->profile_image->move(public_path('assets/files/candidates/profile_image'), $imageName);
             }
             $resume = time() . '.' . $request->resume->extension();
-            $candidate->position_applied = request('position_applied');
+            $candidate->job_position_id = request('job_position_id');
             $candidate->hiring_stage = request('hiring_stage');
             $candidate->first_name = request('first_name');
             $candidate->last_name = request('last_name');
@@ -107,7 +107,7 @@ class CandidateController extends Controller
                     $request->resume->move(public_path('assets/files/candidates/resume/'), $resume);
                 }
             }
-            $candidate->position_applied = request('position_applied');
+            $candidate->job_position_id = request('job_position_id');
             $candidate->hiring_stage = request('hiring_stage');
             $candidate->first_name = request('first_name');
             $candidate->last_name = request('last_name');
@@ -159,7 +159,7 @@ class CandidateController extends Controller
 
         return request()->validate([
 
-            'position_applied'=>'required',
+            'job_position_id'=>'required',
             'hiring_stage'=>'required',
             'first_name'=>'required',
             'last_name'=>'required',

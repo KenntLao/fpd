@@ -45,11 +45,16 @@
 					<td>{{$employmentStatus->id}}</td>
 					<td>{{$employmentStatus->name}}</td>
 					<td>{{$employmentStatus->description}}</td>
-					<td>
-						<a href="/hris/pages/admin/jobDetails/employmentStatuses/{{$employmentStatus->id}}/edit"><i class="fa fa-edit"></i></a>
-						<!-- Button trigger modal -->
-						<button class="delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employmentStatus->id}}"><i class="fa fa-trash"></i></button>
-						<!-- Modal -->
+					<td class="td-action">
+						<div class="row no-gutters">
+							<div class="col-6">
+								<a class="btn btn-success btn-sm" href="/hris/pages/admin/jobDetails/employmentStatuses/{{$employmentStatus->id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+							</div>
+							<div class="col-6">
+								<!-- Button trigger modal -->
+								<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employmentStatus->id}}" data-name="{{$employmentStatus->name}}"><i class="fas fa-fw fa-trash"></i></button>
+							</div>
+						</div>
 					</td>
 				</tr>
 				@endforeach
@@ -73,7 +78,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>Are you sure you want to delete?</p>
+				<p class="data-name"></p>
 				<hr>
 				<form class="form-horizontal" method="post">
 					@csrf
@@ -109,6 +114,8 @@
 			$('.form-horizontal').attr('action', href+'/'+id);
 			$('.form-horizontal').attr('id', 'form-'+id);
 			$('.modal-footer > button').attr('form', 'form-'+id);
+			var name = $(this).attr('data-name');
+			$('.data-name').text('Are you sure you want to delete '+name+'?');
 		});
 	});
 </script>
