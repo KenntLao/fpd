@@ -123,6 +123,9 @@ body {
 	display: inline-block;
 	left: 10%;
 }
+.td-action {
+	width: 100px;
+}
 /* IMAGE PREVIEW */
 .image-preview-container {
 	position: relative;
@@ -233,17 +236,14 @@ body {
 	padding: .25rem .5rem;
 	font-family: opensans;
 }
-.table tbody td form {
-	display: inline-block;
-}
-.table td > a {
+.td-action a {
 	background: #007BFF;
 	color: #fff;
 	padding: 3px 5px;
 	font-size: 12px;
 	border-radius: 3px;
 }
-.table td > button {
+.td-action button {
 	background: #EF5350;
 	color: #fff;
 	padding: 3px 5px;
@@ -251,7 +251,7 @@ body {
 	border-radius: 3px;
 	font-size: 12px;
 }
-.table td a, .table td button{
+.td-action a, .td-action button{
 	display: inline-block;
 }
 .btn-check {
@@ -425,6 +425,11 @@ textarea.form-control {
 	font-family: opensans;
 	text-indent: 30px;
 	font-size: 14px;
+}
+.content .modal-body > p {
+	font-family: opensans;
+	text-align: center;
+	text-indent: 0;
 }
 
 /* ALERT */
