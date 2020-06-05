@@ -26,21 +26,10 @@ class EmployeeLoanController extends Controller
         return view('pages.admin.loans.employeeLoans.create', compact('employeeLoan', 'types', 'currencies', 'employees'));
     }
 
-    public function store(Request $request)
+    public function store(hris_employee_loans $employeeLoan, Request $request)
     {
-        $employeeLoan = new hris_employee_loans();
         if($this->validatedData()) {
-            $employeeLoan->employee_id = request('employee_id');
-            $employeeLoan->type_id = request('type_id');
-            $employeeLoan->loan_start_date = request('loan_start_date');
-            $employeeLoan->last_installment_date = request('last_installment_date');
-            $employeeLoan->loan_period = request('loan_period');
-            $employeeLoan->currency = request('currency');
-            $employeeLoan->loan_amount = request('loan_amount');
-            $employeeLoan->monthly_installment = request('monthly_installment');
-            $employeeLoan->status = request('status');
-            $employeeLoan->details = request('details');
-            $employeeLoan->save();
+            $employeeLoan::create($this->validatedData());
             return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -63,17 +52,7 @@ class EmployeeLoanController extends Controller
     public function update(hris_employee_loans $employeeLoan, Request $request)
     {
         if($this->validatedData()) {
-            $employeeLoan->employee_id = request('employee_id');
-            $employeeLoan->type_id = request('type_id');
-            $employeeLoan->loan_start_date = request('loan_start_date');
-            $employeeLoan->last_installment_date = request('last_installment_date');
-            $employeeLoan->loan_period = request('loan_period');
-            $employeeLoan->currency = request('currency');
-            $employeeLoan->loan_amount = request('loan_amount');
-            $employeeLoan->monthly_installment = request('monthly_installment');
-            $employeeLoan->status = request('status');
-            $employeeLoan->details = request('details');
-            $employeeLoan->update();
+            $employeeLoan->update($this->validatedData());
             return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -103,7 +82,8 @@ class EmployeeLoanController extends Controller
             'currency' => 'required',
             'loan_amount' => 'required',
             'monthly_installment' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'details' => 'nullable'
         ]);
     }
     // decrypt string

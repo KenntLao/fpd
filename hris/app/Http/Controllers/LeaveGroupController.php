@@ -20,14 +20,12 @@ class LeaveGroupController extends Controller
         return view('pages.admin.leave.leaveGroups.create', compact('leaveGroup'));
     }
 
-    public function store(Request $request)
+    public function store(hris_leave_groups $leaveGroup, Request $request)
     {
         $leaveGroup = new hris_leave_groups();
         if ($this->validatedData()) {
-            $leaveGroup->name = request('name');
-            $leaveGroup->details = request('details');
-            $leaveGroup->save();
-            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave Group successfully added!');
+            $leaveGroup::create($this->validatedData());
+            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully added!');
 
         } else {
             return back()->withErrors($this->validatedData());
@@ -48,10 +46,8 @@ class LeaveGroupController extends Controller
     public function update(hris_leave_groups $leaveGroup, Request $request)
     {
         if ($this->validatedData()) {
-            $leaveGroup->name = request('name');
-            $leaveGroup->details = request('details');
-            $leaveGroup->update();
-            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave Group successfully updated!');
+            $leaveGroup->update($this->validatedData());
+            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully updated!');
 
         } else {
             return back()->withErrors($this->validatedData());
@@ -64,7 +60,7 @@ class LeaveGroupController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveGroup->delete();
-            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave Group successfully deleted!');
+            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }
@@ -72,7 +68,8 @@ class LeaveGroupController extends Controller
     protected function validatedData()
     {
         return request()->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'details' => 'nullable'
         ]);
     }
     // decrypt string

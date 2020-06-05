@@ -20,14 +20,11 @@ class EmploymentStatusController extends Controller
         return view('pages.admin.jobDetails.employmentStatuses.create', compact('employmentStatus'));
     }
 
-    public function store(Request $request)
+    public function store(hris_employment_statuses $employmentStatus, Request $request)
     {
-        $employmentStatus = new hris_employment_statuses();
         if($this->validatedData()) {
-            $employmentStatus->name = request('name');
-            $employmentStatus->description = request('description');
-            $employmentStatus->save();
-            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully added!');
+            $employmentStatus::create($this->validatedData());
+            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment status successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -46,10 +43,8 @@ class EmploymentStatusController extends Controller
     public function update(hris_employment_statuses $employmentStatus ,Request $request)
     {
         if($this->validatedData()) {
-            $employmentStatus->name = request('name');
-            $employmentStatus->description = request('description');
-            $employmentStatus->update();
-            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully added!');
+            $employmentStatus->update($this->validatedData());
+            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment status successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -61,7 +56,7 @@ class EmploymentStatusController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employmentStatus->delete();
-            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully deleted!');
+            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment status successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }

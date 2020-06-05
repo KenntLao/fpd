@@ -20,15 +20,11 @@ class LeavePeriodController extends Controller
         return view('pages.admin.leave.leavePeriods.create', compact('leavePeriod'));
     }
 
-    public function store(Request $request)
+    public function store(hris_leave_periods $leavePeriod, Request $request)
     {
-        $leavePeriod = new hris_leave_periods();
         if($this->validatedData()) {
-            $leavePeriod->name = request('name');
-            $leavePeriod->start = request('start');
-            $leavePeriod->end = request('end');
-            $leavePeriod->save();
-            return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave Period successfully added!');
+            $leavePeriod::create($this->validatedData());
+            return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -47,11 +43,8 @@ class LeavePeriodController extends Controller
     public function update(hris_leave_periods $leavePeriod, Request $request)
     {
         if($this->validatedData()) {
-            $leavePeriod->name = request('name');
-            $leavePeriod->start = request('start');
-            $leavePeriod->end = request('end');
-            $leavePeriod->update();
-            return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave Period successfully updated!');
+            $leavePeriod->update($this->validatedData());
+            return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -63,7 +56,7 @@ class LeavePeriodController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leavePeriod->delete();
-            return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave Period successfully deleted!');
+            return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }

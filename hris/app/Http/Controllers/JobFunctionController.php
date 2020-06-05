@@ -20,16 +20,13 @@ class JobFunctionController extends Controller
         return view('pages.recruitment.recruitmentSetup.jobFunctions.create', compact('jobFunction'));
     }
 
-    public function store(Request $request)
+    public function store(hris_job_functions $jobFunction, Request $request)
     {
-        $jobFunction = new hris_job_functions();
-
         if ($this->validatedData()) {
-            $jobFunction->name = request('name');
-            $jobFunction->save();
+            $jobFunction::create($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully added!');
         } else {
-            return back()->withErrors($this->validatedData);
+            return back()->withErrors($this->validatedData());
         }
 
     }
@@ -47,11 +44,10 @@ class JobFunctionController extends Controller
     public function update(hris_job_functions $jobFunction, Request $request)
     {
         if ($this->validatedData()) {
-            $jobFunction->name = request('name');
-            $jobFunction->update();
+            $jobFunction->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully updated!');
         } else {
-            return back()->withErrors($this->validatedData);
+            return back()->withErrors($this->validatedData());
         }  
     }
 

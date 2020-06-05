@@ -13,10 +13,9 @@
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="details">Details: </label>
-			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter details</p>
-				<textarea class="form-control required" name="details">{{old('details') ?? $leaveGroup->details}}</textarea>
+				<textarea class="form-control" name="details">{{old('details') ?? $leaveGroup->details}}</textarea>
 			</div>
 		</div>
 	</div>

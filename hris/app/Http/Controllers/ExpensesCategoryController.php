@@ -20,13 +20,11 @@ class ExpensesCategoryController extends Controller
         return view('pages.admin.benefits.expensesCategories.create', compact('expensesCategory'));
     }
 
-    public function store(Request $request)
+    public function store(hris_expenses_categories $expensesCategory, Request $request)
     {
-        $expensesCategory = new hris_expenses_categories();
         if($this->validatedData()) {
-            $expensesCategory->name = request('name');
-            $expensesCategory->save();
-            return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses Category successfully added!');
+            $expensesCategory::create($this->validatedData());
+            return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -45,9 +43,8 @@ class ExpensesCategoryController extends Controller
     public function update(hris_expenses_categories $expensesCategory, Request $request)
     {
         if($this->validatedData()) {
-            $expensesCategory->name = request('name');
-            $expensesCategory->update();
-            return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses Category successfully updated!');
+            $expensesCategory->update($this->validatedData());
+            return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -59,7 +56,7 @@ class ExpensesCategoryController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $expensesCategory->delete();
-            return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses Category successfully deleted!');
+            return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }

@@ -20,13 +20,10 @@ class CertificationController extends Controller
         return view('pages.admin.qualifications.certifications.create', compact('certification'));
     }
 
-    public function store(Request $request)
+    public function store(hris_certifications $certification, Request $request)
     {
-        $certification = new hris_certifications();
         if($this->validatedData()) {
-            $certification->name = request('name');
-            $certification->description = request('description');
-            $certification->save();
+            $certification::create($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -46,9 +43,7 @@ class CertificationController extends Controller
     public function update(hris_certifications $certification, Request $request)
     {
         if($this->validatedData()) {
-            $certification->name = request('name');
-            $certification->description = request('description');
-            $certification->update();
+            $certification->update($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());

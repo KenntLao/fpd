@@ -24,7 +24,7 @@
 		<h3 class="card-title">edit request</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/admin/overtime/overtimeRequests/update/{{$overtimeCategory->id}}" id="form">
+		<form class="form-horizontal" method="post" action="/hris/pages/admin/overtime/overtimeRequests/update/{{$overtimeRequest->id}}" id="form">
 			@method('PATCH')
 			@include('pages.admin.overtime.overtimeRequests.form')
 		</form>

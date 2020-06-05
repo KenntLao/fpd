@@ -20,16 +20,11 @@ class PayGradeController extends Controller
         return view('pages.admin.jobDetails.payGrades.create', compact('payGrade'));
     }
 
-    public function store(Request $request)
+    public function store(hris_pay_grades $payGrade, Request $request)
     {
-        $payGrade = new hris_pay_grades();
         if ($this->validatedData()) {
-            $payGrade->name = request('name');
-            $payGrade->currency = request('currency');
-            $payGrade->min_salary = request('min_salary');
-            $payGrade->max_salary = request('max_salary');
-            $payGrade->save();
-            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully added!');
+            $payGrade::create($this->validatedData());
+            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -48,12 +43,8 @@ class PayGradeController extends Controller
     public function update(hris_pay_grades $payGrade ,Request $request)
     {
         if($this->validatedData()) {
-            $payGrade->name = request('name');
-            $payGrade->currency = request('currency');
-            $payGrade->min_salary = request('min_salary');
-            $payGrade->max_salary = request('max_salary');
-            $payGrade->update();
-            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully updated!');
+            $payGrade->update($this->validatedData());
+            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -65,7 +56,7 @@ class PayGradeController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $payGrade->delete();
-            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay Grade successfully deleted!');
+            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }

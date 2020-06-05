@@ -24,7 +24,7 @@
 				@if(count($leaveGroups) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($leaveGroups as $leaveGroup)
-				<option value="{{$leaveGroup->id}}" {{ $leaveGroupEmployee->leave_group == $leaveGroup->name  ? 'selected' : '' }}>{{$leaveGroup->name}}</option>
+				<option value="{{$leaveGroup->id}}" {{ $leaveGroupEmployee->leave_group_id == $leaveGroup->id  ? 'selected' : '' }}>{{$leaveGroup->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>

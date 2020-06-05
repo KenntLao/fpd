@@ -26,21 +26,11 @@ class CompanyController extends Controller
         return view('pages.admin.company.create', compact('company', 'companies', 'countries', 'timezones'));
     }
 
-    public function store(Request $request)
+    public function store(hris_company_structures $company, Request $request)
     {
-
-        $company = new hris_company_structures();
-
         if ( $this->validatedData() ) {
-            $company->name = request('name');
-            $company->details = request('details');
-            $company->address = request('address');
-            $company->type = request('type');
-            $company->country = request('country');
-            $company->timezone = request('timezone');
-            $company->parent_structure = request('parent_structure');
-            $company->save();
-            return redirect('/hris/pages/admin/company/index')->with('success', 'Company Structure successfully added!');
+            $company::create($this->validatedData());
+            return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully added!');
 
         } else {
             return back()->withErrors($this->validatedData());
@@ -65,15 +55,8 @@ class CompanyController extends Controller
     {
 
         if ( $this->validatedData() ) {
-            $company->name = request('name');
-            $company->details = request('details');
-            $company->address = request('address');
-            $company->type = request('type');
-            $company->country = request('country');
-            $company->timezone = request('timezone');
-            $company->parent_structure = request('parent_structure');
-            $company->update();
-            return redirect('/hris/pages/admin/company/index')->with('success', 'Company Structure successfully updated!');
+            $company->update($this->validatedData());
+            return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -86,7 +69,7 @@ class CompanyController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $company->delete();
-            return redirect('/hris/pages/admin/company/index')->with('success', 'Company Structure successfully deleted');
+            return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully deleted');
         } else {
             return back()->withErrors(['Password does not match.']);
         }
@@ -99,9 +82,11 @@ class CompanyController extends Controller
 
             'name'=>'required',
             'details'=>'required',
+            'address'=>'nullable',
             'type'=>'required',
             'country'=>'required',
-            'timezone'=>'required'
+            'timezone'=>'required',
+            'parent_structure'=>'nullable'
 
         ]);
 

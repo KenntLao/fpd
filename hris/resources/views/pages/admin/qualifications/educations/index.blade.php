@@ -61,7 +61,7 @@
 			</table>
 		</div>
 		@else
-		<h4>No data Available.</h4>
+		<h4>No data available.</h4>
 		@endif
 	</div>
 	<div class="card-footer">

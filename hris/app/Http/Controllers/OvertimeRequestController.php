@@ -26,18 +26,10 @@ class OvertimeRequestController extends Controller
         return view('pages.admin.overtime.overtimeRequests.create', compact('overtimeRequest', 'overtimeCategories', 'projects','employees'));
     }
 
-    public function store(Request $request)
+    public function store(hris_overtime_requests $overtimeRequest, Request $request)
     {
-        $overtimeRequest = new hris_overtime_requests();
         if($this->validatedData()) {
-            $overtimeRequest->employee_id = request('employee_id');
-            $overtimeRequest->category_id = request('category_id');
-            $overtimeRequest->start_time = request('start_time');
-            $overtimeRequest->end_time = request('end_time');
-            $overtimeRequest->project_id = request('project_id');
-            $overtimeRequest->notes = request('notes');
-            $overtimeRequest->status = 'Pending';
-            $overtimeRequest->save();
+            $overtimeRequest::create($this->validatedData());
             return redirect('/hris/pages/admin/overtime/overtimeRequests/index')->with('success', 'Overtime Request successfully added');
         } else {
             return back()->withErrors($this->validatedData());
@@ -60,14 +52,7 @@ class OvertimeRequestController extends Controller
     public function update(hris_overtime_requests $overtimeRequest, Request $request)
     {
         if($this->validatedData()) {
-            $overtimeRequest->employee_id = request('employee_id');
-            $overtimeRequest->category_id = request('category_id');
-            $overtimeRequest->start_time = request('start_time');
-            $overtimeRequest->end_time = request('end_time');
-            $overtimeRequest->project_id = request('project_id');
-            $overtimeRequest->notes = request('notes');
-            $overtimeRequest->status = 'Pending';
-            $overtimeRequest->update();
+            $overtimeRequest->update($this->validatedData());
             return redirect('/hris/pages/admin/overtime/overtimeRequests/index')->with('success', 'Overtime Request successfully updated');
         } else {
             return back()->withErrors($this->validatedData());
@@ -98,7 +83,10 @@ class OvertimeRequestController extends Controller
             'employee_id' => 'required',
             'category_id' => 'required',
             'start_time' => 'required',
-            'end_time' => 'required'
+            'end_time' => 'required',
+            'project_id' => 'nullable',
+            'notes' => 'nullable',
+            'status' => 'nullable'
         ]);
     }
     // decrypt string

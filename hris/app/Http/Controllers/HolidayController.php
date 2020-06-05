@@ -22,15 +22,10 @@ class HolidayController extends Controller
         return view('pages.admin.leave.holidays.create', compact('holiday', 'countries'));
     }
 
-    public function store(Request $request)
+    public function store(hris_holidays $holiday, Request $request)
     {
-        $holiday = new hris_holidays();
         if($this->validatedData()) {
-            $holiday->name = request('name');
-            $holiday->holiday_date = request('holiday_date');
-            $holiday->status = request('status');
-            $holiday->country = request('country');
-            $holiday->save();
+            $holiday::create($this->validatedData());
             return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -51,11 +46,7 @@ class HolidayController extends Controller
     public function update(hris_holidays $holiday, Request $request)
     {
         if($this->validatedData()) {
-            $holiday->name = request('name');
-            $holiday->holiday_date = request('holiday_date');
-            $holiday->status = request('status');
-            $holiday->country = request('country');
-            $holiday->update();
+            $holiday->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -79,7 +70,8 @@ class HolidayController extends Controller
         return request()->validate([
             'name' => 'required',
             'holiday_date' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'country' => 'nullable'
         ]);
     }
     // decrypt string

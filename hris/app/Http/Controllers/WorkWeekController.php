@@ -22,14 +22,10 @@ class WorkWeekController extends Controller
         return view('pages.admin.leave.workWeeks.create', compact('workWeek', 'countries'));
     }
 
-    public function store(Request $request)
+    public function store(hris_work_weeks $workWeek, Request $request)
     {
-        $workWeek = new hris_work_weeks();
         if($this->validatedData()) {
-            $workWeek->day = request('day');
-            $workWeek->status = request('status');
-            $workWeek->country = request('country');
-            $workWeek->save();
+            $workWeek::create($this->validatedData());
             return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -50,10 +46,7 @@ class WorkWeekController extends Controller
     public function update(hris_work_weeks $workWeek, Request $request)
     {
         if($this->validatedData()) {
-            $workWeek->day = request('day');
-            $workWeek->status = request('status');
-            $workWeek->country = request('country');
-            $workWeek->update();
+            $workWeek->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -76,7 +69,8 @@ class WorkWeekController extends Controller
     {
         return request()->validate([
             'day' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'country' => 'nullable',
         ]);
     }
 

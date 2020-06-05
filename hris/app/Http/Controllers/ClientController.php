@@ -20,19 +20,10 @@ class ClientController extends Controller
         return view('pages.admin.properties.clients.create', compact('client'));
     }
 
-    public function store(Request $request)
+    public function store(hris_clients $client, Request $request)
     {
-        $client = new hris_clients();
         if($this->validatedData()) {
-            $client->name = request('name');
-            $client->details = request('details');
-            $client->address = request('address');
-            $client->contact_number = request('contact_number');
-            $client->email = request('email');
-            $client->company_url = request('company_url');
-            $client->status = request('status');
-            $client->first_contact_date = request('first_contact_date');
-            $client->save();
+            $client::create($this->validatedData());
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -52,15 +43,7 @@ class ClientController extends Controller
     public function update(hris_clients $client, Request $request)
     {
         if($this->validatedData()) {
-            $client->name = request('name');
-            $client->details = request('details');
-            $client->address = request('address');
-            $client->contact_number = request('contact_number');
-            $client->email = request('email');
-            $client->company_url = request('company_url');
-            $client->status = request('status');
-            $client->first_contact_date = request('first_contact_date');
-            $client->update();
+            $client->update($this->validatedData());
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -83,7 +66,13 @@ class ClientController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'status' => 'required'
+            'details' => 'nullable',
+            'address' => 'nullable',
+            'contact_number' => 'nullable',
+            'email' => 'nullable',
+            'company_url' => 'nullable',
+            'status' => 'required',
+            'first_contact_date' => 'nullable',
         ]);
     }
     // decrypt string

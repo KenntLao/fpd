@@ -20,13 +20,10 @@ class CompanyLoanTypeController extends Controller
         return view('pages.admin.loans.loanTypes.create', compact('loanType'));
     }
 
-    public function store(Request $request)
+    public function store(hris_company_loan_types $loanType, Request $request)
     {
-        $loanType = new hris_company_loan_types();
         if($this->validatedData()) {
-            $loanType->name = request('name');
-            $loanType->details = request('details');
-            $loanType->save();
+            $loanType::create($this->validatedData());
             return redirect('/hris/pages/admin/loans/loanTypes/index')->with('success', 'Company Loan Type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -46,9 +43,7 @@ class CompanyLoanTypeController extends Controller
     public function update(hris_company_loan_types $loanType, Request $request)
     {
         if($this->validatedData()) {
-            $loanType->name = request('name');
-            $loanType->details = request('details');
-            $loanType->update();
+            $loanType->update($this->validatedData());
             return redirect('/hris/pages/admin/loans/loanTypes/index')->with('success', 'Company Loan Type successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -70,7 +65,8 @@ class CompanyLoanTypeController extends Controller
     protected function validatedData()
     {
         return request()->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'details' => 'nullable'
         ]);
     }
     // decrypt string

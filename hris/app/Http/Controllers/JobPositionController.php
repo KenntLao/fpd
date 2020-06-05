@@ -36,9 +36,8 @@ class JobPositionController extends Controller
         return view('pages.recruitment.jobPositions.create', compact('benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions', 'countries', 'currencies', 'jobPosition'));
     }
 
-    public function store(Request $request)
+    public function store(hris_job_positions $jobPosition, Request $request)
     {
-        $jobPosition = new hris_job_positions();
         if ($this->validatedData()) {
             if( $request->hasFile('image') ) {
                 $imageName = time() . '.' . $request->image->extension();

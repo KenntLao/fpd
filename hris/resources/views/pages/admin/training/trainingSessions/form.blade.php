@@ -18,7 +18,7 @@
 				@if(count($courses) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($courses as $course)
-				<option value="{{$course->id}}" {{ $course->id == $trainingSession->course  ? 'selected' : '' }}>{{$course->name}}</option>
+				<option value="{{$course->id}}" {{ $course->id == $trainingSession->course_id  ? 'selected' : '' }}>{{$course->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>
@@ -47,15 +47,14 @@
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="assignment_due_date">Assignment Due Date: </label>
-			<span class="badge badge-danger">Required</span>
-			<input class="form-control required" type="date" value="{{old('assignment_due_date') ?? $trainingSession->assignment_due_date}}" name="assignment_due_date" required>
+			<input class="form-control" type="date" value="{{old('assignment_due_date') ?? $trainingSession->assignment_due_date}}" name="assignment_due_date">
 		</div>
 	</div>
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="delivery_method">Delivery Method: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="delivery_method">
+			<select class="form-control required select2" name="delivery_method" required>
 				<option value="Classroom" {{ $trainingSession->delivery_method == 'Classroom'  ? 'selected' : '' }}>Classroom</option>
 				<option value="Self Study" {{ $trainingSession->delivery_method == 'Self Study'  ? 'selected' : '' }}>Self Study</option>
 				<option value="Online" {{ $trainingSession->delivery_method == 'Online'  ? 'selected' : '' }}>Online</option>
@@ -67,7 +66,7 @@
 			<label class="mr-2" for="delivery_location">Delivery Location: </label>
 			<div class="input">
 				<p class="placeholder">Enter delivery location</p>
-				<input class="form-control required" type="text" name="delivery_location" value="{{old('delivery_location') ?? $trainingSession->delivery_location}}">
+				<input class="form-control" type="text" name="delivery_location" value="{{old('delivery_location') ?? $trainingSession->delivery_location}}">
 			</div>
 		</div>
 	</div>
@@ -85,7 +84,7 @@
 	</div>
 	<div class="col-12 col-md-6 col-xl-4">
 		<div class="form-group">
-			<label class="mr-2" for="attachment">Attachment: : </label>
+			<label class="mr-2" for="attachment">Attachment: </label>
 			<input class="form-control required" type="file" name="attachment">
 		</div>
 	</div>

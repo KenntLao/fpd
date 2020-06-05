@@ -21,16 +21,13 @@ class ExperienceLevelController extends Controller
         return view('pages.recruitment.recruitmentSetup.experienceLevels.create', compact('experienceLevel'));
     }
 
-    public function store(Request $request)
+    public function store(hris_experience_levels $experienceLevel, Request $request)
     {
-        $experienceLevel = new hris_experience_levels();
-
         if ($this->validatedData()) {
-            $experienceLevel->name = request('name');
-            $experienceLevel->save();
+            $experienceLevel::create($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level added!');
         } else {
-            return back()->withErrors($this->validatedData);
+            return back()->withErrors($this->validatedData());
         }
 
     }
@@ -48,11 +45,10 @@ class ExperienceLevelController extends Controller
     public function update(hris_experience_levels $experienceLevel, Request $request)
     {
         if ($this->validatedData()) {
-            $experienceLevel->name = request('name');
-            $experienceLevel->update();
+            $experienceLevel->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level updated!');
         } else {
-            return back()->withErrors($this->validatedData);
+            return back()->withErrors($this->validatedData());
         }
     }
 

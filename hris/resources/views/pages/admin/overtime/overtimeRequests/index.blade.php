@@ -66,10 +66,16 @@
 							@if($overtimeRequest->project)
 							{{$overtimeRequest->project->name}}
 							@else
-							<span class="td-error">ERROR</span>
+							None
 							@endif
 						</td>
-						<td>{{$overtimeRequest->status}}</td>
+						<td>
+							@if($overtimeRequest->status == NULL)
+							Pending
+							@else
+							{{$overtimeRequest->status}}
+							@endif
+						</td>
 						<td>
 							<div class="row no-gutters">
 								<div class="col-3">

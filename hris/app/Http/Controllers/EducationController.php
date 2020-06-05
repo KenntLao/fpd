@@ -20,13 +20,10 @@ class EducationController extends Controller
         return view('pages.admin.qualifications.educations.create', compact('education'));
     }
 
-    public function store(Request $request)
+    public function store(hris_educations $education, Request $request)
     {
-        $education = new hris_educations();
         if($this->validatedData()) {
-            $education->name = request('name');
-            $education->description = request('description');
-            $education->save();
+            $education::create($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -46,9 +43,7 @@ class EducationController extends Controller
     public function update(hris_educations $education, Request $request)
     {
         if($this->validatedData()) {
-            $education->name = request('name');
-            $education->description = request('description');
-            $education->update();
+            $education->update($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());

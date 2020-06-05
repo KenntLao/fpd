@@ -20,20 +20,10 @@ class CourseController extends Controller
         return view('pages.admin.training.courses.create', compact('course'));
     }
 
-    public function store(Request $request)
+    public function store(hris_courses $course, Request $request)
     {
-        $course = new hris_courses();
         if($this->validatedData()) {
-            $course->code = request('code');
-            $course->name = request('name');
-            $course->coordinator = request('coordinator');
-            $course->trainer = request('trainer');
-            $course->trainer_details = request('trainer_details');
-            $course->payment_type = request('payment_type');
-            $course->currency = request('currency');
-            $course->cost = request('cost');
-            $course->status = request('status');
-            $course->save();
+            $course::create($this->validatedData());
             return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,16 +43,7 @@ class CourseController extends Controller
     public function update(hris_courses $course, Request $request)
     {
         if($this->validatedData()) {
-            $course->code = request('code');
-            $course->name = request('name');
-            $course->coordinator = request('coordinator');
-            $course->trainer = request('trainer');
-            $course->trainer_details = request('trainer_details');
-            $course->payment_type = request('payment_type');
-            $course->currency = request('currency');
-            $course->cost = request('cost');
-            $course->status = request('status');
-            $course->update();
+            $course->update($this->validatedData());
             return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -87,6 +68,8 @@ class CourseController extends Controller
             'code' => 'required',
             'name' => 'required',
             'coordinator' => 'required',
+            'trainer' => 'nullable',
+            'trainer_details' => 'nullable',
             'payment_type' => 'required',
             'currency' => 'required',
             'cost' => 'required',

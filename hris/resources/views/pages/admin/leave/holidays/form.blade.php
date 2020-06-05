@@ -30,8 +30,7 @@
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="country">Country: </label>
-			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="country">
+			<select class="form-control select2" name="country">
 				@if(count($countries) > 0)
 				<option value="For All Countries" {{ $holiday->country == 'For All Countries'  ? 'selected' : '' }}>For All Countries</option>
 				@foreach($countries as $country)

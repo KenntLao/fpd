@@ -22,15 +22,10 @@ class ProjectController extends Controller
         return view('pages.admin.properties.projects.create', compact('project', 'clients'));
     }
 
-    public function store(Request $request)
+    public function store(hris_projects $project, Request $request)
     {
-        $project = new hris_projects();
         if($this->validatedData()) {
-            $project->name = request('name');
-            $project->client_id = request('client_id');
-            $project->details = request('details');
-            $project->status = request('status');
-            $project->save();
+            $project::create($this->validatedData());
             return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -51,11 +46,7 @@ class ProjectController extends Controller
     public function update(hris_projects $project, Request $request)
     {
         if($this->validatedData()) {
-            $project->name = request('name');
-            $project->client_id = request('client_id');
-            $project->details = request('details');
-            $project->status = request('status');
-            $project->update();
+            $project->update($this->validatedData());
             return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -78,7 +69,9 @@ class ProjectController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'status' => 'required'
+            'client_id' => 'nullable',
+            'status' => 'required',
+            'details' => 'nullable'
         ]);
     }
     // decrypt string

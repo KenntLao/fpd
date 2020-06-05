@@ -65,7 +65,7 @@
 								</div>
 								<div class="col-6">
 									<!-- Button trigger modal -->
-									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeTrainingSession->id}}" data-name="{{$employeeTrainingSession->name}}"><i class="fa fa-trash"></i></button>
+									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeTrainingSession->id}}" data-name="Employee Training Session ID: {{$employeeTrainingSession->id}}"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
 						</td>

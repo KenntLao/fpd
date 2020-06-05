@@ -20,15 +20,11 @@ class BenefitController extends Controller
         return view('pages.recruitment.recruitmentSetup.benefits.create', compact('benefit'));
     }
 
-    public function store(Request $request)
+    public function store(hris_benefits $benefit, Request $request)
     {
 
-        $benefit = new hris_benefits();
-
         if ($this->validatedData()) {
-            $benefit->name = request('name');
-            $benefit->save();
-            Log::channel('benefits')->info('A new benefit has been added. Id: ' .$benefit->id. '. Name: '. $benefit->name. '.');
+            $benefit::create($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
@@ -50,9 +46,7 @@ class BenefitController extends Controller
     public function update(hris_benefits $benefit, Request $request)
     {
         if ($this->validatedData()) {
-            $benefit->name = request('name');
-            $benefit->update();
-            Log::channel('benefits')->info('Benefit id no.' .$benefit->id. ' has been updated. Name: '. $benefit->name. '.');
+            $benefit->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully updated!');
         } else {
             return back()->withErrors($this->validatedData);

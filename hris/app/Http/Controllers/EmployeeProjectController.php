@@ -26,15 +26,11 @@ class EmployeeProjectController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(hris_employee_projects $employeeProject, Request $request)
     {
-        $employeeProject = new hris_employee_projects();
         if($this->validatedData()) {
-            $employeeProject->employee_id = request('employee_id');
-            $employeeProject->project_id = request('project_id');
-            $employeeProject->details = request('details');
-            $employeeProject->save();
-            return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted!');
+            $employeeProject::create($this->validatedData());
+            return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee project successfully deleted!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -55,10 +51,7 @@ class EmployeeProjectController extends Controller
     public function update(hris_employee_projects $employeeProject, Request $request)
     {
         if($this->validatedData()) {
-            $employeeProject->employee_id = request('employee_id');
-            $employeeProject->project_id = request('project_id');
-            $employeeProject->details = request('details');
-            $employeeProject->update();
+            $employeeProject->update($this->validatedData());
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -81,7 +74,8 @@ class EmployeeProjectController extends Controller
     {
         return request()->validate([
             'employee_id' => 'required',
-            'project_id' => 'required'
+            'project_id' => 'required',
+            'details' => 'nullable'
         ]);
     }
     // decrypt string

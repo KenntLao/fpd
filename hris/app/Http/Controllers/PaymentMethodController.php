@@ -20,13 +20,12 @@ class PaymentMethodController extends Controller
         return view('pages.admin.benefits.paymentMethods.create', compact('paymentMethod'));
     }
 
-    public function store(Request $request)
+    public function store(hris_payment_methods $paymentMethod, Request $request)
     {
         $paymentMethod = new hris_payment_methods();
         if($this->validatedData()) {
-            $paymentMethod->name = request('name');
-            $paymentMethod->save();
-            return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment Method successfully added!');
+            $paymentMethod::create($this->validatedData());
+            return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment method successfully added!');
         } else {
             return back()->with($this->validatedData());
         }
@@ -45,9 +44,8 @@ class PaymentMethodController extends Controller
     public function update(hris_payment_methods $paymentMethod, Request $request)
     {
         if($this->validatedData()) {
-            $paymentMethod->name = request('name');
-            $paymentMethod->update();
-            return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment Method successfully updated!');
+            $paymentMethod->update($this->validatedData());
+            return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment method successfully updated!');
         } else {
             return back()->with($this->validatedData());
         }
@@ -59,7 +57,7 @@ class PaymentMethodController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $paymentMethod->delete();
-            return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment Method successfully deleted!');
+            return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment method successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }

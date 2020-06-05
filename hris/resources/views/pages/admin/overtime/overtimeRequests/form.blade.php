@@ -24,7 +24,7 @@
 				@if(count($overtimeCategories) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($overtimeCategories as $overtimeCategory)
-				<option value="{{$overtimeCategory->id}}" {{ $overtimeRequest->category == $overtimeCategory->name  ? 'selected' : '' }}>{{$overtimeCategory->name}}</option>
+				<option value="{{$overtimeCategory->id}}" {{ $overtimeRequest->category_id == $overtimeCategory->id  ? 'selected' : '' }}>{{$overtimeCategory->name}}</option>
 				@endforeach
 				@else 
 				<option disabled default selected>--select one--</option>
@@ -38,14 +38,14 @@
 		<div class="form-group">
 			<label class="mr-2" for="start_time">Start Time: </label>
 			<span class="badge badge-danger">Required</span>
-			<input class="form-control required" type="datetime-local" name="start_time" value="{{old('start_time') ?? $overtimeRequest->start_time}}" required>
+			<input class="form-control required" type="datetime-local" name="start_time" value="{{old('start_time') ??  date('Y-m-d\TH:i', strtotime($overtimeRequest->start_time))}}" required>
 		</div>
 	</div>
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="end_time">End Time: </label>
 			<span class="badge badge-danger">Required</span>
-			<input class="form-control required" type="datetime-local" name="end_time" value="{{old('end_time') ?? $overtimeRequest->end_time}}" required>
+			<input class="form-control required" type="datetime-local" name="end_time" value="{{old('end_time') ??  date('Y-m-d\TH:i', strtotime($overtimeRequest->end_time))}}" required>
 		</div>
 	</div>
 </div>
@@ -53,15 +53,14 @@
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="employee">Project: </label>
-			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="project_id" required>
+			<select class="form-control select2" name="project_id" required>
 				@if(count($projects) > 0)
-				<option disabled default selected>--select one--</option>
+				<option value="None" {{ $overtimeRequest->project_id == 'None'  ? 'selected' : '' }}>None</option>
 				@foreach($projects as $project)
-				<option value="{{$project->id}}" {{ $overtimeRequest->project == $project->name  ? 'selected' : '' }}>{{$project->name}}</option>
+				<option value="{{$project->id}}" {{ $overtimeRequest->project_id == $project->name  ? 'selected' : '' }}>{{$project->name}}</option>
 				@endforeach
 				@else 
-				<option disabled default selected>--select one--</option>
+				<option value="None" {{ $overtimeRequest->project_id == 'None'  ? 'selected' : '' }}>None</option>
 				@endif
 			</select>
 		</div>

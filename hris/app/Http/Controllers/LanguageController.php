@@ -20,13 +20,10 @@ class LanguageController extends Controller
         return view('pages.admin.qualifications.languages.create', compact('language'));
     }
 
-    public function store(Request $request)
+    public function store(hris_languages $language, Request $request)
     {
-        $language = new hris_languages();
         if($this->validatedData()) {
-            $language->name = request('name');
-            $language->description = request('description');
-            $language->save();
+            $language::create($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -46,9 +43,7 @@ class LanguageController extends Controller
     public function update(hris_languages $language, Request $request)
     {
         if($this->validatedData()) {
-            $language->name = request('name');
-            $language->description = request('description');
-            $language->update();
+            $language->update($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());

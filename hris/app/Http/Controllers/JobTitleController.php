@@ -21,17 +21,12 @@ class JobTitleController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(hris_job_titles $jobTitle, Request $request)
     {
 
-        $jobTitle = new hris_job_titles();
         if ($this->validatedData()) {
-            $jobTitle->code = request('code');
-            $jobTitle->name = request('name');
-            $jobTitle->description = request('description');
-            $jobTitle->specification = request('specification');
-            $jobTitle->save();
-            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully added!');
+            $jobTitle::create($this->validatedData());
+            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -51,12 +46,8 @@ class JobTitleController extends Controller
     public function update(hris_job_titles $jobTitle, Request $request)
     {
         if($this->validatedData()) {
-            $jobTitle->code = request('code');
-            $jobTitle->name = request('name');
-            $jobTitle->description = request('description');
-            $jobTitle->specification = request('specification');
-            $jobTitle->update();
-            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully updated!');
+            $jobTitle->update($this->validatedData());
+            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -68,7 +59,7 @@ class JobTitleController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $jobTitle->delete();
-            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job Title successfully deleted!');
+            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }

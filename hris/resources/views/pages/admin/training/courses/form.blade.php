@@ -1,5 +1,5 @@
 @csrf
-<div class="row no-gutters">
+<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="code">Code: </label>
@@ -39,7 +39,7 @@
 		</div>
 	</div>
 </div>
-<div class="row no-gutters">
+<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="trainer_details">Trainer Details: </label>
@@ -69,7 +69,7 @@
 		</div>
 	</div>
 </div>
-<div class="row no-gutters">
+<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="cost">Cost: </label>

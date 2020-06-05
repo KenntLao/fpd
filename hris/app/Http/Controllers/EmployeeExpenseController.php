@@ -28,9 +28,8 @@ class EmployeeExpenseController extends Controller
         return view('pages.admin.benefits.employeeExpenses.create', compact('employeeExpense', 'currencies', 'expensesCategories', 'paymentMethods', 'employees'));
     }
 
-    public function store(Request $request)
+    public function store(hris_employee_expenses $employeeExpense,Request $request)
     {
-        $employeeExpense = new hris_employee_expenses();
         if($this->validatedData()) {
             if ( $request->hasFile('receipt') ) {
                 $receipt = time() . '.' . $request->receipt->extension();
@@ -88,11 +87,11 @@ class EmployeeExpenseController extends Controller
                     unlink($old_file);
                     $receipt = time() . '.' . $request->receipt->extension();
                     $employeeExpense->receipt = $receipt;
-                    $request->receipt->move(public_path('assets/files/employee_expenses/receipt/'), $receipt);
+                    $request->receipt->move($path, $receipt);
                 } else {
                     $receipt = time() . '.' . $request->receipt->extension();
                     $employeeExpense->receipt = $receipt;
-                    $request->receipt->move(public_path('assets/files/employee_expenses/receipt/'), $receipt);
+                    $request->receipt->move($path, $receipt);
                 }
             }
             if ( $request->hasFile('attachment_1') ) {
@@ -102,11 +101,11 @@ class EmployeeExpenseController extends Controller
                     unlink($old_file);
                     $attachment_1 = time() . '.' . $request->attachment_1->extension();
                     $employeeExpense->attachment_1 = $attachment_1;
-                    $request->attachment_1->move(public_path('assets/files/employee_expenses/attachment_1/'), $attachment_1);
+                    $request->attachment_1->move($path, $attachment_1);
                 } else {
                     $attachment_1 = time() . '.' . $request->attachment_1->extension();
                     $employeeExpense->attachment_1 = $attachment_1;
-                    $request->attachment_1->move(public_path('assets/files/employee_expenses/attachment_1/'), $attachment_1);
+                    $request->attachment_1->move($path, $attachment_1);
                 }
             }
             if ( $request->hasFile('attachment_2') ) {
@@ -116,11 +115,11 @@ class EmployeeExpenseController extends Controller
                     unlink($old_file);
                     $attachment_2 = time() . '.' . $request->attachment_2->extension();
                     $employeeExpense->attachment_2 = $attachment_2;
-                    $request->attachment_2->move(public_path('assets/files/employee_expenses/attachment_2/'), $attachment_2);
+                    $request->attachment_2->move($path, $attachment_2);
                 } else {
                     $attachment_2 = time() . '.' . $request->attachment_2->extension();
                     $employeeExpense->attachment_2 = $attachment_2;
-                    $request->attachment_2->move(public_path('assets/files/employee_expenses/attachment_2/'), $attachment_2);
+                    $request->attachment_2->move($path, $attachment_2);
                 }
             }
             $employeeExpense->employee_id = request('employee_id');

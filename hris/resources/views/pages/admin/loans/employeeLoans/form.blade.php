@@ -24,7 +24,7 @@
 				@if(count($types) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($types as $type)
-				<option value="{{$type->id}}" {{ $employeeLoan->type == $type->name  ? 'selected' : '' }}>{{$type->name}}</option>
+				<option value="{{$type->id}}" {{ $employeeLoan->type_id == $type->id  ? 'selected' : '' }}>{{$type->name}}</option>
 				@endforeach
 				@else 
 				<option disabled default selected>--select one--</option>
@@ -116,7 +116,7 @@
 			<label class="mr-2" for="status">Details: </label>
 			<div class="input">
 				<p class="placeholder">Enter details</p>
-				<textarea class="form-control required">{{old('details') ?? $employeeLoan->details}}</textarea>
+				<textarea class="form-control required" name="details">{{old('details') ?? $employeeLoan->details}}</textarea>
 			</div>
 		</div>
 	</div>

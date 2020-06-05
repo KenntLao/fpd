@@ -20,13 +20,11 @@ class OvertimeCategoryController extends Controller
         return view('pages.admin.overtime.overtimeCategories.create', compact('overtimeCategory'));
     }
 
-    public function store(Request $request)
+    public function store(hris_overtime_categories $overtimeCategory, Request $request)
     {
-        $overtimeCategory = new hris_overtime_categories();
         if($this->validatedData()) {
-            $overtimeCategory->name = request('name');
-            $overtimeCategory->save();
-            return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime Category successfully added!');
+            $overtimeCategory::create($this->validatedData());
+            return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -45,9 +43,8 @@ class OvertimeCategoryController extends Controller
     public function update(hris_overtime_categories $overtimeCategory, Request $request)
     {
         if($this->validatedData()) {
-            $overtimeCategory->name = request('name');
-            $overtimeCategory->update();
-            return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime Category successfully updated!');
+            $overtimeCategory->update($this->validatedData());
+            return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -59,7 +56,7 @@ class OvertimeCategoryController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $overtimeCategory->delete();
-            return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime Category successfully deleted!');
+            return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }

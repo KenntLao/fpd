@@ -20,16 +20,13 @@ class EmploymentTypeController extends Controller
         return view('pages.recruitment.recruitmentSetup.employmentTypes.create', compact('employmentType'));
     }
 
-    public function store(Request $request)
+    public function store(hris_employment_types $employmentType, Request $request)
     {
-        $employmentType = new hris_employment_types();
-
         if ($this->validatedData()) {
-            $employmentType->name = request('name');
-            $employmentType->save();
+            $employmentType::create($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully added!');
         } else {
-            return back()->withErrors($this->validatedData);
+            return back()->withErrors($this->validatedData());
         }
 
 
@@ -49,11 +46,10 @@ class EmploymentTypeController extends Controller
     public function update(hris_employment_types $employmentType, Request $request)
     {
         if ($this->validatedData()) {
-            $employmentType->name = request('name');
-            $employmentType->update();
+            $employmentType->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully updated!');
         } else {
-            return back()->withErrors($this->validatedData);
+            return back()->withErrors($this->validatedData());
         } 
     }
 

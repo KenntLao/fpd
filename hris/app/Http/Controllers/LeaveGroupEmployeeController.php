@@ -24,14 +24,11 @@ class LeaveGroupEmployeeController extends Controller
         return view('pages.admin.leave.leaveGroupEmployees.create', compact('leaveGroupEmployee', 'leaveGroups', 'employees'));
     }
 
-    public function store(Request $request)
+    public function store(hris_leave_group_employees $leaveGroupEmployee, Request $request)
     {
-        $leaveGroupEmployee = new hris_leave_group_employees();
         if ($this->validatedData()) {
-            $leaveGroupEmployee->employee_id = request('employee_id');
-            $leaveGroupEmployee->leave_group_id = request('leave_group_id');
-            $leaveGroupEmployee->save();
-            return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave Group Employee successfully added!');
+            $leaveGroupEmployee::create($this->validatedData());
+            return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -52,10 +49,8 @@ class LeaveGroupEmployeeController extends Controller
     public function update(hris_leave_group_employees $leaveGroupEmployee, Request $request)
     {
         if ($this->validatedData()) {
-            $leaveGroupEmployee->employee_id = request('employee_id');
-            $leaveGroupEmployee->leave_group_id = request('leave_group_id');
-            $leaveGroupEmployee->update();
-            return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave Group Employee successfully updated!');
+            $leaveGroupEmployee->update($this->validatedData());
+            return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -67,7 +62,7 @@ class LeaveGroupEmployeeController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveGroupEmployee->delete();
-                return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave Group Employee successfully deleted!');
+                return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }

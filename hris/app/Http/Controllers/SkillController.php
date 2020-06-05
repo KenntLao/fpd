@@ -21,14 +21,10 @@ class SkillController extends Controller
         return view('pages.admin.qualifications.skills.create', compact('skill'));
     }
 
-    public function store(Request $request)
+    public function store(hris_skills $skill, Request $request)
     {
-        $skill = new hris_skills();
-
         if($this->validatedData()) {
-            $skill->name = request('name');
-            $skill->description = request('description');
-            $skill->save();
+            $skill::create($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -48,9 +44,7 @@ class SkillController extends Controller
     public function update(hris_skills $skill, Request $request)
     {
         if($this->validatedData()) {
-            $skill->name = request('name');
-            $skill->description = request('description');
-            $skill->update();
+            $skill->update($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully updated!');
         } else {
             return back()->withErrors($this->validatedData());

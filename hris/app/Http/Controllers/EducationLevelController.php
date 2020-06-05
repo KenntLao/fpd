@@ -21,17 +21,13 @@ class EducationLevelController extends Controller
         return view('pages.recruitment.recruitmentSetup.educationLevels.create', compact('educationLevel'));
     }
 
-    public function store(Request $request)
+    public function store(hris_education_levels $educationLevel, Request $request)
     {
-        $educationLevel = new hris_education_levels();
-
         if ($this->validatedData()) {
-            $educationLevel->name = request('name');
-            $educationLevel->save();
-            Log::channel('educationLevels')->info('A new education level has been added. Id: ' .$educationLevel->id. '. Name: '. $educationLevel->name. '.');
+            $educationLevel::create($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully added!');
         } else {
-            return back()->withErrors($this->validatedData);
+            return back()->withErrors($this->validatedData());
         }
     }
 
@@ -48,12 +44,10 @@ class EducationLevelController extends Controller
     public function update(hris_education_levels $educationLevel, Request $request)
     {
         if ($this->validatedData()) {
-            $educationLevel->name = request('name');
-            $educationLevel->update();
-            Log::channel('educationLevels')->info('Education level id no.' .$educationLevel->id. ' has been updated. Name: '. $educationLevel->name. '.');
+            $educationLevel->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully updated!');
         } else {
-            return back()->withErrors($this->validatedData);
+            return back()->withErrors($this->validatedData());
         } 
     }
 
@@ -63,7 +57,6 @@ class EducationLevelController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $educationLevel->delete();
-            Log::channel('educationLevels')->info('Education level id no.' .$educationLevel->id. ' has been deleted. Name: '. $educationLevel->name. '.');
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
