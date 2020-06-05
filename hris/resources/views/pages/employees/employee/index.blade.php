@@ -57,37 +57,17 @@
                         <td>{{$employee->department}}</td>
                         <td>{{$employee->gender}}</td>
                         <td>{{$employee->supervisor}}</td>
-                        <td>
-                            <a href="/hris/pages/employees/employee/{{$employee->id}}/edit"><i class="fa fa-edit"></i></a>
-                            <!-- Button trigger modal -->
-                            <button type="button" data-toggle="modal" data-target="#modal-{{$employee->id}}"><i class="fa fa-trash"></i></button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="modal-{{$employee->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-{{$employee->id}}" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Delete Confirmation</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Are you sure you want to delete?</p>
-                                            <hr>
-                                            <form action="/hris/pages/employees/employee/delete/{{$employee->id}}" method="post" id="form-{{$employee->id}}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="form-group">
-                                                    <label for="upass">Enter Password: </label>
-                                                    <input class="form-control" type="password" name="upass" required>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-danger" type="submit" form="form-{{$employee->id}}"><i class="fa fa-check"></i> Confirm Delete</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                                        </div>
-                                    </div>
+                        <td class="td-action">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/employees/employee/{{$employee->id}}/edit"><i class="fas fa-edit"></i></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="delete-confirm" action="#" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    </form>
                                 </div>
                             </div>
                         </td>

@@ -117,6 +117,9 @@ body {
 	display: inline-block;
 	left: 10%;
 }
+.td-action {
+	width: 100px;
+}
 /* IMAGE PREVIEW */
 .image-preview-container {
 	position: relative;
