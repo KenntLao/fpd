@@ -101,7 +101,20 @@
                         <td>{{$friday_time_in}} - {{$friday_time_out}}</td>
                         <td>{{$saturday_time_in}} - {{$saturday_time_out}}</td>
                         <td>{{$sunday_time_in}} - {{$sunday_time_out}}</td>
-                        <td></td>
+                        <td class="td-action">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/workshiftManagement/{{$shift->id}}/edit"><i class="fas fa-edit"></i></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="delete-confirm" action="#" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

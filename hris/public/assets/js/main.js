@@ -14,7 +14,14 @@ $(document).ready(function() {
 			picker.container.find(".calendar-table").hide();
 	});
 
-	$('.shift_time').hide();
+
+	$('.shift_time').hide()
+
+	$('.workshift_check[checked]').each(function () {
+		if ($(this).is(":checked")) {
+			$(this).closest('.form-group').find('.shift_time').show();
+		}
+	});
 	$(".workshift_check").click(function () {
 		if ($(this).is(":checked")) {
 			$(this).closest('.form-group').find('.shift_time').show();
@@ -22,6 +29,8 @@ $(document).ready(function() {
 			$(this).closest('.form-group').find('.shift_time').hide();
 		}
 	});
+
+
 
 	// validate required with minimum length
     $('input.required, select.required, textarea.required').on('keyup change', function () {

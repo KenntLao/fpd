@@ -479,6 +479,9 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* ADD */
     Route::get('/hris/pages/time/workshiftManagement/create', 'WorkShiftManagementController@create');
     Route::post('/hris/pages/time/workshiftManagement', 'WorkShiftManagementController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/time/workshiftManagement/{work_shift}/edit', 'WorkShiftManagementController@edit');
+    Route::patch('/hris/pages/time/workshiftManagement/update/{work_shift}', 'WorkShiftManagementController@update');
 
     /* ATTENDANCES PAGE */
     Route::get('/hris/pages/time/attendances/index', 'AttendanceController@index');
