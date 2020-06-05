@@ -1,5 +1,36 @@
 $(document).ready(function() {
+	
 	$('.select2').select2();
+
+	$('.workshift_time').daterangepicker({
+		timePicker: true,
+		singleDatePicker: true,
+		timePicker24Hour: true,
+		timePickerIncrement: 1,
+		locale: {
+			format: 'HH:mm'
+		}
+		}).on('show.daterangepicker', function (ev, picker) {
+			picker.container.find(".calendar-table").hide();
+	});
+
+
+	$('.shift_time').hide()
+
+	$('.workshift_check[checked]').each(function () {
+		if ($(this).is(":checked")) {
+			$(this).closest('.form-group').find('.shift_time').show();
+		}
+	});
+	$(".workshift_check").click(function () {
+		if ($(this).is(":checked")) {
+			$(this).closest('.form-group').find('.shift_time').show();
+		} else {
+			$(this).closest('.form-group').find('.shift_time').hide();
+		}
+	});
+
+
 
 	// validate required with minimum length
     $('input.required, select.required, textarea.required').on('keyup change', function () {

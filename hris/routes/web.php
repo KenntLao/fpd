@@ -473,17 +473,15 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::delete('/hris/pages/recruitment/candidates/delete/{candidate}', 'CandidateController@destroy');
 
     /* TIME MANAGEMENT */
-    /* PROJECT PAGE */
-    Route::get('/hris/pages/time/timeProjects/index', 'TimeProjectController@index');
-    /* ADD PROJECT */
-    Route::get('/hris/pages/time/timeProjects/create', 'TimeProjectController@create');
-    Route::post('/hris/pages/time/timeProjects', 'TimeProjectController@store');
-    /* EDIT PROJECT */
-    Route::get('/hris/pages/time/timeProjects/{timeProject}/edit', 'TimeProjectController@edit');
-    /* UPDATE PROJECT */
-    Route::patch('/hris/pages/time/timeProjects/update/{timeProject}', 'TimeProjectController@update');
-    /* DELETE PROJECT */
-    Route::delete('/hris/pages/time/timeProjects/delete/{timeProject}', 'TimeProjectController@destroy');
+
+    /* WORKSHIFT */
+    Route::get('/hris/pages/time/workshiftManagement/index', 'WorkShiftManagementController@index');
+    /* ADD */
+    Route::get('/hris/pages/time/workshiftManagement/create', 'WorkShiftManagementController@create');
+    Route::post('/hris/pages/time/workshiftManagement', 'WorkShiftManagementController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/time/workshiftManagement/{work_shift}/edit', 'WorkShiftManagementController@edit');
+    Route::patch('/hris/pages/time/workshiftManagement/update/{work_shift}', 'WorkShiftManagementController@update');
 
     /* ATTENDANCES PAGE */
     Route::get('/hris/pages/time/attendances/index', 'AttendanceController@index');

@@ -920,10 +920,9 @@ return [
             'url' => '#',
             'submenu' => [
                 [
-                    'text' => 'Projects',
-                    'url' => '/hris/pages/time/timeProjects/index',
-                    'icon' => 'fas fa-fw fa-project-diagram',
-                    'active' => ['/hris/pages/time/timeProjects/create', '/hris/pages/time/timeProjects/index', '/hris/pages/time/timeProjects/*/edit', 'regex:@^content/[0-9]+$@']
+                    'text' => 'Work Shift Management',
+                    'url' => '/hris/pages/time/workshiftManagement/index',
+                    'icon' => 'fas fa-fw fa-clock'
                 ],
                 [
                     'text' => 'Attendance',
@@ -1157,6 +1156,27 @@ return [
                     'type' => 'css',
                     'asset' => false,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                ],
+            ],
+        ],
+        [
+            'name' => 'Daterangepicker',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css',
                 ],
             ],
         ],
