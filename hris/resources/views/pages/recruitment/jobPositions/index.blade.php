@@ -55,11 +55,11 @@
 						<td class="td-action">
 							<div class="row no-gutters">
 								<div class="col-6">
-									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/jobPositions/{{$jobPosition->id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/jobPositions/{{$jobPosition->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
 								<div class="col-6">
 									<!-- Button trigger modal -->
-									<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$jobPosition->id}}" data-name="{{$jobPosition->job_title}}"><i class="fas fa-fw fa-trash"></i></button>
+									<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$jobPosition->id}}" data-name="{{$jobPosition->job_title}}"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
 						</td>

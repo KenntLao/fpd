@@ -60,11 +60,11 @@
 					<td class="td-action">
 						<div class="row no-gutters">
 							<div class="col-6">
-								<a class="btn btn-success btn-sm" href="/hris/pages/admin/leave/leaveGroupEmployees/{{$leaveGroupEmployee->id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+								<a class="btn btn-success btn-sm" href="/hris/pages/admin/leave/leaveGroupEmployees/{{$leaveGroupEmployee->id}}/edit"><i class="fa fa-edit"></i></a>
 							</div>
 							<div class="col-6">
 								<!-- Button trigger modal -->
-								<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$leaveGroupEmployee->id}}" data-name="Leave Group Employee Id: {{$leaveGroupEmployee->id}}"><i class="fas fa-fw fa-trash"></i></button>
+								<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$leaveGroupEmployee->id}}" data-name="Leave Group Employee Id: {{$leaveGroupEmployee->id}}"><i class="fa fa-trash"></i></button>
 							</div>
 						</div>
 					</td>

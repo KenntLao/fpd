@@ -73,14 +73,14 @@
 						<td>
 							<div class="row no-gutters">
 								<div class="col-3">
-									<a class="btn btn-success btn-sm" href="/hris/pages/admin/overtime/overtimeRequests/{{$overtimeRequest->id}}/edit"><i class="fas fa-fw fa-edit"></i></a>
+									<a class="btn btn-success btn-sm" href="/hris/pages/admin/overtime/overtimeRequests/{{$overtimeRequest->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
 								<div class="col-3">
 									<form action="/hris/pages/admin/overtime/overtimeRequests/updateStatus/{{$overtimeRequest->id}}" method="post">
 										@csrf
 										@method('PATCH')
 										<input type="text" name="status" value="Approved" hidden>
-										<button class="btn btn-primary btn-sm" type="submit" title="Approve status."><i class="fas fa-fw fa-check-square"></i></button>
+										<button class="btn btn-primary btn-sm" type="submit" title="Approve status."><i class="fa fa-check-square"></i></button>
 									</form>
 								</div>
 								<div class="col-3">
@@ -88,12 +88,12 @@
 										@csrf
 										@method('PATCH')
 										<input type="text" name="status" value="Rejected" hidden>
-										<button class="btn btn-warning btn-sm" type="submit" title="Reject status."><i class="fas fa-fw fa-window-close"></i></button>
+										<button class="btn btn-warning btn-sm" type="submit" title="Reject status."><i class="fa fa-window-close"></i></button>
 									</form>
 								</div>
 								<div class="col-3">
 									<!-- Button trigger modal -->
-									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$overtimeRequest->id}}" data-name="Overtime Request Id: {{$overtimeRequest->id}}"><i class="fas fa-fw fa-trash"></i></button>
+									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$overtimeRequest->id}}" data-name="Overtime Request Id: {{$overtimeRequest->id}}"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
 						</td>
