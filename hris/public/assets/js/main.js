@@ -14,6 +14,14 @@ $(document).ready(function() {
 			picker.container.find(".calendar-table").hide();
 	});
 
+	$('.work_sched').daterangepicker({
+	    singleDatePicker: true,
+	    showDropdowns: true,
+		minYear: 2020,
+		locale: {
+		    format: 'M-DD-Y'
+		}
+	});
 
 	$('.shift_time').hide()
 

@@ -377,14 +377,14 @@ Route::middleware([CheckUserID::class])->group(function(){
     //add
     Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
     Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
-    Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
     Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
     //edit
     Route::get('/hris/pages/employees/employee/{employee}/edit', 'EmployeeController@edit');
     Route::patch('/hris/pages/employees/employee/update/{employee}', 'EmployeeController@update');
     //show
     Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
-    
+    //delete
+    Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
 
     /* BENEFITS PAGE */
     Route::get('/hris/pages/recruitment/recruitmentSetup/benefits/index', 'BenefitController@index');
@@ -474,7 +474,7 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     /* TIME MANAGEMENT */
 
-    /* WORKSHIFT */
+    /* WORKSHIFT MANAGEMENT */
     Route::get('/hris/pages/time/workshiftManagement/index', 'WorkShiftManagementController@index');
     /* ADD */
     Route::get('/hris/pages/time/workshiftManagement/create', 'WorkShiftManagementController@create');
@@ -482,6 +482,15 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* UPDATE */
     Route::get('/hris/pages/time/workshiftManagement/{work_shift}/edit', 'WorkShiftManagementController@edit');
     Route::patch('/hris/pages/time/workshiftManagement/update/{work_shift}', 'WorkShiftManagementController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/time/workshiftManagement/delete/{work_shift}', 'WorkShiftManagementController@destroy');
+
+    /* WORKSHIFT ASSIGNMENT */
+    Route::get('/hris/pages/time/workshiftAssignment/index', 'WorkShiftAssignmentController@index');
+    /* ADD */
+    Route::get('/hris/pages/time/workshiftAssignment/create', 'WorkShiftAssignmentController@create');
+    Route::post('/hris/pages/time/workshiftAssignment', 'WorkShiftAssignmentController@store');
+
 
     /* ATTENDANCES PAGE */
     Route::get('/hris/pages/time/attendances/index', 'AttendanceController@index');

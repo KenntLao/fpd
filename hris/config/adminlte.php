@@ -925,6 +925,11 @@ return [
                     'icon' => 'fas fa-fw fa-clock'
                 ],
                 [
+                    'text' => 'Work Shift Assignment',
+                    'url' => '/hris/pages/time/workshiftAssignment/index',
+                    'icon' => 'fas fa-fw fa-tasks'
+                ],
+                [
                     'text' => 'Attendance',
                     'url' => '/hris/pages/time/attendances/index',
                     'icon' => 'fas fa-fw fa-clock'
