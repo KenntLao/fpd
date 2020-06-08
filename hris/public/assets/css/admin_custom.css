@@ -22,7 +22,7 @@ html::-webkit-scrollbar {
 }
 .user-nav > .nav-link:hover {
 	color: #fff !important;
-	background: #475C7A !important;
+	background: #FCBB6D !important;
 }
 .main-profile-photo {
 	display: inline-block;
@@ -39,34 +39,39 @@ html::-webkit-scrollbar {
 	font-size: 12px;
 }
 .main-sidebar {
-	background: #FCBB6D;
+	background: #475C7A;
 }
 :not(.layout-fixed) .main-sidebar {
 	height: 100%;
 }
 .sidebar::-webkit-scrollbar-thumb {
-	background: #e0a869;
+	background: #FFFF00;
 }
 .sidebar::-webkit-scrollbar {
 	background: #475C7A;
 	width: 5px;
 }
 .nav-header {
-	color: #475C7A;
+	color: #FFFF00;
 }
-.brand-link, .nav-item > .nav-link, .has-treeview > .nav-item {
+.brand-link {
+	color: #FFFF00;
+	font-size: 32px;
+	font-family: opensans;
+}
+.nav-item > .nav-link, .has-treeview > .nav-item {
 	color: #fff;
 	text-transform: uppercase;
 	font-family: opensans;
 }
 .nav-item:hover > .nav-link, .has-treeview:hover > .nav-item {
-	color: #475C7A !important;
+	color: #FFFF00 !important;
 	background: rgba(255,255,255,.2);
 	border-radius: 0px
 }
 .nav-item:hover > .nav-link.active, .nav-item > .nav-link.active {
-	color: #FCBB6D !important;
-	background: #475C7A;
+	color: #475C7A !important;
+	background: #FFFF00;
 	border-radius: 0px;
 }
 
@@ -92,7 +97,7 @@ body {
 	font-family: opensans;
 }
 .page-title	> h1 i {
-	color: #FCBB6D;
+	color: #475C7A;
 }
 .card {
 	margin-bottom: 0;
@@ -108,14 +113,14 @@ body {
 
 /* BUTTON */
 .add-button {
-	background: #475C7A;
-	color: #FCBB6D;
+	background: #FFFF00;
+	color: #475C7A;
 	border-radius: 0px;
-	border: 1px solid #475C7A;
+	border: 1px solid #FFFF00;
 }
 .add-button:hover {
-	background: #FCBB6D;
-	color: #475C7A;
+	background: #475C7A;
+	color: #FFFF00;
 }
 /* TABLE IMAGE */
 .table-image-container {
@@ -199,7 +204,7 @@ body {
 }
 .card-header {
 	border-radius: 0px;
-	background: #FCBB6D;
+	background: #475C7A;
 	color: #fff;
 }
 .card-header > .card-tools {
