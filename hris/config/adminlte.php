@@ -552,6 +552,7 @@ return [
                     'text' => 'Employees',
                     'url'  => '/hris/pages/employees/employee/index',
                     'icon'    => 'fas fa-fw fa-users',
+                    'active' => ['/hris/pages/employees/employee/create', '/hris/pages/employees/employee/index', '/hris/pages/employees/employee/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
                 [
                     'text' => 'Employee History',
@@ -594,12 +595,14 @@ return [
                 [
                     'text' => 'Work Shift Management',
                     'url' => '/hris/pages/time/workshiftManagement/index',
-                    'icon' => 'fas fa-fw fa-clock'
+                    'icon' => 'fas fa-fw fa-clock',
+                    'active' => ['/hris/pages/time/workshiftManagement/create', '/hris/pages/time/workshiftManagement/index', '/hris/pages/time/workshiftManagement/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
                 [
                     'text' => 'Work Shift Assignment',
                     'url' => '/hris/pages/time/workshiftAssignment/index',
-                    'icon' => 'fas fa-fw fa-tasks'
+                    'icon' => 'fas fa-fw fa-tasks',
+                    'active' => ['/hris/pages/time/workshiftAssignment/create', '/hris/pages/time/workshiftAssignment/index', '/hris/pages/time/workshiftAssignment/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
                 [
                     'text' => 'Attendance',

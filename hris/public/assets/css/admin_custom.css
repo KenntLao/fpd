@@ -480,3 +480,11 @@ textarea.form-control {
 	color: #FCBB6D;
 	text-transform: uppercase;
 }
+/* ATTENDANCE CAMERA */
+#my_camera video {
+	width: 100% !important;
+	height: 100% !important;
+}
+#results img {
+	width: 100%;
+}

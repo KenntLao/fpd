@@ -55,7 +55,7 @@
                         <td class="td-action">
                             <div class="row no-gutters">
                                 <div class="col-md-6">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/workshiftManagement/{{$assignment->id}}/edit"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/workshiftAssignment/{{$assignment->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
                                 <div class="col-6">
                                     <!-- Button trigger modal -->

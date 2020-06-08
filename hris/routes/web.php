@@ -490,7 +490,9 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* ADD */
     Route::get('/hris/pages/time/workshiftAssignment/create', 'WorkShiftAssignmentController@create');
     Route::post('/hris/pages/time/workshiftAssignment', 'WorkShiftAssignmentController@store');
-
+    /* UPDATE */
+    Route::get('/hris/pages/time/workshiftAssignment/{workshift_assignment}/edit', 'WorkShiftAssignmentController@edit');
+    Route::patch('/hris/pages/time/workshiftAssignment/update/{workshift_assignment}', 'WorkShiftAssignmentController@update');
 
     /* ATTENDANCES PAGE */
     Route::get('/hris/pages/time/attendances/index', 'AttendanceController@index');

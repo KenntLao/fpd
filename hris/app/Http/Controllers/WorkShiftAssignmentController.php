@@ -33,6 +33,21 @@ class WorkShiftAssignmentController extends Controller
             return back()->withErrors($this->validatedData());
         }
     }
+    public function edit(hris_workshift_assignment $workshift_assignment, hris_employee $employees, hris_work_shift_management $work_shift){
+        $employees = hris_employee::all();
+        $employee = hris_employee::with('getEmployeeWorkShiftAssignmentRelation')->first();
+        $work_shift = hris_work_shift_management::all();
+        $workshift_rel = hris_work_shift_management::with('getWorkShiftAssignmentRelation')->first();
+        return view('pages.time.workshiftAssignment.edit', compact('workshift_assignment','employee','workshift_rel','employees', 'work_shift'));
+    }
+    public function update(Request $request, hris_workshift_assignment $workshift_assignment){
+        if ($this->validatedData()) {
+            $workshift_assignment->update($this->validatedData());
+            return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
+    }
     protected function validatedData()
     {
         return request()->validate([

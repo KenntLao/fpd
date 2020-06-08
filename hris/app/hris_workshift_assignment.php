@@ -8,4 +8,5 @@ class hris_workshift_assignment extends Model
 {
     //
     protected $guarded = [];
+
 }
