@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'NEXU - HRIS',
+    'title' => 'MyFPD',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Nexus </b>HRIS',
+    'logo' => 'My<b>FPD</b>',
     'logo_img' => null,
     'logo_img_class' => null,
     'logo_img_xl' => null,
