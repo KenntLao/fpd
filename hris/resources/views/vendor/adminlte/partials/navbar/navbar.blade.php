@@ -16,24 +16,35 @@
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if(isset($_SESSION['sys_id']))
+                <div class="main-profile-photo">
+                    <img src="{{$_SESSION['sys_photo']}}">
+                </div>{{$_SESSION['sys_fullname']}}
+                @endif
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Log out</a>
+            </div>
+        </li>
         {{-- Custom right links --}}
         @yield('content_top_nav_right')
-
         {{-- Configured right links --}}
         @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')
 
         {{-- User menu link --}}
         @if(Auth::user())
-            @if(config('adminlte.usermenu_enabled'))
-                @include('adminlte::partials.navbar.menu-item-dropdown-user-menu')
-            @else
-                @include('adminlte::partials.navbar.menu-item-logout-link')
-            @endif
+        @if(config('adminlte.usermenu_enabled'))
+        @include('adminlte::partials.navbar.menu-item-dropdown-user-menu')
+        @else
+        @include('adminlte::partials.navbar.menu-item-logout-link')
+        @endif
         @endif
 
         {{-- Right sidebar toggler link --}}
         @if(config('adminlte.right_sidebar'))
-            @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
+        @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
         @endif
     </ul>
 
