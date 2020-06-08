@@ -3,7 +3,7 @@ html::-webkit-scrollbar-thumb {
 	background: #FCBB6D;
 }
 html::-webkit-scrollbar {
-	background: #475C7A;
+	background: #041E42;
 	width: 7px;
 }
 /* FONTS */
@@ -39,7 +39,7 @@ html::-webkit-scrollbar {
 	font-size: 12px;
 }
 .main-sidebar {
-	background: #475C7A;
+	background: #041E42;
 }
 :not(.layout-fixed) .main-sidebar {
 	height: 100%;
@@ -48,10 +48,11 @@ html::-webkit-scrollbar {
 	background: #FFFF00;
 }
 .sidebar::-webkit-scrollbar {
-	background: #475C7A;
+	background: #041E42;
 	width: 5px;
 }
 .nav-header {
+	padding-top: 1rem !important;
 	color: #FFFF00;
 }
 .brand-link {
@@ -70,7 +71,7 @@ html::-webkit-scrollbar {
 	border-radius: 0px
 }
 .nav-item:hover > .nav-link.active, .nav-item > .nav-link.active {
-	color: #475C7A !important;
+	color: #041E42 !important;
 	background: #FFFF00;
 	border-radius: 0px;
 }
@@ -97,7 +98,7 @@ body {
 	font-family: opensans;
 }
 .page-title	> h1 i {
-	color: #475C7A;
+	color: #041E42;
 }
 .card {
 	margin-bottom: 0;
@@ -114,12 +115,12 @@ body {
 /* BUTTON */
 .add-button {
 	background: #FFFF00;
-	color: #475C7A;
+	color: #041E42;
 	border-radius: 0px;
 	border: 1px solid #FFFF00;
 }
 .add-button:hover {
-	background: #475C7A;
+	background: #041E42;
 	color: #FFFF00;
 }
 /* TABLE IMAGE */
@@ -174,11 +175,11 @@ body {
 
 /* NAV TABS */
 .nav-tabs {
-	border-bottom: 1px solid #475C7A;
+	border-bottom: 1px solid #041E42;
 }
 .nav-tabs > .nav-item {
-	border-top: 1px solid #475C7A;
-	border-right: 1px solid #475C7A;
+	border-top: 1px solid #041E42;
+	border-right: 1px solid #041E42;
 	background: #fff;
 }
 .nav-tabs > .nav-item > .nav-link {
@@ -204,7 +205,7 @@ body {
 }
 .card-header {
 	border-radius: 0px;
-	background: #475C7A;
+	background: #041E42;
 	color: #fff;
 }
 .card-header > .card-tools {
@@ -367,25 +368,25 @@ textarea.form-control {
 	text-transform: capitalize;
 }
 .tooltip-inner {
-  	background-color: #475C7A !important;
+  	background-color: #041E42 !important;
   	color: #fff;
 }
 .bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
-  	border-top-color: #475C7A !important;
+  	border-top-color: #041E42 !important;
 }
 
 .bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^="right"] .arrow::before {
-  	border-right-color: #475C7A !important;
+  	border-right-color: #041E42 !important;
 }
 
 
 .bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
-  	border-bottom-color: #475C7A !important;
+  	border-bottom-color: #041E42 !important;
 }
 
 
 .bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
-  	border-left-color: #475C7A !important;
+  	border-left-color: #041E42 !important;
 }
 .color-box {
 	position: absolute;
@@ -466,7 +467,7 @@ textarea.form-control {
 /* EMPLOYEE MANAGEMENT */
 .clickable-info {
 	background: transparent !important;
-	color: #475C7A !important;
+	color: #041E42 !important;
 }
 .clickable-info:hover {
 	color: #FCBB6D !important;	
