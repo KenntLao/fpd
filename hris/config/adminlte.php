@@ -828,17 +828,20 @@ return [
                         [
                             'text' => 'Education',
                             'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
+                            'url' => '/hris/pages/personalInformation/educations/index',
+                            'active' => ['/hris/pages/personalInformation/educations/create', '/hris/pages/personalInformation/educations/index', '/hris/pages/personalInformation/educations/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Certifications',
                             'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
+                            'url' => '/hris/pages/personalInformation/certifications/index',
+                            'active' => ['/hris/pages/personalInformation/certifications/create', '/hris/pages/personalInformation/certifications/index', '/hris/pages/personalInformation/certifications/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Languages',
                             'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
+                            'url' => '/hris/pages/personalInformation/languages/index',
+                            'active' => ['/hris/pages/personalInformation/languages/create', '/hris/pages/personalInformation/languages/index', '/hris/pages/personalInformation/languages/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                     ]
                 ],

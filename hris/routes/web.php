@@ -525,6 +525,17 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE */
     Route::delete('/hris/pages/personalInformation/skills/delete/{employeeSkill}', 'EmployeeSkillController@destroy');
 
+    //EMPLOYEE EDUCATION PAGE
+    Route::get('/hris/pages/personalInformation/educations/index', 'EmployeeEducationController@index');
+    /* ADD */
+    Route::get('/hris/pages/personalInformation/educations/create', 'EmployeeEducationController@create');
+    Route::post('/hris/pages/personalInformation/educations', 'EmployeeEducationController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/personalInformation/educations/{employeeEducation}/edit', 'EmployeeEducationController@edit');
+    Route::patch('/hris/pages/personalInformation/educations/update/{employeeEducation}', 'EmployeeEducationController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/personalInformation/educations/delete/{employeeEducation}', 'EmployeeEducationController@destroy');
+
 
 
     Route::get('/hris/', function () {
