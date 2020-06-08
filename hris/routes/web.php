@@ -512,6 +512,7 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     //PERSONAL INFORMATION
     Route::get('/hris/pages/personalInformation/profile/index', 'PersonalInformationController@index');
+    Route::get('/hris/pages/personalInformation/profile/changePass', 'PersonalInformationController@changePass');
 
     //EMPLOYEE SKILL PAGE
     Route::get('/hris/pages/personalInformation/skills/index', 'EmployeeSkillController@index');

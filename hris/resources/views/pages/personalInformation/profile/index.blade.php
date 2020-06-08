@@ -168,6 +168,43 @@
 	<div class="card-footer">
 	</div>
 </div>
+<div class="modal fade" id="change-pass" tabindex="-1" role="dialog" aria-labelledby="change-pass" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="change-passl">Change Password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" action="/hris/pages/personalInformation/profile/changePass" id="form">
+					@csrf
+					<div class="form-group">
+						<label class="mr-2">Old password: </label>
+						<span class="badge badge-danger">Required</span>
+						<div class="input">
+							<p class="placeholder">Enter old password</p>
+							<input class="form-control required" type="password" name="old_pass" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="mr-2">New password: </label>
+						<span class="badge badge-danger">Required</span>
+						<div class="input">
+							<p class="placeholder">Enter new password</p>
+							<input class="form-control required" type="password" name="new_pass" required>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-success" type="submit" form="form"><i class="fa fa-check"></i> Save Password</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 @stop
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
