@@ -158,7 +158,7 @@ class EmployeeController extends Controller
             $employee->update();
             $request->employee_photo->move($imagePath, $imageName);
 
-            return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully updated!');
+            return redirect($_SESSION['return_page'])->with('success', 'Employee successfully updated!');
         } else { // if data fails
             return back()->withErrors($this->validatedData());
         }

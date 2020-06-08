@@ -2,6 +2,9 @@
 @extends('adminlte::page')
 @section('title', 'HRIS | Employees - Employee')
 @section('content_header')
+<?php
+$_SESSION['return_page'] = URL::previous();
+?>
 <div class="row no-gutters">
     <div class="col-12 page-title">
         <h1><i class="fas fa-fw fa-users"></i> Employee Management</h1>
@@ -31,7 +34,7 @@
         </form>
     </div>
     <div class="card-footer text-right">
-        <a class="btn btn-default mr-1" href="/hris/pages/employees/employee/index"><i class="fa fa-arrow-left"></i>
+        <a class="btn btn-default mr-1" href="{{ URL::previous() }}"><i class="fa fa-arrow-left"></i>
             back</a>
         <button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload"></i> save employee
             record</button>

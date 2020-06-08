@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\hris_employee;
 
-class PersonalInformationController extends Controller
+class EmployeeCertificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +14,7 @@ class PersonalInformationController extends Controller
      */
     public function index()
     {
-        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $id = $_SESSION['sys_id'];
-            $employee = hris_employee::find($id);
-            return view('pages.personalInformation.profile.index', compact('employee'));
-        }
+        //
     }
 
     /**
@@ -50,8 +44,9 @@ class PersonalInformationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(hris_employee $employee)
+    public function show($id)
     {
+        //
     }
 
     /**
@@ -87,9 +82,4 @@ class PersonalInformationController extends Controller
     {
         //
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 72fa4791... Revert "Merge branch 'anthony-update' into kennt-update"
-     
 }
