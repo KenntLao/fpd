@@ -52,7 +52,7 @@ html::-webkit-scrollbar {
 	width: 5px;
 }
 .nav-header {
-	padding-top: 1rem !important;
+	padding-top: 1.5rem !important;
 	color: #FFFF00;
 }
 .brand-link {
