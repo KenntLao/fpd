@@ -490,6 +490,59 @@ return [
                 ],
             ]
         ],
+        'PERSONAL INFORMATION',
+        [
+            'text' => 'Personal Information',
+            'icon' => 'fas fa-fw fa-grip-horizontal',
+            'submenu' => [
+                [
+                    'text' => 'Dashboard',
+                    'icon' => 'fas fa-fw fa-desktop',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Basic Information',
+                    'icon' => 'fas fa-fw fa-user',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Qualifications',
+                    'icon' => 'fas fa-fw fa-graduation-cap',
+                    'submenu' => [
+                        [
+                            'text' => 'Skills',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Education',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Certifications',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Languages',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '#'
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Dependents',
+                    'icon' => 'fas fa-fw fa-expand',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Emergency Contacts',
+                    'icon' => 'fas fa-fw fa-phone-square',
+                    'url' => '#'
+                ],
+            ]
+        ],
         'EMPLOYEE MANAGEMENT',
         [
             'text'    => 'Employees',
@@ -529,6 +582,160 @@ return [
                     'text' => 'Document Management',
                     'url'  => '/hris/pages/employee/document_management/',
                     'icon'    => 'fas fa-fw fa-file',
+                ],
+            ],
+        ],
+        'TIME MANAGEMENT',
+        [
+            'text' => 'Time Management',
+            'icon' => 'fas fa-fw fa-hourglass-half',
+            'url' => '#',
+            'submenu' => [
+                [
+                    'text' => 'Work Shift Management',
+                    'url' => '/hris/pages/time/workshiftManagement/index',
+                    'icon' => 'fas fa-fw fa-clock'
+                ],
+                [
+                    'text' => 'Work Shift Assignment',
+                    'url' => '/hris/pages/time/workshiftAssignment/index',
+                    'icon' => 'fas fa-fw fa-tasks'
+                ],
+                [
+                    'text' => 'Attendance',
+                    'url' => '/hris/pages/time/attendances/index',
+                    'icon' => 'fas fa-fw fa-clock'
+                ],
+                [
+                    'text' => 'Time Sheets',
+                    'url' => '/hris/pages/time/timeSheets/index',
+                    'icon' => 'fas fa-fw fa-stopwatch',
+                ],
+                [
+                    'text' => 'Attendance Sheets',
+                    'url' => '/hris/pages/time/attendanceSheets/index',
+                    'icon' => 'fas fa-fw fa-calendar-check',
+                ],
+                [
+                    'text' => 'Overtime Request',
+                    'url' => '/hris/pages/time/overtimeRequests/index',
+                    'icon' => 'fas fa-fw fa-calendar-plus',
+                ],
+            ]
+        ],
+        'LEAVE MANAGEMENT',
+        [
+            'text' => 'Leave Management',
+            'icon' => 'fas fa-fw fa-share-alt',
+            'submenu' => [
+                [
+                    'text' => 'Leave',
+                    'icon' => 'fas fa-fw fa-calendar-day',
+                    'submenu' => [
+                        [
+                            'text' => 'All My Leaves',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/all/index',
+                            'active' => ['/hris/pages/leaves/all/create', '/hris/pages/leaves/all/index', '/hris/pages/leaves/all/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Leave Entitlement',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/leaveEntitlements/index',
+                            'active' => ['/hris/pages/leaves/leaveEntitlements/create', '/hris/pages/leaves/leaveEntitlements/index', '/hris/pages/leaves/leaveEntitlements/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Approved Leave',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/approvedLeaves/index',
+                            'active' => ['/hris/pages/leaves/approvedLeaves/create', '/hris/pages/leaves/approvedLeaves/index', '/hris/pages/leaves/approvedLeaves/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Pending Leave',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/pendingLeaves/index',
+                            'active' => ['/hris/pages/leaves/pendingLeaves/create', '/hris/pages/leaves/pendingLeaves/index', '/hris/pages/leaves/pendingLeaves/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Subordinate Leave',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/subordinateLeaves/index',
+                            'active' => ['/hris/pages/leaves/subordinateLeaves/create', '/hris/pages/leaves/subordinateLeaves/index', '/hris/pages/leaves/subordinateLeaves/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Cancellation Requests',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/cancellationRequests/index',
+                            'active' => ['/hris/pages/leaves/cancellationRequests/create', '/hris/pages/leaves/cancellationRequests/index', '/hris/pages/leaves/cancellationRequests/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Approval Requests',
+                            'icon' => 'fas fa-fw fa-calendar-day',
+                            'url' => '/hris/pages/leaves/approvalRequests/index',
+                            'active' => ['/hris/pages/leaves/approvalRequests/create', '/hris/pages/leaves/approvalRequests/index', '/hris/pages/leaves/approvalRequests/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Leave Calendar',
+                    'icon' => 'fas fa-fw fa-calendar-alt',
+                    'url' => '/hris/pages/leaves/calendar/index'
+                ]
+            ]
+        ],
+        'RECRUITMENT MANAGEMENT',
+        [
+            'text'    => 'Recruitment',
+            'icon' => 'fas fa-fw fa-th',
+            'submenu' => [
+                [
+                    'text'    => 'Recruitment Setup',
+                    'url'     => '#',
+                    'icon'    => 'fas fa-fw fa-random',
+                    'submenu' => [
+                        [
+                            'text'    => 'Benefits',
+                            'url'     => '/hris/pages/recruitment/recruitmentSetup/benefits/index',
+                            'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/benefits/create', '/hris/pages/recruitment/recruitmentSetup/benefits/index', '/hris/pages/recruitment/recruitmentSetup/benefits/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Education Levels',
+                            'url'  => '/hris/pages/recruitment/recruitmentSetup/educationLevels/index',
+                            'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/educationLevels/create', '/hris/pages/recruitment/recruitmentSetup/educationLevels/index', '/hris/pages/recruitment/recruitmentSetup/educationLevels/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Employment Types',
+                            'url'  => '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index',
+                            'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/employmentTypes/create', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Experience Levels',
+                            'url'  => '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index',
+                            'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/experienceLevels/create', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Job Functions',
+                            'url'  => '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index',
+                            'icon'    => 'fas fa-fw fa-random',
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/jobFunctions/create', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                    ],
+                ],
+                [
+                    'text' => 'Job Positions',
+                    'url'  => '/hris/pages/recruitment/jobPositions/index',
+                    'icon' => 'fas fa-fw fa-columns',
+                    'active' => ['/hris/pages/recruitment/jobPositions/create', '/hris/pages/recruitment/jobPositions/index', '/hris/pages/recruitment/jobPositions/*/edit', 'regex:@^content/[0-9]+$@']
+                ],
+                [
+                    'text' => 'Candidates',
+                    'url'  => '/hris/pages/recruitment/candidates/index',
+                    'icon' => 'fas fa-fw fa-user-friends',
+                    'active' => ['/hris/pages/recruitment/candidates/create', '/hris/pages/recruitment/candidates/index', '/hris/pages/recruitment/candidates/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
             ],
         ],
@@ -741,213 +948,6 @@ return [
                     'text' => 'Payslip Templates',
                     'icon' => 'fas fa-fw fa-cogs',
                     'url' => '#'
-                ],
-            ]
-        ],
-        'RECRUITMENT MANAGEMENT',
-        [
-            'text'    => 'Recruitment',
-            'icon' => 'fas fa-fw fa-th',
-            'submenu' => [
-                [
-                    'text'    => 'Recruitment Setup',
-                    'url'     => '#',
-                    'icon'    => 'fas fa-fw fa-random',
-                    'submenu' => [
-                        [
-                            'text'    => 'Benefits',
-                            'url'     => '/hris/pages/recruitment/recruitmentSetup/benefits/index',
-                            'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/benefits/create', '/hris/pages/recruitment/recruitmentSetup/benefits/index', '/hris/pages/recruitment/recruitmentSetup/benefits/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Education Levels',
-                            'url'  => '/hris/pages/recruitment/recruitmentSetup/educationLevels/index',
-                            'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/educationLevels/create', '/hris/pages/recruitment/recruitmentSetup/educationLevels/index', '/hris/pages/recruitment/recruitmentSetup/educationLevels/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Employment Types',
-                            'url'  => '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index',
-                            'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/employmentTypes/create', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Experience Levels',
-                            'url'  => '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index',
-                            'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/experienceLevels/create', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Job Functions',
-                            'url'  => '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index',
-                            'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/jobFunctions/create', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Job Positions',
-                    'url'  => '/hris/pages/recruitment/jobPositions/index',
-                    'icon' => 'fas fa-fw fa-columns',
-                    'active' => ['/hris/pages/recruitment/jobPositions/create', '/hris/pages/recruitment/jobPositions/index', '/hris/pages/recruitment/jobPositions/*/edit', 'regex:@^content/[0-9]+$@']
-                ],
-                [
-                    'text' => 'Candidates',
-                    'url'  => '/hris/pages/recruitment/candidates/index',
-                    'icon' => 'fas fa-fw fa-user-friends',
-                    'active' => ['/hris/pages/recruitment/candidates/create', '/hris/pages/recruitment/candidates/index', '/hris/pages/recruitment/candidates/*/edit', 'regex:@^content/[0-9]+$@']
-                ],
-            ],
-        ],
-        'PERSONAL INFORMATION',
-        [
-            'text' => 'Personal Information',
-            'icon' => 'fas fa-fw fa-grip-horizontal',
-            'submenu' => [
-                [
-                    'text' => 'Dashboard',
-                    'icon' => 'fas fa-fw fa-desktop',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Basic Information',
-                    'icon' => 'fas fa-fw fa-user',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Qualifications',
-                    'icon' => 'fas fa-fw fa-graduation-cap',
-                    'submenu' => [
-                        [
-                            'text' => 'Skills',
-                            'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Education',
-                            'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Certifications',
-                            'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Languages',
-                            'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
-                        ],
-                    ]
-                ],
-                [
-                    'text' => 'Dependents',
-                    'icon' => 'fas fa-fw fa-expand',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Emergency Contacts',
-                    'icon' => 'fas fa-fw fa-phone-square',
-                    'url' => '#'
-                ],
-            ]
-        ],
-        'LEAVE MANAGEMENT',
-        [
-            'text' => 'Leave Management',
-            'icon' => 'fas fa-fw fa-share-alt',
-            'submenu' => [
-                [
-                    'text' => 'Leave',
-                    'icon' => 'fas fa-fw fa-calendar-day',
-                    'submenu' => [
-                        [
-                            'text' => 'All My Leaves',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/all/index',
-                            'active' => ['/hris/pages/leaves/all/create', '/hris/pages/leaves/all/index', '/hris/pages/leaves/all/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Leave Entitlement',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/leaveEntitlements/index',
-                            'active' => ['/hris/pages/leaves/leaveEntitlements/create', '/hris/pages/leaves/leaveEntitlements/index', '/hris/pages/leaves/leaveEntitlements/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Approved Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/approvedLeaves/index',
-                            'active' => ['/hris/pages/leaves/approvedLeaves/create', '/hris/pages/leaves/approvedLeaves/index', '/hris/pages/leaves/approvedLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Pending Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/pendingLeaves/index',
-                            'active' => ['/hris/pages/leaves/pendingLeaves/create', '/hris/pages/leaves/pendingLeaves/index', '/hris/pages/leaves/pendingLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Subordinate Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/subordinateLeaves/index',
-                            'active' => ['/hris/pages/leaves/subordinateLeaves/create', '/hris/pages/leaves/subordinateLeaves/index', '/hris/pages/leaves/subordinateLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Cancellation Requests',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/cancellationRequests/index',
-                            'active' => ['/hris/pages/leaves/cancellationRequests/create', '/hris/pages/leaves/cancellationRequests/index', '/hris/pages/leaves/cancellationRequests/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Approval Requests',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/approvalRequests/index',
-                            'active' => ['/hris/pages/leaves/approvalRequests/create', '/hris/pages/leaves/approvalRequests/index', '/hris/pages/leaves/approvalRequests/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                    ]
-                ], 
-                [
-                    'text' => 'Leave Calendar',
-                    'icon' => 'fas fa-fw fa-calendar-alt',
-                    'url' => '/hris/pages/leaves/calendar/index'
-                ]
-            ]
-        ],
-        'TIME MANAGEMENT',
-        [
-            'text' => 'Time Management',
-            'icon' => 'fas fa-fw fa-hourglass-half',
-            'url' => '#',
-            'submenu' => [
-                [
-                    'text' => 'Work Shift Management',
-                    'url' => '/hris/pages/time/workshiftManagement/index',
-                    'icon' => 'fas fa-fw fa-clock'
-                ],
-                [
-                    'text' => 'Work Shift Assignment',
-                    'url' => '/hris/pages/time/workshiftAssignment/index',
-                    'icon' => 'fas fa-fw fa-tasks'
-                ],
-                [
-                    'text' => 'Attendance',
-                    'url' => '/hris/pages/time/attendances/index',
-                    'icon' => 'fas fa-fw fa-clock'
-                ],
-                [
-                    'text' => 'Time Sheets',
-                    'url' => '/hris/pages/time/timeSheets/index',
-                    'icon' => 'fas fa-fw fa-stopwatch',
-                ],
-                [
-                    'text' => 'Attendance Sheets',
-                    'url' => '/hris/pages/time/attendanceSheets/index',
-                    'icon' => 'fas fa-fw fa-calendar-check',
-                ],
-                [
-                    'text' => 'Overtime Request',
-                    'url' => '/hris/pages/time/overtimeRequests/index',
-                    'icon' => 'fas fa-fw fa-calendar-plus',
                 ],
             ]
         ],
