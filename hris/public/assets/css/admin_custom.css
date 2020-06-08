@@ -1,6 +1,6 @@
 /* BROWSER SCROLLBAR */
 html::-webkit-scrollbar-thumb {
-	background: #FFFF00;
+	background: #FCBB6D;
 }
 html::-webkit-scrollbar {
 	background: #041E42;
@@ -183,7 +183,7 @@ body {
 	background: #fff;
 }
 .nav-tabs > .nav-item > .nav-link {
-	color: #041E42 !important;
+	color: #FCBB6D !important;
 }
 
 .tab-content {
@@ -194,8 +194,8 @@ body {
 	padding: 5px;
 	font-size: 1.5em;
 	margin: 30px 0;
-	color: #041E42;
-	border-bottom: 3px solid #041E42;
+	color: #FCBB6D;
+	border-bottom: 3px solid #FCBB6D;
 }
 /* EMPTY MESSAGE */
 .card-body > h4 {
@@ -487,33 +487,4 @@ textarea.form-control {
 }
 #results img {
 	width: 100%;
-
-
-/* PROFILE */
-.profile {
-	font-family: opensans;
-}
-.profile-image > img {
-	display: block;
-	width: 100%;
-}
-.profile-text a {
-	text-transform: capitalize;
-}
-.section {
-	border: 1px solid #ddd;
-}
-.section-title {
-	background: #041E42;
-	padding: 10px !important;
-	border: 1px solid #041E42;
-}
-.section-title > h5 {
-	text-transform: capitalize;
-	margin-bottom: 0;
-	color: #fff;
-	font-size: 16px;
-}
-.section-info {
-	padding: 10px 40px !important;
 }
