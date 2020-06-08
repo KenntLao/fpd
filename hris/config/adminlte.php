@@ -813,7 +813,7 @@ return [
                 [
                     'text' => 'Basic Information',
                     'icon' => 'fas fa-fw fa-user',
-                    'url' => '#'
+                    'url' => '/hris/pages/personalInformation/profile/index'
                 ],
                 [
                     'text' => 'Qualifications',
@@ -822,7 +822,8 @@ return [
                         [
                             'text' => 'Skills',
                             'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
+                            'url' => '/hris/pages/personalInformation/skills/index',
+                            'active' => ['/hris/pages/personalInformation/skills/create', '/hris/pages/personalInformation/skills/index', '/hris/pages/personalInformation/skills/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Education',

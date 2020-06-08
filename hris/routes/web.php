@@ -510,6 +510,21 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* OVERTIME REQUESTS PAGE */
     Route::get('/hris/pages/time/overtimeRequests/index', 'TimeOvertimeRequestController@index');
 
+    //PERSONAL INFORMATION
+    Route::get('/hris/pages/personalInformation/profile/index', 'PersonalInformationController@index');
+
+    //EMPLOYEE SKILL PAGE
+    Route::get('/hris/pages/personalInformation/skills/index', 'EmployeeSkillController@index');
+    /* ADD */
+    Route::get('/hris/pages/personalInformation/skills/create', 'EmployeeSkillController@create');
+    Route::post('/hris/pages/personalInformation/skills', 'EmployeeSkillController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/personalInformation/skills/{employeeSkill}/edit', 'EmployeeSkillController@edit');
+    Route::patch('/hris/pages/personalInformation/skills/update/{employeeSkill}', 'EmployeeSkillController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/personalInformation/skills/delete/{employeeSkill}', 'EmployeeSkillController@destroy');
+
+
 
     Route::get('/hris/', function () {
         return view('welcome');
