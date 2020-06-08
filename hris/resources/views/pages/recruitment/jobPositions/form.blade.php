@@ -88,11 +88,11 @@
 		<div class="form-group">
 			<label class="mr-2" for="benefits">Benefits: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="benefits" required>
+			<select class="form-control required select2" name="benefit_id" required>
 				@if(count($benefits) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($benefits as $benefit)
-				<option value="{{$benefit->name}}" {{ $jobPosition->benefits == $benefit->name  ? 'selected' : '' }}>{{$benefit->name}}</option>
+				<option value="{{$benefit->id}}" {{ $jobPosition->benefit_id == $benefit->id  ? 'selected' : '' }}>{{$benefit->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>
@@ -141,21 +141,26 @@
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="department">Department: </label>
-			<select class="form-control required select2" name="department">
-				<option value="None" {{ $jobPosition->department == 'None'  ? 'selected' : '' }}>None</option>
-				<option value="Lorem Ipsum 1" {{ $jobPosition->department == 'Lorem Ipsum 1'  ? 'selected' : '' }}>Lorem Ipsum 1</option>
-				<option value="Lorem Ipsum 2" {{ $jobPosition->department == 'Lorem Ipsum 2'  ? 'selected' : '' }}>Lorem Ipsum 2</option>
+			<select class="form-control required select2" name="department_id">
+				@if(count($departments) > 0)
+				<option value="None" {{ $jobPosition->department_id == 'None'  ? 'selected' : '' }}>None</option>
+				@foreach($departments as $department)
+				<option value="{{$department->id}}" {{ $jobPosition->department_id == $department->id  ? 'selected' : '' }}>{{$department->name}}</option>
+				@endforeach
+				@else
+				<option value="None">None</option>
+				@endif
 			</select>
 		</div>
 	</div>
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="employment_type">Employment Type: </label>
-			<select class="form-control required select2" name="employment_type">
+			<select class="form-control required select2" name="employment_type_id">
 				@if(count($employmentTypes) > 0)
-				<option value="None" {{ $jobPosition->employment_type == 'None'  ? 'selected' : '' }}>None</option>
+				<option value="None" {{ $jobPosition->employment_type_id == 'None'  ? 'selected' : '' }}>None</option>
 				@foreach($employmentTypes as $employmentType)
-				<option value="{{$employmentType->name}}" {{ $jobPosition->employment_type == $employmentType->name  ? 'selected' : '' }}>{{$employmentType->name}}</option>
+				<option value="{{$employmentType->id}}" {{ $jobPosition->employment_type_id == $employmentType->id  ? 'selected' : '' }}>{{$employmentType->name}}</option>
 				@endforeach
 				@else
 				<option value="None">None</option>
@@ -168,11 +173,11 @@
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="experience_level">Experience Level: </label>
-			<select class="form-control required" name="exp_level">
+			<select class="form-control required" name="exp_level_id">
 				@if (count($experienceLevels) > 0)
-				<option value="None" {{ $jobPosition->exp_level == 'None'  ? 'selected' : '' }}>None</option>
+				<option value="None" {{ $jobPosition->exp_level_id == 'None'  ? 'selected' : '' }}>None</option>
 				@foreach($experienceLevels as $experienceLevel)
-				<option value="{{$experienceLevel->name}}" {{ $jobPosition->exp_level == $experienceLevel->name  ? 'selected' : '' }}>{{$experienceLevel->name}}</option>
+				<option value="{{$experienceLevel->id}}" {{ $jobPosition->exp_level_id == $experienceLevel->id  ? 'selected' : '' }}>{{$experienceLevel->name}}</option>
 				@endforeach
 				@else
 				<option value="None">None</option>
@@ -183,11 +188,11 @@
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="job_function">Job Function: </label>
-			<select class="form-control required" name="job_function">
+			<select class="form-control required" name="job_function_id">
 				@if (count($jobFunctions) > 0)
-				<option value="None" {{ $jobPosition->job_function == 'None'  ? 'selected' : '' }}>None</option>
+				<option value="None" {{ $jobPosition->job_function_id == 'None'  ? 'selected' : '' }}>None</option>
 				@foreach($jobFunctions as $jobFunction)
-				<option value="{{$jobFunction->name}}" {{ $jobPosition->job_function == $jobFunction->name  ? 'selected' : '' }}>{{$jobFunction->name}}</option>
+				<option value="{{$jobFunction->id}}" {{ $jobPosition->job_function_id == $jobFunction->id  ? 'selected' : '' }}>{{$jobFunction->name}}</option>
 				@endforeach
 				@else
 				<option value="None">None</option>
@@ -198,11 +203,11 @@
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="education_level">Education Level: </label>
-			<select class="form-control required" name="education_level">
+			<select class="form-control required" name="education_level_id">
 				@if (count($educationLevels) > 0)
-				<option value="None" {{ $jobPosition->education_level == 'None'  ? 'selected' : '' }}>None</option>
+				<option value="None" {{ $jobPosition->education_level_id == 'None'  ? 'selected' : '' }}>None</option>
 				@foreach($educationLevels as $educationLevel)
-				<option value="{{$educationLevel->name}}" {{ $jobPosition->education_level == $educationLevel->name  ? 'selected' : '' }}>{{$educationLevel->name}}</option>
+				<option value="{{$educationLevel->id}}" {{ $jobPosition->education_level_id == $educationLevel->id  ? 'selected' : '' }}>{{$educationLevel->name}}</option>
 				@endforeach
 				@else
 				<option value="None">None</option>
