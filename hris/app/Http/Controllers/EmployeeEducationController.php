@@ -4,82 +4,86 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\hris_employee_educations;
+use App\hris_employee;
+use App\hris_educations;
+
 
 class EmployeeEducationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $employeeEducations = hris_employee_educations::paginate(10);
+            return view('pages.personalInformation.educations.index', compact('employeeEducations'));
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(hris_employee_educations $employeeEducation)
     {
-        //
+        $educations = hris_educations::all();
+        return view('pages.personalInformation.educations.create', compact('employeeEducation', 'educations'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(hris_employee_educations $employeeEducation, Request $request)
     {
-        //
+        $employee_id = $_SESSION['sys_id'];
+        if($this->validatedData()) {
+            $employeeEducation->employee_id = $employee_id;
+            $employeeEducation->education_id = request('education_id');
+            $employeeEducation->institute = request('institute');
+            $employeeEducation->start_date = request('start_date');
+            $employeeEducation->completed = request('completed');
+            $employeeEducation->save();
+            return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully added!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(hris_employee_educations $employeeEducation)
     {
-        //
+        $educations = hris_educations::all();
+        return view('pages.personalInformation.educations.edit', compact('employeeEducation', 'educations'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(hris_employee_educations $employeeEducation, Request $request)
     {
-        //
+        if($this->validatedData()) {
+            $employeeEducation->update($this->validatedData());
+            return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully added!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(hris_employee_educations $employeeEducation)
     {
-        //
+        $id = $_SESSION['sys_id'];
+        $employee = hris_employee::find($id);
+        if ( Hash::check(request('password'), $employee->password) ) {
+            $employeeEducation->delete();
+            return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully deleted!');
+        } else {
+            return back()->withErrors(['Password does not match.']);
+        }
     }
+
+    protected function validatedData()
+    {
+        return request()->validate([
+            'education_id' => 'required',
+            'institute' => 'required',
+            'start_date' => 'nullable',
+            'completed' => 'nullable'
+        ]);
+    }
+
 }

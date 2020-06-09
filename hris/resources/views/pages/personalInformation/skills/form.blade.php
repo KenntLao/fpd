@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="skill_id">Code: </label>
+			<label class="mr-2" for="skill_id">Skill: </label>
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="skill_id" required>
 				@if (count($skills) > 0)

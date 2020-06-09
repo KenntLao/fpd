@@ -536,6 +536,50 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE */
     Route::delete('/hris/pages/personalInformation/educations/delete/{employeeEducation}', 'EmployeeEducationController@destroy');
 
+    //EMPLOYEE CERTIFICATION PAGE
+    Route::get('/hris/pages/personalInformation/certifications/index', 'EmployeeCertificationController@index');
+    /* ADD */
+    Route::get('/hris/pages/personalInformation/certifications/create', 'EmployeeCertificationController@create');
+    Route::post('/hris/pages/personalInformation/certifications', 'EmployeeCertificationController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/personalInformation/certifications/{employeeCertification}/edit', 'EmployeeCertificationController@edit');
+    Route::patch('/hris/pages/personalInformation/certifications/update/{employeeCertification}', 'EmployeeCertificationController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/personalInformation/certifications/delete/{employeeCertification}', 'EmployeeCertificationController@destroy');
+
+    //EMPLOYEE LANGUAGES PAGE
+    Route::get('/hris/pages/personalInformation/languages/index', 'EmployeeLanguageController@index');
+    /* ADD */
+    Route::get('/hris/pages/personalInformation/languages/create', 'EmployeeLanguageController@create');
+    Route::post('/hris/pages/personalInformation/languages', 'EmployeeLanguageController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/personalInformation/languages/{employeeLanguage}/edit', 'EmployeeLanguageController@edit');
+    Route::patch('/hris/pages/personalInformation/languages/update/{employeeLanguage}', 'EmployeeLanguageController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/personalInformation/languages/delete/{employeeLanguage}', 'EmployeeLanguageController@destroy');
+
+    //EMPLOYEE DEPENDENTS PAGE
+    Route::get('/hris/pages/personalInformation/dependents/index', 'DependentController@index');
+    /* ADD */
+    Route::get('/hris/pages/personalInformation/dependents/create', 'DependentController@create');
+    Route::post('/hris/pages/personalInformation/dependents', 'DependentController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/personalInformation/dependents/{dependent}/edit', 'DependentController@edit');
+    Route::patch('/hris/pages/personalInformation/dependents/update/{dependent}', 'DependentController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/personalInformation/dependents/delete/{dependent}', 'DependentController@destroy');
+
+    //EMPLOYEE EMERGENCY CONTACTS PAGE
+    Route::get('/hris/pages/personalInformation/emergencyContacts/index', 'EmergencyContactController@index');
+    /* ADD */
+    Route::get('/hris/pages/personalInformation/emergencyContacts/create', 'EmergencyContactController@create');
+    Route::post('/hris/pages/personalInformation/emergencyContacts', 'EmergencyContactController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/personalInformation/emergencyContacts/{emergency}/edit', 'EmergencyContactController@edit');
+    Route::patch('/hris/pages/personalInformation/emergencyContacts/update/{emergency}', 'EmergencyContactController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/personalInformation/emergencyContacts/delete/{emergency}', 'EmergencyContactController@destroy');
+
 
 
     Route::get('/hris/', function () {

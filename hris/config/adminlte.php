@@ -167,7 +167,7 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'hris',
 
     'logout_url' => 'logout',
 
@@ -808,7 +808,7 @@ return [
                 [
                     'text' => 'Dashboard',
                     'icon' => 'fas fa-fw fa-desktop',
-                    'url' => '#'
+                    'url' => '/hris'
                 ],
                 [
                     'text' => 'Basic Information',
@@ -848,12 +848,14 @@ return [
                 [
                     'text' => 'Dependents',
                     'icon' => 'fas fa-fw fa-expand',
-                    'url' => '#'
+                    'url' => '/hris/pages/personalInformation/dependents/index',
+                    'active' => ['/hris/pages/personalInformation/dependents/create', '/hris/pages/personalInformation/dependents/index', '/hris/pages/personalInformation/dependents/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
                 [
                     'text' => 'Emergency Contacts',
                     'icon' => 'fas fa-fw fa-phone-square',
-                    'url' => '#'
+                    'url' => '/hris/pages/personalInformation/emergencyContacts/index',
+                    'active' => ['/hris/pages/personalInformation/emergencyContacts/create', '/hris/pages/personalInformation/emergencyContacts/index', '/hris/pages/personalInformation/emergencyContacts/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
             ]
         ],

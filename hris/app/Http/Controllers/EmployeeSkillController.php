@@ -13,8 +13,10 @@ class EmployeeSkillController extends Controller
 {
     public function index()
     {
-        $employeeSkills = hris_employee_skills::paginate(10);
-        return view('pages.personalInformation.skills.index', compact('employeeSkills'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $employeeSkills = hris_employee_skills::paginate(10);
+            return view('pages.personalInformation.skills.index', compact('employeeSkills'));
+        }
     }
 
     public function create(hris_employee_skills $employeeSkill)
@@ -50,12 +52,8 @@ class EmployeeSkillController extends Controller
 
     public function update(hris_employee_skills $employeeSkill, Request $request)
     {
-        $employee_id = $_SESSION['sys_id'];
         if ($this->validatedData()) {
-            $employeeSkill->employee_id = $employee_id;
-            $employeeSkill->skill_id = request('skill_id');
-            $employeeSkill->details = request('details');
-            $employeeSkill->update();
+            $employeeSkill->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully added!');
         } else {
             return back()->withErrors($this->validatedData());

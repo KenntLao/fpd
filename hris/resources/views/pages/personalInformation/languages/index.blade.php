@@ -23,51 +23,41 @@
 @endif
 <div class="card">
 	<div class="card-header">
-		<h3 class="card-title">education list</h3>
+		<h3 class="card-title">language list</h3>
 		<div class="card-tools">
-			<a class="btn add-button btn-md" href="/hris/pages/personalInformation/educations/create"><i class="fa fa-plus"></i> add education</a>
+			<a class="btn add-button btn-md" href="/hris/pages/personalInformation/languages/create"><i class="fa fa-plus"></i> add language</a>
 		</div>
 	</div>
 	<div class="card-body">
-		@if(count($employeeEducations) > 0)
+		@if(count($employeeLanguages) > 0)
 		<div class="table-responsive">
 			<table class="table table-hover table-bordered table-striped table-condensed">
 				<thead>
 					<tr>
-						<th>name</th>
-						<th>details</th>
-						<th>start date</th>
-						<th>completed on</th>
+						<th>language</th>
+						<th>reading</th>
+						<th>speaking</th>
+						<th>writing</th>
+						<th>understanding</th>
 						<th>actions</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($employeeEducations as $employeeEducation)
+					@foreach($employeeLanguages as $employeeLanguage)
 					<tr>
-						<td>{{$employeeEducation->education->name}}</td>
-						<td>{{$employeeEducation->institute}}</td>
-						<td>
-							@if($employeeEducation->start_date)
-							{{date("M d, Y", strtotime($employeeEducation->start_date))}}
-							@else
-							-- -- --
-							@endif
-						</td>
-						<td>
-							@if($employeeEducation->completed)
-							{{date("M d, Y", strtotime($employeeEducation->completed))}}
-							@else
-							-- -- --
-							@endif
-						</td>
+						<td>{{$employeeLanguage->language->name}}</td>
+						<td>{{$employeeLanguage->reading}}</td>
+						<td>{{$employeeLanguage->speaking}}</td>
+						<td>{{$employeeLanguage->writing}}</td>
+						<td>{{$employeeLanguage->understanding}}</td>
 						<td class="td-action">
 							<div class="row no-gutters">
 								<div class="col-6">
-									<a class="btn btn-success btn-sm" href="/hris/pages/personalInformation/educations/{{$employeeEducation->id}}/edit"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-success btn-sm" href="/hris/pages/personalInformation/languages/{{$employeeLanguage->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
 								<div class="col-6">
 									<!-- Button trigger modal -->
-									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeEducation->id}}" data-name="{{$employeeEducation->education->name}}"><i class="fa fa-trash"></i></button>
+									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeLanguage->id}}" data-name="{{$employeeLanguage->language->name}}"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
 						</td>
@@ -81,7 +71,7 @@
 		@endif
 	</div>
 	<div class="card-footer">
-		{{$employeeEducations->links()}}
+		{{$employeeLanguages->links()}}
 	</div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

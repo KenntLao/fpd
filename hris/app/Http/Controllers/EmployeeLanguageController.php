@@ -4,82 +4,86 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\hris_employee_languages;
+use App\hris_employee;
+use App\hris_languages;
 
 class EmployeeLanguageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $employeeLanguages = hris_employee_languages::paginate(10);
+            return view('pages.personalInformation.languages.index', compact('employeeLanguages'));
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(hris_employee_languages $employeeLanguage)
     {
-        //
+        $languages = hris_languages::all();
+        return view('pages.personalInformation.languages.create', compact('employeeLanguage', 'languages'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(hris_employee_languages $employeeLanguage, Request $request)
     {
-        //
+        $employee_id = $_SESSION['sys_id'];
+        if ($this->validatedData()) {
+            $employeeLanguage->employee_id = $employee_id;
+            $employeeLanguage->language_id = request('language_id');
+            $employeeLanguage->reading = request('reading');
+            $employeeLanguage->speaking = request('speaking');
+            $employeeLanguage->writing = request('writing');
+            $employeeLanguage->understanding = request('understanding');
+            $employeeLanguage->save();
+            return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee language successfully added!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(hris_employee_languages $employeeLanguage)
     {
-        //
+        $languages = hris_languages::all();
+        return view('pages.personalInformation.languages.edit', compact('employeeLanguage', 'languages'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(hris_employee_languages $employeeLanguage, Request $request)
     {
-        //
+        if($this->validatedData()) {
+            $employeeLanguage->update($this->validatedData());
+            return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee education successfully added!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(hris_employee_languages $employeeLanguage)
     {
-        //
+        $id = $_SESSION['sys_id'];
+        $employee = hris_employee::find($id);
+        if ( Hash::check(request('password'), $employee->password) ) {
+            $employeeLanguage->delete();
+            return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee skill successfully deleted!');
+        } else {
+            return back()->withErrors(['Password does not match.']);
+        }
     }
+
+    protected function validatedData()
+    {
+        return request()->validate([
+            'language_id'=> 'required',
+            'reading'=> 'required',
+            'speaking'=> 'required',
+            'writing'=> 'required',
+            'understanding'=> 'required',
+        ]);
+    }
+
 }

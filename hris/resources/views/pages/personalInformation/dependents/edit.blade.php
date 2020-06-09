@@ -1,10 +1,10 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
-@section('title', 'HRIS | Personal Information - Qualifications')
+@section('title', 'HRIS | Personal Information - Dependents')
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1><i class="fas fa-fw fa-graduation-cap"></i> Qualifications</h1>
+		<h1><i class="fas fa-fw fa-graduation-cap"></i> Dependents</h1>
 	</div>
 </div>
 @stop
@@ -24,14 +24,14 @@
 		<h3 class="card-title">edit skill</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/personalInformation/educations/update/{{$employeeEducation->id}}" id="form">
-			@include('pages.personalInformation.educations.form')
+		<form class="form-horizontal" method="post" action="/hris/pages/personalInformation/dependents/update/{{$dependent->id}}" id="form">
+			@include('pages.personalInformation.dependents.form')
 			@method('PATCH')
 		</form>
 	</div>
 	<div class="card-footer text-right">
-		<a class="btn btn-default mr-1" href="/hris/pages/personalInformation/educations/index"><i class="fa fa-arrow-left"></i> back</a>
-		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save education</button>
+		<a class="btn btn-default mr-1" href="/hris/pages/personalInformation/dependents/index"><i class="fa fa-arrow-left"></i> back</a>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save dependent</button>
 	</div>
 </div>
 @stop

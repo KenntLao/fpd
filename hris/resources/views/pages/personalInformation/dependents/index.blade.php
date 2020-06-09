@@ -1,10 +1,10 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
-@section('title', 'HRIS | Personal Information - Qualifications')
+@section('title', 'HRIS | Personal Information - Dependents')
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1><i class="fas fa-fw fa-graduation-cap"></i> Qualifications</h1>
+		<h1><i class="fas fa-fw fa-expand"></i> Dependents</h1>
 	</div>
 </div>
 @stop
@@ -23,51 +23,39 @@
 @endif
 <div class="card">
 	<div class="card-header">
-		<h3 class="card-title">education list</h3>
+		<h3 class="card-title">dependent list</h3>
 		<div class="card-tools">
-			<a class="btn add-button btn-md" href="/hris/pages/personalInformation/educations/create"><i class="fa fa-plus"></i> add education</a>
+			<a class="btn add-button btn-md" href="/hris/pages/personalInformation/dependents/create"><i class="fa fa-plus"></i> add dependent</a>
 		</div>
 	</div>
 	<div class="card-body">
-		@if(count($employeeEducations) > 0)
+		@if(count($dependents) > 0)
 		<div class="table-responsive">
 			<table class="table table-hover table-bordered table-striped table-condensed">
 				<thead>
 					<tr>
 						<th>name</th>
-						<th>details</th>
-						<th>start date</th>
-						<th>completed on</th>
+						<th>relationship</th>
+						<th>date of birth</th>
+						<th>id number</th>
 						<th>actions</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($employeeEducations as $employeeEducation)
+					@foreach($dependents as $dependent)
 					<tr>
-						<td>{{$employeeEducation->education->name}}</td>
-						<td>{{$employeeEducation->institute}}</td>
-						<td>
-							@if($employeeEducation->start_date)
-							{{date("M d, Y", strtotime($employeeEducation->start_date))}}
-							@else
-							-- -- --
-							@endif
-						</td>
-						<td>
-							@if($employeeEducation->completed)
-							{{date("M d, Y", strtotime($employeeEducation->completed))}}
-							@else
-							-- -- --
-							@endif
-						</td>
+						<td>{{$dependent->name}}</td>
+						<td>{{$dependent->relationship}}</td>
+						<td>{{$dependent->birthday}}</td>
+						<td>{{$dependent->id_number}}</td>
 						<td class="td-action">
 							<div class="row no-gutters">
 								<div class="col-6">
-									<a class="btn btn-success btn-sm" href="/hris/pages/personalInformation/educations/{{$employeeEducation->id}}/edit"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-success btn-sm" href="/hris/pages/personalInformation/dependents/{{$dependent->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
 								<div class="col-6">
 									<!-- Button trigger modal -->
-									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeEducation->id}}" data-name="{{$employeeEducation->education->name}}"><i class="fa fa-trash"></i></button>
+									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$dependent->id}}" data-name="{{$dependent->name}}"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
 						</td>
@@ -81,7 +69,7 @@
 		@endif
 	</div>
 	<div class="card-footer">
-		{{$employeeEducations->links()}}
+		{{$dependents->links()}}
 	</div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
