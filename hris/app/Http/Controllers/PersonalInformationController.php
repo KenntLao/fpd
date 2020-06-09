@@ -87,9 +87,5 @@ class PersonalInformationController extends Controller
     {
         //
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 72fa4791... Revert "Merge branch 'anthony-update' into kennt-update"
      
 }
