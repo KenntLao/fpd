@@ -20,7 +20,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @if(isset($_SESSION['sys_id']))
                 <div class="main-profile-photo">
-                    <img src="{{$_SESSION['sys_hris_photo']}}">
+                    <img src="{{asset($_SESSION['sys_hris_photo'])}}">
                 </div>{{$_SESSION['sys_fullname']}}
                 @endif
             </a>

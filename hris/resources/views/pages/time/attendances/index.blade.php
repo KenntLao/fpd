@@ -1,6 +1,9 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
 @section('title', 'HRIS | Time Management - Attendance')
+@section('header_js')
+
+@stop
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
@@ -19,44 +22,73 @@
 	<div class="card-header">
 		<h3 class="card-title">Attendance</h3>
 		<div class="card-tools">
-			<form action="/hris/pages/time/attendances" method="post">
-				@csrf
-				<button class="btn add-button btn-md">Punch In</button>
-			</form>
+			<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>
 		</div>
 	</div>
 	<div class="card-body">
 		@if(count($attendances) > 0)
-				<div class="table-responsive">
-					<table class="table table-hover table-bordered table-striped table-condensed">
-						<thead>
-							<tr>
-								<th>time in</th>
-								<th>time out</th>
-								<th>note</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach($attendances as $attendance)
-							<tr>
-								<td>{{date("M d, Y - h:i:sa", strtotime($attendance->time_in))}}</td>
-								<td>
-									@if($attendance->time_out)
-									{{date("M d, Y - h:i:sa", strtotime($attendance->time_in))}}
-									@endif
-								</td>
-								<td>{{$attendance->note}}</td>
-							</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
-			@else
-			<h4>No data available.</h4>
-			@endif
+		<div class="table-responsive">
+			<table class="table table-hover table-bordered table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>time in</th>
+						<th>time out</th>
+						<th>note</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($attendances as $attendance)
+					<tr>
+						<td>{{date("M d, Y - h:i:sa", strtotime($attendance->time_in))}}</td>
+						<td>
+							@if($attendance->time_out)
+							{{date("M d, Y - h:i:sa", strtotime($attendance->time_in))}}
+							@endif
+						</td>
+						<td>{{$attendance->note}}</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+		@else
+		<h4>No data available.</h4>
+		@endif
 	</div>
 	<div class="card-footer">
 		{{$attendances->links()}}
+	</div>
+	<div class="modal" id="snapModal" s>
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Punch in</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form method="POST" action="storeImage.php">
+						<div class="row">
+							<div class="col-md-6">
+								<div id="my_camera"></div>
+								<input type="button" value="Take Snapshot" onClick="take_snapshot()">
+								<input type="hidden" name="image" class="image-tag">
+							</div>
+							<div class="col-md-6">
+								<div id="results">Your captured image will appear here</div>
+							</div>
+							<div class="col-md-12 text-center">
+								<br />
+								<button class="btn btn-success">Submit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 @stop
@@ -64,7 +96,23 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
+<script src="{{asset('assets/js/jpeg_camera/webcam.js')}}" type="text/javascript"></script>
+
 <script>
-console.log('Hi!');
+	Webcam.set({
+		width: 150,
+		height: 150,
+		image_format: 'jpeg',
+		jpeg_quality: 90
+	});
+
+	Webcam.attach('#my_camera');
+
+	function take_snapshot() {
+		Webcam.snap(function(data_uri) {
+			$(".image-tag").val(data_uri);
+			document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+		});
+	}
 </script>
 @stop

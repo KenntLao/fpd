@@ -7,7 +7,10 @@
 @else
     @php( $def_container_class = 'container-fluid' )
 @endif
-
+@section('header_js')
+    @stack('headerjs')
+    @yield('headerjs')
+@stop
 @section('adminlte_css')
     @stack('css')
     @yield('css')

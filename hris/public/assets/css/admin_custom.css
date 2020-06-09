@@ -52,7 +52,7 @@ html::-webkit-scrollbar {
 	width: 5px;
 }
 .nav-header {
-	padding-top: 1rem !important;
+	padding-top: 1.5rem !important;
 	color: #FFFF00;
 }
 .brand-link {
@@ -480,6 +480,13 @@ textarea.form-control {
 	color: #FCBB6D;
 	text-transform: uppercase;
 }
+/* ATTENDANCE CAMERA */
+#my_camera video {
+	width: 100% !important;
+	height: 100% !important;
+}
+#results img {
+	width: 100%;
 
 
 /* PROFILE */
