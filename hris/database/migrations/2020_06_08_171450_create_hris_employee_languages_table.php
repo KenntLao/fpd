@@ -16,6 +16,7 @@ class CreateHrisEmployeeLanguagesTable extends Migration
         Schema::create('hris_employee_languages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('employee_id');
             $table->string('language_id');
             $table->string('reading');
             $table->string('speaking');

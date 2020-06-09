@@ -167,7 +167,7 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'hris',
 
     'logout_url' => 'logout',
 
@@ -487,6 +487,65 @@ return [
                     'text' => 'Audit Log',
                     'icon' => 'fas fa-fw fa-compass',
                     'url' => '/hris/pages/admin/auditLog/index'
+                ],
+            ]
+        ],
+        'PERSONAL INFORMATION',
+        [
+            'text' => 'Personal Information',
+            'icon' => 'fas fa-fw fa-grip-horizontal',
+            'submenu' => [
+                [
+                    'text' => 'Dashboard',
+                    'icon' => 'fas fa-fw fa-desktop',
+                    'url' => '#'
+                ],
+                [
+                    'text' => 'Basic Information',
+                    'icon' => 'fas fa-fw fa-user',
+                    'url' => '/hris/pages/personalInformation/profile/index'
+                ],
+                [
+                    'text' => 'Qualifications',
+                    'icon' => 'fas fa-fw fa-graduation-cap',
+                    'submenu' => [
+                        [
+                            'text' => 'Skills',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '/hris/pages/personalInformation/skills/index',
+                            'active' => ['/hris/pages/personalInformation/skills/create', '/hris/pages/personalInformation/skills/index', '/hris/pages/personalInformation/skills/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Education',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '/hris/pages/personalInformation/educations/index',
+                            'active' => ['/hris/pages/personalInformation/educations/create', '/hris/pages/personalInformation/educations/index', '/hris/pages/personalInformation/educations/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Certifications',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '/hris/pages/personalInformation/certifications/index',
+                            'active' => ['/hris/pages/personalInformation/certifications/create', '/hris/pages/personalInformation/certifications/index', '/hris/pages/personalInformation/certifications/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Languages',
+                            'icon' => 'fas fa-fw fa-graduation-cap',
+                            'url' => '/hris/pages/personalInformation/languages/index',
+                            'active' => ['/hris/pages/personalInformation/languages/create', '/hris/pages/personalInformation/languages/index', '/hris/pages/personalInformation/languages/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                    ]
+                ],
+                [
+                    'text' => 'Dependents',
+                    'icon' => 'fas fa-fw fa-expand',
+                    'url' => '/hris/pages/personalInformation/dependents/index',
+                    'active' => ['/hris/pages/personalInformation/dependents/create', '/hris/pages/personalInformation/dependents/index', '/hris/pages/personalInformation/dependents/*/edit', 'regex:@^content/[0-9]+$@']
+                ],
+                [
+                    'text' => 'Emergency Contacts',
+                    'icon' => 'fas fa-fw fa-phone-square',
+                    'url' => '/hris/pages/personalInformation/emergencyContacts/index',
+                    'active' => ['/hris/pages/personalInformation/emergencyContacts/create', '/hris/pages/personalInformation/emergencyContacts/index', '/hris/pages/personalInformation/emergencyContacts/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
             ]
         ],
@@ -901,120 +960,6 @@ return [
                 ],
             ]
         ],
-        'PERSONAL INFORMATION',
-        [
-            'text' => 'Personal Information',
-            'icon' => 'fas fa-fw fa-grip-horizontal',
-            'submenu' => [
-                [
-                    'text' => 'Dashboard',
-                    'icon' => 'fas fa-fw fa-desktop',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Basic Information',
-                    'icon' => 'fas fa-fw fa-user',
-                    'url' => '/hris/pages/personalInformation/profile/index'
-                ],
-                [
-                    'text' => 'Qualifications',
-                    'icon' => 'fas fa-fw fa-graduation-cap',
-                    'submenu' => [
-                        [
-                            'text' => 'Skills',
-                            'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '/hris/pages/personalInformation/skills/index',
-                            'active' => ['/hris/pages/personalInformation/skills/create', '/hris/pages/personalInformation/skills/index', '/hris/pages/personalInformation/skills/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Education',
-                            'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Certifications',
-                            'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Languages',
-                            'icon' => 'fas fa-fw fa-graduation-cap',
-                            'url' => '#'
-                        ],
-                    ]
-                ],
-                [
-                    'text' => 'Dependents',
-                    'icon' => 'fas fa-fw fa-expand',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Emergency Contacts',
-                    'icon' => 'fas fa-fw fa-phone-square',
-                    'url' => '#'
-                ],
-            ]
-        ],
-        'LEAVE MANAGEMENT',
-        [
-            'text' => 'Leave Management',
-            'icon' => 'fas fa-fw fa-share-alt',
-            'submenu' => [
-                [
-                    'text' => 'Leave',
-                    'icon' => 'fas fa-fw fa-calendar-day',
-                    'submenu' => [
-                        [
-                            'text' => 'All My Leaves',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/all/index',
-                            'active' => ['/hris/pages/leaves/all/create', '/hris/pages/leaves/all/index', '/hris/pages/leaves/all/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Leave Entitlement',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/leaveEntitlements/index',
-                            'active' => ['/hris/pages/leaves/leaveEntitlements/create', '/hris/pages/leaves/leaveEntitlements/index', '/hris/pages/leaves/leaveEntitlements/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Approved Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/approvedLeaves/index',
-                            'active' => ['/hris/pages/leaves/approvedLeaves/create', '/hris/pages/leaves/approvedLeaves/index', '/hris/pages/leaves/approvedLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Pending Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/pendingLeaves/index',
-                            'active' => ['/hris/pages/leaves/pendingLeaves/create', '/hris/pages/leaves/pendingLeaves/index', '/hris/pages/leaves/pendingLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Subordinate Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/subordinateLeaves/index',
-                            'active' => ['/hris/pages/leaves/subordinateLeaves/create', '/hris/pages/leaves/subordinateLeaves/index', '/hris/pages/leaves/subordinateLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Cancellation Requests',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/cancellationRequests/index',
-                            'active' => ['/hris/pages/leaves/cancellationRequests/create', '/hris/pages/leaves/cancellationRequests/index', '/hris/pages/leaves/cancellationRequests/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Approval Requests',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/approvalRequests/index',
-                            'active' => ['/hris/pages/leaves/approvalRequests/create', '/hris/pages/leaves/approvalRequests/index', '/hris/pages/leaves/approvalRequests/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                    ]
-                ], 
-                [
-                    'text' => 'Leave Calendar',
-                    'icon' => 'fas fa-fw fa-calendar-alt',
-                    'url' => '/hris/pages/leaves/calendar/index'
-                ]
-            ]
-        ],
         'DOCUMENT MANAGEMENT',
         [
             'text' => 'Documents',
@@ -1170,6 +1115,7 @@ return [
             'url' => '#'
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

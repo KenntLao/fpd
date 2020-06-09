@@ -4,82 +4,84 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\hris_employee_certifications;
+use App\hris_employee;
+use App\hris_certifications;
 
 class EmployeeCertificationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $employeeCertifications = hris_employee_certifications::paginate(10);
+            return view('pages.personalInformation.certifications.index', compact('employeeCertifications'));
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(hris_employee_certifications $employeeCertification)
     {
-        //
+        $certifications = hris_certifications::all();
+        return view('pages.personalInformation.certifications.create', compact('employeeCertification', 'certifications'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(hris_employee_certifications $employeeCertification, Request $request)
     {
-        //
+        $employee_id = $_SESSION['sys_id'];
+        if ($this->validatedData()) {
+            $employeeCertification->employee_id = $employee_id;
+            $employeeCertification->certification_id = request('certification_id');
+            $employeeCertification->institute = request('institute');
+            $employeeCertification->granted_on = request('granted_on');
+            $employeeCertification->valid_thru = request('valid_thru');
+            $employeeCertification->save();
+            return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee certification successfully added!');
+        } else {
+            return back()->withErrors($this->validateData());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(hris_employee_certifications $employeeCertification)
     {
-        //
+        $certifications = hris_certifications::all();
+        return view('pages.personalInformation.certifications.edit', compact('employeeCertification', 'certifications'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(hris_employee_certifications $employeeCertification, Request $request)
     {
-        //
+        if ($this->validatedData()) {
+            $employeeCertification->update($this->validatedData());
+            return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee certification successfully added!');
+        } else {
+            return back()->withErrors($this->validateData());
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(hris_employee_certifications $employeeCertification)
     {
-        //
+        $id = $_SESSION['sys_id'];
+        $employee = hris_employee::find($id);
+        if ( Hash::check(request('password'), $employee->password) ) {
+            $employeeCertification->delete();
+            return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee education successfully deleted!');
+        } else {
+            return back()->withErrors(['Password does not match.']);
+        }
     }
+
+    protected function validatedData()
+    {
+        return request()->validate([
+            'certification_id' => 'required',
+            'institute' => 'required',
+            'granted_on' => 'nullable',
+            'valid_thru' => 'nullable',
+        ]);
+    }
+
 }

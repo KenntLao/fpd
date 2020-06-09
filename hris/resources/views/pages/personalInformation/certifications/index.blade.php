@@ -1,0 +1,138 @@
+{{-- resources/views/admin/dashboard.blade.php --}}
+@extends('adminlte::page')
+@section('title', 'HRIS | Personal Information - Qualifications')
+@section('content_header')
+<div class="row no-gutters">
+	<div class="col-12 page-title">
+		<h1><i class="fas fa-fw fa-graduation-cap"></i> Qualifications</h1>
+	</div>
+</div>
+@stop
+@section('content')
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
+</div>
+@endif
+@if($errors->any())
+<div class="alert alert-danger alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<p><i class="fas fa-fw fa-exclamation-circle"></i>{{$errors->first()}}</p>
+</div>
+@endif
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">certification list</h3>
+		<div class="card-tools">
+			<a class="btn add-button btn-md" href="/hris/pages/personalInformation/certifications/create"><i class="fa fa-plus"></i> add certification</a>
+		</div>
+	</div>
+	<div class="card-body">
+		@if(count($employeeCertifications) > 0)
+		<div class="table-responsive">
+			<table class="table table-hover table-bordered table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>name</th>
+						<th>details</th>
+						<th>start date</th>
+						<th>completed on</th>
+						<th>actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($employeeCertifications as $employeeCertification)
+					<tr>
+						<td>{{$employeeCertification->certification->name}}</td>
+						<td>{{$employeeCertification->institute}}</td>
+						<td>
+							@if($employeeCertification->granted_on)
+							{{date("M d, Y", strtotime($employeeCertification->granted_on))}}
+							@else
+							-- -- --
+							@endif
+						</td>
+						<td>
+							@if($employeeCertification->valid_thru)
+							{{date("M d, Y", strtotime($employeeCertification->valid_thru))}}
+							@else
+							-- -- --
+							@endif
+						</td>
+						<td class="td-action">
+							<div class="row no-gutters">
+								<div class="col-6">
+									<a class="btn btn-success btn-sm" href="/hris/pages/personalInformation/certifications/{{$employeeCertification->id}}/edit"><i class="fa fa-edit"></i></a>
+								</div>
+								<div class="col-6">
+									<!-- Button trigger modal -->
+									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeCertification->id}}" data-name="{{$employeeCertification->certification->name}}"><i class="fa fa-trash"></i></button>
+								</div>
+							</div>
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+		@else
+		<h4>No data available.</h4>
+		@endif
+	</div>
+	<div class="card-footer">
+		{{$employeeCertifications->links()}}
+	</div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Delete Confirmation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="data-name"></p>
+				<hr>
+				<form class="form-horizontal" method="post">
+					@csrf
+					@method('DELETE')
+					<div class="form-group">
+						<label for="upass">Enter Password: </label>
+						<input class="form-control" type="password" name="password" required>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-danger" type="submit"><i class="fa fa-check"></i> Confirm Delete</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+@stop
+@section('css')
+<link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
+@stop
+@section('js')
+<script>
+	$(document).ready(function(){
+		$('.delete-btn').on('click', function(){
+			var get = $('.add-button').attr('href');
+			var href = get.replace('create', 'delete');
+			var target = $(this).attr('data-target');
+			var modal_id = target.replace('#', '');
+			var id = target.replace('#modal-', '');
+			$('.modal').attr('id', modal_id);
+			$('.modal').attr('aria-labelledby', modal_id);
+			$('.form-horizontal').attr('action', href+'/'+id);
+			$('.form-horizontal').attr('id', 'form-'+id);
+			$('.modal-footer > button').attr('form', 'form-'+id);
+			var name = $(this).attr('data-name');
+			$('.data-name').text('Are you sure you want to delete '+name+'?');
+		});
+	});
+</script>
+@stop
