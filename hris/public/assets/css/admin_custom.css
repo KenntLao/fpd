@@ -235,7 +235,7 @@ body {
 }
 .table td {
 	vertical-align: middle;
-	text-align: center;
+	text-align: left;
 	font-size: 12px;
 	color: #7a7a7a;
 	padding: .25rem .5rem;
