@@ -6,6 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\users;
 use App\hris_leave_rules;
+use App\hris_leave_types;
+use App\hris_leave_groups;
+use App\hris_leave_periods;
+use App\hris_job_titles;
+use App\hris_employment_statuses;
+use App\hris_employee;
+use App\hris_company_structures;
 
 class LeaveRuleController extends Controller
 {
@@ -17,12 +24,24 @@ class LeaveRuleController extends Controller
 
     public function create(hris_leave_rules $leaveRule)
     {
-        return view('pages.admin.leave.leaveRules.create', compact('leaveRule'));
+        $leaveTypes = hris_leave_types::all();
+        $leaveGroups = hris_leave_groups::all();
+        $leavePeriods = hris_leave_periods::all();
+        $jobTitles = hris_job_titles::all();
+        $employmentStatuses = hris_employment_statuses::all();
+        $employees = hris_employee::all();
+        $departments = hris_company_structures::all();
+        return view('pages.admin.leave.leaveRules.create', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'jobTitles', 'employmentStatuses', 'employees', 'departments'));
     }
 
-    public function store(Request $request)
+    public function store(hris_leave_rules $leaveRule, Request $request)
     {
-
+        if ($this->validatedData()) {
+            $leaveRule::create($this->validatedData());
+            return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success', 'Leave rule successfully added!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
     }
 
     public function show($id)
@@ -32,12 +51,24 @@ class LeaveRuleController extends Controller
 
     public function edit(hris_leave_rules $leaveRule)
     {
-        return view('pages.admin.leave.leaveRules.edit', compact('leaveRule'));
+        $leaveTypes = hris_leave_types::all();
+        $leaveGroups = hris_leave_groups::all();
+        $leavePeriods = hris_leave_periods::all();
+        $jobTitles = hris_job_titles::all();
+        $employmentStatuses = hris_employment_statuses::all();
+        $employees = hris_employee::all();
+        $departments = hris_company_structures::all();
+        return view('pages.admin.leave.leaveRules.edit', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'jobTitles', 'employmentStatuses', 'employees', 'departments'));
     }
 
     public function update(hris_leave_rules $leaveRule, Request $request)
     {
-
+        if ($this->validatedData()) {
+            $leaveRule->update($this->validatedData());
+            return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success', 'Leave rule successfully updated!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
     }
 
     public function destroy(hris_leave_rules $leaveRule)
@@ -50,6 +81,31 @@ class LeaveRuleController extends Controller
         } else {
             return back()->withErrors(['Password does not match.']);
         }
+    }
+
+    protected function validatedData()
+    {
+        return request()->validate([
+            'leave_type_id' => 'required',
+            'leave_group_id' => 'nullable',
+            'job_title_id' => 'nullable',
+            'employment_status_id' => 'nullable',
+            'employee_id' => 'nullable',
+            'exp_days' => 'required',
+            'department_id' => 'nullable',
+            'leave_period_id' => 'nullable',
+            'default_per_year' => 'required',
+            'supervisor_assign_leave' => 'required',
+            'employee_can_apply' => 'required',
+            'apply_beyond_current' => 'required',
+            'leave_accrue' => 'required',
+            'carried_forward' => 'required',
+            'carried_forward_percentage' => 'required',
+            'max_carried_forward_amount' => 'required',
+            'carried_forward_leave_availability' => 'required',
+            'proportionate_on_joined_date' => 'required',
+            'employee_leave_period' => 'required',            
+        ]);
     }
 
     // decrypt string

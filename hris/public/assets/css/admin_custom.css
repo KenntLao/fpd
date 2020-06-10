@@ -408,7 +408,10 @@ textarea.form-control {
 	font-size: 14px;
 }
 .modal-header {
-	background: #fcbb6d;
+	background: #041E42;
+}
+.modal .close {
+	color: #FFFF00 !important;
 }
 .modal-title {
 	font-family: opensans;

@@ -1,6 +1,6 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
-@section('title', 'HRIS | Leave Settings - Leave Types')
+@section('title', 'HRIS | Leave Settings - Paid Time Off')
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
@@ -21,16 +21,16 @@
 @endif
 <div class="card">
 	<div class="card-header">
-		<h3 class="card-title">add leave rule</h3>
+		<h3 class="card-title">add paid time off</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/admin/leave/leaveRules" id="form">
-			@include('pages.admin.leave.leaveRules.form')
+		<form class="form-horizontal" method="post" action="/hris/pages/admin/leave/paidTimeOffs" id="form">
+			@include('pages.admin.leave.paidTimeOffs.form')
 		</form>
 	</div>
 	<div class="card-footer text-right">
-		<a class="btn btn-default mr-1" href="/hris/pages/admin/leave/leaveRules/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save leave rule</button>
+		<a class="btn btn-default mr-1" href="/hris/pages/admin/leave/paidTimeOffs/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save paid time off</button>
 	</div>
 </div>
 @stop
@@ -39,16 +39,4 @@
 @stop
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#percentInput').keyup(function(){
-	  		if ($(this).val() > 100){
-	    		$(this).val('100');
-	  		}
-		});
-		$('#colorInput').keyup(function() {
-			$('.color-box').css('background-color', '#'+$(this).val());
-		});
-	});	
-</script>
 @stop

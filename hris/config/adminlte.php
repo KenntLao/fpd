@@ -358,8 +358,8 @@ return [
                         [
                             'text' => 'Paid Time Off',
                             'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/paidTimeOff/index',
-                            'active' => ['/hris/pages/admin/leave/paidTimeOff/create', '/hris/pages/admin/leave/paidTimeOff/index', '/hris/pages/admin/leave/paidTimeOff/*/edit', 'regex:@^content/[0-9]+$@']
+                            'url' => '/hris/pages/admin/leave/paidTimeOffs/index',
+                            'active' => ['/hris/pages/admin/leave/paidTimeOffs/create', '/hris/pages/admin/leave/paidTimeOffs/index', '/hris/pages/admin/leave/paidTimeOffs/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Leave Groups',
@@ -424,24 +424,6 @@ return [
                     ]
                 ],
                 [
-                    'text' => 'Employee Custom Fields',
-                    'icon' => 'fas fa-fw fa-ruler-horizontal',
-                    'submenu' => [
-                        [
-                            'text' => 'Field Names',
-                            'icon' => 'fas fa-fw fa-ruler-horizontal',
-                            'url' => '/hris/pages/admin/employee/employeeFieldNames/index',
-                            'active' => ['/hris/pages/admin/employee/employeeFieldNames/create', '/hris/pages/admin/employee/employeeFieldNames/index', '/hris/pages/admin/employee/employeeFieldNames/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Custom Fields',
-                            'icon' => 'fas fa-fw fa-ruler-horizontal',
-                            'url' => '/hris/pages/admin/employee/employeeCustomFields/index',
-                            'active' => ['/hris/pages/admin/employee/employeeCustomFields/create', '/hris/pages/admin/employee/employeeCustomFields/index', '/hris/pages/admin/employee/employeeCustomFields/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                    ]
-                ],
-                [
                     'text' => 'Company Loans',
                     'icon' => 'fas fa-fw fa-money-check',
                     'submenu' => [
@@ -466,21 +448,15 @@ return [
                         [
                             'text' => 'Asset Types',
                             'icon' => 'fas fa-fw fa-archive',
-                            'url' => '/hris/pages/admin/assets/types/index',
-                            'active' => ['/hris/pages/admin/assets/companyAssetTypes/create', '/hris/pages/admin/assets/companyAssetTypes/index', '/hris/pages/admin/assets/companyAssetTypes/*/edit', 'regex:@^content/[0-9]+$@']
+                            'url' => '/hris/pages/admin/companyAssets/types/index',
+                            'active' => ['/hris/pages/admin/companyAssets/types/create', '/hris/pages/admin/companyAssets/types/index', '/hris/pages/admin/companyAssets/types/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
                         [
                             'text' => 'Assets',
                             'icon' => 'fas fa-fw fa-archive',
-                            'url' => '/hris/pages/admin/assets/companyAssets/index',
-                            'active' => ['/hris/pages/admin/assets/companyAssets/create', '/hris/pages/admin/assets/companyAssets/index', '/hris/pages/admin/assets/companyAssets/*/edit', 'regex:@^content/[0-9]+$@']
+                            'url' => '/hris/pages/admin/companyAssets/assets/index',
+                            'active' => ['/hris/pages/admin/companyAssets/assets/create', '/hris/pages/admin/companyAssets/assets/index', '/hris/pages/admin/companyAssets/assets/*/edit', 'regex:@^content/[0-9]+$@']
                         ],
-                        [
-                            'text' => 'Custom Fields',
-                            'icon' => 'fas fa-fw fa-archive',
-                            'url' => '/hris/pages/admin/assets/assetCustomFields/index',
-                            'active' => ['/hris/pages/admin/assets/assetCustomFields/create', '/hris/pages/admin/assets/assetCustomFields/index', '/hris/pages/admin/assets/assetCustomFields/*/edit', 'regex:@^content/[0-9]+$@']
-                        ]
                     ]
                 ],
                 [
