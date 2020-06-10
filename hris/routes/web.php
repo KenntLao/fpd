@@ -545,14 +545,10 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE ATTENDANCES */
     Route::delete('/hris/pages/time/attendances/delete/{attendance}', 'AttendanceController@destroy');
 
-    /* TIME SHEETS PAGE */
-    Route::get('/hris/pages/time/timeSheets/index', 'TimeSheetController@index');
 
-    /* ATTENDANCE SHEETS PAGE */
-    Route::get('/hris/pages/time/attendanceSheets/index', 'AttendanceSheetController@index');
-
-    /* OVERTIME REQUESTS PAGE */
-    Route::get('/hris/pages/time/overtimeRequests/index', 'TimeOvertimeRequestController@index');
+    /* OVERTIME MANAGEMENT */
+    Route::get('/hris/pages/time/overtime/index', 'OvertimeController@index');
+    
 
     //PERSONAL INFORMATION
     Route::get('/hris/pages/personalInformation/profile/index', 'PersonalInformationController@index');

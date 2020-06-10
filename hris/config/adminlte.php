@@ -589,6 +589,11 @@ return [
                 [
                     'text' => 'Attendance',
                     'url' => '/hris/pages/time/attendances/index',
+                    'icon' => 'fas fa-fw fa-calendar-check'
+                ],
+                [
+                    'text' => 'Overtime',
+                    'url' => '/hris/pages/time/overtime/index',
                     'icon' => 'fas fa-fw fa-clock'
                 ],
                 [
@@ -600,11 +605,6 @@ return [
                     'text' => 'Attendance Sheets',
                     'url' => '/hris/pages/time/attendanceSheets/index',
                     'icon' => 'fas fa-fw fa-calendar-check',
-                ],
-                [
-                    'text' => 'Overtime Request',
-                    'url' => '/hris/pages/time/overtimeRequests/index',
-                    'icon' => 'fas fa-fw fa-calendar-plus',
                 ],
             ]
         ],
