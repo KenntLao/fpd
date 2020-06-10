@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="col-6">
                                     <!-- Button trigger modal -->
-                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$assignment->id}}" data-name="{{$assignment->workshift_name}}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$assignment->id}}" data-name="this work shift"><i class="fa fa-trash"></i></button>
                                 </div>
                             </div>
                         </td>
