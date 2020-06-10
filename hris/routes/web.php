@@ -278,6 +278,18 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE LEAVE RULES */
     Route::delete('/hris/pages/admin/leave/leaveRules/delete/{leaveRule}', 'LeaveRuleController@destroy');
 
+    /* PAID TIME OFF PAGE */
+    Route::get('/hris/pages/admin/leave/paidTimeOffs/index', 'PaidTimeOffController@index');
+    /* ADD PAID TIME OFF */
+    Route::get('/hris/pages/admin/leave/paidTimeOffs/create', 'PaidTimeOffController@create');
+    Route::post('/hris/pages/admin/leave/paidTimeOffs', 'PaidTimeOffController@store');
+    /* EDIT PAID TIME OFF */
+    Route::get('/hris/pages/admin/leave/paidTimeOffs/{paidTimeOff}/edit', 'PaidTimeOffController@edit');
+    /* UPDATE PAID TIME OFF */
+    Route::patch('/hris/pages/admin/leave/paidTimeOffs/update/{paidTimeOff}', 'PaidTimeOffController@update');
+    /* DELETE PAID TIME OFF */
+    Route::delete('/hris/pages/admin/leave/paidTimeOffs/delete/{paidTimeOff}', 'PaidTimeOffController@destroy');
+
     /* BENEFITS ADMINISTRATION */
 
     /* EXPENSES CATEGORIES PAGE */
@@ -371,6 +383,34 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::patch('/hris/pages/admin/loans/employeeLoans/update/{employeeLoan}', 'EmployeeLoanController@update');
     /* DELETE EMPLOYEE LOANS */
     Route::delete('/hris/pages/admin/loans/employeeLoans/delete/{employeeLoan}', 'EmployeeLoanController@destroy');
+
+    /* COMPANY ASSETS */
+    /* TYPES */
+
+    /* TYPES PAGE */
+    Route::get('/hris/pages/admin/companyAssets/types/index', 'CompanyAssetTypeController@index');
+    /* ADD TYPES */
+    Route::get('/hris/pages/admin/companyAssets/types/create', 'CompanyAssetTypeController@create');
+    Route::post('/hris/pages/admin/companyAssets/types', 'CompanyAssetTypeController@store');
+    /* EDIT TYPES */
+    Route::get('/hris/pages/admin/companyAssets/types/{type}/edit', 'CompanyAssetTypeController@edit');
+    /* UPDATE TYPES */
+    Route::patch('/hris/pages/admin/companyAssets/types/update/{type}', 'CompanyAssetTypeController@update');
+    /* DELETE TYPES */
+    Route::delete('/hris/pages/admin/companyAssets/types/delete/{type}', 'CompanyAssetTypeController@destroy');
+    /* TYPES */
+
+    /* ASSETS PAGE */
+    Route::get('/hris/pages/admin/companyAssets/assets/index', 'CompanyAssetController@index');
+    /* ADD ASSETS */
+    Route::get('/hris/pages/admin/companyAssets/assets/create', 'CompanyAssetController@create');
+    Route::post('/hris/pages/admin/companyAssets/assets', 'CompanyAssetController@store');
+    /* EDIT ASSETS */
+    Route::get('/hris/pages/admin/companyAssets/assets/{asset}/edit', 'CompanyAssetController@edit');
+    /* UPDATE ASSETS */
+    Route::patch('/hris/pages/admin/companyAssets/assets/update/{asset}', 'CompanyAssetController@update');
+    /* DELETE ASSETS */
+    Route::delete('/hris/pages/admin/companyAssets/assets/delete/{asset}', 'CompanyAssetController@destroy');
 
 
     /* EMPLOYEE MANAGEMENT */

@@ -235,7 +235,7 @@ body {
 }
 .table td {
 	vertical-align: middle;
-	text-align: center;
+	text-align: left;
 	font-size: 12px;
 	color: #7a7a7a;
 	padding: .25rem .5rem;
@@ -408,7 +408,10 @@ textarea.form-control {
 	font-size: 14px;
 }
 .modal-header {
-	background: #fcbb6d;
+	background: #041E42;
+}
+.modal .close {
+	color: #FFFF00 !important;
 }
 .modal-title {
 	font-family: opensans;
@@ -487,7 +490,7 @@ textarea.form-control {
 }
 #results img {
 	width: 100%;
-
+}
 
 /* PROFILE */
 .profile {

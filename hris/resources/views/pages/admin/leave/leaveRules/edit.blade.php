@@ -31,7 +31,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/leave/leaveRules/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save leave types</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save leave rule</button>
 	</div>
 </div>
 @stop
@@ -40,4 +40,16 @@
 @stop
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#percentInput').keyup(function(){
+	  		if ($(this).val() > 100){
+	    		$(this).val('100');
+	  		}
+		});
+		$('#colorInput').keyup(function() {
+			$('.color-box').css('background-color', '#'+$(this).val());
+		});
+	});	
+</script>
 @stop

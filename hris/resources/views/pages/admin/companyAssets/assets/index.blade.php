@@ -1,10 +1,10 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
-@section('title', 'HRIS | Leave Settings - Leave Types')
+@section('title', 'HRIS | Company Assets - Assets')
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1><i class="fas fa-fw fa-pause"></i> Leave Settings</h1>
+		<h1><i class="fas fa-fw fa-archive"></i> Company Assets</h1>
 	</div>
 </div>
 @stop
@@ -23,36 +23,44 @@
 @endif
 <div class="card">
 	<div class="card-header">
-		<h3 class="card-title">leave type list</h3>
+		<h3 class="card-title">asset list</h3>
 		<div class="card-tools">
-			<a class="btn add-button btn-md" href="/hris/pages/admin/leave/leaveTypes/create"><i class="fa fa-plus mr-1"></i> add leave type</a>
+			<a class="btn add-button btn-md" href="/hris/pages/admin/companyAssets/assets/create"><i class="fa fa-plus mr-1"></i> add asset</a>
 		</div>
 	</div>
 	<div class="card-body">
-		@if(count($leaveTypes) > 0)
+		@if(count($assets) > 0)
 		<table class="table table-hover table-bordered table-striped table-condensed">
 			<thead>
 				<tr>
-					<th>id</th>
-					<th>leave name</th>
-					<th>leave accrue enabled</th>
-					<th>leave carried forward</th>
-					<th>leaves per year</th>
-					<th>leave group</th>
+					<th>code</th>
+					<th>type</th>
+					<th>employee</th>
+					<th>department</th>
 					<th>actions</th>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($leaveTypes as $leaveType)
+				@foreach($assets as $asset)
 				<tr>
-					<td>{{$leaveType->id}}</td>
-					<td>{{$leaveType->name}}</td>
-					<td>{{$leaveType->leave_accrue}}</td>
-					<td>{{$leaveType->carried_forward}}</td>
-					<td>{{$leaveType->leaves_per_period}}</td>
+					<td>{{$asset->code}}</td>
 					<td>
-						@if($leaveType->leave_group)
-						{{$leaveType->leave_group->name}}
+						@if($asset->type)
+						{{$asset->type->name}}
+						@else
+						None
+						@endif
+					</td>
+					<td>
+						@if($asset->employee)
+						{{$asset->employee->firstname}} {{$asset->employee->lastname}}
+						@else
+						None
+						@endif
+					</td>
+					<td>
+						@if($asset->department)
+						{{$asset->department->name}}
 						@else
 						None
 						@endif
@@ -60,11 +68,11 @@
 					<td class="td-action">
 						<div class="row no-gutters">
 							<div class="col-6">
-								<a class="btn btn-success btn-sm" href="/hris/pages/admin/leave/leaveTypes/{{$leaveType->id}}/edit"><i class="fa fa-edit"></i></a>
+								<a class="btn btn-success btn-sm" href="/hris/pages/admin/companyAssets/assets/{{$asset->id}}/edit"><i class="fa fa-edit"></i></a>
 							</div>
 							<div class="col-6">
 								<!-- Button trigger modal -->
-								<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$leaveType->id}}" data-name="{{$leaveType->name}}"><i class="fa fa-trash"></i></button>
+								<button class="btn btn-danger btn-sm delete-btn" asset="button" data-toggle="modal" data-target="#modal-{{$asset->id}}" data-name="{{$asset->code}}"><i class="fa fa-trash"></i></button>
 							</div>
 						</div>
 					</td>
@@ -77,7 +85,7 @@
 		@endif
 	</div>
 	<div class="card-footer">
-		{{$leaveTypes->links()}}
+		{{$assets->links()}}
 	</div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

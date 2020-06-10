@@ -40,9 +40,10 @@
 					<th>department</th>
 					<th>job title</th>
 					<th>employment status</th>
-					<th>employmee</th>
+					<th>employee</th>
 					<th>Experience (Days)</th>
 					<th>Leaves Per Year</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -50,38 +51,60 @@
 				<tr>
 					<td>{{$leaveRule->id}}</td>
 					<td>
-						<a href="/hris/pages/admin/leave/leaveRules/{{$leaveRule->id}}/edit"><i class="fa fa-edit"></i></a>
+						@if($leaveRule->leave_type)
+						{{$leaveRule->leave_type->name}}
+						@else
+						None
+						@endif
+					</td>
+					<td>
+						@if($leaveRule->leave_group)
+						{{$leaveRule->leave_group->name}}
+						@else
+						None
+						@endif
+					</td>
+					<td>
+						@if($leaveRule->leave_period)
+						{{$leaveRule->leave_period->name}}
+						@else
+						None
+						@endif
+					</td>
+					<td>
+						@if($leaveRule->department)
+						{{$leaveRule->department->name}}
+						@else
+						None
+						@endif
+					</td>
+					<td>
+						@if($leaveRule->job_title)
+						{{$leaveRule->job_title->name}}
+						@else
+						None
+						@endif
+					</td>
+					<td>
+						@if($leaveRule->employment_status)
+						{{$leaveRule->employment_status->name}}
+						@else
+						None
+						@endif
+					</td>
+					<td>
+						@if($leaveRule->employee)
+						{{$leaveRule->employee->name}}
+						@else
+						None
+						@endif
+					</td>
+					<td>{{$leaveRule->exp_days}}</td>
+					<td>{{$leaveRule->default_per_year}}</td>
+					<td>
+						<a class="btn btn-success btn-sm" href="/hris/pages/admin/leave/leaveRules/{{$leaveRule->id}}/edit"><i class="fa fa-edit"></i></a>
 						<!-- Button trigger modal -->
-						<button type="button" data-toggle="modal" data-target="#modal-{{$leaveRule->id}}"><i class="fa fa-trash"></i></button>
-						<!-- Modal -->
-						<div class="modal fade" id="modal-{{$leaveRule->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-{{$leaveRule->id}}" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title">Delete Confirmation</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<p>Are you sure you want to delete?</p>
-										<hr>
-										<form action="/hris/pages/admin/leave/leaveRules/delete/{{$leaveRule->id}}" method="post" id="form-{{$leaveRule->id}}">
-											@csrf
-											@method('DELETE')
-											<div class="form-group">
-												<label for="upass">Enter Password: </label>
-												<input class="form-control" type="password" name="upass" required>
-											</div>
-										</form>
-									</div>
-									<div class="modal-footer">
-										<button class="btn btn-danger" type="submit" form="form-{{$leaveRule->id}}"><i class="fa fa-check"></i> Confirm Delete</button>
-										<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-									</div>
-								</div>
-							</div>
-						</div>
+						<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$leaveRule->id}}" data-name="Leave Rule ID: {{$leaveRule->id}}"><i class="fa fa-trash"></i></button>
 					</td>
 				</tr>
 				@endforeach
@@ -95,12 +118,55 @@
 		{{$leaveRules->links()}}
 	</div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Delete Confirmation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="data-name"></p>
+				<hr>
+				<form class="form-horizontal" method="post">
+					@csrf
+					@method('DELETE')
+					<div class="form-group">
+						<label for="upass">Enter Password: </label>
+						<input class="form-control" type="password" name="upass" required>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-danger" type="submit"><i class="fa fa-check"></i> Confirm Delete</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 @stop
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
 <script>
-console.log('Hi!');
+	$(document).ready(function(){
+		$('.delete-btn').on('click', function(){
+			var get = $('.add-button').attr('href');
+			var href = get.replace('create', 'delete');
+			var target = $(this).attr('data-target');
+			var modal_id = target.replace('#', '');
+			var id = target.replace('#modal-', '');
+			$('.modal').attr('id', modal_id);
+			$('.modal').attr('aria-labelledby', modal_id);
+			$('.form-horizontal').attr('action', href+'/'+id);
+			$('.form-horizontal').attr('id', 'form-'+id);
+			$('.modal-footer > button').attr('form', 'form-'+id);
+			var name = $(this).attr('data-name');
+			$('.data-name').text('Are you sure you want to delete '+name+'?');
+		});
+	});
 </script>
 @stop
