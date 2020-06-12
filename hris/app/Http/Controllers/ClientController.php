@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_clients;
 use App\users;
 
 class ClientController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Properties Setup - Client';
+    }
     public function index()
     {
         $clients = hris_clients::paginate(10);
@@ -23,7 +29,9 @@ class ClientController extends Controller
     public function store(hris_clients $client, Request $request)
     {
         if($this->validatedData()) {
-            $client::create($this->validatedData());
+            $client = hris_clients::create($this->validatedData());
+            $id = $client->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +50,11 @@ class ClientController extends Controller
 
     public function update(hris_clients $client, Request $request)
     {
+        $id = $client->id;
         if($this->validatedData()) {
+            $model = $client;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $client->update($this->validatedData());
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully updated!');
         } else {
@@ -52,10 +64,13 @@ class ClientController extends Controller
 
     public function destroy(hris_clients $client)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $client->delete();
+            $id = $client->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

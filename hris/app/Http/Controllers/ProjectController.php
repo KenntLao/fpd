@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_projects;
 use App\hris_clients;
 use App\users;
 
 class ProjectController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Properties Setup - Project';
+    }
     public function index()
     {
         $projects = hris_projects::paginate(10);
@@ -24,8 +30,11 @@ class ProjectController extends Controller
 
     public function store(hris_projects $project, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $project::create($this->validatedData());
+            $project = hris_projects::create($this->validatedData());
+            $id = $project->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -45,7 +54,11 @@ class ProjectController extends Controller
 
     public function update(hris_projects $project, Request $request)
     {
+        $id = $project->id;
         if($this->validatedData()) {
+            $model = $project;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $project->update($this->validatedData());
             return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully updated!');
         } else {
@@ -55,10 +68,13 @@ class ProjectController extends Controller
 
     public function destroy(hris_projects $project)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $project->delete();
+            $id = $project->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

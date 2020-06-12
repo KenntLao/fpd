@@ -9,6 +9,13 @@ use App\users;
 
 class CompanyLoanTypeController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Company Loans - Loan Type';
+    }
     public function index()
     {
         $loanTypes = hris_company_loan_types::paginate(10);
@@ -22,8 +29,11 @@ class CompanyLoanTypeController extends Controller
 
     public function store(hris_company_loan_types $loanType, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $loanType::create($this->validatedData());
+            $loanType = hris_company_loan_types::create($this->validatedData());
+            $id = $loanType->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/loans/loanTypes/index')->with('success', 'Company Loan Type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +52,11 @@ class CompanyLoanTypeController extends Controller
 
     public function update(hris_company_loan_types $loanType, Request $request)
     {
+        $id = $loanType->id;
         if($this->validatedData()) {
+            $model = $loanType;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $loanType->update($this->validatedData());
             return redirect('/hris/pages/admin/loans/loanTypes/index')->with('success', 'Company Loan Type successfully updated!');
         } else {
@@ -52,10 +66,13 @@ class CompanyLoanTypeController extends Controller
 
     public function destroy(hris_company_loan_types $loanType)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $loanType->delete();
+            $id = $loanType->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/loans/loanTypes/index')->with('success', 'Company Loan Type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

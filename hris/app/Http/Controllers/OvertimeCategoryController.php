@@ -9,6 +9,13 @@ use App\users;
 
 class OvertimeCategoryController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Overtime Administration - Overtime Category';
+    }
     public function index()
     {
         $overtimeCategories = hris_overtime_categories::paginate(10);
@@ -22,8 +29,11 @@ class OvertimeCategoryController extends Controller
 
     public function store(hris_overtime_categories $overtimeCategory, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $overtimeCategory::create($this->validatedData());
+            $overtimeCategory = hris_overtime_categories::create($this->validatedData());
+            $id = $jobTitle->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +52,11 @@ class OvertimeCategoryController extends Controller
 
     public function update(hris_overtime_categories $overtimeCategory, Request $request)
     {
+        $id = $jobTitle->id;
         if($this->validatedData()) {
+            $model = $jobTitle;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $overtimeCategory->update($this->validatedData());
             return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully updated!');
         } else {
@@ -52,10 +66,13 @@ class OvertimeCategoryController extends Controller
 
     public function destroy(hris_overtime_categories $overtimeCategory)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $overtimeCategory->delete();
+            $id = $jobTitle->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

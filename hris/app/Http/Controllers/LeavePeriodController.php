@@ -9,6 +9,13 @@ use App\users;
 
 class LeavePeriodController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Leave Settings - Leave Period';
+    }
     public function index()
     {
         $leavePeriods = hris_leave_periods::paginate(10);
@@ -22,8 +29,11 @@ class LeavePeriodController extends Controller
 
     public function store(hris_leave_periods $leavePeriod, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $leavePeriod::create($this->validatedData());
+            $leavePeriod = hris_leave_periods::create($this->validatedData());
+            $id = $leavePeriod->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +52,11 @@ class LeavePeriodController extends Controller
 
     public function update(hris_leave_periods $leavePeriod, Request $request)
     {
+        $id = $leavePeriod->id;
         if($this->validatedData()) {
+            $model = $leavePeriod;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $leavePeriod->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully updated!');
         } else {
@@ -52,10 +66,13 @@ class LeavePeriodController extends Controller
 
     public function destroy(hris_leave_periods $leavePeriod)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leavePeriod->delete();
+            $id = $leavePeriod->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

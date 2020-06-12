@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_experience_levels;
 use App\users;
 
 class ExperienceLevelController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Recruitment Setup - Experience Level';
+    }
 
     public function index()
     {   
@@ -23,8 +29,11 @@ class ExperienceLevelController extends Controller
 
     public function store(hris_experience_levels $experienceLevel, Request $request)
     {
+        $action = 'add';
         if ($this->validatedData()) {
-            $experienceLevel::create($this->validatedData());
+            $experienceLevel = hris_experience_levels::create($this->validatedData());
+            $id = $experienceLevel->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -44,7 +53,11 @@ class ExperienceLevelController extends Controller
 
     public function update(hris_experience_levels $experienceLevel, Request $request)
     {
+        $id = $experienceLevel->id;
         if ($this->validatedData()) {
+            $model = $experienceLevel;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $experienceLevel->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level updated!');
         } else {
@@ -54,10 +67,13 @@ class ExperienceLevelController extends Controller
 
     public function destroy(hris_experience_levels $experienceLevel)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $experienceLevel->delete();
+            $id = $experienceLevel->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success','Experience level deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -11,6 +11,13 @@ use App\hris_languages;
 
 class EmployeeLanguageController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Personal Information - Language';
+    }
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
@@ -27,6 +34,7 @@ class EmployeeLanguageController extends Controller
 
     public function store(hris_employee_languages $employeeLanguage, Request $request)
     {
+        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if ($this->validatedData()) {
             $employeeLanguage->employee_id = $employee_id;
@@ -36,6 +44,8 @@ class EmployeeLanguageController extends Controller
             $employeeLanguage->writing = request('writing');
             $employeeLanguage->understanding = request('understanding');
             $employeeLanguage->save();
+            $id = $employeeLanguage->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee language successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -55,7 +65,11 @@ class EmployeeLanguageController extends Controller
 
     public function update(hris_employee_languages $employeeLanguage, Request $request)
     {
+        $id = $employeeLanguage->id;
         if($this->validatedData()) {
+            $model = $employeeLanguage;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $employeeLanguage->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee education successfully added!');
         } else {
@@ -65,10 +79,13 @@ class EmployeeLanguageController extends Controller
 
     public function destroy(hris_employee_languages $employeeLanguage)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeLanguage->delete();
+            $id = $employeeLanguage->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee skill successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

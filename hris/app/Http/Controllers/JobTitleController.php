@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_job_titles;
 use App\users;
 
 class JobTitleController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Job Details Setup - Job Title';
+    }
     public function index()
     {   
         $jobTitles = hris_job_titles::paginate(10);
@@ -23,9 +29,11 @@ class JobTitleController extends Controller
 
     public function store(hris_job_titles $jobTitle, Request $request)
     {
-
+        $action = 'add';
         if ($this->validatedData()) {
-            $jobTitle::create($this->validatedData());
+            $jobTitle = hris_job_titles::create($this->validatedData());
+            $id = $jobTitle->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -45,7 +53,11 @@ class JobTitleController extends Controller
 
     public function update(hris_job_titles $jobTitle, Request $request)
     {
+        $id = $jobTitle->id;
         if($this->validatedData()) {
+            $model = $jobTitle;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $jobTitle->update($this->validatedData());
             return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully updated!');
         } else {
@@ -55,10 +67,13 @@ class JobTitleController extends Controller
 
     public function destroy(hris_job_titles $jobTitle)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $jobTitle->delete();
+            $id = $jobTitle->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

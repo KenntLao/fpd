@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_courses;
 use App\users;
 
 class CourseController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Training Setup - Course';
+    }
     public function index()
     {
         $courses = hris_courses::paginate(10);
@@ -22,8 +28,11 @@ class CourseController extends Controller
 
     public function store(hris_courses $course, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $course::create($this->validatedData());
+            $course = hris_courses::create($this->validatedData());
+            $id = $course->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +51,11 @@ class CourseController extends Controller
 
     public function update(hris_courses $course, Request $request)
     {
+        $id = $course->id;
         if($this->validatedData()) {
+            $model = $course;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $course->update($this->validatedData());
             return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully updated!');
         } else {
@@ -52,10 +65,13 @@ class CourseController extends Controller
 
     public function destroy(hris_courses $course)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $course->delete();
+            $id = $course->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

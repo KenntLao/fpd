@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_pay_grades;
 use App\users;
 
 class PayGradeController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Job Details Setup - Pay Grade';
+    }
     public function index()
     {
         $payGrades = hris_pay_grades::paginate(10);
@@ -22,8 +28,11 @@ class PayGradeController extends Controller
 
     public function store(hris_pay_grades $payGrade, Request $request)
     {
+        $action = 'add';
         if ($this->validatedData()) {
-            $payGrade::create($this->validatedData());
+            $payGrade = hris_pay_grades::create($this->validatedData());
+            $id = $payGrade->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +51,11 @@ class PayGradeController extends Controller
 
     public function update(hris_pay_grades $payGrade ,Request $request)
     {
+        $id = $payGrade->id;
         if($this->validatedData()) {
+            $model = $payGrade;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $payGrade->update($this->validatedData());
             return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully updated!');
         } else {
@@ -52,10 +65,13 @@ class PayGradeController extends Controller
 
     public function destroy(hris_pay_grades $payGrade)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $payGrade->delete();
+            $id = $payGrade->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

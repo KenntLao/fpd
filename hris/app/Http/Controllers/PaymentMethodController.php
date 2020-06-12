@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_payment_methods;
 use App\users;
 
 class PaymentMethodController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Benefits Administration - Payment Method';
+    }
     public function index()
     {
         $paymentMethods = hris_payment_methods::paginate(10);
@@ -22,9 +28,12 @@ class PaymentMethodController extends Controller
 
     public function store(hris_payment_methods $paymentMethod, Request $request)
     {
+        $action = 'add';
         $paymentMethod = new hris_payment_methods();
         if($this->validatedData()) {
-            $paymentMethod::create($this->validatedData());
+            $paymentMethod = hris_payment_methods::create($this->validatedData());
+            $id = $paymentMethod->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment method successfully added!');
         } else {
             return back()->with($this->validatedData());
@@ -43,7 +52,11 @@ class PaymentMethodController extends Controller
 
     public function update(hris_payment_methods $paymentMethod, Request $request)
     {
+        $id = $paymentMethod->id;
         if($this->validatedData()) {
+            $model = $paymentMethod;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $paymentMethod->update($this->validatedData());
             return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment method successfully updated!');
         } else {
@@ -53,10 +66,13 @@ class PaymentMethodController extends Controller
 
     public function destroy(hris_payment_methods $paymentMethod)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $paymentMethod->delete();
+            $id = $paymentMethod->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment method successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

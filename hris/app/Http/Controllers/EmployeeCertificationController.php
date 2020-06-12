@@ -11,6 +11,13 @@ use App\hris_certifications;
 
 class EmployeeCertificationController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Personal Information - Certification';
+    }
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
@@ -27,6 +34,7 @@ class EmployeeCertificationController extends Controller
 
     public function store(hris_employee_certifications $employeeCertification, Request $request)
     {
+        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if ($this->validatedData()) {
             $employeeCertification->employee_id = $employee_id;
@@ -35,6 +43,8 @@ class EmployeeCertificationController extends Controller
             $employeeCertification->granted_on = request('granted_on');
             $employeeCertification->valid_thru = request('valid_thru');
             $employeeCertification->save();
+            $id = $employeeCertification->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee certification successfully added!');
         } else {
             return back()->withErrors($this->validateData());
@@ -54,7 +64,11 @@ class EmployeeCertificationController extends Controller
 
     public function update(hris_employee_certifications $employeeCertification, Request $request)
     {
+        $id = $employeeCertification->id;
         if ($this->validatedData()) {
+            $model = $employeeCertification;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $employeeCertification->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee certification successfully added!');
         } else {
@@ -64,10 +78,13 @@ class EmployeeCertificationController extends Controller
 
     public function destroy(hris_employee_certifications $employeeCertification)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeCertification->delete();
+            $id = $employeeCertification->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee education successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -196,6 +196,29 @@ if(isset($_POST['submit-login'])) {
 							
 						}
 					*/
+						//SYSTEM LOGS
+						$datetime = date('Y/m/d H:i:sa');
+						$user = $_SESSION['sys_login_uname'];
+						$mode = $_SESSION['sys_account_mode'];
+						$action = 'login';
+						$description = 'User: '.$_SESSION['sys_login_uname'].' has logged in.';
+						$sql = $pdo->prepare("INSERT INTO hris_system_logs(
+						user,
+						account_mode,
+						action,
+						description,
+						log_date_time) VALUES(
+						'". $user ."',
+						'". $mode ."',
+						'". $action ."',
+						'". $description ."',
+						'". $datetime ."') ");
+						$sql->bindParam(':user', $user);
+						$sql->bindParam(':mode', $mode);
+						$sql->bindParam(':action', $action);
+						$sql->bindParam(':description', $description);
+						$sql->bindParam(':log_date_time', $datetime);
+						$sql->execute();
 						// redirect to dashboard
                         header('location: /dashboard');
 					} else { // else redirect to login page and display error details

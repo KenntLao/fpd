@@ -62,6 +62,7 @@ return array(
     'App\\Http\\Controllers\\PersonalInformationController' => $baseDir . '/app/Http/Controllers/PersonalInformationController.php',
     'App\\Http\\Controllers\\ProjectController' => $baseDir . '/app/Http/Controllers/ProjectController.php',
     'App\\Http\\Controllers\\SkillController' => $baseDir . '/app/Http/Controllers/SkillController.php',
+    'App\\Http\\Controllers\\SystemLogController' => $baseDir . '/app/Http/Controllers/SystemLogController.php',
     'App\\Http\\Controllers\\TimeOvertimeRequestController' => $baseDir . '/app/Http/Controllers/TimeOvertimeRequestController.php',
     'App\\Http\\Controllers\\TimeProjectController' => $baseDir . '/app/Http/Controllers/TimeProjectController.php',
     'App\\Http\\Controllers\\TimeSheetController' => $baseDir . '/app/Http/Controllers/TimeSheetController.php',

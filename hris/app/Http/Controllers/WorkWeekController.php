@@ -10,6 +10,13 @@ use App\users;
 
 class WorkWeekController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Leave Settings - Work Week';
+    }
     public function index()
     {
         $workWeeks = hris_work_weeks::paginate(10);
@@ -24,8 +31,11 @@ class WorkWeekController extends Controller
 
     public function store(hris_work_weeks $workWeek, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $workWeek::create($this->validatedData());
+            $workWeek = hris_work_weeks::create($this->validatedData());
+            $id = $workWeek->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -45,7 +55,11 @@ class WorkWeekController extends Controller
 
     public function update(hris_work_weeks $workWeek, Request $request)
     {
+        $id = $workWeek->id;
         if($this->validatedData()) {
+            $model = $workWeek;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $workWeek->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully updated!');
         } else {
@@ -55,10 +69,13 @@ class WorkWeekController extends Controller
 
     public function destroy(hris_work_weeks $workWeek)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $workWeek->delete();
+            $id = $workWeek->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

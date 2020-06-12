@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_skills;
 use App\users;
 
 class SkillController extends Controller
 {
+    private $systemLog;
+    private $module;
 
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Qualifications Setup - Skill';
+    }
     public function index()
     {
         $skills = hris_skills::paginate(10);
@@ -23,8 +28,11 @@ class SkillController extends Controller
 
     public function store(hris_skills $skill, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $skill::create($this->validatedData());
+            $skill = hris_skills::create($this->validatedData());
+            $id = $skill->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -43,7 +51,11 @@ class SkillController extends Controller
 
     public function update(hris_skills $skill, Request $request)
     {
+        $id = $skill->id;
         if($this->validatedData()) {
+            $model = $skill;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $skill->update($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully updated!');
         } else {
@@ -53,10 +65,13 @@ class SkillController extends Controller
 
     public function destroy(hris_skills $skill)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $skill->delete();
+            $id = $skill->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

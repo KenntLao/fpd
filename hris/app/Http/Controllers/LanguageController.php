@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_languages;
 use App\users;
 
 class LanguageController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Qualificatioins Setup - Language';
+    }
     public function index()
     {
         $languages = hris_languages::paginate(10);
@@ -22,8 +28,11 @@ class LanguageController extends Controller
 
     public function store(hris_languages $language, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $language::create($this->validatedData());
+            $language = hris_languages::create($this->validatedData());
+            $id = $language->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +51,11 @@ class LanguageController extends Controller
 
     public function update(hris_languages $language, Request $request)
     {
+        $id = $language->id;
         if($this->validatedData()) {
+            $model = $language;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $language->update($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully updated!');
         } else {
@@ -52,10 +65,13 @@ class LanguageController extends Controller
 
     public function destroy(hris_languages $language)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $language->delete();
+            $id = $language->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

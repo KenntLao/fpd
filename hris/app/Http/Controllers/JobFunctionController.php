@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_job_functions;
 use App\users;
 
 class JobFunctionController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Recruitment Setup - Job  Function';
+    }
     public function index()
     {   
         $jobFunctions = hris_job_functions::paginate(10);
@@ -22,8 +28,12 @@ class JobFunctionController extends Controller
 
     public function store(hris_job_functions $jobFunction, Request $request)
     {
+        $action = 'add';
+        $systemLog = new SystemLogController;
         if ($this->validatedData()) {
-            $jobFunction::create($this->validatedData());
+            $jobFunction = hris_job_functions::create($this->validatedData());
+            $id = $jobFunction->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -43,7 +53,11 @@ class JobFunctionController extends Controller
 
     public function update(hris_job_functions $jobFunction, Request $request)
     {
+        $id = $jobFunction->id;
         if ($this->validatedData()) {
+            $model = $jobFunction;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $jobFunction->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully updated!');
         } else {
@@ -53,10 +67,13 @@ class JobFunctionController extends Controller
 
     public function destroy(hris_job_functions $jobFunction)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $jobFunction->delete();
+            $id = $jobFunction->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

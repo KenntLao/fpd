@@ -11,6 +11,13 @@ use App\hris_employee;
 
 class EmployeeSkillController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Personal Information - Skill';
+    }
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
@@ -27,12 +34,15 @@ class EmployeeSkillController extends Controller
 
     public function store(hris_employee_skills $employeeSkill, Request $request)
     {
+        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if ($this->validatedData()) {
             $employeeSkill->employee_id = $employee_id;
             $employeeSkill->skill_id = request('skill_id');
             $employeeSkill->details = request('details');
             $employeeSkill->save();
+            $id = $employeeSkill->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -52,7 +62,11 @@ class EmployeeSkillController extends Controller
 
     public function update(hris_employee_skills $employeeSkill, Request $request)
     {
+        $id = $employeeSkill->id;
         if ($this->validatedData()) {
+            $model = $employeeSkill;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $employeeSkill->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully added!');
         } else {
@@ -62,10 +76,13 @@ class EmployeeSkillController extends Controller
 
     public function destroy(hris_employee_skills $employeeSkill)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeSkill->delete();
+            $id = $employeeSkill->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

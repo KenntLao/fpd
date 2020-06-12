@@ -10,6 +10,13 @@ use App\users;
 
 class LeaveTypeController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Leave Settings - Leave Type';
+    }
     public function index()
     {
         $leaveTypes = hris_leave_types::paginate(10);
@@ -24,8 +31,11 @@ class LeaveTypeController extends Controller
 
     public function store(hris_leave_types $leaveType, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $leaveType::create($this->validatedData());
+            $leaveType = hris_leave_types::create($this->validatedData());
+            $id = $leaveType->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -45,7 +55,11 @@ class LeaveTypeController extends Controller
 
     public function update(hris_leave_types $leaveType, Request $request)
     {
+        $id = $leaveType->id;
         if($this->validatedData()) {
+            $model = $leaveType;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $leaveType->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully updated!');
         } else {
@@ -55,10 +69,13 @@ class LeaveTypeController extends Controller
 
     public function destroy(hris_leave_types $leaveType)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveType->delete();
+            $id = $leaveType->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

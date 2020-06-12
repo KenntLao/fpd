@@ -10,6 +10,13 @@ use App\users;
 
 class HolidayController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Leave Settings - Holiday';
+    }
     public function index()
     {
         $holidays = hris_holidays::paginate(10);
@@ -24,8 +31,11 @@ class HolidayController extends Controller
 
     public function store(hris_holidays $holiday, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $holiday::create($this->validatedData());
+            $holiday = hris_holidays::create($this->validatedData());
+            $id = $holiday->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -45,7 +55,11 @@ class HolidayController extends Controller
 
     public function update(hris_holidays $holiday, Request $request)
     {
+        $id = $holiday->id;
         if($this->validatedData()) {
+            $model = $holiday;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $holiday->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully updated!');
         } else {
@@ -55,10 +69,13 @@ class HolidayController extends Controller
 
     public function destroy(hris_holidays $holiday)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $holiday->delete();
+            $id = $holiday->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_training_sessions;
 use App\hris_courses;
 use App\users;
 
 class TrainingSessionController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Training Setup - Training Session';
+    }
     public function index()
     {
 
@@ -25,6 +31,7 @@ class TrainingSessionController extends Controller
 
     public function store(hris_training_sessions $trainingSession, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
             if($request->hasFile('attachment')) {
                 $file = time() . '.' . $request->attachment->extension();
@@ -42,6 +49,8 @@ class TrainingSessionController extends Controller
             $trainingSession->attendance_type = request('attendance_type');
             $trainingSession->training_cert_required = request('training_cert_required');
             $trainingSession->save();
+            $id = $trainingSession->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training session successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -61,7 +70,9 @@ class TrainingSessionController extends Controller
 
     public function update(hris_training_sessions $trainingSession, Request $request)
     {
+        $id = $trainingSession->id;
         if($this->validatedData()) {
+            $model = $trainingSession;
             if ($request->hasFile('attachment')) {
                 $path = public_path('assets/files/training_session/');
                 if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
@@ -75,7 +86,9 @@ class TrainingSessionController extends Controller
                     $trainingSession->attachment = $file;
                     $request->attachment->move($path, $file);
                 }
-            }
+            }            
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $trainingSession->name = request('name');
             $trainingSession->course_id = request('course_id');
             $trainingSession->details = request('details');
@@ -94,6 +107,7 @@ class TrainingSessionController extends Controller
 
     public function destroy(hris_training_sessions $trainingSession)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
@@ -103,6 +117,8 @@ class TrainingSessionController extends Controller
                 $old_file = $path . $trainingSession->attachment;
                 unlink($old_file);
             }
+            $id = $trainingSession->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training session successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

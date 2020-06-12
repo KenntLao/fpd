@@ -10,6 +10,13 @@ use App\hris_employee;
 
 class DependentController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Personal Information - Dependent';
+    }
     public function index()
     {
         if ($_SESSION['sys_account_mode'] == 'employee') {
@@ -25,6 +32,7 @@ class DependentController extends Controller
 
     public function store(hris_employee_dependents $dependent, Request $request)
     {
+        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if($this->validatedData()) {
             $dependent->employee_id = $employee_id;
@@ -33,6 +41,8 @@ class DependentController extends Controller
             $dependent->birthday = request('birthday');
             $dependent->id_number = request('id_number');
             $dependent->save();
+            $id = $dependent->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
@@ -51,7 +61,11 @@ class DependentController extends Controller
 
     public function update(hris_employee_dependents $dependent, Request $request)
     {
+        $id = $dependent->id;
         if($this->validatedData()) {
+            $model = $dependent;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $dependent->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully updated!');
         } else {
@@ -61,10 +75,13 @@ class DependentController extends Controller
 
     public function destroy(hris_employee_dependents $dependent)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $dependent->delete();
+            $id = $dependent->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

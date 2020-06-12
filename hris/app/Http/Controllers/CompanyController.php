@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_company_structures;
 use App\hris_countries;
 use App\hris_time_zones;
@@ -11,6 +10,14 @@ use App\users;
 
 class CompanyController extends Controller
 {
+
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Administration - Company Structure';
+    }
 
     public function index()
     {
@@ -28,8 +35,11 @@ class CompanyController extends Controller
 
     public function store(hris_company_structures $company, Request $request)
     {
+        $action = 'add';
         if ( $this->validatedData() ) {
-            $company::create($this->validatedData());
+            $company = hris_company_structures::create($this->validatedData());
+            $id = $company->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully added!');
 
         } else {
@@ -53,8 +63,11 @@ class CompanyController extends Controller
 
     public function update(hris_company_structures $company, Request $request)
     {
-
+        $id = $company->id;
         if ( $this->validatedData() ) {
+            $model = $company;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $company->update($this->validatedData());
             return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully updated!');
         } else {
@@ -65,10 +78,13 @@ class CompanyController extends Controller
 
     public function destroy(hris_company_structures $company)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $company->delete();
+            $id = $company->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully deleted');
         } else {
             return back()->withErrors(['Password does not match.']);

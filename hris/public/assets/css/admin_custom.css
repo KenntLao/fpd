@@ -235,7 +235,7 @@ body {
 }
 .table td {
 	vertical-align: middle;
-	text-align: left;
+	text-align: center;
 	font-size: 12px;
 	color: #7a7a7a;
 	padding: .25rem .5rem;
@@ -519,4 +519,60 @@ textarea.form-control {
 }
 .section-info {
 	padding: 10px 40px !important;
+}
+
+/* LOGS */
+.line {
+	position: absolute;
+	top: 100%;
+	left: 50px;
+	content: "";
+	background: #ddd;
+	height: 20px;
+	width: 1px;
+}
+/* LOG CARD BODY WIDTH
+.log {
+	width: 80%;
+}
+*/
+.log .card-body {
+	padding: 15px;
+	display: inline-flex;
+}
+.log-icon > i {
+	font-size: 15px;
+	padding: 10px;
+	border-radius: 50%;
+}
+.log-icon > .fa-sign-in-alt {
+	background: #339AF0;
+	color: #fff;
+}
+.log-icon > .fa-plus {
+	background: #28a745;
+	color: #fff;
+}
+.log-icon > .fa-trash {
+	background: #dc3545;
+	color: #fff;
+}
+.log-icon > .fa-pencil-alt {
+	background: #339AF0;
+	color: #fff;
+}
+.log-info > h5, .log-info > p {
+	font-family: opensans;
+}
+.log-info > h5 {
+	color: #bcbcbc;
+	font-size: 12px;
+}
+.log-info > p {
+	color: #000;
+	font-size: 12px;
+	margin-bottom: 0;
+}
+.links {
+	float: right;
 }

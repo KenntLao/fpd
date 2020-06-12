@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_employee_projects;
 use App\hris_projects;
 use App\users;
@@ -11,6 +10,13 @@ use App\hris_employee;
 
 class EmployeeProjectController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Properties Setup - Employee Project';
+    }
 
     public function index()
     {
@@ -28,8 +34,11 @@ class EmployeeProjectController extends Controller
 
     public function store(hris_employee_projects $employeeProject, Request $request)
     {
+        $action = 'add'
         if($this->validatedData()) {
-            $employeeProject::create($this->validatedData());
+            $employeeProject = hris_employee_projects::create($this->validatedData());
+            $id = $employeeProject->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee project successfully deleted!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -50,7 +59,11 @@ class EmployeeProjectController extends Controller
 
     public function update(hris_employee_projects $employeeProject, Request $request)
     {
+        $id = $employeeProject->id;
         if($this->validatedData()) {
+            $model = $employeeProject;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $employeeProject->update($this->validatedData());
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully updated!');
         } else {
@@ -60,10 +73,13 @@ class EmployeeProjectController extends Controller
 
     public function destroy(hris_employee_projects $employeeProject)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employeeProject->delete();
+            $id = $employeeProject->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted');
         } else {
             return back()->withErrors(['Password does not match.']);

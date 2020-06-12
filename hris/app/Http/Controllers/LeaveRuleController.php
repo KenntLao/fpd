@@ -16,6 +16,13 @@ use App\hris_company_structures;
 
 class LeaveRuleController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Leave Settings - Leave Rule';
+    }
     public function index()
     {
         $leaveRules = hris_leave_rules::paginate(10);
@@ -27,17 +34,20 @@ class LeaveRuleController extends Controller
         $leaveTypes = hris_leave_types::all();
         $leaveGroups = hris_leave_groups::all();
         $leavePeriods = hris_leave_periods::all();
-        $jobTitles = hris_job_titles::all();
+        $leaveRules = hris_job_titles::all();
         $employmentStatuses = hris_employment_statuses::all();
         $employees = hris_employee::all();
         $departments = hris_company_structures::all();
-        return view('pages.admin.leave.leaveRules.create', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'jobTitles', 'employmentStatuses', 'employees', 'departments'));
+        return view('pages.admin.leave.leaveRules.create', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'leaveRules', 'employmentStatuses', 'employees', 'departments'));
     }
 
     public function store(hris_leave_rules $leaveRule, Request $request)
     {
+        $action = 'add';
         if ($this->validatedData()) {
-            $leaveRule::create($this->validatedData());
+            $leaveRule = hris_leave_rules::create($this->validatedData());
+            $id = $leaveRule->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success', 'Leave rule successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -54,16 +64,20 @@ class LeaveRuleController extends Controller
         $leaveTypes = hris_leave_types::all();
         $leaveGroups = hris_leave_groups::all();
         $leavePeriods = hris_leave_periods::all();
-        $jobTitles = hris_job_titles::all();
+        $leaveRules = hris_job_titles::all();
         $employmentStatuses = hris_employment_statuses::all();
         $employees = hris_employee::all();
         $departments = hris_company_structures::all();
-        return view('pages.admin.leave.leaveRules.edit', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'jobTitles', 'employmentStatuses', 'employees', 'departments'));
+        return view('pages.admin.leave.leaveRules.edit', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'leaveRules', 'employmentStatuses', 'employees', 'departments'));
     }
 
     public function update(hris_leave_rules $leaveRule, Request $request)
     {
+        $id = $leaveRule->id;
         if ($this->validatedData()) {
+            $model = $leaveRule;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $leaveRule->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success', 'Leave rule successfully updated!');
         } else {
@@ -77,6 +91,8 @@ class LeaveRuleController extends Controller
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveRule->delete();
+            $id = $leaveRule->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success','Leave rule successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

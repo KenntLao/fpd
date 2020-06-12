@@ -12,6 +12,13 @@ use App\hris_employee;
 
 class EmployeeLoanController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Company Loans - Employee Loan';
+    }
     public function index()
     {
         $employeeLoans = hris_employee_loans::paginate(10);
@@ -28,8 +35,11 @@ class EmployeeLoanController extends Controller
 
     public function store(hris_employee_loans $employeeLoan, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $employeeLoan::create($this->validatedData());
+            $employeeLoan = hris_employee_loans::create($this->validatedData());
+            $id = $employeeLoan->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -51,7 +61,11 @@ class EmployeeLoanController extends Controller
 
     public function update(hris_employee_loans $employeeLoan, Request $request)
     {
+        $id = $employeeLoan->id;
         if($this->validatedData()) {
+            $model = $employeeLoan;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $employeeLoan->update($this->validatedData());
             return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully updated!');
         } else {
@@ -61,10 +75,13 @@ class EmployeeLoanController extends Controller
 
     public function destroy(hris_employee_loans $employeeLoan)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employeeLoan->delete();
+            $id = $employeeLoan->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

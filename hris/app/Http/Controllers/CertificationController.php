@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_certifications;
 use App\users;
 
 class CertificationController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Qualifications Setup - Certification';
+    }
     public function index()
     {
         $certifications = hris_certifications::paginate(10);
@@ -22,8 +28,11 @@ class CertificationController extends Controller
 
     public function store(hris_certifications $certification, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $certification::create($this->validatedData());
+            $certification = hris_certifications::create($this->validatedData());
+            $id = $certification->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +51,11 @@ class CertificationController extends Controller
 
     public function update(hris_certifications $certification, Request $request)
     {
+        $id = $certification->id;
         if($this->validatedData()) {
+            $model = $certification;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $certification->update($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully updated!');
         } else {
@@ -52,10 +65,13 @@ class CertificationController extends Controller
 
     public function destroy(hris_certifications $certification)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $certification->delete();
+            $id = $certification->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

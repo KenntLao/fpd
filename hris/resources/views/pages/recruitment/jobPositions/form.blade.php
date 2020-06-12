@@ -25,7 +25,7 @@
 			<label class="mr-2" for="company_name">Company Name: </label>
 			<div class="input">
 				<p class="placeholder">Enter company name</p>
-				<input class="form-control required" type="text" name="company_name" value="{{old('company_name') ?? $jobPosition->company_names}}">
+				<input class="form-control required" type="text" name="company_name" value="{{old('company_name') ?? $jobPosition->company_name}}">
 			</div>
 		</div>
 	</div>

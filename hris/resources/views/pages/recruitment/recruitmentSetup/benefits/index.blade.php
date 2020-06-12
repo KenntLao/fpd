@@ -101,6 +101,7 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 <script>
 	$(document).ready(function(){
 		$('.delete-btn').on('click', function(){

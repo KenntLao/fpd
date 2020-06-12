@@ -12,7 +12,13 @@ use App\hris_educations;
 
 class EmployeeEducationController extends Controller
 {
+    private $systemLog;
+    private $module;
 
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Personal Information - Education';
+    }
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
@@ -29,6 +35,7 @@ class EmployeeEducationController extends Controller
 
     public function store(hris_employee_educations $employeeEducation, Request $request)
     {
+        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if($this->validatedData()) {
             $employeeEducation->employee_id = $employee_id;
@@ -37,6 +44,8 @@ class EmployeeEducationController extends Controller
             $employeeEducation->start_date = request('start_date');
             $employeeEducation->completed = request('completed');
             $employeeEducation->save();
+            $id = $employeeEducation->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -56,7 +65,11 @@ class EmployeeEducationController extends Controller
 
     public function update(hris_employee_educations $employeeEducation, Request $request)
     {
+        $id = $employeeEducation->id;
         if($this->validatedData()) {
+            $model = $employeeEducation;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $employeeEducation->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully added!');
         } else {
@@ -66,10 +79,13 @@ class EmployeeEducationController extends Controller
 
     public function destroy(hris_employee_educations $employeeEducation)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeEducation->delete();
+            $id = $employeeEducation->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

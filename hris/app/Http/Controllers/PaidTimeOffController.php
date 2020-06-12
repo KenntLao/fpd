@@ -12,7 +12,13 @@ use App\hris_employee;
 
 class PaidTimeOffController extends Controller
 {
+    private $systemLog;
+    private $module;
 
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Leave Settings - Paid Time Off';
+    }
     public function index()
     {
         $paidTimeOffs = hris_paid_time_offs::paginate(10);
@@ -29,8 +35,11 @@ class PaidTimeOffController extends Controller
 
     public function store(hris_paid_time_offs $paidTimeOff, Request $request)
     {
+        $action = 'add';
         if ($this->validatedData()) {
-            $paidTimeOff::create($this->validatedData());
+            $paidTimeOff = hris_paid_time_offs::create($this->validatedData());
+            $id = $paidTimeOff->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/paidTimeOffs/index')->with('success', 'Paid time off successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -52,7 +61,11 @@ class PaidTimeOffController extends Controller
 
     public function update(hris_paid_time_offs $paidTimeOff, Request $request)
     {
+        $id = $paidTimeOff->id;
         if ($this->validatedData()) {
+            $model = $paidTimeOff;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $paidTimeOff->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/paidTimeOffs/index')->with('success', 'Paid time off successfully updated!');
         } else {
@@ -62,10 +75,13 @@ class PaidTimeOffController extends Controller
 
     public function destroy(hris_paid_time_offs $paidTimeOff)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $paidTimeOff->delete();
+            $id = $paidTimeOff->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/paidTimeOffs/index')->with('success','Paid time off successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

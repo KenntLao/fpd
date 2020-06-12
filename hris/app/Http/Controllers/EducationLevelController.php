@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_education_levels;
 use App\users;
 
 class EducationLevelController extends Controller
 {
+    private $systemLog;
+    private $module;
 
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Recruitment Setup - Education Level';
+    }
     public function index()
     {   
         $educationLevels = hris_education_levels::paginate(10);
@@ -23,8 +28,11 @@ class EducationLevelController extends Controller
 
     public function store(hris_education_levels $educationLevel, Request $request)
     {
+        $action = 'add';
         if ($this->validatedData()) {
-            $educationLevel::create($this->validatedData());
+            $educationLevel = hris_education_levels::create($this->validatedData());
+            $id = $educationLevel->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -43,7 +51,11 @@ class EducationLevelController extends Controller
 
     public function update(hris_education_levels $educationLevel, Request $request)
     {
+        $id = $educationLevel->id;
         if ($this->validatedData()) {
+            $model = $educationLevel;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $educationLevel->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully updated!');
         } else {
@@ -53,10 +65,13 @@ class EducationLevelController extends Controller
 
     public function destroy(hris_education_levels $educationLevel)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $educationLevel->delete();
+            $id = $educationLevel->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -549,6 +549,7 @@ class ComposerStaticInit6c181881bffc77215f481f707d408bf5
         'App\\Http\\Controllers\\PersonalInformationController' => __DIR__ . '/../..' . '/app/Http/Controllers/PersonalInformationController.php',
         'App\\Http\\Controllers\\ProjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProjectController.php',
         'App\\Http\\Controllers\\SkillController' => __DIR__ . '/../..' . '/app/Http/Controllers/SkillController.php',
+        'App\\Http\\Controllers\\SystemLogController' => __DIR__ . '/../..' . '/app/Http/Controllers/SystemLogController.php',
         'App\\Http\\Controllers\\TimeOvertimeRequestController' => __DIR__ . '/../..' . '/app/Http/Controllers/TimeOvertimeRequestController.php',
         'App\\Http\\Controllers\\TimeProjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/TimeProjectController.php',
         'App\\Http\\Controllers\\TimeSheetController' => __DIR__ . '/../..' . '/app/Http/Controllers/TimeSheetController.php',

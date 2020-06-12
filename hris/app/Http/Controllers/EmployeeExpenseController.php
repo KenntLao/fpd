@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_employee_expenses;
 use App\hris_expenses_categories;
 use App\hris_payment_methods;
@@ -13,6 +12,13 @@ use App\hris_employee;
 
 class EmployeeExpenseController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Benefits Administration - Employee Expense';
+    }
     public function index()
     {
         $employeeExpenses = hris_employee_expenses::paginate(10);
@@ -30,6 +36,7 @@ class EmployeeExpenseController extends Controller
 
     public function store(hris_employee_expenses $employeeExpense,Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
             if ( $request->hasFile('receipt') ) {
                 $receipt = time() . '.' . $request->receipt->extension();
@@ -57,6 +64,8 @@ class EmployeeExpenseController extends Controller
             $employeeExpense->amount = request('amount');
             $employeeExpense->status = 'Pending';
             $employeeExpense->save();
+            $id = $employeeExpense->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -79,7 +88,9 @@ class EmployeeExpenseController extends Controller
 
     public function update(hris_employee_expenses $employeeExpense, Request $request)
     {
+        $id = $employeeExpense->id;
         if($this->validatedData()) {
+            $model = $employeeExpense;
             if ( $request->hasFile('receipt') ) {
                 $path = public_path('assets/files/employee_expenses/receipt/');
                 if ($employeeExpense->receipt != '' && $employeeExpense->receipt != NULL) {
@@ -122,6 +133,8 @@ class EmployeeExpenseController extends Controller
                     $request->attachment_2->move($path, $attachment_2);
                 }
             }
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $employeeExpense->employee_id = request('employee_id');
             $employeeExpense->expense_date_id = request('expense_date_id');
             $employeeExpense->payment_method = request('payment_method');
@@ -140,13 +153,18 @@ class EmployeeExpenseController extends Controller
     }
     public function updateStatus(hris_employee_expenses $employeeExpense, Request $request)
     {
+        $id = $employeeExpense->id;
+        $model = $employeeExpense;
         $employeeExpense->status = request('status');
+        //DO systemLog function FROM SystemLogController
+        $this->systemLog->updateSystemLog($model,$this->module,$id);
         $employeeExpense->update();
         return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense status successfully updated!');
     }
 
     public function destroy(hris_employee_expenses $employeeExpense)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
@@ -166,6 +184,8 @@ class EmployeeExpenseController extends Controller
                 $old_file = $path3 . $employeeExpense->attachment_2;
                 unlink($old_file);
             }
+            $id = $employeeExpense->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

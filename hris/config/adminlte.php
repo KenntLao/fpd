@@ -414,13 +414,7 @@ return [
                             'icon' => 'fas fa-fw fa-align-center',
                             'url' => '/hris/pages/admin/overtime/overtimeCategories/index',
                             'active' => ['/hris/pages/admin/overtime/overtimeCategories/create', '/hris/pages/admin/overtime/overtimeCategories/index', '/hris/pages/admin/overtime/overtimeCategories/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Requests',
-                            'icon' => 'fas fa-fw fa-align-center',
-                            'url' => '/hris/pages/admin/overtime/overtimeRequests/index',
-                            'active' => ['/hris/pages/admin/overtime/overtimeRequests/create', '/hris/pages/admin/overtime/overtimeRequests/index', '/hris/pages/admin/overtime/overtimeRequests/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
+                        ]
                     ]
                 ],
                 [

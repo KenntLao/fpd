@@ -344,20 +344,6 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE OVERTIME CATEGORIES */
     Route::delete('/hris/pages/admin/overtime/overtimeCategories/delete/{overtimeCategory}', 'OvertimeCategoryController@destroy');
 
-    /* OVERTIME REQUESTS PAGE */
-    Route::get('/hris/pages/admin/overtime/overtimeRequests/index', 'OvertimeRequestController@index');
-    /* ADD OVERTIME REQUESTS */
-    Route::get('/hris/pages/admin/overtime/overtimeRequests/create', 'OvertimeRequestController@create');
-    Route::post('/hris/pages/admin/overtime/overtimeRequests', 'OvertimeRequestController@store');
-    /* EDIT OVERTIME REQUESTS */
-    Route::get('/hris/pages/admin/overtime/overtimeRequests/{overtimeRequest}/edit', 'OvertimeRequestController@edit');
-    /* UPDATE OVERTIME REQUESTS */
-    Route::patch('/hris/pages/admin/overtime/overtimeRequests/update/{overtimeRequest}', 'OvertimeRequestController@update');
-    /* UPDATE OVERTIME REQUESTS STATUS*/
-    Route::patch('/hris/pages/admin/overtime/overtimeRequests/updateStatus/{overtimeRequest}', 'OvertimeRequestController@updateStatus');
-    /* DELETE OVERTIME REQUESTS */
-    Route::delete('/hris/pages/admin/overtime/overtimeRequests/delete/{overtimeRequest}', 'OvertimeRequestController@destroy');
-
     /* COMPANY LOANS */
 
     /* LOAN TYPES PAGE */
@@ -411,6 +397,9 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::patch('/hris/pages/admin/companyAssets/assets/update/{asset}', 'CompanyAssetController@update');
     /* DELETE ASSETS */
     Route::delete('/hris/pages/admin/companyAssets/assets/delete/{asset}', 'CompanyAssetController@destroy');
+
+    /* AUDIT LOG PAGE */
+    Route::get('/hris/pages/admin/auditLog/index', 'SystemLogController@index');
 
 
     /* EMPLOYEE MANAGEMENT */

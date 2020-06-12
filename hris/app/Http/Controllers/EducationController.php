@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_educations;
 use App\users;
 
 class EducationController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Qualifications Setup - Education';
+    }
     public function index()
     {
         $educations = hris_educations::paginate(10);
@@ -22,8 +28,11 @@ class EducationController extends Controller
 
     public function store(hris_educations $education, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
-            $education::create($this->validatedData());
+            $education = hris_educations::create($this->validatedData());
+            $id = $education->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +51,11 @@ class EducationController extends Controller
 
     public function update(hris_educations $education, Request $request)
     {
+        $id = $education->id;
         if($this->validatedData()) {
+            $model = $education;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $education->update($this->validatedData());
             return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully updated!');
         } else {
@@ -52,10 +65,13 @@ class EducationController extends Controller
 
     public function destroy(hris_educations $education)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $education->delete();
+            $id = $education->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

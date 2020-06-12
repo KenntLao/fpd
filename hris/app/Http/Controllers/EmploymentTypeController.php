@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\hris_employment_types;
 use App\users;
 
 class EmploymentTypeController extends Controller
 {
+    private $systemLog;
+    private $module;
+
+    public function __construct() {
+        $this->systemLog = new SystemLogController;
+        $this->module = 'Recruitment Setup - Employment Type';
+    }
     public function index()
     {
         $employmentTypes = hris_employment_types::paginate(10);
@@ -22,8 +28,11 @@ class EmploymentTypeController extends Controller
 
     public function store(hris_employment_types $employmentType, Request $request)
     {
+        $action = 'add';
         if ($this->validatedData()) {
-            $employmentType::create($this->validatedData());
+            $employmentType = hris_employment_types::create($this->validatedData());
+            $id = $employmentType->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -45,7 +54,11 @@ class EmploymentTypeController extends Controller
 
     public function update(hris_employment_types $employmentType, Request $request)
     {
+        $id = $employmentType->id;
         if ($this->validatedData()) {
+            $model = $employmentType;
+            //DO systemLog function FROM SystemLogController
+            $this->systemLog->updateSystemLog($model,$this->module,$id);
             $employmentType->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully updated!');
         } else {
@@ -54,11 +67,14 @@ class EmploymentTypeController extends Controller
     }
 
     public function destroy(hris_employment_types $employmentType)
-    {
+    {   
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employmentType->delete();
+            $id = $employmentType->id;
+            $this->systemLog->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success','Employment type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
