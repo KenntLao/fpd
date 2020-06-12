@@ -1,9 +1,9 @@
 @extends('adminlte::page')
-@section('title', 'HRIS | Work Shift Assignment')
+@section('title', 'HRIS | Overtime Management')
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-users "></i> Work Shift Assignment</h1>
+        <h1><i class="fas fa-fw fa-users "></i> Overtime Management</h1>
     </div>
 </div>
 @stop
@@ -22,50 +22,36 @@
 @endif
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Work Shift Assignments</h3>
+        <h3 class="card-title">Overtime Request List</h3>
         <div class="card-tools">
-            <a class="btn add-button btn-md" href="/hris/pages/time/workshiftAssignment/create"><i class="fa fa-plus mr-1"></i> Assign Work Shift</a>
+            <a class="btn add-button btn-md" href="/hris/pages/time/overtime/create"><i class="fa fa-plus mr-1"></i> Request Overtime</a>
         </div>
     </div>
     <div class="card-body">
-        @if(count($workshift_assignment) > 0)
+        @if(count($overtimes) > 0)
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped table-condensed">
                 <thead>
                     <tr>
-                        <th>Employee</th>
-                        <th>Work Shift</th>
-                        <th>Date from</th>
-                        <th>Date to</th>
-                        <th>Action</th>
+                        
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach($workshift_assignment as $assignment)
-
+                <tbody>    
                     <tr>
-                        @foreach($employee as $emp_data)
-                        <td>{{$emp_data->firstname}} {{$emp_data->lastname}}</td>
-                        @endforeach
-                        @foreach($workshift as $shift)
-                        <td>{{$shift->workshift_name}}</td>
-                        @endforeach
-                        <td>{{$assignment->date_from}}</td>
-                        <td>{{$assignment->date_to}}</td>
+                        <td></td>
+                        <td></td>
                         <td class="td-action">
                             <div class="row no-gutters">
                                 <div class="col-md-6">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/workshiftAssignment/{{$assignment->id}}/edit"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
                                 <div class="col-6">
                                     <!-- Button trigger modal -->
-                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$assignment->id}}" data-name="this work shift"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="{{$overtime->ot_request_date}}"><i class="fa fa-trash"></i></button>
                                 </div>
                             </div>
                         </td>
                     </tr>
-
-                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -74,7 +60,7 @@
         @endif()
     </div>
     <div class="card-footer">
-        {{$workshift_assignment->links()}}
+        {{$overtimes->links()}}
     </div>
     <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">

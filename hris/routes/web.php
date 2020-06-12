@@ -522,6 +522,8 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* UPDATE */
     Route::get('/hris/pages/time/workshiftAssignment/{workshift_assignment}/edit', 'WorkShiftAssignmentController@edit');
     Route::patch('/hris/pages/time/workshiftAssignment/update/{workshift_assignment}', 'WorkShiftAssignmentController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/time/workshiftAssignment/delete/{workshift_assignment}', 'WorkShiftAssignmentController@destroy');
 
     /* ATTENDANCES PAGE */
     Route::get('/hris/pages/time/attendances/index', 'AttendanceController@index');
@@ -532,14 +534,10 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE ATTENDANCES */
     Route::delete('/hris/pages/time/attendances/delete/{attendance}', 'AttendanceController@destroy');
 
-    /* TIME SHEETS PAGE */
-    Route::get('/hris/pages/time/timeSheets/index', 'TimeSheetController@index');
 
-    /* ATTENDANCE SHEETS PAGE */
-    Route::get('/hris/pages/time/attendanceSheets/index', 'AttendanceSheetController@index');
-
-    /* OVERTIME REQUESTS PAGE */
-    Route::get('/hris/pages/time/overtimeRequests/index', 'TimeOvertimeRequestController@index');
+    /* OVERTIME MANAGEMENT */
+    Route::get('/hris/pages/time/overtime/index', 'OvertimeController@index');
+    
 
     //PERSONAL INFORMATION
     Route::get('/hris/pages/personalInformation/profile/index', 'PersonalInformationController@index');
