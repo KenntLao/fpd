@@ -1,6 +1,56 @@
 <?php
 $permissions_arr = array(
 
+
+	// HRIS EMPLOYEES ===========================================================================
+	array(
+		array(
+			'permission_code' => 'employees',
+			'permission_name' => array(
+				'Employee Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employees list and view employee profile.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-add',
+			'permission_name' => array(
+				'Create Employee',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create employee.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-edit',
+			'permission_name' => array(
+				'Update Employee',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update employee.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-delete',
+			'permission_name' => array(
+				'Delete Employee',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete employee.',
+				''
+			)
+		),
+	),
+
+
     // DASHBOARD CALENDAR ===========================================================================
     array(
         array(
@@ -338,7 +388,7 @@ $permissions_arr = array(
 	),
 
 	// EMPLOYEES =========================================================================================
-	array(
+/*	array(
 		array(
 			'permission_code' => 'employees',
 			'permission_name' => array(
@@ -394,7 +444,8 @@ $permissions_arr = array(
 				'アカウントが従業員レコードを削除することを許可します。'
 			)
 		)
-	),
+			),
+*/
 
 	// DEPARTMENTS =========================================================================================
 	array(

@@ -66,12 +66,18 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group">
-                    <label class="mr-2" for="job_postion">Job Positions </label>
+                    <label class="mr-2" for="job_postion">Job Positions</label>
                     <span class="badge badge-danger">Required</span>
-                    <div class="input">
-                        <p class="placeholder">Job Position</p>
-                        <input class="form-control required" type="text" name="job_position" value="{{old('job_position') ?? $employee->job_position}}" required>
-                    </div>
+                    <select class="form-control required select2" name="job_position" required>
+                        @if($employee->job_position)
+                        <option default selected>{{$employee->job_position}}</option>
+                        @else
+                        <option disabled default selected>--select one--</option>
+                        @endif
+                        @foreach($roles as $role)
+                        <option value="{{$role->id}}">{{$role->role_name}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>

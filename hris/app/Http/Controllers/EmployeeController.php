@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\hris_employee;
 use App\users;
+use App\roles;
 
 class EmployeeController extends Controller
 {
@@ -15,9 +16,10 @@ class EmployeeController extends Controller
         return view('pages.employees.employee.index', compact('employees'));
     }
 
-    public function create(hris_employee $employee)
+    public function create(hris_employee $employee, roles $roles)
     {
-        return view('pages.employees.employee.create', compact('employee'));
+        $roles = roles::all();
+        return view('pages.employees.employee.create', compact('employee', 'roles'));
     }
 
     public function store(Request $request, hris_employee $employees) {
