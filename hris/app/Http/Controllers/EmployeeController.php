@@ -47,7 +47,7 @@ class EmployeeController extends Controller
             $employees->firstname = request('firstname');
             $employees->middlename = request('middlename');
             $employees->lastname = request('lastname');
-            $employees->job_position = request('job_position');
+            $employees->role_ids = request('job_position');
             $employees->work_no = request('work_no');
             $employees->work_phone = request('work_phone');
             $employees->work_email = request('work_email');

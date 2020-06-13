@@ -44,7 +44,6 @@ class CreateHrisEmployeesTable extends Migration
             $table->string('sss')->nullable();
             $table->string('phic')->nullable();
             $table->bigInteger('bank_acc');
-            $table->string('job_position');
             $table->string('employment_status');
             $table->string('work_no');
             $table->string('work_phone')->nullable();
@@ -54,7 +53,7 @@ class CreateHrisEmployeesTable extends Migration
             $table->date('termination_date')->nullable();
             $table->string('department');
             $table->string('supervisor');
-            $table->string('role_ids', 500)->default(',1,');
+            $table->string('role_ids', 500)->default(',');
             $table->bigInteger('last_login')->default(0);
             $table->string('status')->default('active')->nullable();
             $table->timestamps();

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUserID;
+use App\Http\Middleware\CheckPermission;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -404,16 +406,20 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     /* EMPLOYEE MANAGEMENT */
     //add
-    Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
-    Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
-    Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
-    //edit
-    Route::get('/hris/pages/employees/employee/{employee}/edit', 'EmployeeController@edit');
-    Route::patch('/hris/pages/employees/employee/update/{employee}', 'EmployeeController@update');
-    //show
-    Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
-    //delete
-    Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
+    
+
+    Route::group(['middleware' => 'CheckPermission:employees'], function () {
+        Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
+        Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
+        Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
+        //edit
+        Route::get('/hris/pages/employees/employee/{employee}/edit', 'EmployeeController@edit');
+        Route::patch('/hris/pages/employees/employee/update/{employee}', 'EmployeeController@update');
+        //show
+        Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
+        //delete
+        Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
+    });
 
     /* BENEFITS PAGE */
     Route::get('/hris/pages/recruitment/recruitmentSetup/benefits/index', 'BenefitController@index');
