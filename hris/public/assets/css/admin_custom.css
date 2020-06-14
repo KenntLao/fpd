@@ -37,9 +37,8 @@ html::-webkit-scrollbar {
 }
 
 /* SIDEBAR */
-.main-sidebar {
-	box-shadow: 0 14px 28px rgba(0, 0, 0, .25),
-	0 10px 10px rgba(0, 0, 0, .22) !important;
+.sidebar {
+	padding-bottom: 6rem;
 }
 .nav-link > p {
 	font-size: 12px;
@@ -47,6 +46,8 @@ html::-webkit-scrollbar {
 .main-sidebar {
 	overflow: hidden;
 	background: #041E42;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, .25),
+	0 10px 10px rgba(0, 0, 0, .22) !important;
 }
 :not(.layout-fixed) .main-sidebar {
 	height: 100%;
