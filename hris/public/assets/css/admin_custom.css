@@ -536,13 +536,17 @@ textarea.form-control {
 	width: 80%;
 }
 */
+.log {
+	margin-bottom: 15px !important;
+}
 .log .card-body {
-	padding: 15px;
+	padding: 5px 15px;
 	display: inline-flex;
 }
 .log-icon > i {
-	font-size: 15px;
-	padding: 10px;
+	vertical-align: middle;
+	font-size: 12px;
+	padding: 5px;
 	border-radius: 50%;
 }
 .log-icon > .fa-sign-in-alt {
@@ -565,6 +569,7 @@ textarea.form-control {
 	font-family: opensans;
 }
 .log-info > h5 {
+	margin-bottom: 0px;
 	color: #bcbcbc;
 	font-size: 12px;
 }

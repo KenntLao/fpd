@@ -19,6 +19,7 @@ use App\Http\Middleware\CheckPermission;
 
 /* COMPANY PAGE */
 Route::middleware([CheckUserID::class])->group(function(){
+    Route::get('/hris/logout', 'LoginController@logout');
     Route::get('/hris/pages/admin/company/index', 'CompanyController@index');
     /* ADD COMPANY STRUCTURE */
     Route::get('/hris/pages/admin/company/create', 'CompanyController@create');
@@ -403,7 +404,15 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* AUDIT LOG PAGE */
     Route::get('/hris/pages/admin/auditLog/index', 'SystemLogController@index');
 
-
+    /* DEPARTMENT MODULE */
+    Route::get('/hris/pages/admin/department/index', 'DepartmentController@index');
+    Route::get('/hris/pages/admin/department/create', 'DepartmentController@create');
+    Route::post('/hris/pages/admin/department', 'DepartmentController@store');
+    /* EDIT */
+    Route::get('/hris/pages/admin/department/{department}/edit', 'DepartmentController@edit');
+    Route::patch('/hris/pages/admin/department/update/{department}', 'DepartmentController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/admin/department/delete/{department}', 'DepartmentController@destroy');
     /* EMPLOYEE MANAGEMENT */
     //add
     

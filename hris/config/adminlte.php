@@ -458,6 +458,11 @@ return [
                     'icon' => 'fas fa-fw fa-compass',
                     'url' => '/hris/pages/admin/auditLog/index'
                 ],
+                [
+                    'text' => 'Departments',
+                    'icon' => 'fas fa-fw fa-building',
+                    'url' => '/hris/pages/admin/department/index'
+                ],
             ]
         ],
         'PERSONAL INFORMATION',

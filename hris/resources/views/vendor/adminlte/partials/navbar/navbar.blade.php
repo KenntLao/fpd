@@ -25,7 +25,7 @@
                 @endif
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Log out</a>
+                <a class="dropdown-item" href="/hris/logout">Log out</a>
             </div>
         </li>
         {{-- Custom right links --}}

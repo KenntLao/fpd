@@ -10,7 +10,7 @@ class SystemLogController extends Controller
 {
 	public function index() 
 	{
-		$logs = hris_system_logs::paginate(10);
+        $logs = hris_system_logs::orderBy('created_at','desc')->paginate(30);
 		return view('pages.admin.auditLog.index', compact('logs'));
 	}
     public function systemLog($module,$action,$id)
