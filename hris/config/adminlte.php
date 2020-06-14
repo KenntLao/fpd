@@ -461,7 +461,8 @@ return [
                 [
                     'text' => 'Departments',
                     'icon' => 'fas fa-fw fa-building',
-                    'url' => '/hris/pages/admin/department/index'
+                    'url' => '/hris/pages/admin/department/index',
+                    'active' => ['/hris/pages/admin/department/create', '/hris/pages/admin/department/index', '/hris/pages/admin/department/*/edit', 'regex:@^content/[0-9]+$@'],
                 ],
             ]
         ],
