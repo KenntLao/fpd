@@ -46,8 +46,8 @@ return [
     */
 
     'logo' => 'My<b>FPD</b>',
-    'logo_img' => null,
-    'logo_img_class' => null,
+    'logo_img' => '../public/assets/images/logo.gif',
+    'logo_img_class' => 'logo-img',
     'logo_img_xl' => null,
     'logo_img_xl_class' => null,
     'logo_img_alt' => null,
