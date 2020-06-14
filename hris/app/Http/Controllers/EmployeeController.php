@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use App\hris_employee;
 use App\users;
 use App\roles;
+use App\hris_department;
+
 
 class EmployeeController extends Controller
 {
@@ -16,10 +18,11 @@ class EmployeeController extends Controller
         return view('pages.employees.employee.index', compact('employees'));
     }
 
-    public function create(hris_employee $employee, roles $roles)
+    public function create(hris_employee $employee, roles $roles, hris_department $deparments)
     {
         $roles = roles::all();
-        return view('pages.employees.employee.create', compact('employee', 'roles'));
+        $departments = hris_department::all();
+        return view('pages.employees.employee.create', compact('employee', 'roles', 'departments'));
     }
 
     public function store(Request $request, hris_employee $employees) {
@@ -87,8 +90,10 @@ class EmployeeController extends Controller
         }
     }
 
-    public function edit(hris_employee $employee){
-        return view('pages.employees.employee.edit', compact('employee'));
+    public function edit(hris_employee $employee, roles $roles, hris_department $deparments){
+            $roles = roles::all();
+            $departments = hris_department::all();
+            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments'));
     }
 
     public function update(Request $request, hris_employee $employee){
@@ -125,7 +130,6 @@ class EmployeeController extends Controller
             $employee->firstname = request('firstname');
             $employee->middlename = request('middlename');
             $employee->lastname = request('lastname');
-            $employee->job_position = request('job_position');
             $employee->work_no = request('work_no');
             $employee->work_phone = request('work_phone');
             $employee->work_email = request('work_email');

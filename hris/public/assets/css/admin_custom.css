@@ -34,11 +34,11 @@ html::-webkit-scrollbar {
 }
 
 /* SIDEBAR */
-
 .nav-link > p {
 	font-size: 12px;
 }
 .main-sidebar {
+	overflow: hidden;
 	background: #041E42;
 }
 :not(.layout-fixed) .main-sidebar {
@@ -51,6 +51,34 @@ html::-webkit-scrollbar {
 	background: #041E42;
 	width: 5px;
 }
+/*SIDE BAR FOOTER */
+.sidebar-footer {
+	position: sticky;
+	bottom: 0;
+	z-index: 999;
+}
+.user-panel {
+	background: #030d31;
+}
+.user-panel,
+.user-panel .footer-name {
+	overflow: hidden;
+	white-space: nowrap;
+}
+.footer-profile-photo, .footer-name {
+	display: inline-block;
+	vertical-align: middle;
+	color: #FFFF00;
+}
+.sidebar-footer .footer-profile-photo {
+	margin-right: 1rem;
+	padding-left: .8rem;
+}
+.sidebar-footer .footer-profile-photo img {
+	padding: 5px;
+	width: 3rem;
+}
+/* END SIDE BAR FOOTER */
 .nav-header {
 	padding-top: 1.5rem !important;
 	color: #FFFF00;
