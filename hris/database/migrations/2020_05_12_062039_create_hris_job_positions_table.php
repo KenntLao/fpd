@@ -16,13 +16,11 @@ public function up()
         Schema::create('hris_job_positions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('job_code');
-            $table->string('job_title');
+            $table->string('job_title_id');
             $table->string('company_name')->nullable();
             $table->string('hiring_manager')->nullable();
             $table->string('show_hiring_manager_name');
             $table->string('short_description');
-            $table->string('job_description');
             $table->string('requirements')->nullable();
             $table->string('benefit_id');
             $table->string('country');

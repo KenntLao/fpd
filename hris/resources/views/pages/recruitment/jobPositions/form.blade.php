@@ -1,26 +1,22 @@
 @csrf
 <div class="row">
-	<div class="col-12 col-md-4">
-		<div class="form-group">
-			<label class="mr-2" for="job_code">Job Code: </label>
-			<span class="badge right badge-danger">Required</span>
-			<div class="input">
-				<p class="placeholder">Enter job code</p>
-				<input class="form-control required" type="text" name="job_code" value="{{old('job_code') ?? $jobPosition->job_code}}" required>
-			</div>
-		</div>
-	</div>
-	<div class="col-12 col-md-4">
+	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="job_title">Job Title: </label>
 			<span class="badge badge-danger">Required</span>
-			<div class="input">
-				<p class="placeholder">Enter job title</p>
-				<input class="form-control required" type="text" name="job_title" value="{{old('job_title') ?? $jobPosition->job_title}}" required>
-			</div>
+			<select class="form-control required select2" name="job_title_id" required>
+				@if(count($jobTitles) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($jobTitles as $jobTitle)
+				<option value="{{$jobTitle->id}}" {{ $jobPosition->job_title_id == $jobTitle->id  ? 'selected' : '' }}>{{$jobTitle->name}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
+			</select>
 		</div>
 	</div>
-	<div class="col-12 col-md-4">
+	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="company_name">Company Name: </label>
 			<div class="input">
@@ -65,18 +61,6 @@
 	</div>
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="job_description">Job Description: </label>
-			<span class="badge badge-danger">Required</span>
-			<div class="input">
-				<p class="placeholder">Enter job description</p>
-				<textarea class="form-control required" name="job_description" required>{{old('job_description') ?? $jobPosition->job_description}}</textarea>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-12 col-md-6">
-		<div class="form-group">
 			<label class="mr-2" for="requirements">Requirements: </label>
 			<div class="input">
 				<p class="placeholder">Enter requirements</p>
@@ -84,6 +68,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-3">
 		<div class="form-group">
 			<label class="mr-2" for="benefits">Benefits: </label>
@@ -116,8 +102,6 @@
 			</select>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="city">City: </label>
@@ -138,6 +122,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="department">Department: </label>
@@ -168,8 +154,6 @@
 			</select>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="experience_level">Experience Level: </label>
@@ -200,6 +184,8 @@
 			</select>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="education_level">Education Level: </label>
@@ -225,8 +211,6 @@
 			</select>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="currency">Currency: </label>
@@ -252,6 +236,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="salary_max">Salary Max: </label>
@@ -270,8 +256,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="status">Status: </label>
@@ -289,6 +273,8 @@
 			<input class="form-control required" type="date" name="closing_date" value="{{old('closing_date') ?? $jobPosition->closing_date}}">
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="image">Image: </label>
