@@ -85,5 +85,15 @@ $(document).ready(function() {
 		};
 	
 	});
+	// CHANGE BADGE WHEN CHECKED
+	$("input[type=checkbox]").change(function(){
+		var parent = $(this).parents('.form-group').parent();
+		if ($(this).prop('checked')) {
+			parent.find('.badge').addClass('badge-success').removeClass('badge-danger');
+        }
+        else {
+        	parent.find('.badge').addClass('badge-danger').removeClass('badge-success');
+        }
+	});
 
 });

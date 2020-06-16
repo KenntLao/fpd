@@ -208,10 +208,14 @@ return [
     */
 
     'menu' => [
-        'ADMINISTRATION',
+        [
+            'header' => 'ADMINISTRATION',
+            'can' => 'admin',
+        ],
         [
             'text' => 'Admin',
             'icon' => 'fas fa-fw fa-cubes',
+            'can' => 'admin',
             'submenu' => [
                 [   
                     'text' => 'Company Structure',
@@ -466,7 +470,9 @@ return [
                 ],
             ]
         ],
-        'PERSONAL INFORMATION',
+        [
+            'header' => 'PERSONAL INFORMATION'
+        ],
         [
             'text' => 'Personal Information',
             'icon' => 'fas fa-fw fa-grip-horizontal',
@@ -525,10 +531,14 @@ return [
                 ],
             ]
         ],
-        'EMPLOYEE MANAGEMENT',
+        [
+            'header' => 'EMPLOYEE MANAGEMENT',
+            'can' => 'employees',
+        ],
         [
             'text'    => 'Employees',
             'icon'    => 'fas fa-fw fa-users',
+            'can' => 'employees',
             'submenu' => [
                 [
                     'text' => 'Employees',
@@ -568,7 +578,9 @@ return [
                 ],
             ],
         ],
-        'TIME MANAGEMENT',
+        [
+            'header' => 'TIME MANAGEMENT',
+        ],
         [
             'text' => 'Time Management',
             'icon' => 'fas fa-fw fa-hourglass-half',
@@ -608,7 +620,9 @@ return [
                 ],
             ]
         ],
-        'LEAVE MANAGEMENT',
+        [
+            'header' => 'LEAVE MANAGEMENT',
+        ],
         [
             'text' => 'Leave Management',
             'icon' => 'fas fa-fw fa-share-alt',
@@ -668,7 +682,9 @@ return [
                 ]
             ]
         ],
-        'RECRUITMENT MANAGEMENT',
+        [
+            'header' => 'RECRUITMENT MANAGEMENT',
+        ],
         [
             'text'    => 'Recruitment',
             'icon' => 'fas fa-fw fa-th',
@@ -724,7 +740,9 @@ return [
                 ],
             ],
         ],
-        'ADMIN REPORTS',
+        [
+            'header' => 'ADMIN REPORTS',
+        ],
         [
             'text' => 'Admin Reports',
             'icon' => 'fas fa-fw fa-window-maximize',
@@ -735,7 +753,9 @@ return [
             'icon' => 'fas fa-fw fa-file-export',
             'url' => '#'
         ],
-        'SYSTEM MANAGEMENT',
+        [
+            'header' => 'SYSTEM MANAGEMENT',
+        ],
         [
             'text' => 'System',
             'icon' => 'fas fa-fw fa-sliders-h',
@@ -872,13 +892,17 @@ return [
                 ],
             ]
         ],
-        'INSIGHTS',
+        [
+            'header' => 'INSIGHTS',
+        ],
         [
             'text' => 'Time and Management',
             'icon' => 'fas fa-fw fa-user-clock',
             'url' => '#'
         ],
-        'PAYROLL',
+        [
+            'header' => 'PAYROLL',
+        ],
         [
             'text' => 'Salary',
             'icon' => 'fas fa-fw fa-file-archive',
@@ -936,7 +960,9 @@ return [
                 ],
             ]
         ],
-        'DOCUMENT MANAGEMENT',
+        [
+            'header' => 'DOCUMENT MANAGEMENT',
+        ],
         [
             'text' => 'Documents',
             'icon' => 'fas fa-fw fa-file-alt',
@@ -964,13 +990,17 @@ return [
                 ],
             ]
         ],
-        'COMPANY',
+        [
+            'header' => 'COMPANY',
+        ],
         [
             'text' => 'Staff Directory',
             'icon' => 'fas fa-fw fa-user',
             'url' => '#'
         ],
-        'TRAINING MANAGEMENT',
+        [
+            'header' => 'TRAINING MANAGEMENT',
+        ],
         [
             'text' => 'Training',
             'icon' => 'fas fa-fw fa-briefcase',
@@ -997,7 +1027,9 @@ return [
                 ],
             ]
         ],
-        'PERFORMANCE',
+        [
+            'header' => 'PERFORMANCE',
+        ],
         [
             'text' => 'Reviews',
             'icon' => 'fas fa-fw fa-bezier-curve',
@@ -1019,7 +1051,9 @@ return [
                 ],
             ]
         ],
-        'TRAVEL MANAGEMENT',
+        [
+            'header' => 'TRAVEL MANAGEMENT',
+        ],
         [
             'text' => 'Itinerary',
             'icon' => 'fas fa-fw fa-globe',
@@ -1041,7 +1075,9 @@ return [
                 ],
             ]
         ],
-        'FINANCE MANAGEMENT',
+        [
+            'header' => 'FINANCE MANAGEMENT',
+        ],
         [
             'text' => 'Finance',
             'icon' => 'fas fa-fw fa-calculator',
@@ -1079,7 +1115,9 @@ return [
                 ],
             ]
         ],
-        'USER REPORTS',
+        [
+            'header' => 'USER REPORTS',
+        ],
         [
             'text' => 'Reports',
             'icon' => 'fas fa-fw fa-window-maximize',
@@ -1111,9 +1149,10 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
+        //JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
+        App\MenuFilter::class,
     ],
 
     /*

@@ -32,6 +32,10 @@ class hris_job_positions extends Model
     {
         return $this->belongsTo('App\hris_company_structures');
     }
+    public function job_title()
+    {
+        return $this->belongsTo('App\hris_job_titles');
+    }
 
 
 }

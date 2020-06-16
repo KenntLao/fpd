@@ -9,6 +9,7 @@ use App\hris_employment_types;
 use App\hris_education_levels;
 use App\hris_experience_levels;
 use App\hris_job_functions;
+use App\hris_job_titles;
 use App\hris_countries;
 use App\hris_currencies;
 use App\users;
@@ -38,10 +39,11 @@ class JobPositionController extends Controller
         $educationLevels = hris_education_levels::all();
         $experienceLevels = hris_experience_levels::all();
         $jobFunctions = hris_job_functions::all();
+        $jobTitles = hris_job_titles::all();
         $countries = hris_countries::all()->sortBy('name');
         $currencies = hris_currencies::all()->sortBy('name');
         $departments = hris_company_structures::all();
-        return view('pages.recruitment.jobPositions.create', compact('benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions', 'countries', 'currencies', 'jobPosition', 'departments'));
+        return view('pages.recruitment.jobPositions.create', compact('benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions', 'countries', 'currencies', 'jobPosition', 'departments', 'jobTitles'));
     }
 
     public function store(hris_job_positions $jobPosition, Request $request)
@@ -53,13 +55,11 @@ class JobPositionController extends Controller
                 $jobPosition->image = $imageName;
                 $request->image->move(public_path('assets/images/job_positions/'), $imageName);
             }
-            $jobPosition->job_code = request('job_code');
-            $jobPosition->job_title = request('job_title');
+            $jobPosition->job_title_id = request('job_title_id');
             $jobPosition->company_name = request('company_name');
             $jobPosition->hiring_manager = request('hiring_manager');
             $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
             $jobPosition->short_description = request('short_description');
-            $jobPosition->job_description = request('job_description');
             $jobPosition->requirements = request('requirements');
             $jobPosition->benefit_id = request('benefit_id');
             $jobPosition->country = request('country');
@@ -100,10 +100,11 @@ class JobPositionController extends Controller
         $educationLevels = hris_education_levels::all();
         $experienceLevels = hris_experience_levels::all();
         $jobFunctions = hris_job_functions::all();
+        $jobTitles = hris_job_titles::all();
         $countries = hris_countries::all()->sortBy('name');
         $currencies = hris_currencies::all()->sortBy('name');
         $departments = hris_company_structures::all();
-        return view('pages.recruitment.jobPositions.edit', compact('jobPosition','benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions','countries', 'currencies', 'departments'));
+        return view('pages.recruitment.jobPositions.edit', compact('jobPosition','benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions','countries', 'currencies', 'departments','jobTitles'));
     }
 
     public function update(hris_job_positions $jobPosition, Request $request)
@@ -127,13 +128,11 @@ class JobPositionController extends Controller
             }
             //DO systemLog function FROM SystemLogController
             $this->systemLog->updateSystemLog($model,$this->module,$id);
-            $jobPosition->job_code = request('job_code');
-            $jobPosition->job_title = request('job_title');
+            $jobPosition->job_title_id = request('job_title_id');
             $jobPosition->company_name = request('company_name');
             $jobPosition->hiring_manager = request('hiring_manager');
             $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
             $jobPosition->short_description = request('short_description');
-            $jobPosition->job_description = request('job_description');
             $jobPosition->requirements = request('requirements');
             $jobPosition->benefit_id = request('benefit_id');
             $jobPosition->country = request('country');
@@ -183,11 +182,9 @@ class JobPositionController extends Controller
     protected function validatedData() 
     {
         return request()->validate([
-            'job_code'=>'required',
-            'job_title'=>'required',
+            'job_title_id'=>'required',
             'show_hiring_manager_name'=>'required',
             'short_description'=>'required',
-            'job_description'=>'required',
             'benefit_id'=>'required',
             'country'=>'required',
             'city'=>'required',

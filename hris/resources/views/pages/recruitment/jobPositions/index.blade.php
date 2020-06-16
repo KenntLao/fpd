@@ -47,9 +47,9 @@
 					@foreach($jobPositions as $jobPosition)
 					<tr>
 						<td>{{$jobPosition->id}}</td>
-						<td>{{$jobPosition->job_code}}</td>
-						<td>{{$jobPosition->job_title}}</td>
-						<td>{{$jobPosition->job_description}}</td>
+						<td>{{$jobPosition->job_title->code}}</td>
+						<td>{{$jobPosition->job_title->name}}</td>
+						<td>{{$jobPosition->job_title->description}}</td>
 						<td>{{$jobPosition->country}}</td>
 						<td>{{$jobPosition->department}}</td>
 						<td class="td-action">
