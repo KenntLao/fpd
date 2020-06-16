@@ -527,7 +527,24 @@ textarea.form-control {
 #results img {
 	width: 100%;
 }
+/* EMPLOYEE ROLE CHECKBOX */
+.select-role input {
+    display: none;
+}
 
+.select-role > label {
+	display: inline-block;
+	padding: 0 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    line-height: 50px;
+    cursor: pointer
+}
+
+.role-checked {
+    background: #041E42;
+    color: #ffffff;
+}
 /* PROFILE */
 .profile {
 	font-family: opensans;

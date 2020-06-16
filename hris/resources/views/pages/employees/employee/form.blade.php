@@ -238,6 +238,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="mr-2" for="roles">Roles</label>
+                            <span class="badge badge-danger">Required</span>
+                            <div class="input">
+                                <div class="select-role">
+                                    @foreach($roles as $role)
+                                    <input class="required role-checkbox" type="checkbox" name="roles[]" id="{{$role->id}}" />
+                                    <label for="{{$role->id}}">{{$role->role_name}}</label>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane" id="tabs-2" role="tabpanel">
                 <div class="row">
