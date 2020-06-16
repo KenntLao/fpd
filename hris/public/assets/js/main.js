@@ -1,6 +1,9 @@
 $(document).ready(function() {
 	
 	$('.select2').select2();
+	$('.select-role').select2({
+		placeholder: "Select Roles",
+	});
 
 	$('.workshift_time').daterangepicker({
 		timePicker: true,
@@ -92,7 +95,7 @@ $(document).ready(function() {
 			parent.find('.badge').addClass('badge-success').removeClass('badge-danger');
         }
         else {
-        	parent.find('.badge').addClass('badge-danger').removeClass('badge-success');
+			parent.find('.badge').addClass('badge-danger').removeClass('badge-success');
         }
 	});
 

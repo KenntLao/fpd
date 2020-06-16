@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\hris_employee;
 use App\users;
+use App\hris_job_titles;
 use App\roles;
 use App\hris_department;
 
@@ -18,11 +19,12 @@ class EmployeeController extends Controller
         return view('pages.employees.employee.index', compact('employees'));
     }
 
-    public function create(hris_employee $employee, roles $roles, hris_department $deparments)
+    public function create(hris_employee $employee, roles $roles, hris_department $deparments, hris_job_titles $job_titles)
     {
+        $job_titles = hris_job_titles::all();
         $roles = roles::all();
         $departments = hris_department::all();
-        return view('pages.employees.employee.create', compact('employee', 'roles', 'departments'));
+        return view('pages.employees.employee.create', compact('employee', 'roles', 'departments','job_titles'));
     }
 
     public function store(Request $request, hris_employee $employees) {
@@ -43,6 +45,8 @@ class EmployeeController extends Controller
             $username = substr($employee_firstname,0,1).substr($employee_middlename, 0, 1).substr($employee_lastname, 0, 1).$employee_number;
             $password = Hash::make(1234);
 
+            $role_ids = implode(',',request('role'));
+
             $employees->employee_photo = $imageName;
             $employees->employee_number = request('employee_number');
             $employees->username = $username;
@@ -50,7 +54,7 @@ class EmployeeController extends Controller
             $employees->firstname = request('firstname');
             $employees->middlename = request('middlename');
             $employees->lastname = request('lastname');
-            $employees->role_ids = request('job_position');
+            $employees->role_ids = ','.$role_ids.',';
             $employees->work_no = request('work_no');
             $employees->work_phone = request('work_phone');
             $employees->work_email = request('work_email');
@@ -90,10 +94,11 @@ class EmployeeController extends Controller
         }
     }
 
-    public function edit(hris_employee $employee, roles $roles, hris_department $deparments){
+    public function edit(hris_employee $employee, roles $roles, hris_department $deparments, hris_job_titles $job_titles){
+            $job_titles = hris_job_titles::all();
             $roles = roles::all();
             $departments = hris_department::all();
-            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments'));
+            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles'));
     }
 
     public function update(Request $request, hris_employee $employee){
@@ -122,6 +127,7 @@ class EmployeeController extends Controller
             $employee_number = request('employee_number');
             $username = substr($employee_firstname, 0, 1) . substr($employee_middlename, 0, 1) . substr($employee_lastname, 0, 1) . $employee_number;
             $password = Hash::make(1234);
+            $role_ids = implode(',', request('role'));
 
             $employee->employee_photo = $imageName;
             $employee->employee_number = request('employee_number');
@@ -130,6 +136,7 @@ class EmployeeController extends Controller
             $employee->firstname = request('firstname');
             $employee->middlename = request('middlename');
             $employee->lastname = request('lastname');
+            $employee->role_ids = ','.$role_ids.',';
             $employee->work_no = request('work_no');
             $employee->work_phone = request('work_phone');
             $employee->work_email = request('work_email');
@@ -163,7 +170,6 @@ class EmployeeController extends Controller
             $employee->visa_expire = request('visa_expire');
             $employee->update();
             $request->employee_photo->move($imagePath, $imageName);
-
             return redirect($_SESSION['return_page'])->with('success', 'Employee successfully updated!');
         } else { // if data fails
             return back()->withErrors($this->validatedData());

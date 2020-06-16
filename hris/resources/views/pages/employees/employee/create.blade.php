@@ -41,6 +41,7 @@
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
 <script>
+	
 	//preview image
 	var loadFile = function(event) {
 		var output = document.getElementById('image-preview');
@@ -49,21 +50,5 @@
 			URL.revokeObjectURL(output.src) // free memory
 		}
 	};
-	$("body").on("click", ".select-role label", function(e) {
-		var getLabel = $(this);
-		var getLabelFor = $(this).attr("for");
-		var goToParent = $(this).parents(".select-role");
-		var getCheckbox = goToParent.find("input[id = " + getLabelFor + "]");
-		
-		getCheckbox.attr('checked', 'checked');
-
-		if (getCheckbox.is(":checked")) {
-			getLabel.addClass('role-checked');
-		} else {
-			getLabel.removeClass('role-checked');
-		}
-		console.log(getCheckbox.attr("id"));
-
-	});
 </script>
 @stop

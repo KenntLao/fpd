@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\hris_job_titles;
 use App\users;
-use App\roles;
+
 
 class JobTitleController extends Controller
 {
@@ -23,8 +23,8 @@ class JobTitleController extends Controller
     }
 
     public function create(hris_job_titles $jobTitle)
-    {s
-        return view('pages.admin.jobDetails.jobTitles.create', compact('jobTitle','roles'));
+    {
+        return view('pages.admin.jobDetails.jobTitles.create', compact('jobTitle'));
     }
 
 
@@ -49,7 +49,7 @@ class JobTitleController extends Controller
 
     public function edit(hris_job_titles $jobTitle)
     {
-        return view('pages.admin.jobDetails.jobTitles.edit', compact('jobTitle','roles'));
+        return view('pages.admin.jobDetails.jobTitles.edit', compact('jobTitle'));
     }
 
     public function update(hris_job_titles $jobTitle, Request $request)

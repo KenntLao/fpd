@@ -74,8 +74,8 @@
                         @else
                         <option disabled default selected>--select one--</option>
                         @endif
-                        @foreach($roles as $role)
-                        <option value="{{$role->id}}">{{$role->role_name}}</option>
+                        @foreach($job_titles as $job_title)
+                        <option value="{{$job_title->id}}">{{$job_title->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -239,18 +239,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="mr-2" for="roles">Roles</label>
                             <span class="badge badge-danger">Required</span>
-                            <div class="input">
-                                <div class="select-role">
-                                    @foreach($roles as $role)
-                                    <input class="required role-checkbox" type="checkbox" name="roles[]" id="{{$role->id}}" />
-                                    <label for="{{$role->id}}">{{$role->role_name}}</label>
-                                    @endforeach
-                                </div>
-                            </div>
+                            <select class="required select-role" name="role[]" multiple="multiple">
+                                @foreach($roles as $role)
+                                <option value="{{$role->id}}">{{$role->role_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
