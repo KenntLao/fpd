@@ -573,8 +573,27 @@ return [
                 ],
                 [
                     'text' => 'Document Management',
-                    'url'  => '/hris/pages/employee/document_management/',
                     'icon'    => 'fas fa-fw fa-file',
+                    'submenu' => [
+                        [
+                            'text' => 'Company Documents',
+                            'url'  => '/hris/pages/employees/documents/companyDocuments/index',
+                            'icon'    => 'fas fa-fw fa-file',
+                            'active' => ['/hris/pages/employees/documents/companyDocuments/create', '/hris/pages/employees/documents/companyDocuments/index', '/hris/pages/employees/documents/companyDocuments/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Document Types',
+                            'url'  => '/hris/pages/employees/documents/types/index',
+                            'icon'    => 'fas fa-fw fa-file',
+                            'active' => ['/hris/pages/employees/documents/types/create', '/hris/pages/employees/documents/types/index', '/hris/pages/employees/documents/types/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                        [
+                            'text' => 'Employee Documents',
+                            'url'  => '/hris/pages/employees/documents/employeeDocuments/index',
+                            'icon'    => 'fas fa-fw fa-file',
+                            'active' => ['/hris/pages/employees/documents/employeeDocuments/create', '/hris/pages/employees/documents/employeeDocuments/index', '/hris/pages/employees/documents/employeeDocuments/*/edit', 'regex:@^content/[0-9]+$@']
+                        ],
+                    ]
                 ],
             ],
         ],

@@ -42,11 +42,19 @@ class SystemLogController extends Controller
             if( $f != 'created_at' && $f != 'updated_at' && $f != 'id' && $f != 'resume' && $f != 'profile_image' && $f != 'attachment' && $f != 'receipt' && $f != 'attachment_1' && $f != 'attachment_2') {
                 if ( $model->getOriginal($f) != request($f) ) {
                     if ( $model->getOriginal($f) == '' ) {
-                        $msg[] = '. Updated blank data to '.request($f);
+                        if ( is_array(request($f)) ) {
+                            $msg[] = '. Updated blank data to '.implode(",", request($f));
+                        } else {
+                            $msg[] = '. Updated blank data to '.request($f);
+                        }
                     } elseif ( request($f) == '' ) {
                         $msg[] = '. Updated '.$model->getOriginal($f).' to blank data';
                     } else {
-                        $msg[] = '. Updated '.$model->getOriginal($f).' to '.request($f);
+                        if ( is_array(request($f)) ) {
+                            $msg[] = '. Updated '.$model->getOriginal($f).' to '.implode(",", request($f));
+                        } else {
+                            $msg[] = '. Updated '.$model->getOriginal($f).' to '.request($f);
+                        }
                     }
                 }
             }

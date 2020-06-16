@@ -428,6 +428,16 @@ Route::middleware([CheckUserID::class])->group(function(){
         Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
         //delete
         Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
+
+        //DOCUMENT MANAGEMENT
+        Route::get('/hris/pages/employees/documents/companyDocuments/index', 'CompanyDocumentController@index');
+        Route::get('/hris/pages/employees/documents/companyDocuments/create', 'CompanyDocumentController@create');
+        Route::post('/hris/pages/employees/documents/companyDocuments', 'CompanyDocumentController@store');
+        //edit
+        Route::get('/hris/pages/employees/documents/companyDocuments/{document}/edit', 'CompanyDocumentController@edit');
+        Route::patch('/hris/pages/employees/documents/companyDocuments/update/{document}', 'CompanyDocumentController@update');
+        //delete
+        Route::delete('/hris/pages/employees/documents/companyDocuments/delete/{document}', 'CompanyDocumentController@destroy');
     });
 
     /* BENEFITS PAGE */
