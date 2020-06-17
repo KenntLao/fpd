@@ -18,6 +18,16 @@
 	<p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
 </div>
 @endif
+@if (count($errors))
+<div class="alert alert-danger">
+	<strong>Whoops!</strong> There were some problems with your input.
+	<ul>
+		@foreach ($errors->all() as $error)
+		<li>{{ $error }}</li>
+		@endforeach
+	</ul>
+</div>
+@endif
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">Attendance</h3>
@@ -33,7 +43,6 @@
 					<tr>
 						<th>time in</th>
 						<th>time out</th>
-						<th>note</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -45,7 +54,6 @@
 							{{date("M d, Y - h:i:sa", strtotime($attendance->time_in))}}
 							@endif
 						</td>
-						<td>{{$attendance->note}}</td>
 					</tr>
 					@endforeach
 				</tbody>
@@ -70,13 +78,13 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form method="POST">
+					<form method="POST" action="/hris/pages/time/attendances" enctype="multipart/form-data">
 						@csrf
 						<div class="row">
 							<div class="col-md-6">
 								<div id="my_camera"></div>
 								<input type="button" value="Take Photo" onClick="take_snapshot()">
-								<input type="hidden" name="image" class="image-tag">
+								<input type="hidden" name="time_in_photo" class="image-tag" accept="image/*">
 							</div>
 							<div class="col-md-6">
 								<div id="results">Captured image will appear here!</div>
@@ -112,7 +120,7 @@
 	function take_snapshot() {
 		Webcam.snap(function(data_uri) {
 			$(".image-tag").val(data_uri);
-			document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+			document.getElementById('results').innerHTML = '<img src="' + data_uri + '" />';
 		});
 	}
 </script>

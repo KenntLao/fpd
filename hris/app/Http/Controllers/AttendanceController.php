@@ -19,12 +19,27 @@ class AttendanceController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(Request $request, hris_attendances $attendance)
     {
-        $attendance = new hris_attendances();
-        $attendance->time_in = date_create();
-        $attendance->save();
-        return redirect('/hris/pages/time/attendances/index')->with('success', 'Punch in successful!');
+        
+        if($this->validatedData()){
+            // check data if valid
+            $img = request('time_in_photo');
+            $folderPath = public_path('assets/images/employees/employee_time_in/');
+            $image_parts = explode(";base64,", $img);
+            $image_base64 = base64_decode($image_parts[1]);
+            $file_name = uniqid() . '.png';
+            
+            $attendance->time_in_photo = $file_name;
+            $attendance->time_in = date_create();
+
+            $attendance->save();
+
+            file_put_contents($folderPath . $file_name, $image_base64);
+            return redirect('/hris/pages/time/attendances/index')->with('success', 'Punch in successful!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
     }
 
     public function show($id)
@@ -32,19 +47,11 @@ class AttendanceController extends Controller
 
     }
 
-    public function edit($id)
-    {
 
+
+    protected function validatedData(){
+        return request()->validate([
+            'time_in_photo' => 'required',
+        ]);
     }
-
-    public function update(Request $request, $id)
-    {
-
-    }
-
-    public function destroy($id)
-    {
-
-    }
-
 }
