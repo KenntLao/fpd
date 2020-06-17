@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1><i class="fas fa-fw fa-random"></i> Company Documents</h1>
+		<h1><i class="fas fa-fw fa-file"></i> Company Documents</h1>
 	</div>
 </div>
 @stop
@@ -25,7 +25,6 @@
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/employees/documents/companyDocuments" enctype="multipart/form-data" id="form">
-			@csrf
             @include('pages.employees.documents.companyDocuments.form')
 		</form>
 	</div>

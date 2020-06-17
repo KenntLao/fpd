@@ -10,7 +10,14 @@ use App\users;
 
 class WorkShiftAssignmentController extends Controller
 {
-    //
+    private $function;
+    private $module;
+
+    public function __construct() {
+        $this->function = new FunctionController;
+        $this->module = 'Time Management - Work Shift Assignment';
+    }
+
     public function index(hris_workshift_assignment $workshift_assignment)
     {
         $workshift_assignment = hris_workshift_assignment::paginate(10);
@@ -25,10 +32,13 @@ class WorkShiftAssignmentController extends Controller
         $work_shift = hris_work_shift_management::all();
         return view('pages.time.workshiftAssignment.create', compact('workshift_assignment', 'employees', 'work_shift'));
     }
-    public function store()
+    public function store(hris_workshift_assignment $workshift_assignment)
     {
+        $action = 'add';
         if ($this->validatedData()) {
-            hris_workshift_assignment::create($this->validatedData());
+            $workshift_assignment = hris_workshift_assignment::create($this->validatedData());
+            $id = $workshift_assignment->id;
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -42,7 +52,11 @@ class WorkShiftAssignmentController extends Controller
         return view('pages.time.workshiftAssignment.edit', compact('workshift_assignment','employee','workshift_rel','employees', 'work_shift'));
     }
     public function update(Request $request, hris_workshift_assignment $workshift_assignment){
+        $id = $workshift_assignment->id;
         if ($this->validatedData()) {
+            $model = $workshift_assignment;
+            //DO systemLog function FROM SystemLogController
+            $this->function->updateSystemLog($model,$this->module,$id);
             $workshift_assignment->update($this->validatedData());
             return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
         } else {
@@ -51,31 +65,19 @@ class WorkShiftAssignmentController extends Controller
     }
     public function destroy(hris_workshift_assignment $workshift_assignment)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ($upass == request('upass')) {
             $workshift_assignment->delete();
+            $id = $benefit->id;
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }
     }
-
-    // decrypt string
-    function decryptStr($str)
-    {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher = "AES-128-CBC");
-        $iv = substr($c, 0, $ivlen);
-        $hmac = substr($c, $ivlen, $sha2len = 32);
-        $ciphertext_raw = substr($c, $ivlen + $sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-        $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-        if (hash_equals($hmac, $calcmac)) {
-            return $original_plaintext;
-        }
-    }
+    
     protected function validatedData()
     {
         return request()->validate([

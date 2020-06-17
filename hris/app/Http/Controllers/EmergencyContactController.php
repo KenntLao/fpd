@@ -10,11 +10,11 @@ use App\hris_employee;
 
 class EmergencyContactController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Personal Information - Emergency Contact';
     }
     public function index()
@@ -43,7 +43,7 @@ class EmergencyContactController extends Controller
             $emergency->mobile_phone = request('mobile_phone');
             $emergency->save();
             $id = $emergency->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -66,7 +66,7 @@ class EmergencyContactController extends Controller
         if ($this->validatedData()) {
             $model = $emergency;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $emergency->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully updated!');
         } else {
@@ -82,7 +82,7 @@ class EmergencyContactController extends Controller
         if ( Hash::check(request('password'), $employee->password) ) {
             $emergency->delete();
             $id = $emergency->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -8,11 +8,11 @@ use App\users;
 
 class EmploymentTypeController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Recruitment Setup - Employment Type';
     }
     public function index()
@@ -32,7 +32,7 @@ class EmploymentTypeController extends Controller
         if ($this->validatedData()) {
             $employmentType = hris_employment_types::create($this->validatedData());
             $id = $employmentType->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -58,7 +58,7 @@ class EmploymentTypeController extends Controller
         if ($this->validatedData()) {
             $model = $employmentType;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $employmentType->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully updated!');
         } else {
@@ -70,11 +70,11 @@ class EmploymentTypeController extends Controller
     {   
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employmentType->delete();
             $id = $employmentType->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success','Employment type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -87,17 +87,5 @@ class EmploymentTypeController extends Controller
         return request()->validate([
             'name' => 'required|max:100'
         ]);
-    }
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 }

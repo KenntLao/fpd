@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1><i class="fas fa-fw fa-user-friends"></i> Company Documents</h1>
+		<h1><i class="fas fa-fw fa-file"></i> Company Documents</h1>
 	</div>
 </div>
 @stop

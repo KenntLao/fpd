@@ -11,11 +11,11 @@ use App\hris_certifications;
 
 class EmployeeCertificationController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Personal Information - Certification';
     }
     public function index()
@@ -44,7 +44,7 @@ class EmployeeCertificationController extends Controller
             $employeeCertification->valid_thru = request('valid_thru');
             $employeeCertification->save();
             $id = $employeeCertification->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee certification successfully added!');
         } else {
             return back()->withErrors($this->validateData());
@@ -68,7 +68,7 @@ class EmployeeCertificationController extends Controller
         if ($this->validatedData()) {
             $model = $employeeCertification;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $employeeCertification->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee certification successfully added!');
         } else {
@@ -84,7 +84,7 @@ class EmployeeCertificationController extends Controller
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeCertification->delete();
             $id = $employeeCertification->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee education successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

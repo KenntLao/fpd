@@ -1,13 +1,10 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
-@section('title', 'HRIS | Employees - Employee')
+@section('title', 'HRIS | Document Management - Company Documents')
 @section('content_header')
-<?php
-$_SESSION['return_page'] = URL::previous();
-?>
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-users"></i> Employee Management</h1>
+        <h1><i class="fas fa-fw fa-file"></i> Company Documents</h1>
     </div>
 </div>
 @stop
@@ -24,7 +21,7 @@ $_SESSION['return_page'] = URL::previous();
 @endif
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Update Employee</h3>
+        <h3 class="card-title">edit company document</h3>
     </div>
     <div class="card-body">
         <form class="form-horizontal" method="post" action="/hris/pages/employees/documents/companyDocuments/update/{{$document->id}}" enctype="multipart/form-data" id="form">

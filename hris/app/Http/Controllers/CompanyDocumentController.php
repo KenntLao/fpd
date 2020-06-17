@@ -11,11 +11,11 @@ use App\users;
 
 class CompanyDocumentController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Document Management - Company Document';
     }
     public function index()
@@ -24,11 +24,6 @@ class CompanyDocumentController extends Controller
         return view('pages.employees.documents.companyDocuments.index', compact('documents'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(hris_company_documents $document)
     {
         $departments = hris_department::all();
@@ -38,12 +33,6 @@ class CompanyDocumentController extends Controller
         return view('pages.employees.documents.companyDocuments.create', compact('document', 'departments', 'employees', 'department_id', 'employee_id'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(hris_company_documents $document,Request $request)
     {
         $action = 'add';
@@ -70,30 +59,18 @@ class CompanyDocumentController extends Controller
             $request->attachment->move(public_path('assets/files/employees/documents/company_documents'), $attachment);
             $document->save();
             $id = $document->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success', 'Company document successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(hris_company_documents $document)
     {
         $departments = hris_department::all();
@@ -107,13 +84,6 @@ class CompanyDocumentController extends Controller
         return view('pages.employees.documents.companyDocuments.edit', compact('document', 'departments', 'employees', 'department_id', 'employee_id'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(hris_company_documents $document, Request $request)
     {
         $id = $document->id;
@@ -143,7 +113,7 @@ class CompanyDocumentController extends Controller
                     $request->attachment->move($path, $attachment);
                 }
             }
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $document->name = request('name');
             $document->details = request('details');
             $document->status = request('status');
@@ -157,17 +127,11 @@ class CompanyDocumentController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(hris_company_documents $document)
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $document->delete();
             $path = public_path('/assets/files/employees/documents/company_documents/');
@@ -176,7 +140,7 @@ class CompanyDocumentController extends Controller
                 unlink($old);
             }
             $id = $document->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success','Company document successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -192,17 +156,5 @@ class CompanyDocumentController extends Controller
             'department_id' => 'nullable',
             'employee_id' => 'nullable'
         ]);
-    }
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 }

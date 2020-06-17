@@ -17,11 +17,11 @@ use App\hris_company_structures;
 
 class JobPositionController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Recruitment Setup - Job Position';
     }
 
@@ -79,7 +79,7 @@ class JobPositionController extends Controller
             $jobPosition->closing_date = request('closing_date');
             $jobPosition->display_type = request('display_type');
             $id = $jobPosition->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             $jobPosition->save();
             return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully added!');
         } else {
@@ -127,7 +127,7 @@ class JobPositionController extends Controller
                 }
             }
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $jobPosition->job_title_id = request('job_title_id');
             $jobPosition->company_name = request('company_name');
             $jobPosition->hiring_manager = request('hiring_manager');
@@ -163,7 +163,7 @@ class JobPositionController extends Controller
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $imagePath = public_path('assets/images/job_positions/');
             $jobPosition->delete();
@@ -172,7 +172,7 @@ class JobPositionController extends Controller
                 unlink($old_file);
             }
             $id = $jobPosition->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -194,18 +194,6 @@ class JobPositionController extends Controller
             'status'=>'required',
             'display_type'=>'required'
         ]);
-    }
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }
