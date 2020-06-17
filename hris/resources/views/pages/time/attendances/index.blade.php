@@ -58,7 +58,7 @@
 	<div class="card-footer">
 		{{$attendances->links()}}
 	</div>
-	<div class="modal" id="snapModal" s>
+	<div class="modal" id="snapModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
@@ -70,15 +70,16 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form method="POST" action="storeImage.php">
+					<form method="POST">
+						@csrf
 						<div class="row">
 							<div class="col-md-6">
 								<div id="my_camera"></div>
-								<input type="button" value="Take Snapshot" onClick="take_snapshot()">
+								<input type="button" value="Take Photo" onClick="take_snapshot()">
 								<input type="hidden" name="image" class="image-tag">
 							</div>
 							<div class="col-md-6">
-								<div id="results">Your captured image will appear here</div>
+								<div id="results">Captured image will appear here!</div>
 							</div>
 							<div class="col-md-12 text-center">
 								<br />

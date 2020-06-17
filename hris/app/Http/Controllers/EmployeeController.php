@@ -21,11 +21,14 @@ class EmployeeController extends Controller
 
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
     {
-        $job_titles = hris_job_titles::all();
         $roles = roles::all();
+        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+        $supervisor_id = implode(' ',$supervisor_role_id[0]);
+        $employee_supervisors = hris_employee::whereRaw('find_in_set('.$supervisor_id.',role_id)',[$employee->id])->get();
+        $job_titles = hris_job_titles::all();
         $departments = hris_company_structures::all();
         $role_ids = explode(',', $employee->role_id);
-        return view('pages.employees.employee.create', compact('employee', 'roles', 'departments','job_titles','role_ids'));
+        return view('pages.employees.employee.create', compact('employee_supervisors','employee','roles', 'departments','job_titles','role_ids'));
     }
 
     public function store(Request $request, hris_employee $employees) {
@@ -99,9 +102,12 @@ class EmployeeController extends Controller
     public function edit(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles){
             $job_titles = hris_job_titles::all();
             $roles = roles::all();
+            $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+            $supervisor_id = implode(' ', $supervisor_role_id[0]);
+            $employee_supervisors = hris_employee::whereRaw('find_in_set(' . $supervisor_id . ',role_id)', [$employee->id])->get();
             $departments = hris_company_structures::all();
             $role_ids = explode(',',$employee->role_id);
-            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids'));
+            return view('pages.employees.employee.edit', compact('employee_supervisors','employee', 'roles', 'departments','job_titles','role_ids'));
     }
 
     public function update(Request $request, hris_employee $employee){

@@ -24,5 +24,4 @@ class hris_employee extends Model
     public function roles(){
         return $this->belongsTo('App\roles','id');
     }
-
 }

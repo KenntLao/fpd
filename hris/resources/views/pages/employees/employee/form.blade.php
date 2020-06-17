@@ -141,10 +141,9 @@
                 @else
                 <option disabled default selected>--select one--</option>
                 @endif
-                <option value="sample">sample</option>
-                <option value="sample">sample</option>
-                <option value="sample">sample</option>
-                <option value="sample">sample</option>
+                @foreach($employee_supervisors as $employee_supervisor)
+                <option value="{{$employee_supervisor->id}}">{{$employee_supervisor->firstname}} {{$employee_supervisor->lastname}}</option>
+                @endforeach
             </select>
         </div>
     </div>
