@@ -10,11 +10,11 @@ use App\hris_employee;
 
 class EmployeeProjectController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Properties Setup - Employee Project';
     }
 
@@ -38,7 +38,7 @@ class EmployeeProjectController extends Controller
         if($this->validatedData()) {
             $employeeProject = hris_employee_projects::create($this->validatedData());
             $id = $employeeProject->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee project successfully deleted!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -63,7 +63,7 @@ class EmployeeProjectController extends Controller
         if($this->validatedData()) {
             $model = $employeeProject;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $employeeProject->update($this->validatedData());
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully updated!');
         } else {
@@ -75,11 +75,11 @@ class EmployeeProjectController extends Controller
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employeeProject->delete();
             $id = $employeeProject->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -93,18 +93,6 @@ class EmployeeProjectController extends Controller
             'project_id' => 'required',
             'details' => 'nullable'
         ]);
-    }
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }

@@ -9,7 +9,13 @@ use App\users;
 
 class WorkShiftManagementController extends Controller
 {
-    //
+    private $function;
+    private $module;
+
+    public function __construct() {
+        $this->function = new FunctionController;
+        $this->module = 'Time Management - Work Shift Management';
+    }
     public function index(hris_work_shift_management $work_shift){
         $work_shift = hris_work_shift_management::paginate(10);
         return view('pages.time.workshiftManagement.index', compact('work_shift'));
@@ -19,6 +25,7 @@ class WorkShiftManagementController extends Controller
         return view('pages.time.workshiftManagement.create', compact('work_shift'));
     }
     public function store(Request $request, hris_work_shift_management $work_shift){
+        $action = 'add';
         if($this->validatedData()){
 
             if(request('monday_shift') == NULL) {
@@ -87,6 +94,8 @@ class WorkShiftManagementController extends Controller
             $work_shift->sunday_time_out = strtotime(request('sunday_time_out'));
 
             $work_shift->save();
+            $id = $work_shift->id;
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/time/workshiftManagement/index')->with('success', 'Work Shift successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -97,8 +106,9 @@ class WorkShiftManagementController extends Controller
         return view('pages.time.workshiftManagement.edit', compact('work_shift'));
     }
     public function update(Request $request, hris_work_shift_management $work_shift){
+        $id = $work_shift->id;
         if ($this->validatedData()) {
-
+            $model = $work_shift;
             if (request('monday_shift') == NULL) {
                 $monday_shift = 0;
                 $monday_time_in = '00:00';
@@ -169,6 +179,8 @@ class WorkShiftManagementController extends Controller
                 $sunday_time_out = request('sunday_time_out');
             }
 
+            //DO systemLog function FROM SystemLogController
+            $this->function->updateSystemLog($model,$this->module,$id);
             $work_shift->workshift_name = request('workshift_name');
             $work_shift->monday_shift = $monday_shift;
             $work_shift->monday_time_in = strtotime($monday_time_in);
@@ -200,31 +212,19 @@ class WorkShiftManagementController extends Controller
     }
     public function destroy(hris_work_shift_management $work_shift)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ($upass == request('upass')) {
             $work_shift->delete();
+            $id = $benefit->id;
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/time/workshiftManagement/index')->with('success', 'Work Shift successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
         }
     }
 
-    // decrypt string
-    function decryptStr($str)
-    {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher = "AES-128-CBC");
-        $iv = substr($c, 0, $ivlen);
-        $hmac = substr($c, $ivlen, $sha2len = 32);
-        $ciphertext_raw = substr($c, $ivlen + $sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-        $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-        if (hash_equals($hmac, $calcmac)) {
-            return $original_plaintext;
-        }
-    }
     protected function validatedData()
     {
         return request()->validate([

@@ -8,11 +8,11 @@ use App\users;
 
 class ClientController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Properties Setup - Client';
     }
     public function index()
@@ -31,7 +31,7 @@ class ClientController extends Controller
         if($this->validatedData()) {
             $client = hris_clients::create($this->validatedData());
             $id = $client->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -54,7 +54,7 @@ class ClientController extends Controller
         if($this->validatedData()) {
             $model = $client;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $client->update($this->validatedData());
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully updated!');
         } else {
@@ -66,11 +66,11 @@ class ClientController extends Controller
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $client->delete();
             $id = $client->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -89,18 +89,6 @@ class ClientController extends Controller
             'status' => 'required',
             'first_contact_date' => 'nullable',
         ]);
-    }
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }

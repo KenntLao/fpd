@@ -11,11 +11,11 @@ use App\hris_languages;
 
 class EmployeeLanguageController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Personal Information - Language';
     }
     public function index()
@@ -45,7 +45,7 @@ class EmployeeLanguageController extends Controller
             $employeeLanguage->understanding = request('understanding');
             $employeeLanguage->save();
             $id = $employeeLanguage->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee language successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -69,7 +69,7 @@ class EmployeeLanguageController extends Controller
         if($this->validatedData()) {
             $model = $employeeLanguage;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $employeeLanguage->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee education successfully added!');
         } else {
@@ -85,7 +85,7 @@ class EmployeeLanguageController extends Controller
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeLanguage->delete();
             $id = $employeeLanguage->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee skill successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

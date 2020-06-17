@@ -10,11 +10,11 @@ use App\hris_employee;
 
 class DependentController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Personal Information - Dependent';
     }
     public function index()
@@ -42,7 +42,7 @@ class DependentController extends Controller
             $dependent->id_number = request('id_number');
             $dependent->save();
             $id = $dependent->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
@@ -65,7 +65,7 @@ class DependentController extends Controller
         if($this->validatedData()) {
             $model = $dependent;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $dependent->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully updated!');
         } else {
@@ -81,7 +81,7 @@ class DependentController extends Controller
         if ( Hash::check(request('password'), $employee->password) ) {
             $dependent->delete();
             $id = $dependent->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

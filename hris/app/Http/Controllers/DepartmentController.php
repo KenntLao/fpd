@@ -8,11 +8,11 @@ use App\users;
 
 class DepartmentController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
     public function __construct()
     {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Administration - Department';
     }
     public function index(){
@@ -24,6 +24,7 @@ class DepartmentController extends Controller
         return view('pages.admin.department.create', compact('department'));
     }
     public function store(Request $request, hris_department $department){
+        $action = 'add';
         if ($this->validatedData()){
             if($department::where('department_code', '=', request('department_code'))->count() == 0) {
                 $status = 0;
@@ -31,6 +32,8 @@ class DepartmentController extends Controller
                 $department->department_name = request('department_name');
                 $department->status = $status;
                 $department->save();
+                $id = $document->id;
+                $this->function->systemLog($this->module,$action,$id);
                 return redirect('/hris/pages/admin/department/index')->with('success', 'Department successfully added!');
             } else {
                 return back()->withErrors('Department already exist');  
@@ -43,8 +46,10 @@ class DepartmentController extends Controller
         return view('pages.admin.department.edit', compact('department'));
     }
     public function update(Request $request, hris_department $department){
+        $id = $department->id;
         if ($this->validatedData()) {
             if ($department::where('department_code', '=', request('department_code'))->count() == 0) {
+                $this->function->updateSystemLog($model,$this->module,$id);
                 $status = 0;
                 $department->department_code = request('department_code');
                 $department->department_name = request('department_name');
@@ -61,11 +66,11 @@ class DepartmentController extends Controller
     public function destroy(hris_department $department){
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ($upass == request('upass')) {
             $department->delete();
             $id = $department->id;
-            $this->systemLog->systemLog($this->module, $action, $id);
+            $this->function->systemLog($this->module, $action, $id);
             return redirect('/hris/pages/admin/department/index')->with('success', 'Department successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -78,21 +83,6 @@ class DepartmentController extends Controller
             'department_code' => 'required',
             'department_name' => 'required',
         ]);
-    }
-
-    function decryptStr($str)
-    {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher = "AES-128-CBC");
-        $iv = substr($c, 0, $ivlen);
-        $hmac = substr($c, $ivlen, $sha2len = 32);
-        $ciphertext_raw = substr($c, $ivlen + $sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-        $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-        if (hash_equals($hmac, $calcmac)) {
-            return $original_plaintext;
-        }
     }
 
 }

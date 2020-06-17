@@ -12,11 +12,11 @@ use App\users;
 
 class CompanyAssetController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Company Assets - Asset';
     }
     public function index()
@@ -39,7 +39,7 @@ class CompanyAssetController extends Controller
         if($this->validatedData()) {
             $asset = hris_company_assets::create($this->validatedData());
             $id = $asset->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/companyAssets/assets/index')->with('success', 'Company asset successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -65,7 +65,7 @@ class CompanyAssetController extends Controller
         if($this->validatedData()) {
             $model = $asset;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $asset->update($this->validatedData());
             return redirect('/hris/pages/admin/companyAssets/assets/index')->with('success', 'Company asset successfully updated!');
         } else {
@@ -77,11 +77,11 @@ class CompanyAssetController extends Controller
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $asset->delete();
             $id = $asset->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/companyAssets/assets/index')->with('success','Company asset successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -9,11 +9,11 @@ use App\users;
 
 class CompanyAssetTypeController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Company Assets - Asset Type';
     }
     public function index()
@@ -40,7 +40,7 @@ class CompanyAssetTypeController extends Controller
             $type->description = request('description');
             $type->save();
             $id = $type->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/companyAssets/types/index')->with('success', 'Asset type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -77,7 +77,7 @@ class CompanyAssetTypeController extends Controller
                 }
             }
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $type->name = request('name');
             $type->description = request('description');
             $type->update();
@@ -91,7 +91,7 @@ class CompanyAssetTypeController extends Controller
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $type->delete();
             $path = public_path('assets/files/companyAssets/types/');
@@ -100,7 +100,7 @@ class CompanyAssetTypeController extends Controller
                 unlink($old_file);
             }
             $id = $type->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/companyAssets/types/index')->with('success','Asset type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -114,18 +114,6 @@ class CompanyAssetTypeController extends Controller
             'description' => 'nullable',
             'attachment' => 'nullable'
         ]);
-    }
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }

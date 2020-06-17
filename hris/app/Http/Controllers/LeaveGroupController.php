@@ -8,11 +8,11 @@ use App\users;
 
 class LeaveGroupController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Leave Settings - Leave Group';
     }
     public function index()
@@ -32,7 +32,7 @@ class LeaveGroupController extends Controller
         if ($this->validatedData()) {
             $leaveGroup = hris_leave_groups::create($this->validatedData());
             $id = $leaveGroup->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully added!');
 
         } else {
@@ -57,7 +57,7 @@ class LeaveGroupController extends Controller
         if ($this->validatedData()) {
             $model = $leaveGroup;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $leaveGroup->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully updated!');
 
@@ -70,11 +70,11 @@ class LeaveGroupController extends Controller
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveGroup->delete();
             $id = $leaveGroup->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -86,17 +86,5 @@ class LeaveGroupController extends Controller
             'name' => 'required',
             'details' => 'nullable'
         ]);
-    }
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 }

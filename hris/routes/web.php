@@ -428,6 +428,35 @@ Route::middleware([CheckUserID::class])->group(function(){
         Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
         //delete
         Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
+
+        // DOCUMENT MANAGEMENT
+        // COMPANY DOCUMENTS
+        Route::get('/hris/pages/employees/documents/companyDocuments/index', 'CompanyDocumentController@index');
+        Route::get('/hris/pages/employees/documents/companyDocuments/create', 'CompanyDocumentController@create');
+        Route::post('/hris/pages/employees/documents/companyDocuments', 'CompanyDocumentController@store');
+        //edit
+        Route::get('/hris/pages/employees/documents/companyDocuments/{document}/edit', 'CompanyDocumentController@edit');
+        Route::patch('/hris/pages/employees/documents/companyDocuments/update/{document}', 'CompanyDocumentController@update');
+        //delete
+        Route::delete('/hris/pages/employees/documents/companyDocuments/delete/{document}', 'CompanyDocumentController@destroy');
+        // DOCUMENT TYPES
+        Route::get('/hris/pages/employees/documents/types/index', 'DocumentTypeController@index');
+        Route::get('/hris/pages/employees/documents/types/create', 'DocumentTypeController@create');
+        Route::post('/hris/pages/employees/documents/types', 'DocumentTypeController@store');
+        //edit
+        Route::get('/hris/pages/employees/documents/types/{type}/edit', 'DocumentTypeController@edit');
+        Route::patch('/hris/pages/employees/documents/types/update/{type}', 'DocumentTypeController@update');
+        //delete
+        Route::delete('/hris/pages/employees/documents/types/delete/{type}', 'DocumentTypeController@destroy');
+        // EMPLOYEE DOCUMENTS
+        Route::get('/hris/pages/employees/documents/employeeDocuments/index', 'EmployeeDocumentController@index');
+        Route::get('/hris/pages/employees/documents/employeeDocuments/create', 'EmployeeDocumentController@create');
+        Route::post('/hris/pages/employees/documents/employeeDocuments', 'EmployeeDocumentController@store');
+        //edit
+        Route::get('/hris/pages/employees/documents/employeeDocuments/{document}/edit', 'EmployeeDocumentController@edit');
+        Route::patch('/hris/pages/employees/documents/employeeDocuments/update/{document}', 'EmployeeDocumentController@update');
+        //delete
+        Route::delete('/hris/pages/employees/documents/employeeDocuments/delete/{document}', 'EmployeeDocumentController@destroy');
     });
 
     /* BENEFITS PAGE */

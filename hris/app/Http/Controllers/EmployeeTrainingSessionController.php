@@ -10,11 +10,11 @@ use App\hris_employee;
 
 class EmployeeTrainingSessionController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Training Setup - Employee Training Session';
     }
     public function index()
@@ -32,10 +32,11 @@ class EmployeeTrainingSessionController extends Controller
 
     public function store(hris_employee_training_sessions $employeeTrainingSession, Request $request)
     {
+        $action = 'add';
         if($this->validatedData()) {
             $employeeTrainingSession = hris_employee_training_sessions::create($this->validatedData());
             $id = $employeeTrainingSession->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully added!');
 
         } else {
@@ -61,7 +62,7 @@ class EmployeeTrainingSessionController extends Controller
         if($this->validatedData()) {
             $model = $employeeTrainingSession;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $employeeTrainingSession->update($this->validatedData());
             return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully updated!');
 
@@ -74,11 +75,11 @@ class EmployeeTrainingSessionController extends Controller
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employeeTrainingSession->delete();
             $id = $employeeTrainingSession->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -92,18 +93,6 @@ class EmployeeTrainingSessionController extends Controller
             'training_session_id' => 'required',
             'status' => 'required'
         ]);
-    }
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }

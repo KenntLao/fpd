@@ -11,11 +11,11 @@ use App\hris_employee;
 
 class EmployeeSkillController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Personal Information - Skill';
     }
     public function index()
@@ -42,7 +42,7 @@ class EmployeeSkillController extends Controller
             $employeeSkill->details = request('details');
             $employeeSkill->save();
             $id = $employeeSkill->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -66,7 +66,7 @@ class EmployeeSkillController extends Controller
         if ($this->validatedData()) {
             $model = $employeeSkill;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $employeeSkill->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully added!');
         } else {
@@ -82,7 +82,7 @@ class EmployeeSkillController extends Controller
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeSkill->delete();
             $id = $employeeSkill->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

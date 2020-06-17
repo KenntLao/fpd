@@ -383,7 +383,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 .input {
 	position: relative;
 }
-input.form-control, select.form-control {
+input.form-control, select.form-control, .select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
 	border: 0;
 	border-bottom: 1px solid #ced4da;
 	border-radius: 0;

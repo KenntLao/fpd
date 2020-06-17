@@ -16,11 +16,11 @@ use App\hris_company_structures;
 
 class LeaveRuleController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Leave Settings - Leave Rule';
     }
     public function index()
@@ -47,7 +47,7 @@ class LeaveRuleController extends Controller
         if ($this->validatedData()) {
             $leaveRule = hris_leave_rules::create($this->validatedData());
             $id = $leaveRule->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success', 'Leave rule successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -77,7 +77,7 @@ class LeaveRuleController extends Controller
         if ($this->validatedData()) {
             $model = $leaveRule;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $leaveRule->update($this->validatedData());
             return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success', 'Leave rule successfully updated!');
         } else {
@@ -87,12 +87,13 @@ class LeaveRuleController extends Controller
 
     public function destroy(hris_leave_rules $leaveRule)
     {
+        $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
+        $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveRule->delete();
             $id = $leaveRule->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success','Leave rule successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -122,19 +123,6 @@ class LeaveRuleController extends Controller
             'proportionate_on_joined_date' => 'required',
             'employee_leave_period' => 'required',            
         ]);
-    }
-
-    // decrypt string
-    function decryptStr($str) {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c,0,$ivlen);
-        $hmac = substr($c,$ivlen,$sha2len=32);
-        $ciphertext_raw = substr($c,$ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw,$cipher,$key,$options=OPENSSL_RAW_DATA,$iv);
-        $calcmac = hash_hmac('sha256',$ciphertext_raw,$key,$as_binary=true);
-        if (hash_equals($hmac,$calcmac)) { return $original_plaintext; }
     }
 
 }

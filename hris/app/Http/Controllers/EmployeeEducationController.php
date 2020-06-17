@@ -12,11 +12,11 @@ use App\hris_educations;
 
 class EmployeeEducationController extends Controller
 {
-    private $systemLog;
+    private $function;
     private $module;
 
     public function __construct() {
-        $this->systemLog = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Personal Information - Education';
     }
     public function index()
@@ -45,7 +45,7 @@ class EmployeeEducationController extends Controller
             $employeeEducation->completed = request('completed');
             $employeeEducation->save();
             $id = $employeeEducation->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -69,7 +69,7 @@ class EmployeeEducationController extends Controller
         if($this->validatedData()) {
             $model = $employeeEducation;
             //DO systemLog function FROM SystemLogController
-            $this->systemLog->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($model,$this->module,$id);
             $employeeEducation->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully added!');
         } else {
@@ -85,7 +85,7 @@ class EmployeeEducationController extends Controller
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeEducation->delete();
             $id = $employeeEducation->id;
-            $this->systemLog->systemLog($this->module,$action,$id);
+            $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
