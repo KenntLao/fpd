@@ -54,7 +54,7 @@
                         <td><a class="clickable-info" href="/hris/pages/employees/employee/{{$employee->id}}">{{$employee->employee_number}}</a></td>
                         <td><a class="clickable-info" href="/hris/pages/employees/employee/{{$employee->id}}">{{$employee->firstname}} {{$employee->middlename}} {{$employee->lastname}}</a></td>
                         <td>{{$employee->work_no}}</td>
-                        <td>{{$employee->department}}</td>
+                        <td>{{$employee->department->name}}</td>
                         <td>{{$employee->gender}}</td>
                         <td>{{$employee->supervisor}}</td>
                         <td class="td-action">

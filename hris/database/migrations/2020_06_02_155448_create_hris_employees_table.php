@@ -51,9 +51,10 @@ class CreateHrisEmployeesTable extends Migration
             $table->string('private_email');
             $table->date('joined_date');
             $table->date('termination_date')->nullable();
-            $table->integer('department');
+            $table->integer('job_title_id');
+            $table->integer('department_id');
             $table->string('supervisor');
-            $table->string('role_ids', 500)->default(',');
+            $table->string('role_id', 500)->default(',');
             $table->bigInteger('last_login')->default(0);
             $table->string('status')->default('active')->nullable();
             $table->timestamps();

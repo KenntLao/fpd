@@ -66,11 +66,11 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group">
-                    <label class="mr-2" for="job_postion">Job Positions</label>
+                    <label class="mr-2" for="job_title">Job Title</label>
                     <span class="badge badge-danger">Required</span>
-                    <select class="form-control required select2" name="job_position" required>
-                        @if($employee->job_position)
-                        <option default selected>{{$employee->job_position}}</option>
+                    <select class="form-control required select2" name="job_title" required>
+                        @if($employee->job_title_id)
+                        <option value="{{$employee->job_title->id}}" default selected>{{$employee->job_title->name}}</option>
                         @else
                         <option disabled default selected>--select one--</option>
                         @endif
@@ -121,12 +121,12 @@
             <span class="badge badge-danger">Required</span>
             <select class="form-control required select2" name="department" required>
                 @if($employee->department)
-                <option default selected>{{$employee->department}}</option>
+                <option value="{{$employee->department->id}}" default selected>{{$employee->department->name}}</option>
                 @else
                 <option disabled default selected>--select one--</option>
                 @endif
                 @foreach($departments as $department)
-                <option value="{{$department->id}}">{{$department->department_name}}</option>
+                <option value="{{$department->id}}">{{$department->name}}</option>
                 @endforeach
             </select>
         </div>
@@ -244,9 +244,13 @@
                             <label class="mr-2" for="roles">Roles</label>
                             <span class="badge badge-danger">Required</span>
                             <select class="required select-role" name="role[]" multiple="multiple">
+                                @if(count($roles) > 0)
                                 @foreach($roles as $role)
-                                <option value="{{$role->id}}">{{$role->role_name}}</option>
+                                <option value="{{$role->id}}" {{in_array($role->id, $role_ids) ? 'selected' : ''}}>
+                                    {{$role->role_name}}
+                                </option>
                                 @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ use App\hris_employee;
 use App\users;
 use App\hris_job_titles;
 use App\roles;
-use App\hris_department;
+use App\hris_company_structures;
 
 
 class EmployeeController extends Controller
@@ -19,12 +19,13 @@ class EmployeeController extends Controller
         return view('pages.employees.employee.index', compact('employees'));
     }
 
-    public function create(hris_employee $employee, roles $roles, hris_department $deparments, hris_job_titles $job_titles)
+    public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
     {
         $job_titles = hris_job_titles::all();
         $roles = roles::all();
-        $departments = hris_department::all();
-        return view('pages.employees.employee.create', compact('employee', 'roles', 'departments','job_titles'));
+        $departments = hris_company_structures::all();
+        $role_ids = explode(',', $employee->role_id);
+        return view('pages.employees.employee.create', compact('employee', 'roles', 'departments','job_titles','role_ids'));
     }
 
     public function store(Request $request, hris_employee $employees) {
@@ -54,11 +55,12 @@ class EmployeeController extends Controller
             $employees->firstname = request('firstname');
             $employees->middlename = request('middlename');
             $employees->lastname = request('lastname');
-            $employees->role_ids = ','.$role_ids.',';
+            $employees->role_id = ','.$role_ids.',';
             $employees->work_no = request('work_no');
             $employees->work_phone = request('work_phone');
             $employees->work_email = request('work_email');
-            $employees->department = request('department');
+            $employees->department_id = request('department');
+            $employees->job_title_id = request('job_title');
             $employees->supervisor = request('supervisor');
             $employees->work_address = request('work_address');
             $employees->sss = request('sss');
@@ -94,11 +96,12 @@ class EmployeeController extends Controller
         }
     }
 
-    public function edit(hris_employee $employee, roles $roles, hris_department $deparments, hris_job_titles $job_titles){
+    public function edit(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles){
             $job_titles = hris_job_titles::all();
             $roles = roles::all();
-            $departments = hris_department::all();
-            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles'));
+            $departments = hris_company_structures::all();
+            $role_ids = explode(',',$employee->role_id);
+            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids'));
     }
 
     public function update(Request $request, hris_employee $employee){
@@ -136,11 +139,12 @@ class EmployeeController extends Controller
             $employee->firstname = request('firstname');
             $employee->middlename = request('middlename');
             $employee->lastname = request('lastname');
-            $employee->role_ids = ','.$role_ids.',';
+            $employee->role_id = ','.$role_ids.',';
             $employee->work_no = request('work_no');
             $employee->work_phone = request('work_phone');
             $employee->work_email = request('work_email');
-            $employee->department = request('department');
+            $employee->department_id = request('department');
+            $employee->job_title_id = request('job_title');
             $employee->supervisor = request('supervisor');
             $employee->work_address = request('work_address');
             $employee->sss = request('sss');
@@ -216,7 +220,7 @@ class EmployeeController extends Controller
             'firstname' => 'required',
             'middlename' => 'nullable',
             'lastname' => 'required',
-            'job_position' => 'required',
+            'job_title' => 'required',
             'work_no' => 'required',
             'work_phone' => 'nullable',
             'work_email' => 'email',
