@@ -56,7 +56,13 @@
                         <td>{{$employee->work_no}}</td>
                         <td>{{$employee->department->name}}</td>
                         <td>{{$employee->gender}}</td>
-                        <td>{{$employee->supervisor}}</td>
+                        @foreach($employee_supervisors as $employee_supervisor)
+                        @if($employee->supervisor == $employee_supervisor->id)
+                        <td>{{$employee_supervisor->firstname}}{{$employee_supervisor->lastname}}</td>
+                        @else
+                        <td></td>
+                        @endif
+                        @endforeach
                         <td class="td-action">
                             <div class="row no-gutters">
                                 <div class="col-md-6">
