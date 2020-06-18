@@ -12,5 +12,9 @@ class hris_overtime extends Model
     {
     	return $this->belongsTo('App\hris_employee');
     }
+    public function supervisor()
+    {
+    	return $this->belongsTo('App\hris_employee');
+    }
 
 }

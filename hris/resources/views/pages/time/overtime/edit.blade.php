@@ -30,7 +30,7 @@
     </div>
     <div class="card-footer text-right">
         <a class="btn btn-default mr-1" href="/hris/pages/time/overtime/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-        <button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save work shift</button>
+        <button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save overtime request</button>
     </div>
 </div>
 @stop

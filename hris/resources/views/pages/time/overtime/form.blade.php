@@ -60,7 +60,7 @@
 			<select class="form-control required select2" name="supervisor_id" required>
 				<option disabled default selected>--select one--</option>
 				@foreach($employee_supervisor as $supervisor)
-				<option value="{{$supervisor->id}}" {{ $overtime->approved_by == $supervisor->id  ? 'selected' : '' }} >{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
+				<option value="{{$supervisor->id}}" {{ $overtime->supervisor_id == $supervisor->id  ? 'selected' : '' }} >{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
 				@endforeach
 			</select>
 		</div>

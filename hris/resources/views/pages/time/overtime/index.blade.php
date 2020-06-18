@@ -47,7 +47,15 @@
                     <tr>
                         <td>{{$overtime->created_at}}</td>
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
-                        <td>{{$overtime->ot_date}} {{$overtime->ot_time_in}} {{$overtime->ot_time_out}}</td>
+                        <td>{{$overtime->ot_date}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
+                        <td>
+                            @if($overtime->supervisor)
+                            {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                            @else
+                            None
+                            @endif
+                        </td>
+                        <td>{{$overtime->approved_date}}</td>
                         <td>{{$overtime->status}}</td>
                         <td class="td-action">
                             <div class="row no-gutters">

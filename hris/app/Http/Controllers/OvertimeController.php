@@ -20,24 +20,29 @@ class OvertimeController extends Controller
     public function index(hris_overtime $overtimes)
     {
         $id = $_SESSION['sys_id'];
-        $roles = roles::all();
-        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
-        $supervisor_id = implode(' ', $supervisor_role_id[0]);
-        $find = hris_employee::find($id);
-        $role_ids = explode(',',$find->role_id);
-
-        if ( in_array($supervisor_id, $role_ids) ) {
-        	$department = $find->department_id;
-	        $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id);
-	        $employee_id = array();
-	        foreach ($employee as $e) {
-	        	$employee_id[] = $e->id;
-	        }
-	        $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->paginate(10);
-	        return view('pages.time.overtime.index', compact('overtimes'));
+        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+	        $overtimes = hris_overtime::paginate(10);
+		    return view('pages.time.overtime.index', compact('overtimes'));
         } else {
-        	$overtimes = hris_overtime::where('employee_id', $id)->paginate(10);
-	        return view('pages.time.overtime.index', compact('overtimes'));
+			$roles = roles::all();
+	        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+	        $supervisor_id = implode(' ', $supervisor_role_id[0]);
+	        $find = hris_employee::find($id);
+	        $role_ids = explode(',',$find->role_id);
+
+	        if ( in_array($supervisor_id, $role_ids) ) {
+	        	$department = $find->department_id;
+		        $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id);
+		        $employee_id = array();
+		        foreach ($employee as $e) {
+		        	$employee_id[] = $e->id;
+		        }
+		        $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->paginate(10);
+		        return view('pages.time.overtime.index', compact('overtimes'));
+	        } else {
+	        	$overtimes = hris_overtime::where('employee_id', $id)->paginate(10);
+		        return view('pages.time.overtime.index', compact('overtimes'));
+	        }
         }
         
     }
@@ -62,7 +67,7 @@ class OvertimeController extends Controller
     			$overtime->ot_time_out = request('ot_time_out');
     			$overtime->employee_remarks = request('employee_remarks');
     			$overtime->supervisor_remarks = request('supervisor_remarks');
-    			$overtime->approved_by = request('approved_by');
+    			$overtime->supervisor_id = request('supervisor_id');
     			$overtime->approved_date = request('approved_date');
     			$overtime->status = 'Pending';
     			$overtime->save();
@@ -109,7 +114,7 @@ class OvertimeController extends Controller
 	    		$overtime->ot_time_out = request('ot_time_out');
 	    		$overtime->employee_remarks = request('employee_remarks');
 	    		$overtime->supervisor_remarks = request('supervisor_remarks');
-	    		$overtime->approved_by = request('approved_by');
+	    		$overtime->supervisor_id = request('supervisor_id');
 	    		$overtime->approved_date = request('approved_date');
 	    		$overtime->status = request('status');
 	    		$overtime->update();
