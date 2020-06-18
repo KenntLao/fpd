@@ -25,7 +25,7 @@
         <div class="form-group">
             <label class="mr-2">Status: </label>
             <span class="badge badge-danger">Required</span>
-            <select class="required select2" name="status" required>
+            <select class="form-control required select2" name="status" required>
                 <option disabled default selected>--select one--</option>
                 <option value="Active" {{ $document->status == 'Active'  ? 'selected' : '' }} >Active</option>
                 <option value="Inactive" {{ $document->status == 'Inactive'  ? 'selected' : '' }} >Inactive</option>

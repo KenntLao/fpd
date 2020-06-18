@@ -1,7 +1,4 @@
 @csrf
-<?php
-	echo $_SESSION['sys_id'];
-?>
 <div class="row">
 	<div class="col-12 col-md-4">
 		<div class="form-group">
@@ -34,7 +31,7 @@
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="employee_remarks">Employee Remarks</label>
+			<label class="mr-2" for="employee_remarks">Employee Remarks: </label>
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter employee remarks</p>
@@ -42,13 +39,52 @@
 			</div>
 		</div>
 	</div>
+	@if($id == $employee->supervisor)
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="supervisor_remarks">Supervisor Remarks</label>
+			<label class="mr-2" for="supervisor_remarks">Supervisor Remarks: </label>
 			<div class="input">
 				<p class="placeholder">Enter supervisor remarks</p>
-				<textarea class="form-control required" name="supervisor_remarks" disabled>{{ old('supervisor_remarks') ?? $overtime->supervisor_remarks }}</textarea>
+				<textarea class="form-control required" name="supervisor_remarks">{{ old('supervisor_remarks') ?? $overtime->supervisor_remarks }}</textarea>
 			</div>
 		</div>
 	</div>
+	@endif
 </div>
+@if($id == $employee->supervisor)
+<div class="row">
+	<div class="col-12 col-md-4">
+		<div class="form-group">
+			<label class="mr-2" for="supervisor_id">Approved by: </label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control required select2" name="supervisor_id" required>
+				<option disabled default selected>--select one--</option>
+				@foreach($employee_supervisor as $supervisor)
+				<option value="{{$supervisor->id}}" {{ $overtime->approved_by == $supervisor->id  ? 'selected' : '' }} >{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
+				@endforeach
+			</select>
+		</div>
+	</div>
+	<div class="col-12 col-md-4">
+		<div class="form-group">
+			<label class="mr-2" for="approved_date">Approved date: </label>
+			<span class="badge badge-danger">Required</span>
+			<div class="input">
+				<input class="form-control required overtime_date" type="text" name="approved_date" value="{{ old('approved_date') ?? $overtime->approved_date }}" required>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-4">
+		<div class="form-group">
+			<label class="mr-2" for="status">Status: </label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control required select2" name="status" required>
+				<option disabled default selected>--select one--</option>
+				<option value="Pending" {{ $overtime->status == 'Pending'  ? 'selected' : '' }} >Pending</option>
+				<option value="Rejected" {{ $overtime->status == 'Rejected'  ? 'selected' : '' }} >Rejected</option>
+				<option value="Approved" {{ $overtime->status == 'Approved'  ? 'selected' : '' }} >Approved</option>
+			</select>
+		</div>
+	</div>
+</div>
+@endif
