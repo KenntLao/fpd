@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\hris_overtime;
+use App\hris_employee;
 
 class OvertimeController extends Controller
 {
@@ -14,8 +15,11 @@ class OvertimeController extends Controller
         return view('pages.time.overtime.index', compact('overtimes'));
     }
     public function create(hris_overtime $overtime)
-    {
-        return view('pages.time.overtime.create', compact('overtime'));
+    {	
+    	$id = $_SESSION['sys_id'];
+    	$employee = hris_employee::find($id);
+    	$supervisor = $employee->supervisor;
+        return view('pages.time.overtime.create', compact('overtime', 'supervisor'));
     }
     public function store(hris_overtime $overtime)
     {
