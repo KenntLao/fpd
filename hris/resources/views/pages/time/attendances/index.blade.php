@@ -34,16 +34,16 @@
 
 		<div class="card-tools">
 			@if($attendance !== NULL)
-				@if($attendance->status == 0)
-				<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>
-				@else
-				<form method="POST" action="/hris/pages/time/attendances/punchout/{{$attendance->id}}">
-					@method('PATCH')
-					@csrf
-					<input type="hidden" name="status" value="0">
-					<button class="btn add-button btn-md">Punch Out</button>
-				</form>
-				@endif
+			@if($attendance->status == 0)
+			<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>
+			@else
+			<form method="POST" action="/hris/pages/time/attendances/punchout/{{$attendance->id}}">
+				@method('PATCH')
+				@csrf
+				<input type="hidden" name="status" value="0">
+				<button class="btn add-button btn-md">Punch Out</button>
+			</form>
+			@endif
 			@else
 			<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>
 			@endif
@@ -97,7 +97,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div id="my_camera"></div>
-								<input type="button" value="Take Photo" onClick="take_snapshot()">
+								<input class="btn add-button btn-sm" type="button" value="Take Photo" onClick="take_snapshot()">
 								<input type="hidden" name="time_in_photo" class="image-tag" accept="image/*">
 							</div>
 							<div class="col-md-6">
