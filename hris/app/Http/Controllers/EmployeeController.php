@@ -14,9 +14,13 @@ use App\hris_company_structures;
 class EmployeeController extends Controller
 {
 //
-    public function index(){
+    public function index(hris_employee $employee){
         $employees = hris_employee::paginate(10);
-        return view('pages.employees.employee.index', compact('employees'));
+        $roles = roles::all();
+        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+        $supervisor_id = implode(' ', $supervisor_role_id[0]);
+        $employee_supervisors = hris_employee::whereRaw('find_in_set(' . $supervisor_id . ',role_id)', [$employee->id])->get();
+        return view('pages.employees.employee.index', compact('employee_supervisors','employees'));
     }
 
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)

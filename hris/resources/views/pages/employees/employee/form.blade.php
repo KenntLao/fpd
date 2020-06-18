@@ -134,14 +134,10 @@
     <div class="col-md-4">
         <div class="form-group">
             <label class="mr-2" for="supervisor">Supervisor </label>
-            <select class="form-control select2" name="supervisor">
-                @if($employee->supervisor)
-                <option default selected>{{$employee->supervisor}}</option>
-                @else
-                <option disabled default selected>--select one--</option>
-                @endif
+            <span class="badge badge-danger">Required</span>
+            <select class="form-control required select2" name="supervisor" required>
                 @foreach($employee_supervisors as $employee_supervisor)
-                <option value="{{$employee_supervisor->id}}">{{$employee_supervisor->firstname}} {{$employee_supervisor->lastname}}</option>
+                <option value="{{$employee_supervisor->id}}" {{$employee->supervisor == $employee_supervisor->id ? 'selected' : ''}}>{{$employee_supervisor->firstname}} {{$employee_supervisor->lastname}}</option>
                 @endforeach
             </select>
         </div>
