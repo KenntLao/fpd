@@ -581,6 +581,14 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     /* OVERTIME MANAGEMENT */
     Route::get('/hris/pages/time/overtime/index', 'OvertimeController@index');
+    /* ADD */
+    Route::get('/hris/pages/time/overtime/create', 'OvertimeController@create');
+    Route::post('/hris/pages/time/overtime', 'OvertimeController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/time/overtime/{overtime}/edit', 'OvertimeController@edit');
+    Route::patch('/hris/pages/time/overtime/update/{overtime}', 'OvertimeController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/time/overtime/delete/{overtime}', 'OvertimeController@destroy');
     
 
     //PERSONAL INFORMATION

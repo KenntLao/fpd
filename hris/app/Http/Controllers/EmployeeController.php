@@ -231,7 +231,7 @@ class EmployeeController extends Controller
             'work_phone' => 'nullable',
             'work_email' => 'email',
             'department' => 'required',
-            'supervisor' => 'required',
+            'supervisor' => 'nullable',
             'work_address' => 'required',
             'sss' => 'nullable',
             'pagibig' => 'nullable',

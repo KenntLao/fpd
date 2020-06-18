@@ -75,7 +75,7 @@ if(isset($_POST['submit-login'])) {
 					$_SESSION['sys_photo'] = 'hris/public/assets/images/employees/employee_photos/'.$data['employee_photo'];
 					$_SESSION['sys_hris_photo'] =  'assets/images/employees/employee_photos/'.$data['employee_photo'];
 				}
-				$_SESSION['sys_role_ids'] = $data['role_ids'];
+				$_SESSION['sys_role_ids'] = $data['role_id'];
 				//$_SESSION['sys_department_id'] = $data['department_id'];
 				//$_SESSION['sys_property_ids'] = explode($data['property_ids'],',');
 				//$_SESSION['sys_language'] = $data['language'];

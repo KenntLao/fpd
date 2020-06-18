@@ -5,7 +5,7 @@ $(document).ready(function() {
 		placeholder: "Select Roles",
 	});
 
-	$('.workshift_time').daterangepicker({
+	$('.workshift_time, .overtime_time').daterangepicker({
 		timePicker: true,
 		singleDatePicker: true,
 		timePicker24Hour: true,
@@ -17,7 +17,7 @@ $(document).ready(function() {
 			picker.container.find(".calendar-table").hide();
 	});
 
-	$('.work_sched').daterangepicker({
+	$('.work_sched, .overtime_date').daterangepicker({
 	    singleDatePicker: true,
 	    showDropdowns: true,
 		minYear: 2020,

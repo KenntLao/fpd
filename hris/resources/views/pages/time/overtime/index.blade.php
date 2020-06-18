@@ -33,7 +33,6 @@
             <table class="table table-hover table-bordered table-striped table-condensed">
                 <thead>
                     <tr>
-                        
                     </tr>
                 </thead>
                 <tbody>    
