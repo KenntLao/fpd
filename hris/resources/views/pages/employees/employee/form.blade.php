@@ -134,8 +134,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label class="mr-2" for="supervisor">Supervisor </label>
-            <span class="badge badge-danger">Required</span>
-            <select class="form-control required select2" name="supervisor" required>
+            <select class="form-control select2" name="supervisor">
                 @foreach($employee_supervisors as $employee_supervisor)
                 <option value="{{$employee_supervisor->id}}" {{$employee->supervisor == $employee_supervisor->id ? 'selected' : ''}}>{{$employee_supervisor->firstname}} {{$employee_supervisor->lastname}}</option>
                 @endforeach

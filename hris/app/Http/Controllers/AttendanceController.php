@@ -10,18 +10,13 @@ class AttendanceController extends Controller
 {
     public function index()
     {
+        $attendance = hris_attendances::orderBy('id','desc')->first();
         $attendances = hris_attendances::paginate(10);
-        return view('pages.time.attendances.index', compact('attendances'));
-    }
-
-    public function create()
-    {
-
+        return view('pages.time.attendances.index', compact('attendances','attendance'));
     }
 
     public function store(Request $request, hris_attendances $attendance)
     {
-        
         if($this->validatedData()){
             // check data if valid
             $img = request('time_in_photo');
@@ -31,7 +26,8 @@ class AttendanceController extends Controller
             $file_name = uniqid() . '.png';
             
             $attendance->time_in_photo = $file_name;
-            $attendance->time_in = date_create();
+            $attendance->time_in = time();
+            $attendance->status = 1;
 
             $attendance->save();
 
@@ -40,6 +36,13 @@ class AttendanceController extends Controller
         } else {
             return back()->withErrors($this->validatedData());
         }
+    }
+
+    public function punchout(Request $request, hris_attendances $attendance){
+        dd($attendance->id);
+        $attendance->time_out = time();
+        $attendance->status = request('status');
+        $attendance->update();
     }
 
     public function show($id)
