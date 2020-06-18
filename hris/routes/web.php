@@ -571,13 +571,10 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     /* ATTENDANCES PAGE */
     Route::get('/hris/pages/time/attendances/index', 'AttendanceController@index');
-    /* ADD ATTENDANCES */
+    /* PUNCH IN */
     Route::post('/hris/pages/time/attendances', 'AttendanceController@store');
-    /* UPDATE ATTENDANCES */
-    Route::patch('/hris/pages/time/attendances/update/{attendance}', 'AttendanceController@update');
-    /* DELETE ATTENDANCES */
-    Route::delete('/hris/pages/time/attendances/delete/{attendance}', 'AttendanceController@destroy');
-
+    /* PUNCH OUT */
+    Route::patch('/hris/pages/time/attendances/punchout/{attendance}', 'AttendanceController@punchout');
 
     /* OVERTIME MANAGEMENT */
     Route::get('/hris/pages/time/overtime/index', 'OvertimeController@index');
