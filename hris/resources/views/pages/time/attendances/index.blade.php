@@ -31,16 +31,21 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">Attendance</h3>
+
 		<div class="card-tools">
-			@if($attendance->status == 0)
-			<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>
+			@if($attendance !== NULL)
+				@if($attendance->status == 0)
+				<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>
+				@else
+				<form method="POST" action="/hris/pages/time/attendances/punchout/{{$attendance->id}}">
+					@method('PATCH')
+					@csrf
+					<input type="hidden" name="status" value="0">
+					<button class="btn add-button btn-md">Punch Out</button>
+				</form>
+				@endif
 			@else
-			<form method="post" action="/hris/pages/time/attendances/punchout/{{$attendance->id}}">
-				@method('PATCH')
-				@csrf
-				<input type="hidden" name="status" value="0">
-				<button class="btn add-button btn-md">Punch out</button>
-			</form>
+			<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>
 			@endif
 		</div>
 	</div>
@@ -60,7 +65,7 @@
 						<td>{{date("M d, Y - h:i:sa", $attendance->time_in)}}</td>
 						<td>
 							@if($attendance->time_out)
-							{{date("M d, Y - h:i:sa", strtotime($attendance->time_in))}}
+							{{date("M d, Y - h:i:sa", $attendance->time_in)}}
 							@endif
 						</td>
 					</tr>

@@ -574,7 +574,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* PUNCH IN */
     Route::post('/hris/pages/time/attendances', 'AttendanceController@store');
     /* PUNCH OUT */
-    Route::patch('/hris/pages/time/attendances/punchout/{punchout}', 'AttendanceController@punchout');
+    Route::patch('/hris/pages/time/attendances/punchout/{attendance}', 'AttendanceController@punchout');
 
     /* OVERTIME MANAGEMENT */
     Route::get('/hris/pages/time/overtime/index', 'OvertimeController@index');

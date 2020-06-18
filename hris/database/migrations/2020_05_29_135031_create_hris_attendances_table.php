@@ -16,6 +16,7 @@ class CreateHrisAttendancesTable extends Migration
         Schema::create('hris_attendances', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->bigInteger('employee_id');
             $table->string('time_in_photo');
             $table->bigInteger('time_in');
             $table->bigInteger('time_out')->nullable();
