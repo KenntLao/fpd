@@ -9,6 +9,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\hris_employee::class, function (Faker $faker) {
 	$gender = $faker->randomElement(['male', 'female']);
+	$g = $gender[0];
 	$firstname = $faker->firstName($gender);
 	$lastname = $faker->lastName;
 	$fn = substr($firstname, 0, 1);
@@ -16,10 +17,16 @@ $factory->define(App\hris_employee::class, function (Faker $faker) {
 	$employee_number = $faker->unique()->numerify('####');
 	$username = $fn.''.$ln.''.$employee_number;
 	$role_id = ''.$faker->randomElement([',4,', ',5,']);
+	$path = public_path('assets/images/employees/employee_photos');
+	if ( $g == 'm' ) {
+		$image = $faker->file($path.'/male/tmp', $path, false);
+	} else {
+		$image = $faker->file($path.'/female/tmp', $path, false);
+	}
     return [
         //
         'employee_number' => $employee_number,
-        'employee_photo' => $faker->imageUrl($width = 640, $height = 480),
+        'employee_photo' => $image,
         'username' => $username,
         'password' => Hash::make(1234),
         'firstname' => $firstname,
