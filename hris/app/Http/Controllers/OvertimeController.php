@@ -38,10 +38,10 @@ class OvertimeController extends Controller
 		        	$employee_id[] = $e->id;
 		        }
 		        $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->paginate(10);
-		        return view('pages.time.overtime.index', compact('overtimes'));
+		        return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
 	        } else {
 	        	$overtimes = hris_overtime::where('employee_id', $id)->paginate(10);
-		        return view('pages.time.overtime.index', compact('overtimes'));
+		        return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
 	        }
         }
         
@@ -67,7 +67,7 @@ class OvertimeController extends Controller
     			$overtime->ot_time_out = request('ot_time_out');
     			$overtime->employee_remarks = request('employee_remarks');
     			$overtime->supervisor_remarks = request('supervisor_remarks');
-    			$overtime->supervisor_id = request('supervisor_id');
+    			$overtime->supervisor_id = $employee->supervisor;
     			$overtime->approved_date = request('approved_date');
     			$overtime->status = 'Pending';
     			$overtime->save();
@@ -109,16 +109,9 @@ class OvertimeController extends Controller
 	            $model = $overtime;
 	            //DO systemLog function FROM SystemLogController
 	            $this->function->updateSystemLog($model,$this->module,$id);
-	    		$overtime->ot_date = request('ot_date');
-	    		$overtime->ot_time_in = request('ot_time_in');
-	    		$overtime->ot_time_out = request('ot_time_out');
-	    		$overtime->employee_remarks = request('employee_remarks');
 	    		$overtime->supervisor_remarks = request('supervisor_remarks');
-	    		$overtime->supervisor_id = request('supervisor_id');
-	    		$overtime->approved_date = request('approved_date');
-	    		$overtime->status = request('status');
 	    		$overtime->update();
-	            return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully updated!');
+	            return redirect('/hris/pages/time/overtime/index')->with('success', 'Supervisor remarks successfully added!');
 	        } else {
 	            return back()->withErrors($this->validatedData);
 	        } 
@@ -141,6 +134,21 @@ class OvertimeController extends Controller
         
         
     }
+
+    public function updateStatus(hris_overtime $overtime)
+    {
+        $id = $overtime->id;
+        $supervisor = $_SESSION['sys_id'];
+        $model = $overtime;
+        $overtime->supervisor_id = $supervisor;
+        $overtime->approved_date = date('Y-m-d H:i:s');
+        $overtime->status = request('status');
+        //DO systemLog function FROM SystemLogController
+        $this->function->updateSystemLog($model,$this->module,$id);
+        $overtime->update();
+        return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request status successfully updated!');
+    }
+
     public function destroy(hris_overtime $overtime)
     {
         $action = 'delete';
