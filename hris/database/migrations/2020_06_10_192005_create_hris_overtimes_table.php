@@ -24,7 +24,7 @@ class CreateHrisOvertimesTable extends Migration
             $table->string('type')->nullable();
             $table->string('supervisor_remarks')->nullable();
             $table->bigInteger('supervisor_id')->nullable();
-            $table->bigInteger('role_id')->nullable();
+            $table->string('role_id')->nullable();
             $table->string('approved_date')->nullable();
             $table->string('status')->nullable();
         });
