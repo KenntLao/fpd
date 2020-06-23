@@ -51,7 +51,12 @@
                         <td>
                             @if($overtime->supervisor)
                             @if($overtime->role_id == ',1,')
-                            {{ $users->uname }}
+                            @php
+                            {{
+                                $users = App\users::find($overtime->supervisor_id);
+                                echo $users->uname;
+                            }}
+                            @endphp
                             @else
                             {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
                             @endif
@@ -59,7 +64,12 @@
                             None
                             @endif
                         </td>
-                        <td>{{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}</td>
+                        <td>
+                            @if($overtime->approved_date)
+                            {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
+                            @else
+                            @endif
+                        </td>
                         <td>
                             @if($overtime->status == '0')
                             Pending

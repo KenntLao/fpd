@@ -233,17 +233,6 @@ body {
 	color: #041E42;
 	border-bottom: 3px solid #041E42;
 }
-.form-label {
-	background: #ffff00;
-	padding: 4px 7px;
-	color: #000;
-}
-.form-data {
-	font-family: opensans;
-	color: #000;
-	font-size: 15px;
-	text-indent: 2px;
-}
 /* EMPTY MESSAGE */
 .card-body > h4 {
 	text-align: center;
@@ -584,9 +573,14 @@ textarea.form-control {
 	margin-bottom: 0;
 	color: #fff;
 	font-size: 16px;
+	font-family: opensans;
 }
 .section-info {
 	padding: 10px 40px !important;
+}
+.sform-group p {
+	font-family: opensans;
+	font-size: 13px;
 }
 
 /* LOGS */

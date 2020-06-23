@@ -22,12 +22,7 @@ class OvertimeController extends Controller
         $id = $_SESSION['sys_id'];
         if ($_SESSION['sys_role_ids'] == ',1,' ) {
             $overtimes = hris_overtime::paginate(10);
-            foreach ($overtimes as $ot) {
-                if ( $ot->role_id == ',1,' ) {
-                    $users = users::find($ot->supervisor_id);
-                }
-            }
-            return view('pages.time.overtime.index', compact('overtimes', 'users'));
+            return view('pages.time.overtime.index', compact('overtimes'));
         } else {
             $roles = roles::all();
             $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
@@ -43,20 +38,10 @@ class OvertimeController extends Controller
                     $employee_id[] = $e->id;
                 }
                 $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->paginate(10);
-                foreach ($overtimes as $ot) {
-                    if ( $ot->role_id == ',1,' ) {
-                        $users = users::find($ot->supervisor_id);
-                    }
-                }
-                return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id', 'users'));
+                return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
             } else {
                 $overtimes = hris_overtime::where('employee_id', $id)->paginate(10);
-                foreach ($overtimes as $ot) {
-                    if ( $ot->role_id == ',1,' ) {
-                        $users = users::find($ot->supervisor_id);
-                    }
-                }
-                return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id', 'users'));
+                return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
             }
 
         }
