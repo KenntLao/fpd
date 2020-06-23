@@ -47,7 +47,7 @@
 					@foreach($candidates as $candidate)
 					<tr>
 						<td>{{$candidate->id}}</td>
-						<td>{{$candidate->job_position->job_title}}</td>
+						<td>{{$candidate->job_position->job_title->name}}</td>
 						<td>{{$candidate->first_name}}</td>
 						<td>{{$candidate->last_name}}</td>
 						<td>{{$candidate->email}}</td>

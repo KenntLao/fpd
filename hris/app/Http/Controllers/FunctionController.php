@@ -35,7 +35,7 @@ class FunctionController extends Controller
         //GET COLUMN FIELDS
         $field = array_keys($model->getAttributes());
         foreach ($field as $f) {
-            if( $f != 'created_at' && $f != 'updated_at' && $f != 'id' && $f != 'resume' && $f != 'profile_image' && $f != 'attachment' && $f != 'receipt' && $f != 'attachment_1' && $f != 'attachment_2') {
+            if( $f != 'created_at' && $f != 'updated_at' && $f != 'id') {
                 if ( $model->getOriginal($f) != request($f) ) {
                     if ( $model->getOriginal($f) == '' ) {
                         if ( is_array(request($f)) ) {
@@ -44,7 +44,12 @@ class FunctionController extends Controller
                             $msg[] = '. Updated blank data to '.request($f);
                         }
                     } elseif ( request($f) == '' ) {
-                        $msg[] = '. Updated '.$model->getOriginal($f).' to blank data';
+                        if ( request('attachment') == '' ?? request('resume') == '' ?? request('profile_image') == '' ?? request('receipt') == '' ?? request('attachment_1') == '' ?? request('attachment_2') == '' ) {
+                            $msg[] = '';
+                        } else {
+                            $msg[] = '. Updated '.$model->getOriginal($f).' to blank data';
+                        }
+                        
                     } else {
                         if ( is_array(request($f)) ) {
                             $msg[] = '. Updated '.$model->getOriginal($f).' to '.implode(",", request($f));
@@ -52,13 +57,19 @@ class FunctionController extends Controller
                             $msg[] = '. Updated '.$model->getOriginal($f).' to '.request($f);
                         }
                     }
+                } else {
+                    $msg[] = '';
                 }
             }
         }
         $user = $_SESSION['sys_login_uname'];
         $account_mode = $_SESSION['sys_account_mode'];
         $datetime = date("Y/m/d H:i:s");
-        $description = $module.' ID: '.$id.' has been updated by '.$user.''.implode("", $msg).'.';
+        if (count(array_unique($msg)) === 1 && end($msg) === '') {
+            $description = $module.' ID: '.$id.' has been updated by '.$user.'. No changes.';
+        } else {
+            $description = $module.' ID: '.$id.' has been updated by '.$user.''.implode('', $msg).'.';
+        }
         $systemLog = new hris_system_logs();
         $systemLog->user = $user;
         $systemLog->account_mode = $account_mode;

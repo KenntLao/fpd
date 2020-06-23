@@ -8,7 +8,7 @@
 				@if (count($jobPositions) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($jobPositions as $jobPosition)
-				<option value="{{$jobPosition->id}}" {{ $candidate->job_position_id == $jobPosition->id  ? 'selected' : '' }}>{{$jobPosition->job_title}}</option>
+				<option value="{{$jobPosition->id}}" {{ $candidate->job_position_id == $jobPosition->id  ? 'selected' : '' }}>{{$jobPosition->job_title->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>
@@ -126,7 +126,7 @@
 		<div class="form-group">
 			<label class="mr-2" for="resume">Resume:</label>
 			<span class="badge badge-danger">Required</span>
-			<input class="form-control required" type="file" name="resume">
+			<input class="form-control required" type="file" name="resume" required>
 		</div>
 	</div>
 </div>

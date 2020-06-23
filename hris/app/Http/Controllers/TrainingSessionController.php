@@ -13,7 +13,7 @@ class TrainingSessionController extends Controller
     private $module;
 
     public function __construct() {
-        $this->function = new SystemLogController;
+        $this->function = new FunctionController;
         $this->module = 'Training Setup - Training Session';
     }
     public function index()

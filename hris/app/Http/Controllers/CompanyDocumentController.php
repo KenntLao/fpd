@@ -46,7 +46,7 @@ class CompanyDocumentController extends Controller
         } else {
             $employee_id = implode(",", request('employee_id'));
         }
-        if($this->validatedData()) {
+        if($this->storeValidatedData()) {
             if ( $request->hasFile('attachment') ) {
                 $attachment = time() . '.' . $request->attachment->extension();
             }
@@ -62,7 +62,7 @@ class CompanyDocumentController extends Controller
             $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success', 'Company document successfully added!');
         } else {
-            return back()->withErrors($this->validatedData());
+            return back()->withErrors($this->storeValidatedData());
         }
     }
 
@@ -97,18 +97,14 @@ class CompanyDocumentController extends Controller
         } else {
             $employee_id = implode(",", request('employee_id'));
         }
-        if($this->validatedData()) {
+        if($this->updateValidatedData()) {
             $model = $document;
             if( $request->hasFile('attachment') ) {
                 $path = public_path('/assets/files/employees/documents/company_documents/');
-                if ($document->profile_image != '' && $document->attachment != NULL) {
+                if ($document->attachment != '' && $document->attachment != NULL) {
                     $old = $path . $document->attachment;
                     unlink($old);
                     $attachment = time() . '.' . $request->attachment->extension();
-                    $document->attachment = $attachment;
-                    $request->attachment->move($path, $attachment);
-                } else {
-                    $imageName = time() . '.' . $request->profile_image->extension();
                     $document->attachment = $attachment;
                     $request->attachment->move($path, $attachment);
                 }
@@ -123,7 +119,7 @@ class CompanyDocumentController extends Controller
             $id = $document->id;
             return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success', 'Company document successfully updated!');
         } else {
-            return back()->withErrors($this->validatedData());
+            return back()->withErrors($this->updateValidatedData());
         }
     }
 
@@ -146,7 +142,18 @@ class CompanyDocumentController extends Controller
             return back()->withErrors(['Password does not match.']);
         }
     }
-    protected function validatedData()
+    protected function storeValidatedData()
+    {
+        return request()->validate([
+            'name' => 'required',
+            'details' => 'nullable',
+            'status' => 'required',
+            'attachment' => 'required',
+            'department_id' => 'nullable',
+            'employee_id' => 'nullable'
+        ]);
+    }
+    protected function updateValidatedData()
     {
         return request()->validate([
             'name' => 'required',

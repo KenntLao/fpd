@@ -20,7 +20,7 @@
 @endif
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">edit overtime request</h3>
+        <h3 class="card-title">overtime request - {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</h3>
     </div>
     <div class="card-body">
         <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/update/{{$overtime->id}}" id="form">

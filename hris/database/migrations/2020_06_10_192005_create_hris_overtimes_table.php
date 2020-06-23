@@ -21,8 +21,10 @@ class CreateHrisOvertimesTable extends Migration
             $table->string('ot_time_in');
             $table->string('ot_time_out');
             $table->string('employee_remarks');
+            $table->string('type')->nullable();
             $table->string('supervisor_remarks')->nullable();
-            $table->string('supervisor_id')->nullable();
+            $table->bigInteger('supervisor_id')->nullable();
+            $table->bigInteger('role_id')->nullable();
             $table->string('approved_date')->nullable();
             $table->string('status')->nullable();
         });

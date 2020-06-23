@@ -36,7 +36,7 @@
                         <th>date</th>
                         <th>employee</th>
                         <th>request date and time</th>
-                        <th>supervisor</th>
+                        <th>approved by</th>
                         <th>approved date</th>
                         <th>status</th>
                         <th>actions</th>
@@ -45,46 +45,70 @@
                 <tbody>
                     @foreach($overtimes as $overtime)
                     <tr>
-                        <td>{{$overtime->created_at}}</td>
+                        <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
-                        <td>{{$overtime->ot_date}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
+                        <td>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
                         <td>
                             @if($overtime->supervisor)
+                            @if($overtime->role_id == ',1,')
+                            {{ $users->uname }}
+                            @else
                             {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                            @endif
                             @else
                             None
                             @endif
                         </td>
-                        <td>{{$overtime->approved_date}}</td>
-                        <td>{{$overtime->status}}</td>
+                        <td>{{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}</td>
+                        <td>
+                            @if($overtime->status == '0')
+                            Pending
+                            @endif
+                            @if($overtime->status == '1')
+                            Approved
+                            @endif
+                            @if($overtime->status == '2')
+                            Rejected
+                            @endif
+                        </td>
+                        @if ($_SESSION['sys_role_ids'] == ',1,')
+                        <td>
+                            <div class="row no-gutters">
+                                @if($overtime->status == '1' OR $overtime->status == '2')
+                                <div class="col-12">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                </div>
+                                @else
+                                <div class="col-md-4">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit?status=1" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit?status=2" title="Reject request"><i class="fas fa-times"></i></a>
+                                </div>
+                                <div class="col-4">
+                                    <!-- Button trigger modal -->
+                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="{{$overtime->ot_request_date}}"><i class="fa fa-trash"></i></button>
+                                </div>
+                                @endif
+                            </div>
+                        </td>
+
+                        @else
                         @if(in_array($supervisor_id, $role_ids))
                         <td>
                             <div class="row no-gutters">
-                                @if($overtime->status == 'Approved' OR $overtime->status == 'Rejected')
+                                @if($overtime->status == '1' OR $overtime->status == '2')
                                 <div class="col-12">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-search"></i></a>
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
-                                <div class="col-md-3">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit" title="Add Supervisor Remarks"><i class="fas fa-edit"></i></a>
+                                <div class="col-md-4">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit?status=1" title="Approve request"><i class="fas fa-check-square"></i></a>
                                 </div>
-                                <div class="col-3">
-                                    <form action="/hris/pages/time/overtime/updateStatus/{{$overtime->id}}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="text" name="status" value="Approved" hidden>
-                                        <button class="btn btn-primary btn-sm" type="submit" title="Approve status."><i class="fa fa-check-square"></i></button>
-                                    </form>
+                                <div class="col-md-4">
+                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit?status=2" title="Reject request"><i class="fas fa-times"></i></a>
                                 </div>
-                                <div class="col-3">
-                                    <form action="/hris/pages/time/overtime/updateStatus/{{$overtime->id}}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="text" name="status" value="Rejected" hidden>
-                                        <button class="btn btn-warning btn-sm" type="submit" title="Reject status."><i class="fa fa-window-close"></i></button>
-                                    </form>
-                                </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <!-- Button trigger modal -->
                                     <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="{{$overtime->ot_request_date}}"><i class="fa fa-trash"></i></button>
                                 </div>
@@ -94,9 +118,9 @@
                         @else
                         <td class="td-action">
                             <div class="row no-gutters">
-                                @if($overtime->status == 'Approved' OR $overtime->status == 'Rejected')
+                                @if($overtime->status == '1' OR $overtime->status == '2')
                                 <div class="col-12">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-search"></i></a>
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
                                 <div class="col-6">
@@ -109,6 +133,7 @@
                                 @endif
                             </div>
                         </td>
+                        @endif
                         @endif
                     </tr>
                     @endforeach

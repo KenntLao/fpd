@@ -99,10 +99,6 @@ class EmployeeExpenseController extends Controller
                     $receipt = time() . '.' . $request->receipt->extension();
                     $employeeExpense->receipt = $receipt;
                     $request->receipt->move($path, $receipt);
-                } else {
-                    $receipt = time() . '.' . $request->receipt->extension();
-                    $employeeExpense->receipt = $receipt;
-                    $request->receipt->move($path, $receipt);
                 }
             }
             if ( $request->hasFile('attachment_1') ) {
@@ -110,10 +106,6 @@ class EmployeeExpenseController extends Controller
                 if ($employeeExpense->attachment_1 != '' && $employeeExpense->attachment_1 != NULL) {
                     $old_file = $path . $employeeExpense->attachment_1;
                     unlink($old_file);
-                    $attachment_1 = time() . '.' . $request->attachment_1->extension();
-                    $employeeExpense->attachment_1 = $attachment_1;
-                    $request->attachment_1->move($path, $attachment_1);
-                } else {
                     $attachment_1 = time() . '.' . $request->attachment_1->extension();
                     $employeeExpense->attachment_1 = $attachment_1;
                     $request->attachment_1->move($path, $attachment_1);
@@ -127,17 +119,13 @@ class EmployeeExpenseController extends Controller
                     $attachment_2 = time() . '.' . $request->attachment_2->extension();
                     $employeeExpense->attachment_2 = $attachment_2;
                     $request->attachment_2->move($path, $attachment_2);
-                } else {
-                    $attachment_2 = time() . '.' . $request->attachment_2->extension();
-                    $employeeExpense->attachment_2 = $attachment_2;
-                    $request->attachment_2->move($path, $attachment_2);
                 }
             }
             //DO systemLog function FROM SystemLogController
             $this->function->updateSystemLog($model,$this->module,$id);
             $employeeExpense->employee_id = request('employee_id');
-            $employeeExpense->expense_date_id = request('expense_date_id');
-            $employeeExpense->payment_method = request('payment_method');
+            $employeeExpense->expense_date = request('expense_date');
+            $employeeExpense->payment_method_id = request('payment_method_id');
             $employeeExpense->ref_number = request('ref_number');
             $employeeExpense->payee = request('payee');
             $employeeExpense->expense_category_id = request('expense_category_id');
@@ -198,11 +186,16 @@ class EmployeeExpenseController extends Controller
             'employee_id' => 'required',
             'expense_date' => 'required',
             'payment_method_id' => 'required',
+            'ref_number' => 'nullable',
             'payee' => 'required',
             'expense_category_id' => 'required',
             'notes' => 'required',
             'currency' => 'required',
-            'amount' => 'required'
+            'amount' => 'required',
+            'receipt' => 'nullable',
+            'attachment_1' => 'nullable',
+            'attachment_2' => 'nullable',
+            'status' => 'nullable'
         ]);
     }
 

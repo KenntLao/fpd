@@ -32,7 +32,7 @@ class OvertimeCategoryController extends Controller
         $action = 'add';
         if($this->validatedData()) {
             $overtimeCategory = hris_overtime_categories::create($this->validatedData());
-            $id = $jobTitle->id;
+            $id = $overtimeCategory->id;
             $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully added!');
         } else {
@@ -52,9 +52,9 @@ class OvertimeCategoryController extends Controller
 
     public function update(hris_overtime_categories $overtimeCategory, Request $request)
     {
-        $id = $jobTitle->id;
+        $id = $overtimeCategory->id;
         if($this->validatedData()) {
-            $model = $jobTitle;
+            $model = $overtimeCategory;
             //DO systemLog function FROM SystemLogController
             $this->function->updateSystemLog($model,$this->module,$id);
             $overtimeCategory->update($this->validatedData());
@@ -71,7 +71,7 @@ class OvertimeCategoryController extends Controller
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $overtimeCategory->delete();
-            $id = $jobTitle->id;
+            $id = $overtimeCategory->id;
             $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully deleted!');
         } else {

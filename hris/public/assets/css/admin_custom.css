@@ -233,6 +233,17 @@ body {
 	color: #041E42;
 	border-bottom: 3px solid #041E42;
 }
+.form-label {
+	background: #ffff00;
+	padding: 4px 7px;
+	color: #000;
+}
+.form-data {
+	font-family: opensans;
+	color: #000;
+	font-size: 15px;
+	text-indent: 2px;
+}
 /* EMPTY MESSAGE */
 .card-body > h4 {
 	text-align: center;
@@ -337,6 +348,9 @@ body {
 label, input, select, textarea {
 	font-family: opensans;
 }
+.form-group label {
+	font-size: 13px !important;
+}
 .select2 {
 	width: 100% !important;
 }
@@ -369,6 +383,7 @@ label:not(.form-check-label):not(.custom-file-label) {
   top: 10px;
   pointer-events: none;
   left: 10px;
+  font-size: 13px;
   transition: all 0.2s ease;
 }
 .form-group .placeholder.active {

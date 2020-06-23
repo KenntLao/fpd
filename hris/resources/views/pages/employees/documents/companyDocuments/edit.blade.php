@@ -41,4 +41,14 @@
 @stop
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.form-group').each(function(){
+            var find = $(this).find('input[type="file"]');
+            var badge = find.siblings('.badge');
+            badge.remove();
+            $(find).removeAttr('required');
+        });
+    });
+</script>
 @stop

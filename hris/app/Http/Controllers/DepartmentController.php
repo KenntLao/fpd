@@ -32,7 +32,7 @@ class DepartmentController extends Controller
                 $department->department_name = request('department_name');
                 $department->status = $status;
                 $department->save();
-                $id = $document->id;
+                $id = $department->id;
                 $this->function->systemLog($this->module,$action,$id);
                 return redirect('/hris/pages/admin/department/index')->with('success', 'Department successfully added!');
             } else {
