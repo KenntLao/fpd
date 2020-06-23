@@ -519,6 +519,17 @@ textarea.form-control {
 	color: #FCBB6D;
 	text-transform: uppercase;
 }
+/* NOTIFICATIONS */
+.notif-item {
+	font-size: 12px;
+}
+.notif-item i {
+	color: #041E42;
+}
+.notif-item p {
+	text-align: right;
+	color: #a1a1a1;
+}
 /* ATTENDANCE CAMERA */
 #my_camera video {
 	width: 100% !important;

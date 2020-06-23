@@ -34,7 +34,7 @@ class EmployeeProjectController extends Controller
 
     public function store(hris_employee_projects $employeeProject, Request $request)
     {
-        $action = 'add'
+        $action = 'add';
         if($this->validatedData()) {
             $employeeProject = hris_employee_projects::create($this->validatedData());
             $id = $employeeProject->id;

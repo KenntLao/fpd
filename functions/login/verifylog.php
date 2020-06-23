@@ -209,6 +209,8 @@ if(isset($_POST['submit-login'])) {
 						$sql->bindParam(':description', $description);
 						$sql->bindParam(':log_date_time', $datetime);
 						$sql->execute();
+
+
 						// redirect to dashboard
                         header('location: /dashboard');
 					} else { // else redirect to login page and display error details

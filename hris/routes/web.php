@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUserID;
 use App\Http\Middleware\CheckPermission;
+use App\hris_employee;
+use App\Notifications\SupervisorNotif;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,7 @@ use App\Http\Middleware\CheckPermission;
 
 /* COMPANY PAGE */
 Route::middleware([CheckUserID::class])->group(function(){
+
     Route::get('/hris/logout', 'LoginController@logout');
     Route::get('/hris/pages/admin/company/index', 'CompanyController@index');
     /* ADD COMPANY STRUCTURE */
