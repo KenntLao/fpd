@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class hris_employee extends Model
 {
+    use Notifiable;
     //
     protected $guarded = [];
 

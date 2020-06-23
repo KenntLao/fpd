@@ -22,10 +22,10 @@
         
         $notif_count = 0;
         if(checkPermission('notifications')) {
-            $notif_count = getField("count(id)", "notifications", "user_id = ".$_SESSION['sys_id']." AND account_mode = '".$_SESSION['sys_account_mode']."' AND status IS NULL ".$notif_permissions_search);
+            $notif_count = getField("count(id)", "fpd_notifications", "user_id = ".$_SESSION['sys_id']." AND account_mode = '".$_SESSION['sys_account_mode']."' AND status IS NULL ".$notif_permissions_search);
         }
 
-        $sql_notif = $pdo->prepare("SELECT * FROM notifications WHERE user_id = :user_id AND account_mode = :account_mode AND status IS NULL $notif_permissions_search ORDER BY date DESC LIMIT 5");
+        $sql_notif = $pdo->prepare("SELECT * FROM fpd_notifications WHERE user_id = :user_id AND account_mode = :account_mode AND status IS NULL $notif_permissions_search ORDER BY date DESC LIMIT 5");
         $sql_notif->bindParam(":user_id", $_SESSION['sys_id']);
         $sql_notif->bindParam(":account_mode", $_SESSION['sys_account_mode']);
         $sql_notif->execute();

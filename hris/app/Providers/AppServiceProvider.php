@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
+use Illuminate\Support\Facades\Schema;
+use App\hris_employee;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        
+        Schema::defaultStringLength(191);
+        view()->composer('adminlte::partials.navbar.navbar', function($view){
+            $emp = hris_employee::find($_SESSION['sys_id']);
+            $view->with('emp', $emp);
+        });
     }
 }

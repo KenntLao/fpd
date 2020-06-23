@@ -11,8 +11,10 @@ use App\roles;
 use App\hris_company_structures;
 
 
+
 class EmployeeController extends Controller
 {
+    
 //
     public function index(hris_employee $employee){
         $employees = hris_employee::paginate(10);

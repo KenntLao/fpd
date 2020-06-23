@@ -79,6 +79,7 @@ class FunctionController extends Controller
         $systemLog->save();
     }
 
+
     public function decryptStr($str) {
         $key = '4507';
         $c = base64_decode($str);

@@ -17,6 +17,27 @@
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="far fa-bell"></i>
+                <span class="badge badge-warning navbar-badge">
+                    {{count($emp->notifications)}}
+                </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <span class="dropdown-item dropdown-header">Notifications</span>
+                @foreach($emp->notifications as $notification)
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item notif-item">
+                    <i class="fas fa-clock mr-2"></i> {{$notification->data['notif_message']}}
+                    <p>{{$notification->created_at->diffForHumans()}}</p>
+                </a>
+
+                @endforeach
+
+                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @if(isset($_SESSION['sys_id']))
                 <div class="main-profile-photo">

@@ -7,6 +7,7 @@ use App\hris_overtime;
 use App\hris_employee;
 use App\roles;
 use App\users;
+use App\Notifications\SupervisorNotif;
 
 class OvertimeController extends Controller
 {
@@ -52,7 +53,7 @@ class OvertimeController extends Controller
         $employee = hris_employee::find($id);
         return view('pages.time.overtime.create', compact('overtime', 'id', 'employee'));
     }
-    public function store(hris_overtime $overtime, Request $request)
+    public function store(hris_overtime $overtime,Request $request)
     {
         $action = 'add';
         $id = $_SESSION['sys_id'];
@@ -69,10 +70,19 @@ class OvertimeController extends Controller
                 $overtime->supervisor_remarks = request('supervisor_remarks');
                 $overtime->supervisor_id = request('supervisor_id');
                 $overtime->approved_date = request('approved_date');
-                $overtime->status = '0';
+                $overtime->status = 'Pending';
                 $overtime->save();
+
+                // OVERTIME REQUEST NOTIFICATION
+                $employee = hris_employee::find($_SESSION['sys_id']);
+                $get_supervisor = hris_employee::where('id', $_SESSION['sys_id'])->get('supervisor');
+                $employee_supervisor = hris_employee::find($get_supervisor)->first();
+                $employee_supervisor->notify(new SupervisorNotif($employee));
+
+                /* SYSTEM LOG */
                 $id = $overtime->id;
                 $this->function->systemLog($this->module,$action,$id);
+                
                 return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully added!');
             } else {
                 return back()->withErrors($this->validatedData());
