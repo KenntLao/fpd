@@ -147,6 +147,8 @@
 			</div>
 		</div>
 	</div>
-	<input class="form-control" type="text" name="status" value="{{$_GET['status']}}" hidden>
+	@if(isset($_GET['status']))
+	<input class="form-control" type="hidden" name="status" value="{{$_GET['status']}}">
+	@endif
 	@endif
 </div>

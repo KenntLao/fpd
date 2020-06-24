@@ -432,6 +432,16 @@ Route::middleware([CheckUserID::class])->group(function(){
         //delete
         Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
 
+        // ITENERARY REQUEST
+        Route::get('/hris/pages/employees/iteneraryRequests/index', 'IteneraryRequestController@index');
+        Route::get('/hris/pages/employees/iteneraryRequests/create', 'IteneraryRequestController@create');
+        Route::post('/hris/pages/employees/iteneraryRequests', 'IteneraryRequestController@store');
+        //edit
+        Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/edit', 'IteneraryRequestController@edit');
+        Route::patch('/hris/pages/employees/iteneraryRequests/update/{iteneraryRequest}', 'IteneraryRequestController@update');
+        //delete
+        Route::delete('/hris/pages/employees/iteneraryRequests/delete/{iteneraryRequest}', 'IteneraryRequestController@destroy');
+
         // DOCUMENT MANAGEMENT
         // COMPANY DOCUMENTS
         Route::get('/hris/pages/employees/documents/companyDocuments/index', 'CompanyDocumentController@index');

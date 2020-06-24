@@ -549,31 +549,33 @@ return [
                 [
                     'text' => 'Employee History',
                     'url'  => '/hris/pages/employee/employee_history/',
-                    'icon'    => 'fas fa-fw fa-history',
+                    'icon'    => 'fas fa-fw fa-history'
                 ],
                 [
                     'text' => 'HR Form',
                     'url'  => '/hris/pages/employee/hr_form/',
-                    'icon'    => 'fas fa-fw fa-folder',
+                    'icon'    => 'fas fa-fw fa-folder'
                 ],
                 [
                     'text' => 'Itenerary Request',
-                    'url'  => '/hris/pages/employee/itenerary_request/',
+                    'url'  => '/hris/pages/employees/iteneraryRequests/index',
                     'icon'    => 'fas fa-fw fa-plane-departure',
+                    'active' => ['/hris/pages/employees/iteneraryRequests/create', '/hris/pages/employees/iteneraryRequests/index', '/hris/pages/employees/iteneraryRequests/*/edit', 'regex:@^content/[0-9]+$@']
                 ],
                 [
                     'text' => 'Monitor Attendance',
                     'url'  => '/hris/pages/employee/monitor_attendance/',
-                    'icon'    => 'fas fa-fw fa-clock',
+                    'icon'    => 'fas fa-fw fa-clock'
                 ],
                 [
                     'text' => 'Performance Review',
                     'url'  => '/hris/pages/employee/performance_review/',
-                    'icon'    => 'fas fa-fw fa-chart-bar',
+                    'icon'    => 'fas fa-fw fa-chart-bar'
                 ],
                 [
                     'text' => 'Document Management',
                     'icon'    => 'fas fa-fw fa-file',
+                    'can' => 'document-management',
                     'submenu' => [
                         [
                             'text' => 'Company Documents',

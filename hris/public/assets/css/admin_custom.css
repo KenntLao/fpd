@@ -144,6 +144,9 @@ body {
 .card-body .nav-tabs > .nav-item > .nav-link {
 	font-size: 12px;
 }
+.nav-tabs > .tab-item > .nav-link {
+	font-size: 12px;
+}
 .tab-content .card-tools {
 	float: right;
 }
@@ -220,6 +223,17 @@ body {
 }
 .nav-tabs > .nav-item > .nav-link {
 	color: #041E42 !important;
+}
+.nav-tabs > .tab-item {
+	border: 1px solid #041E42;
+	background: #041E42;
+}
+.nav-tabs > .tab-item > .nav-link.active {
+	color: #041E42 !important;
+}
+.nav-tabs > .tab-item > .nav-link {
+	color: #fff !important;
+	border: 0;
 }
 
 .tab-content {

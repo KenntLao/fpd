@@ -39,7 +39,8 @@ class OvertimeController extends Controller
                     $employee_id[] = $e->id;
                 }
                 $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->paginate(10);
-                return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
+                $self = hris_overtime::where('employee_id', $_SESSION['sys_id'])->paginate(10);
+                return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id', 'self'));
             } else {
                 $overtimes = hris_overtime::where('employee_id', $id)->paginate(10);
                 return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
@@ -70,7 +71,7 @@ class OvertimeController extends Controller
                 $overtime->supervisor_remarks = request('supervisor_remarks');
                 $overtime->supervisor_id = request('supervisor_id');
                 $overtime->approved_date = request('approved_date');
-                $overtime->status = 'Pending';
+                $overtime->status = '0';
                 $overtime->save();
 
                 // OVERTIME REQUEST NOTIFICATION
@@ -203,23 +204,23 @@ class OvertimeController extends Controller
     {
         $action = 'delete';
         $id = $_SESSION['sys_id'];
-        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $overtime->delete();
+                $id = $overtime->id;
+                $this->function->systemLog($this->module,$action,$id);
+                return redirect('/hris/pages/time/overtime/index')->with('success','Overtime request successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
+        } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
                 $overtime->delete();
                 $id = $overtime->id;
                 $this->function->systemLog($this->module,$action,$id);
-                return redirect('/hris/pages/time/overtime/index')->with('success', 'Employee skill successfully deleted!');
-            } else {
-                return back()->withErrors(['Password does not match.']);
-            }
-        } else {
-            $upass = $this->function->decryptStr(users::find($id)->upass);
-            if ( $upass == request('upass') ) {
-                $benefit->delete();
-                $id = $overtime->id;
-                $this->function->systemLog($this->module,$action,$id);
-                return redirect('/hris/pages/time/overtime/index')->with('success','Overtime request successfully deleted!');
+                return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully deleted!');
             } else {
                 return back()->withErrors(['Password does not match.']);
             }
