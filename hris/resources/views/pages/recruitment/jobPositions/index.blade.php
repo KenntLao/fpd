@@ -51,7 +51,7 @@
 						<td>{{$jobPosition->job_title->name}}</td>
 						<td>{{$jobPosition->job_title->description}}</td>
 						<td>{{$jobPosition->country}}</td>
-						<td>{{$jobPosition->department}}</td>
+						<td>{{$jobPosition->department->name}}</td>
 						<td class="td-action">
 							<div class="row no-gutters">
 								<div class="col-6">

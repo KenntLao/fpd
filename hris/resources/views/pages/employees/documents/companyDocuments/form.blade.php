@@ -37,7 +37,7 @@
         <div class="form-group">
             <label class="mr-2" for="name">Attachment: </label>
             <span class="badge badge-danger">Required</span>
-            <input class="form-control" type="file" name="attachment">
+            <input class="form-control required" type="file" name="attachment" required>
         </div>
     </div>
 </div>

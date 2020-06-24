@@ -337,6 +337,9 @@ body {
 label, input, select, textarea {
 	font-family: opensans;
 }
+.form-group label {
+	font-size: 13px !important;
+}
 .select2 {
 	width: 100% !important;
 }
@@ -369,6 +372,7 @@ label:not(.form-check-label):not(.custom-file-label) {
   top: 10px;
   pointer-events: none;
   left: 10px;
+  font-size: 13px;
   transition: all 0.2s ease;
 }
 .form-group .placeholder.active {
@@ -580,9 +584,14 @@ textarea.form-control {
 	margin-bottom: 0;
 	color: #fff;
 	font-size: 16px;
+	font-family: opensans;
 }
 .section-info {
 	padding: 10px 40px !important;
+}
+.sform-group p {
+	font-family: opensans;
+	font-size: 13px;
 }
 
 /* LOGS */

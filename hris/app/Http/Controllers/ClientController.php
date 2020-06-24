@@ -27,7 +27,8 @@ class ClientController extends Controller
     }
 
     public function store(hris_clients $client, Request $request)
-    {
+    {   
+        $action = 'add';
         if($this->validatedData()) {
             $client = hris_clients::create($this->validatedData());
             $id = $client->id;

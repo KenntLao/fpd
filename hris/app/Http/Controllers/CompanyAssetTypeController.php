@@ -70,10 +70,6 @@ class CompanyAssetTypeController extends Controller
                     $attachment = time() . '.' . $request->attachment->extension();
                     $type->attachment = $attachment;
                     $request->attachment->move(public_path('/assets/files/companyAssets/types/'), $attachment);
-                } else {
-                    $attachment = time() . '.' . $request->attachment->extension();
-                    $type->attachment = $attachment;
-                    $request->attachment->move(public_path('/assets/files/companyAssets/types/'), $attachment);
                 }
             }
             //DO systemLog function FROM SystemLogController

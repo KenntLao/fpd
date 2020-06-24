@@ -120,10 +120,6 @@ class JobPositionController extends Controller
                     $imageName = time() . '.' . $request->image->extension();
                     $jobPosition->image = $imageName;
                     $request->image->move(public_path('assets/images/job_positions/'), $imageName);
-                } else {
-                    $imageName = time() . '.' . $request->image->extension();
-                    $jobPosition->image = $imageName;
-                    $request->image->move(public_path('assets/images/job_positions/'), $imageName);
                 }
             }
             //DO systemLog function FROM SystemLogController
@@ -183,15 +179,28 @@ class JobPositionController extends Controller
     {
         return request()->validate([
             'job_title_id'=>'required',
+            'company_name'=>'nullable',
+            'hiring_manager'=>'nullable',
             'show_hiring_manager_name'=>'required',
             'short_description'=>'required',
+            'requirements'=>'nullable',
             'benefit_id'=>'required',
             'country'=>'required',
             'city'=>'required',
             'postal_code'=>'required',
+            'department_id'=>'nullable',
+            'employment_type_id'=>'nullable',
+            'exp_level_id'=>'nullable',
+            'job_function_id'=>'nullable',
+            'education_level_id'=>'nullable',
             'show_salary'=>'required',
             'currency'=>'required',
+            'salary_min'=>'nullable',
+            'salary_max'=>'nullable',
+            'keywords'=>'nullable',
             'status'=>'required',
+            'closing_date'=>'nullable',
+            'image'=>'nullable',
             'display_type'=>'required'
         ]);
     }

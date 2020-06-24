@@ -44,6 +44,8 @@
 	$(document).ready(function(){
 		$('.form-group').each(function(){
 			var find = $(this).find('input[type="file"]');
+			var badge = find.siblings('.badge');
+			badge.remove();
 			$(find).removeAttr('required');
 		});
 	});

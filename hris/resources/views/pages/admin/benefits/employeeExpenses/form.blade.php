@@ -31,7 +31,7 @@
 				@if(count($paymentMethods) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($paymentMethods as $paymentMethod)
-				<option value="{{$paymentMethod->id}}" {{ $employeeExpense->payment_method == $paymentMethod->name  ? 'selected' : '' }}>{{$paymentMethod->name}}</option>
+				<option value="{{$paymentMethod->id}}" {{ $employeeExpense->payment_method_id == $paymentMethod->id  ? 'selected' : '' }}>{{$paymentMethod->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>

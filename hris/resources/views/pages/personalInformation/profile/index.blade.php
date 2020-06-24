@@ -153,13 +153,8 @@
 						<p>{{$employee->supervisor}}</p>
 					</div>
 					<div class="col-12 col-md-3">
-						<label>Direct Reports</label>
-					</div>
-				</div>
-				<div class="row no-gutters">
-					<div class="col-12 col-md-3">
 						<label>Department</label>
-						<p>{{$employee->department}}</p>
+						<p>{{$employee->department->name}}</p>
 					</div>
 				</div>
 			</div>

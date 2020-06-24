@@ -87,8 +87,7 @@ class JobTitleController extends Controller
             'code' => 'required',
             'name' => 'required',
             'description' => 'required',
-            'specification' => 'required',
-            'role' => 'required'
+            'specification' => 'required'
         ]);
 
     }

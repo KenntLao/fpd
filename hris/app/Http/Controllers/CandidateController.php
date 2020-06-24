@@ -34,13 +34,17 @@ class CandidateController extends Controller
     public function store(hris_candidates $candidate, Request $request)
     {
         $action = 'add';
-        if($this->validatedData() && $request->hasFile('resume')) {
+        if($this->storeValidatedData()) {
             if ( $request->hasFile('profile_image') ) {
                 $imageName = time() . '.' . $request->profile_image->extension();
                 $candidate->profile_image = $imageName;
                 $request->profile_image->move(public_path('assets/files/candidates/profile_image'), $imageName);
             }
-            $resume = time() . '.' . $request->resume->extension();
+            if($request->hasFile('resume')) {
+                $resume = time() . '.' . $request->resume->extension();
+                $candidate->resume = $resume;
+                $request->resume->move(public_path('assets/files/candidates/resume'), $resume);
+            }
             $candidate->job_position_id = request('job_position_id');
             $candidate->hiring_stage = request('hiring_stage');
             $candidate->first_name = request('first_name');
@@ -50,7 +54,6 @@ class CandidateController extends Controller
             $candidate->country = request('country');
             $candidate->telephone = request('telephone');
             $candidate->email = request('email');
-            $candidate->resume = $resume;
             $candidate->resume_headline = request('resume_headline');
             $candidate->profile_summary = request('profile_summary');
             $candidate->total_years_exp = request('total_years_exp');
@@ -60,13 +63,12 @@ class CandidateController extends Controller
             $candidate->referees = request('referees');
             $candidate->prefered_industry = request('prefered_industry');
             $candidate->expected_salary = request('expected_salary');
-            $request->resume->move(public_path('assets/files/candidates/resume'), $resume);
             $candidate->save();
             $id = $candidate->id;
             $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully added!');
         } else {
-            return back()->withErrors($this->validatedData());
+            return back()->withErrors($this->storeValidatedData());
         }
     }
 
@@ -85,17 +87,13 @@ class CandidateController extends Controller
     public function update(hris_candidates $candidate, Request $request)
     {
         $id = $candidate->id;
-        if($this->validatedData()) {
+        if($this->updateValidatedData()) {
             $model = $candidate;
             if( $request->hasFile('profile_image') ) {
                 $pathCandidate = public_path('/assets/files/candidates/profile_image/');
                 if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
                     $old_file_1 = $pathCandidate . $candidate->profile_image;
                     unlink($old_file_1);
-                    $imageName = time() . '.' . $request->profile_image->extension();
-                    $candidate->profile_image = $imageName;
-                    $request->profile_image->move(public_path('/assets/files/candidates/profile_image/'), $imageName);
-                } else {
                     $imageName = time() . '.' . $request->profile_image->extension();
                     $candidate->profile_image = $imageName;
                     $request->profile_image->move(public_path('/assets/files/candidates/profile_image/'), $imageName);
@@ -106,10 +104,6 @@ class CandidateController extends Controller
                 if ($candidate->resume != '' && $candidate->resume != NULL) {
                     $old_file_2 = $pathResume . $candidate->resume;
                     unlink($old_file_2);
-                    $resume = time() . '.' . $request->resume->extension();
-                    $candidate->resume = $resume;
-                    $request->resume->move(public_path('assets/files/candidates/resume/'), $resume);
-                } else {
                     $resume = time() . '.' . $request->resume->extension();
                     $candidate->resume = $resume;
                     $request->resume->move(public_path('assets/files/candidates/resume/'), $resume);
@@ -139,7 +133,7 @@ class CandidateController extends Controller
             $candidate->update();
             return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
         } else {
-            return back()->withErrors($this->validatedData());
+            return back()->withErrors($this->updateValidatedData());
         }
 
     }
@@ -169,7 +163,7 @@ class CandidateController extends Controller
         }
     }
 
-    protected function validatedData() {
+    protected function storeValidatedData() {
 
         return request()->validate([
 
@@ -177,11 +171,50 @@ class CandidateController extends Controller
             'hiring_stage'=>'required',
             'first_name'=>'required',
             'last_name'=>'required',
+            'profile_image'=>'nullable',
             'gender'=>'required',
+            'city'=>'nullable',
             'country'=>'required',
             'telephone'=>'required',
             'email'=>'required',  
-            'prefered_industry'=>'required'
+            'resume'=>'required',
+            'resume_headline'=>'nullable',
+            'profile_summary'=>'nullable',
+            'total_years_exp'=>'nullable',
+            'work_history'=>'nullable',
+            'education'=>'nullable',
+            'skills'=>'nullable',
+            'referees'=>'nullable',
+            'prefered_industry'=>'required',
+            'expected_salary'=>'nullable'
+        ]);
+
+    }
+
+    protected function updateValidatedData() {
+
+        return request()->validate([
+
+            'job_position_id'=>'required',
+            'hiring_stage'=>'required',
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'profile_image'=>'nullable',
+            'gender'=>'required',
+            'city'=>'nullable',
+            'country'=>'required',
+            'telephone'=>'required',
+            'email'=>'required',  
+            'resume'=>'nullable',
+            'resume_headline'=>'nullable',
+            'profile_summary'=>'nullable',
+            'total_years_exp'=>'nullable',
+            'work_history'=>'nullable',
+            'education'=>'nullable',
+            'skills'=>'nullable',
+            'referees'=>'nullable',
+            'prefered_industry'=>'required',
+            'expected_salary'=>'nullable'
         ]);
 
     }

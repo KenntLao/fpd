@@ -579,7 +579,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* PUNCH OUT */
     Route::patch('/hris/pages/time/attendances/punchout/{attendance}', 'AttendanceController@punchout');
 
-    /* OVERTIME MANAGEMENT */
+    /* OVERTIME REQUEST */
     Route::get('/hris/pages/time/overtime/index', 'OvertimeController@index');
     /* ADD */
     Route::get('/hris/pages/time/overtime/create', 'OvertimeController@create');
@@ -587,9 +587,10 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* UPDATE */
     Route::get('/hris/pages/time/overtime/{overtime}/edit', 'OvertimeController@edit');
     Route::patch('/hris/pages/time/overtime/update/{overtime}', 'OvertimeController@update');
-    Route::patch('/hris/pages/time/overtime/updateStatus/{overtime}', 'OvertimeController@updateStatus');
     /* DELETE */
     Route::delete('/hris/pages/time/overtime/delete/{overtime}', 'OvertimeController@destroy');
+    /* SHOW */
+    Route::get('/hris/pages/time/overtime/{overtime}/show', 'OvertimeController@show');
     
 
     //PERSONAL INFORMATION

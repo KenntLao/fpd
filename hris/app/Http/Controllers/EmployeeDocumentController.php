@@ -34,7 +34,7 @@ class EmployeeDocumentController extends Controller
     public function store(hris_employee_documents $document, Request $request)
     {   
         $action = 'add';
-        if ($this->validatedData()) {
+        if ($this->storeValidatedData()) {
             if($request->hasFile('attachment')) {
                 $attachment = time() . '.' . $request->attachment->extension();
                 $document->attachment = $attachment;
@@ -46,14 +46,14 @@ class EmployeeDocumentController extends Controller
             $document->valid_until = request('valid_until');
             $document->status = request('status');
             $document->details = request('details');
-            $document->attachment = request('attachment');
+            $document->attachment = $attachment;
             $document->save();
             $id = $document->id;
             $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully added!');
 
         } else {
-            return back()->withErrors($this->validatedData());
+            return back()->withErrors($this->storeValidatedData());
         }
     }
 
@@ -72,17 +72,13 @@ class EmployeeDocumentController extends Controller
     public function update(hris_employee_documents $document, Request $request)
     {   
         $id = $document->id;
-        if ($this->validatedData()) {
+        if ($this->updateValidatedData()) {
             $model = $document;
             if( $request->hasFile('attachment') ) {
                 $path = public_path('/assets/files/employees/documents/employee_documents/');
                 if ($document->attachment != '' && $document->attachment != NULL) {
                     $attachment = $path . $document->attachment;
                     unlink($attachment);
-                    $attachment = time() . '.' . $request->attachment->extension();
-                    $document->attachment = $attachment;
-                    $request->attachment->move($path, $attachment);
-                } else {
                     $attachment = time() . '.' . $request->attachment->extension();
                     $document->attachment = $attachment;
                     $request->attachment->move($path, $attachment);
@@ -100,7 +96,7 @@ class EmployeeDocumentController extends Controller
             return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully updated!');
 
         } else {
-            return back()->withErrors($this->validatedData());
+            return back()->withErrors($this->updateValidatedData());
         }
 
     }
@@ -125,7 +121,7 @@ class EmployeeDocumentController extends Controller
         }
     }
 
-    protected function validatedData()
+    protected function storeValidatedData()
     {
         return request()->validate([
             'employee_id' => 'required',
@@ -134,6 +130,19 @@ class EmployeeDocumentController extends Controller
             'valid_until' => 'nullable',
             'status' => 'required',
             'details' => 'nullable',
+            'attachment' => 'required'
+        ]);
+    }
+    protected function updateValidatedData()
+    {
+        return request()->validate([
+            'employee_id' => 'required',
+            'type_id' => 'required',
+            'date_added' => 'required',
+            'valid_until' => 'nullable',
+            'status' => 'required',
+            'details' => 'nullable',
+            'attachment' => 'nullable'
         ]);
     }
 
