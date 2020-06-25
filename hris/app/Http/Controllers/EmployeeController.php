@@ -19,22 +19,16 @@ class EmployeeController extends Controller
     public function index(hris_employee $employee){
         $employees = hris_employee::paginate(10);
         $roles = roles::all();
-        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
-        $supervisor_id = implode(' ', $supervisor_role_id[0]);
-        $employee_supervisors = hris_employee::whereRaw('find_in_set(' . $supervisor_id . ',role_id)', [$employee->id])->get();
-        return view('pages.employees.employee.index', compact('employee_supervisors','employees'));
+        return view('pages.employees.employee.index', compact('employee','employees'));
     }
 
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
     {
         $roles = roles::all();
-        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
-        $supervisor_id = implode(' ',$supervisor_role_id[0]);
-        $employee_supervisors = hris_employee::whereRaw('find_in_set('.$supervisor_id.',role_id)',[$employee->id])->get();
         $job_titles = hris_job_titles::all();
         $departments = hris_company_structures::all();
         $role_ids = explode(',', $employee->role_id);
-        return view('pages.employees.employee.create', compact('employee_supervisors','employee','roles', 'departments','job_titles','role_ids'));
+        return view('pages.employees.employee.create', compact('employee','roles', 'departments','job_titles','role_ids'));
     }
 
     public function store(Request $request, hris_employee $employees) {
@@ -108,12 +102,9 @@ class EmployeeController extends Controller
     public function edit(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles){
             $job_titles = hris_job_titles::all();
             $roles = roles::all();
-            $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
-            $supervisor_id = implode(' ', $supervisor_role_id[0]);
-            $employee_supervisors = hris_employee::whereRaw('find_in_set(' . $supervisor_id . ',role_id)', [$employee->id])->get();
             $departments = hris_company_structures::all();
             $role_ids = explode(',',$employee->role_id);
-            return view('pages.employees.employee.edit', compact('employee_supervisors','employee', 'roles', 'departments','job_titles','role_ids'));
+            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids'));
     }
 
     public function update(Request $request, hris_employee $employee){
@@ -224,6 +215,25 @@ class EmployeeController extends Controller
         }
     }
 
+    public function getSupervisorRoleId()
+    {
+        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+        return implode(' ', $supervisor_role_id[0]);
+    }
+    public function getEmployeeSupervisors()
+    {
+        return hris_employee::whereRaw('find_in_set(?,role_id)', [$this->getSupervisorRoleId()])->get('id')->toArray();
+    }
+    public function renderSupervisor(Request $request){
+        $department_id = $request->get('department_id');
+        $supervisors = hris_employee::whereRaw('find_in_set(?,role_id)', [$this->getSupervisorRoleId()])->where('department_id',$department_id)->get();
+        $output = '<option value="">-- select one --</option>';
+        foreach ($supervisors as $supervisor) {
+            $output .= '<option value="' . $supervisor->id . '">' . $supervisor->firstname . ' '. $supervisor->lastname .'</option>';
+        }
+        echo $output;
+
+    }
     protected function validatedData()
     {
         return request()->validate([

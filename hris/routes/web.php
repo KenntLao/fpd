@@ -425,6 +425,9 @@ Route::middleware([CheckUserID::class])->group(function(){
     
 
     Route::group(['middleware' => 'CheckPermission:employees'], function () {
+        // GET AJAX DATA FOR SUPERVISOR
+        Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
+
         Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
         Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
         Route::post('/hris/pages/employees/employee', 'EmployeeController@store');

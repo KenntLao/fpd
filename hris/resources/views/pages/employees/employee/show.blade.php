@@ -111,7 +111,7 @@
                 <div class="form-group">
                     <label class="mr-2" for="department">Department </label>
                     <div class="employee-info">
-                        <span>{{$employee->department}}</span>
+                        <span>{{$employee->department->name}}</span>
                     </div>
                 </div>
             </div>
