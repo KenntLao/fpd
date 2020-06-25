@@ -99,4 +99,9 @@ $(document).ready(function() {
         }
 	});
 
+
+	// DEPARTMENT == SUPERVISOR EMPLOYEE MODULE
+
+	
+
 });
