@@ -37,7 +37,7 @@
                 <li class="nav-item">
                     <a href="/hris" class="nav-link">
                         <i class="fas nav-icon fa-users"></i>
-                        <p>HRIS</p>
+                        <p>MyFPD</p>
                     </a>
                 </li>
 
