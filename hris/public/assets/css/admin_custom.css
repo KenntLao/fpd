@@ -578,6 +578,9 @@ textarea.form-control {
 .profile {
 	font-family: opensans;
 }
+.profile-image {
+	border: 1px solid #041E42;
+}
 .profile-image > img {
 	display: block;
 	width: 100%;

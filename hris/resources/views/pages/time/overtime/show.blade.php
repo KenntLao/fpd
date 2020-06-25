@@ -29,16 +29,12 @@
                     <img src="{{ URL::asset('assets/images/employees/employee_photos/') }}/{{$overtime->employee->employee_photo}}">
                 </div>
             </div>
-            <div class="col-6 col-sm-10">
+            <div class="col-9 col-sm-10">
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label>Employee number:</label>
                             <p>{{$overtime->employee->employee_number}}</p>
-                        </div>
-                        <div class="form-group">
-                            <label>Employee name:</label>
-                            <p>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</p>
                         </div>
                     </div>
                     <div class="col-6">
@@ -46,6 +42,16 @@
                             <label>Work phone:</label>
                             <p>{{$overtime->employee->work_phone}}</p>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Employee name:</label>
+                            <p>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
                         <div class="form-group">
                             <label>Private mail address:</label>
                             <p>{{$overtime->employee->private_email}}</p>

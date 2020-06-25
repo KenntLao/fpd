@@ -183,7 +183,7 @@
                                     Denied
                                     @endif
                                 </td>
-                                <td class="td-action">
+                                <td>
                                     <div class="row no-gutters">
                                         @if($s->status == '1' OR $s->status == '2')
                                         <div class="col-12">

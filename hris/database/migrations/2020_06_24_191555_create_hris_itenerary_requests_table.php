@@ -17,6 +17,8 @@ class CreateHrisIteneraryRequestsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->bigInteger('employee_id');
+            $table->bigInteger('supervisor_id')->nullable();
+            $table->string('role_id')->nullable();
             $table->string('transportation');
             $table->string('purpose');
             $table->string('travel_from');
@@ -24,7 +26,7 @@ class CreateHrisIteneraryRequestsTable extends Migration
             $table->string('travel_date');
             $table->string('return_date');
             $table->string('notes')->nullable();
-            $table->string('currency');
+            $table->bigInteger('currency_id');
             $table->string('total_funding_proposed');
             $table->string('attachment_1')->nullable();
             $table->string('attachment_2')->nullable();

@@ -100,15 +100,15 @@
 				<div class="row no-gutters">
 					<div class="col-12 col-md-3">
 						<label>Work Address</label>
-						<p>{{$employee->sss}}</p>
+						<p>{{$employee->work_address}}</p>
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Home Address</label>
-						<p>{{date("M d, Y", strtotime($employee->birthday))}}</p>
+						<p>{{$employee->home_address}}</p>
 					</div>
 					<div class="col-12 col-md-3">
 						<label>City</label>
-						<p>{{$employee->gender}}</p>
+						<p>{{$employee->city}}</p>
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Country</label>
@@ -142,7 +142,7 @@
 				<div class="row no-gutters">
 					<div class="col-12 col-md-3">
 						<label>Job Title</label>
-						<p>{{$employee->job_position}}</p>
+						<p>{{$employee->job_title->name}}</p>
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Employment Status</label>

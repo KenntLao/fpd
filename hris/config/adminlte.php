@@ -480,7 +480,8 @@ return [
                 [
                     'text' => 'Dashboard',
                     'icon' => 'fas fa-fw fa-desktop',
-                    'url' => '#'
+                    'url' => '/hris/',
+                    'active' => ['/hris/', 'regex:@^content/[0-9]+$@'],
                 ],
                 [
                     'text' => 'Basic Information',
@@ -544,33 +545,39 @@ return [
                     'text' => 'Employees',
                     'url'  => '/hris/pages/employees/employee/index',
                     'icon'    => 'fas fa-fw fa-users',
-                    'active' => ['/hris/pages/employees/employee/create', '/hris/pages/employees/employee/index', '/hris/pages/employees/employee/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/employees/employee/create', '/hris/pages/employees/employee/index', '/hris/pages/employees/employee/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
                 [
                     'text' => 'Employee History',
                     'url'  => '/hris/pages/employee/employee_history/',
-                    'icon'    => 'fas fa-fw fa-history'
+                    'icon'    => 'fas fa-fw fa-history',
+                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
                 [
                     'text' => 'HR Form',
                     'url'  => '/hris/pages/employee/hr_form/',
-                    'icon'    => 'fas fa-fw fa-folder'
+                    'icon'    => 'fas fa-fw fa-folder',
+                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
                 [
                     'text' => 'Itenerary Request',
                     'url'  => '/hris/pages/employees/iteneraryRequests/index',
                     'icon'    => 'fas fa-fw fa-plane-departure',
-                    'active' => ['/hris/pages/employees/iteneraryRequests/create', '/hris/pages/employees/iteneraryRequests/index', '/hris/pages/employees/iteneraryRequests/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/employees/iteneraryRequests/create', '/hris/pages/employees/iteneraryRequests/index', '/hris/pages/employees/iteneraryRequests/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'employees'
                 ],
                 [
                     'text' => 'Monitor Attendance',
                     'url'  => '/hris/pages/employee/monitor_attendance/',
-                    'icon'    => 'fas fa-fw fa-clock'
+                    'icon'    => 'fas fa-fw fa-clock',
+                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
                 [
                     'text' => 'Performance Review',
                     'url'  => '/hris/pages/employee/performance_review/',
-                    'icon'    => 'fas fa-fw fa-chart-bar'
+                    'icon'    => 'fas fa-fw fa-chart-bar',
+                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
                 [
                     'text' => 'Document Management',
@@ -581,19 +588,22 @@ return [
                             'text' => 'Company Documents',
                             'url'  => '/hris/pages/employees/documents/companyDocuments/index',
                             'icon'    => 'fas fa-fw fa-file',
-                            'active' => ['/hris/pages/employees/documents/companyDocuments/create', '/hris/pages/employees/documents/companyDocuments/index', '/hris/pages/employees/documents/companyDocuments/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/employees/documents/companyDocuments/create', '/hris/pages/employees/documents/companyDocuments/index', '/hris/pages/employees/documents/companyDocuments/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => ['employee-add', 'employee-edit', 'employee-delete']
                         ],
                         [
                             'text' => 'Document Types',
                             'url'  => '/hris/pages/employees/documents/types/index',
                             'icon'    => 'fas fa-fw fa-file',
-                            'active' => ['/hris/pages/employees/documents/types/create', '/hris/pages/employees/documents/types/index', '/hris/pages/employees/documents/types/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/employees/documents/types/create', '/hris/pages/employees/documents/types/index', '/hris/pages/employees/documents/types/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => ['employee-add', 'employee-edit', 'employee-delete']
                         ],
                         [
                             'text' => 'Employee Documents',
                             'url'  => '/hris/pages/employees/documents/employeeDocuments/index',
                             'icon'    => 'fas fa-fw fa-file',
-                            'active' => ['/hris/pages/employees/documents/employeeDocuments/create', '/hris/pages/employees/documents/employeeDocuments/index', '/hris/pages/employees/documents/employeeDocuments/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/employees/documents/employeeDocuments/create', '/hris/pages/employees/documents/employeeDocuments/index', '/hris/pages/employees/documents/employeeDocuments/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => ['employee-add', 'employee-edit', 'employee-delete']
                         ],
                     ]
                 ],
