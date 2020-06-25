@@ -1,9 +1,9 @@
 @extends('adminlte::page')
-@section('title', 'HRIS | Overtime Management')
+@section('title', 'HRIS | iteneraryRequests - request')
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-users "></i> Overtime Management</h1>
+        <h1><i class="fas fa-fw fa-users "></i> Itenerary Request</h1>
     </div>
 </div>
 @stop
@@ -23,74 +23,86 @@
 @if( $_SESSION['sys_role_ids'] == ',1,' )
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Overtime Request List</h3>
+        <h3 class="card-title">Itenerary Request List</h3>
+        <div class="card-tools">
+            <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
+        </div>
     </div>
     <div class="card-body">
-        @if(count($overtimes) > 0)
+        @if(count($iteneraryRequests) > 0)
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped table-condensed">
                 <thead>
                     <tr>
-                        <th>date</th>
                         <th>employee</th>
-                        <th>request date and time</th>
                         <th>approved by</th>
-                        <th>approved date</th>
+                        <th>travel date</th>
+                        <th>return date</th>
+                        <th>from</th>
+                        <th>to</th>
+                        <th>purpose</th>
                         <th>status</th>
-                        <th>actions</th>
+                        <th>action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($overtimes as $overtime)
+                    @foreach($iteneraryRequests as $iteneraryRequest)
                     <tr>
-                        <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                        <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
-                        <td>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
+                        <td>{{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</td>
                         <td>
-                            @if($overtime->supervisor)
-                            @if($overtime->role_id == ',1,')
+                            @if($iteneraryRequest->supervisor)
+                            @if($iteneraryRequest->role_id == ',1,')
                             @php
                             {{
-                            $users = App\users::find($overtime->supervisor_id);
+                            $users = App\users::find($iteneraryRequest->supervisor_id);
                             echo $users->uname;
                             }}
                             @endphp
                             @else
-                            {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                            {{$iteneraryRequest->supervisor->firstname}} {{$iteneraryRequest->supervisor->lastname}}
                             @endif
                             @else
                             None
                             @endif
                         </td>
+                        <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->travel_date), 'M d, Y h:i A')}}</td>
+                        <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->return_date), 'M d, Y h:i A')}}</td>
+                        <td>{{$iteneraryRequest->travel_from}}</td>
+                        <td>{{$iteneraryRequest->travel_to}}</td>
+                        <td>{{$iteneraryRequest->purpose}}</td>
                         <td>
-                            @if($overtime->approved_date)
-                            {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
-                            @else
-                            @endif
-                        </td>
-                        <td>
-                            @if($overtime->status == '0')
+                            @if($iteneraryRequest->status == '0')
                             Pending
                             @endif
-                            @if($overtime->status == '1')
+                            @if($iteneraryRequest->status == '1')
                             Approved
                             @endif
-                            @if($overtime->status == '2')
+                            @if($iteneraryRequest->status == '2')
                             Denied
                             @endif
                         </td>
                         <td>
                             <div class="row no-gutters">
-                                @if($overtime->status == '1' OR $overtime->status == '2')
+                                @if($itenerary->status == '1' OR $itenerary->status == '2')
                                 <div class="col-12">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
                                 <div class="col-md-6">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit?status=1" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                    <form action="/hris/pages/employees/iteneraryRequests/updateStatus/{{$iteneraryRequest->id}}" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="status" value="1">
+                                        <button type="submit" class="btn btn-primary btn-sm" title="Approve request"><i class="fas fa-check-square"></i></button>
+                                    </form>
                                 </div>
                                 <div class="col-md-6">
-                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit?status=2" title="Deny request"><i class="fas fa-times"></i></a>
+                                    <form action="/hris/pages/employees/iteneraryRequests/updateStatus/{{$iteneraryRequest->id}}" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="status" value="2">
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Deny request"><i class="fas fa-times"></i></button>
+                                    </form>
                                 </div>
                                 @endif
                             </div>
@@ -105,7 +117,7 @@
         @endif()
     </div>
     <div class="card-footer">
-        {{$overtimes->links()}}
+        {{$iteneraryRequests->links()}}
     </div>
 </div>
 @else
@@ -113,10 +125,10 @@
 <div class="row no-gutters">
     <ul class="nav nav-tabs" role="tablist" style="border-bottom: 0;">
         <li class="nav-item tab-item">
-            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">My Overtime Requests</a>
+            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">My Itenerary Requests</a>
         </li>
         <li class="nav-item tab-item">
-            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Subordinate Overtime Requests</a>
+            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Subordinate Itenerary Requests</a>
         </li>
     </ul>
 </div>
@@ -124,9 +136,9 @@
     <div class="tab-pane active" id="tabs-1" role="tab-panel">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Overtime Request List</h3>
+                <h3 class="card-title">Itenerary Request List</h3>
                 <div class="card-tools">
-                    <a class="btn add-button btn-md" href="/hris/pages/time/overtime/create"><i class="fa fa-plus mr-1"></i> Request Overtime</a>
+                    <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
                 </div>
             </div>
             <div class="card-body">
@@ -135,21 +147,21 @@
                     <table class="table table-hover table-bordered table-striped table-condensed">
                         <thead>
                             <tr>
-                                <th>date</th>
                                 <th>employee</th>
-                                <th>request date and time</th>
                                 <th>approved by</th>
-                                <th>approved date</th>
+                                <th>travel date</th>
+                                <th>return date</th>
+                                <th>from</th>
+                                <th>to</th>
+                                <th>purpose</th>
                                 <th>status</th>
-                                <th>actions</th>
+                                <th>action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($self as $s)
                             <tr>
-                                <td>{{date("M d, Y - h:i:sa", strtotime($s->created_at))}}</td>
-                                <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
-                                <td>{{date_format(date_create_from_format('m-d-Y', $s->ot_date), 'M d, Y')}} {{$s->ot_time_in}} - {{$s->ot_time_out}}</td>
+                                <td>{{$s->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</td>
                                 <td>
                                     @if($s->supervisor)
                                     @if($s->role_id == ',1,')
@@ -166,12 +178,11 @@
                                     None
                                     @endif
                                 </td>
-                                <td>
-                                    @if($s->approved_date)
-                                    {{date("M d, Y - h:i:sa", strtotime($s->approved_date))}}
-                                    @else
-                                    @endif
-                                </td>
+                                <td>{{date_format(date_create_from_format('m-d-Y h:i A', $s->travel_date), 'M d, Y h:i A')}}</td>
+                                <td>{{date_format(date_create_from_format('m-d-Y h:i A', $s->return_date), 'M d, Y h:i A')}}</td>
+                                <td>{{$s->travel_from}}</td>
+                                <td>{{$s->travel_to}}</td>
+                                <td>{{$s->purpose}}</td>
                                 <td>
                                     @if($s->status == '0')
                                     Pending
@@ -187,15 +198,18 @@
                                     <div class="row no-gutters">
                                         @if($s->status == '1' OR $s->status == '2')
                                         <div class="col-12">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         @else
-                                        <div class="col-6">
-                                            <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
+                                        <div class="col-4">
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
+                                            <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
+                                        </div>
+                                        <div class="col-4">
                                             <!-- Button trigger modal -->
-                                            <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$s->id}}" data-name="Overtime request - {{$s->created_at}} from {{$s->employee->firstname}} {{$s->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$s->id}}" data-name="Itenerary request - {{$s->created_at}} from {{$s->employee->firstname}} {{$s->employee->lastname}}"><i class="fa fa-trash"></i></button>
                                         </div>
                                         @endif
                                     </div>
@@ -217,74 +231,89 @@
     <div class="tab-pane" id="tabs-2" role="tab-panel">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Overtime Request List</h3>
+                <h3 class="card-title">Itenerary Request List</h3>
+                <div class="card-tools">
+                    <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
+                </div>
             </div>
             <div class="card-body">
-                @if(count($overtimes) > 0)
+                @if(count($iteneraryRequests) > 0)
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-striped table-condensed">
                         <thead>
                             <tr>
-                                <th>date</th>
                                 <th>employee</th>
-                                <th>request date and time</th>
                                 <th>approved by</th>
-                                <th>approved date</th>
+                                <th>travel date</th>
+                                <th>return date</th>
+                                <th>from</th>
+                                <th>to</th>
+                                <th>purpose</th>
                                 <th>status</th>
-                                <th>actions</th>
+                                <th>action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($overtimes as $overtime)
+                            @foreach($iteneraryRequests as $iteneraryRequest)
                             <tr>
-                                <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                                <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
-                                <td>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
+                                <td>{{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</td>
                                 <td>
-                                    @if($overtime->supervisor)
-                                    @if($overtime->role_id == ',1,')
+                                    @if($iteneraryRequest->supervisor)
+                                    @if($iteneraryRequest->role_id == ',1,')
                                     @php
                                     {{
-                                    $users = App\users::find($overtime->supervisor_id);
+                                    $users = App\users::find($iteneraryRequest->supervisor_id);
                                     echo $users->uname;
                                     }}
                                     @endphp
                                     @else
-                                    {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                                    {{$iteneraryRequest->supervisor->firstname}} {{$iteneraryRequest->supervisor->lastname}}
                                     @endif
                                     @else
                                     None
                                     @endif
                                 </td>
+                                <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->travel_date), 'M d, Y h:i A')}}</td>
+                                <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->return_date), 'M d, Y h:i A')}}</td>
+                                <td>{{$iteneraryRequest->travel_from}}</td>
+                                <td>{{$iteneraryRequest->travel_to}}</td>
+                                <td>{{$iteneraryRequest->purpose}}</td>
                                 <td>
-                                    @if($overtime->approved_date)
-                                    {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
-                                    @else
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($overtime->status == '0')
+                                    @if($iteneraryRequest->status == '0')
                                     Pending
                                     @endif
-                                    @if($overtime->status == '1')
+                                    @if($iteneraryRequest->status == '1')
                                     Approved
                                     @endif
-                                    @if($overtime->status == '2')
+                                    @if($iteneraryRequest->status == '2')
                                     Denied
                                     @endif
                                 </td>
                                 <td>
                                     <div class="row no-gutters">
-                                        @if($overtime->status == '1' OR $overtime->status == '2')
+                                        @if($iteneraryRequest->status == '1' OR $iteneraryRequest->status == '2')
                                         <div class="col-12">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         @else
-                                        <div class="col-md-6">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit?status=1" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                        <div class="col-4">
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
-                                        <div class="col-md-6">
-                                            <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit?status=2" title="Deny request"><i class="fas fa-times"></i></a>
+                                        <div class="col-4">
+                                            <form action="/hris/pages/employees/iteneraryRequests/updateStatus/{{$iteneraryRequest->id}}" method="post">
+                                                @method('PATCH')
+                                                @csrf
+                                                <input type="hidden" name="status" value="1">
+                                                <button type="submit" class="btn btn-success btn-sm" title="Approve request"><i class="fas fa-check-square"></i></button>
+                                            </form>
+                                        </div>
+                                        <div class="col-4">
+                                            <form action="/hris/pages/employees/iteneraryRequests/updateStatus/{{$iteneraryRequest->id}}" method="post">
+                                                @method('PATCH')
+                                                @csrf
+                                                <input type="hidden" name="status" value="2">
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Deny request"><i class="fas fa-times"></i></button>
+                                            </form>
                                         </div>
                                         @endif
                                     </div>
@@ -299,7 +328,7 @@
                 @endif()
             </div>
             <div class="card-footer">
-                {{$overtimes->links()}}
+                {{$iteneraryRequests->links()}}
             </div>
         </div>
     </div>
@@ -307,78 +336,77 @@
 @else
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Overtime Request List</h3>
+        <h3 class="card-title">Itenerary Request List</h3>
         <div class="card-tools">
-            <a class="btn add-button btn-md" href="/hris/pages/time/overtime/create"><i class="fa fa-plus mr-1"></i> Request Overtime</a>
+            <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
         </div>
     </div>
     <div class="card-body">
-        @if(count($overtimes) > 0)
+        @if(count($iteneraryRequests) > 0)
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped table-condensed">
                 <thead>
                     <tr>
-                        <th>date</th>
                         <th>employee</th>
-                        <th>request date and time</th>
                         <th>approved by</th>
-                        <th>approved date</th>
+                        <th>travel date</th>
+                        <th>return date</th>
+                        <th>from</th>
+                        <th>to</th>
+                        <th>purpose</th>
                         <th>status</th>
-                        <th>actions</th>
+                        <th>action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($overtimes as $overtime)
+                    @foreach($iteneraryRequests as $iteneraryRequest)
                     <tr>
-                        <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                        <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
-                        <td>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
+                        <td>{{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</td>
                         <td>
-                            @if($overtime->supervisor)
-                            @if($overtime->role_id == ',1,')
+                            @if($iteneraryRequest->supervisor)
+                            @if($iteneraryRequest->role_id == ',1,')
                             @php
                             {{
-                            $users = App\users::find($overtime->supervisor_id);
+                            $users = App\users::find($iteneraryRequest->supervisor_id);
                             echo $users->uname;
                             }}
                             @endphp
                             @else
-                            {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                            {{$iteneraryRequest->supervisor->firstname}} {{$iteneraryRequest->supervisor->lastname}}
                             @endif
                             @else
                             None
                             @endif
                         </td>
+                        <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->travel_date), 'M d, Y h:i A')}}</td>
+                        <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->return_date), 'M d, Y h:i A')}}</td>
+                        <td>{{$iteneraryRequest->travel_from}}</td>
+                        <td>{{$iteneraryRequest->travel_to}}</td>
+                        <td>{{$iteneraryRequest->purpose}}</td>
                         <td>
-                            @if($overtime->approved_date)
-                            {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
-                            @else
-                            @endif
-                        </td>
-                        <td>
-                            @if($overtime->status == '0')
+                            @if($iteneraryRequest->status == '0')
                             Pending
                             @endif
-                            @if($overtime->status == '1')
+                            @if($iteneraryRequest->status == '1')
                             Approved
                             @endif
-                            @if($overtime->status == '2')
+                            @if($iteneraryRequest->status == '2')
                             Denied
                             @endif
                         </td>
-                        <td class="td-action">
+                        <td>
                             <div class="row no-gutters">
-                                @if($overtime->status == '1' OR $overtime->status == '2')
+                                @if($iteneraryRequest->status == '1' OR $iteneraryRequest->status == '2')
                                 <div class="col-12">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
                                 <div class="col-6">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
                                 <div class="col-6">
                                     <!-- Button trigger modal -->
-                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$iteneraryRequest->id}}" data-name="Itenerary request - {{$iteneraryRequest->created_at}} from {{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}"><i class="fa fa-trash"></i></button>
                                 </div>
                                 @endif
                             </div>
@@ -393,7 +421,7 @@
         @endif()
     </div>
     <div class="card-footer">
-        {{$overtimes->links()}}
+        {{$iteneraryRequests->links()}}
     </div>
 </div>
 @endif

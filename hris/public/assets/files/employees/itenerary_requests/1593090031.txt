@@ -1,0 +1,90 @@
+Timeline
+
+Recruitment ( 3-4 weeks )
+
+	1. Application
+		- can add edit delete applicant
+	2. Examination
+	3. Initial Interview
+	4. Final Interview
+	5. Background Check
+	6. Job Offer
+	7. Medical Check
+	8. Pre employment Check ( Based on position )
+	9. Signing Contract
+
+Online Job Application Portal ( 5-10 days )
+
+	1. Application Profile
+		- applicant profile
+	2. Personal Information
+		- add personal information of applicant
+	3. Uploading Curriculum Vitae
+	4. Examination with Time Limit
+	5. Application Status
+
+201 Files ( 4-5 weeks )
+
+1. Employee Master List
+	a. Personal Information Tab
+		- can view add edit delete personal information of an employee
+	b. Profile Tab
+		- can view profile of employee
+	c. Status and Development Tab
+	d. Health Records Tab
+		- health records of employee.
+	e. Character Reference Tab
+	f. Educational Background Tab
+	g. Work Experience Tab
+	h. Other Information Tab
+	i. Appraisal Tab
+	j. Training Monitoring Tab
+	k. Deployment History Tab
+	l. Memo Tab
+	m. Benefit Tab
+	n. Pre-employment Tab
+	o. Employment Tab
+
+2. Appraisals
+	a. Evaluation Period
+	b. Over-All Monitoring of Evaluation Status
+
+3. Personnel Movement
+	a. Employee Transfer
+
+4. Resignations
+	a. Monitoring
+		- Resignation Phase
+		- Clearance Phase
+		- Exit Interview Phase
+		- COE Request Phase
+		- Exit Clearance
+
+
+Employee Leaves ( 1-2 weeks )
+	- employee can apply for leave.
+	- manager can approve or reject pending leaves *
+
+Employee Relations ( 1-2 weeks )
+	- can manage employee requests and inquiries.
+	- can manage memos.
+	- can add edit delete notice of violations.
+	- can add edit delete notice of disciplinary actions.
+	- can add edit delete notice of tardiness.
+	- can add edit delete notice of promotions.
+	- can add edit delete notice of regularization
+	- can add edit delete certificate of employment requests.
+
+
+Fixed Asset Management ( 3-5 days )
+	- not sure pano yung valuation.
+	- can add edit delete property types. Ex: Laptop, Car, Mobile Phone.
+	- can add edit delete assets. ( can issue date and return date of asset ).
+
+Payroll System Interface ( 3-4 weeks )
+
+1. Payroll
+	- Uploading of payslips and time credit summary
+2. Employee Master File
+	- Downloading of new hirees.
+	- Downloading of changesin status, assignments and the like.

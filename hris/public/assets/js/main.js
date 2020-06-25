@@ -25,6 +25,13 @@ $(document).ready(function() {
 		    format: 'M-DD-Y'
 		}
 	});
+	$('.travel_date').daterangepicker({
+	    singleDatePicker: true,
+    	timePicker: true,
+	    locale: {
+	      	format: 'MM-DD-Y hh:mm A'
+	    }
+	});
 
 	$('.shift_time').hide()
 
