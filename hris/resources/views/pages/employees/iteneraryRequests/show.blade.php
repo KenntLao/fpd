@@ -8,6 +8,12 @@
 </div>
 @stop
 @section('content')
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
+</div>
+@endif
 @if (count($errors))
 <div class="alert alert-danger">
     <strong>Whoops!</strong> There were some problems with your input.
@@ -24,20 +30,26 @@
     </div>
     <div class="card-body">
         <div class="row mb-4">
-            <div class="col-3 col-sm-2">
-                <div class="profile-image">
+            <div class="col-12 col-sm-2">
+                <div class="profile-image mb-4">
                     <img src="{{ URL::asset('assets/images/employees/employee_photos/') }}/{{$iteneraryRequest->employee->employee_photo}}">
                 </div>
             </div>
-            <div class="col-9 col-sm-10">
+            <div class="col-12 col-sm-10">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12 col-sm-4">
                         <div class="form-group">
                             <label>Employee number:</label>
                             <p>{{$iteneraryRequest->employee->employee_number}}</p>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 col-sm-4">
+                        <div class="form-group">
+                            <label>Department:</label>
+                            <p>{{$iteneraryRequest->employee->department->name}}</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
                         <div class="form-group">
                             <label>Work phone:</label>
                             <p>{{$iteneraryRequest->employee->work_phone}}</p>
@@ -45,13 +57,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12 col-sm-4">
                         <div class="form-group">
                             <label>Employee name:</label>
                             <p>{{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</p>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 col-sm-4">
                         <div class="form-group">
                             <label>Private mail address:</label>
                             <p>{{$iteneraryRequest->employee->private_email}}</p>
@@ -155,9 +167,9 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>Attachments: </label>
-                            <p><a href="{{ URL::asset('assets/images/employees/employee_photos/') }}/{{$iteneraryRequest->employee->employee_photo}}" download="{{$iteneraryRequest->attachment_1}}">{{$iteneraryRequest->attachment_1}}</a></p>
-                            <p><a href="{{ URL::asset('assets/images/employees/employee_photos/') }}/{{$iteneraryRequest->employee->employee_photo}}" download="{{$iteneraryRequest->attachment_1}}">{{$iteneraryRequest->attachment_2}}</a></p>
-                            <p><a href="{{ URL::asset('assets/images/employees/employee_photos/') }}/{{$iteneraryRequest->employee->employee_photo}}" download="{{$iteneraryRequest->attachment_1}}">{{$iteneraryRequest->attachment_3}}</a></p>
+                            <p><a class="download-link" href="/hris/pages/employees/iteneraryRequests/download/1/{{$iteneraryRequest->id}}" title="Download attachment"><i class="fas fa-cloud-download-alt mr-2"></i>{{$iteneraryRequest->attachment_1}}</a></p>
+                            <p><a class="download-link" href="/hris/pages/employees/iteneraryRequests/download/2/{{$iteneraryRequest->id}}" title="Download attachment"><i class="fas fa-cloud-download-alt mr-2"></i>{{$iteneraryRequest->attachment_2}}</a></p>
+                            <p><a class="download-link" href="/hris/pages/employees/iteneraryRequests/download/3/{{$iteneraryRequest->id}}" title="Download attachment"><i class="fas fa-cloud-download-alt mr-2"></i>{{$iteneraryRequest->attachment_3}}</a></p>
                         </div>
                     </div>
                 </div>

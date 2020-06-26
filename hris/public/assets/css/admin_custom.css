@@ -671,3 +671,19 @@ textarea.form-control {
 .links {
 	float: right;
 }
+
+/* DOWNLOAD LINK */
+.form-group > p {
+	margin-bottom: 15px;
+}
+.download-link {
+	background: #041E42;
+	color: #FFFF00;
+	padding: 5px 15px;
+	border: 1px solid #041E42;
+	font-family: opensans;
+}
+.download-link:hover {
+	background: #FFFF00;
+	color: #041E42;
+}

@@ -31,13 +31,19 @@
             </div>
             <div class="col-9 col-sm-10">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label>Employee number:</label>
                             <p>{{$overtime->employee->employee_number}}</p>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Department:</label>
+                            <p>{{$overtime->employee->department->name}}</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
                         <div class="form-group">
                             <label>Work phone:</label>
                             <p>{{$overtime->employee->work_phone}}</p>
@@ -45,13 +51,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label>Employee name:</label>
                             <p>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</p>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label>Private mail address:</label>
                             <p>{{$overtime->employee->private_email}}</p>
@@ -68,14 +74,14 @@
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label class="mr-2" for="created_at">Request date and time: </label>
+                            <label class="mr-2" for="created_at">Date and Time: </label>
                             <p>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</p>
                         </div>
                     </div>
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label class="mr-2" for="ot_date">Overtime Date: </label>
-                            <p>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}}</p>
+                            <label class="mr-2" for="type">Type: </label>
+                            <p>{{$overtime->type}}</p>
                         </div>
                     </div>
                 </div>
@@ -96,22 +102,8 @@
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label class="mr-2" for="ot_time_in">Overtime Time In: </label>
-                            <p>{{$overtime->ot_time_in}}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="ot_time_out">Overtime Time out: </label>
-                            <p>{{$overtime->ot_time_out}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="type">Type: </label>
-                            <p>{{$overtime->type}}</p>
+                            <label class="mr-2" for="ot_date">Overtime Request Date and Time: </label>
+                            <p>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</p>
                         </div>
                     </div>
                     <div class="col-6 col-sm-6">

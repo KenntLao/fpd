@@ -115,8 +115,48 @@ class OvertimeController extends Controller
         return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor'));
 
     }
+    public function editStatus($status, hris_overtime $overtime)
+    {
+        $id = $_SESSION['sys_id'];
+        $employee_id = $overtime->employee_id;
+        $employee = hris_employee::find($employee_id);
+        $roles = roles::all();
+        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+        $supervisor_id = implode(' ', $supervisor_role_id[0]);
+        $employee_supervisor = hris_employee::all()->where('role_id', ','.$supervisor_id.',')->where('department_id', $employee->department_id);
+        return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor'));
+
+    }
     public function update(hris_overtime $overtime, Request $request)
     {
+        $id = $overtime->id;
+        if ($this->validatedData()) {
+            $model = $overtime;
+            //DO systemLog function FROM SystemLogController
+            $this->function->updateSystemLog($model,$this->module,$id);
+            $overtime->ot_date = request('ot_date');
+            $overtime->ot_time_in = request('ot_time_in');
+            $overtime->ot_time_out = request('ot_time_out');
+            $overtime->employee_remarks = request('employee_remarks');
+            $overtime->update();
+            return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully updated!');
+        } else {
+            return back()->withErrors($this->validatedData());
+        }
+    }
+    public function updateStatus($status, hris_overtime $overtime, Request $request)
+    {
+        $id = $_SESSION['sys_id'];
+        $employee_id = $overtime->employee_id;
+        $employee = hris_employee::find($employee_id);
+        $roles = roles::all();
+        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+        $supervisor_id = implode(' ', $supervisor_role_id[0]);
+        $employee_supervisor = hris_employee::all()->where('role_id', ','.$supervisor_id.',')->where('department_id', $employee->department_id);
+        $es_id = array();
+        foreach ($employee_supervisor as $es) {
+            $es_id[] = $es->id;
+        }
         $id = $_SESSION['sys_id'];
         $employee_id = $overtime->employee_id;
         $employee = hris_employee::find($employee_id);
@@ -134,14 +174,14 @@ class OvertimeController extends Controller
                 $model = $overtime;
                 //DO systemLog function FROM SystemLogController
                 $this->function->updateSystemLog($model,$this->module,$id);
-                if ( request('status') == '1' OR request('status') == '2' ) {
-                    if ( request('status') == '1' ) {
-                        $status = 'accepted';
+                if( $status == 1 OR $status == 2 ) {
+                    if( $status == 1 ) {
+                        $string = 'approved';
                     }
-                    if ( request('status') == '2' ) {
-                        $status = 'rejected';
+                    if ( $status == 2 ) {
+                        $string = 'denied';
                     }
-                    $overtime->status = request('status');
+                    $overtime->status = $status;
                 } else {
                     return redirect('/hris/pages/time/overtime/index')->withErrors(['Invalid status.']);
                 }
@@ -151,7 +191,7 @@ class OvertimeController extends Controller
                 $overtime->type = request('type');
                 $overtime->supervisor_remarks = request('supervisor_remarks');
                 $overtime->update();
-                return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request '.$status.'!');
+                return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request '.$string.'!');
             } else {
                 return back()->withErrors($this->supervisorData());
             }
@@ -162,42 +202,27 @@ class OvertimeController extends Controller
                     $model = $overtime;
                     //DO systemLog function FROM SystemLogController
                     $this->function->updateSystemLog($model,$this->module,$id);
-                    if ( request('status') == '1' OR request('status') == '2' ) {
-                        if ( request('status') == '1' ) {
-                            $status = 'accepted';
+                    if( $status == 1 OR $status == 2 ) {
+                        if( $status == 1 ) {
+                            $string = 'approved';
                         }
-                        if ( request('status') == '2' ) {
-                            $status = 'rejected';
+                        if ( $status == 2 ) {
+                            $string = 'denied';
                         }
-                        $overtime->status = request('status');
+                        $overtime->status = $status;
                     } else {
                         return redirect('/hris/pages/time/overtime/index')->withErrors(['Invalid status.']);
                     }
                     $overtime->supervisor_id = $_SESSION['sys_id'];
                     $overtime->role_id = $_SESSION['sys_role_ids'];
                     $overtime->approved_date = date('Y-m-d H:i:s');
-                $overtime->type = request('type');
+                    $overtime->type = request('type');
                     $overtime->supervisor_remarks = request('supervisor_remarks');
                     $overtime->update();
-                    return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request '.$status.'!');
+                    return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request '.$string.'!');
                 } else {
                     return back()->withErrors($this->supervisorData());
                 } 
-            } else {
-                $id = $overtime->id;
-                if ($this->validatedData()) {
-                    $model = $overtime;
-                    //DO systemLog function FROM SystemLogController
-                    $this->function->updateSystemLog($model,$this->module,$id);
-                    $overtime->ot_date = request('ot_date');
-                    $overtime->ot_time_in = request('ot_time_in');
-                    $overtime->ot_time_out = request('ot_time_out');
-                    $overtime->employee_remarks = request('employee_remarks');
-                    $overtime->update();
-                    return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully updated!');
-                } else {
-                    return back()->withErrors($this->validatedData());
-                }
             }
         }
     }

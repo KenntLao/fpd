@@ -20,5 +20,9 @@ class hris_itenerary_requests extends Model
     {
     	return $this->belongsTo('App\hris_currencies');
     }
+    public function department()
+    {
+        return $this->belongsTo('App\hris_company_structures');
+    }
 
 }

@@ -24,9 +24,6 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Itenerary Request List</h3>
-        <div class="card-tools">
-            <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
-        </div>
     </div>
     <div class="card-body">
         @if(count($iteneraryRequests) > 0)
@@ -83,26 +80,19 @@
                         </td>
                         <td>
                             <div class="row no-gutters">
-                                @if($itenerary->status == '1' OR $itenerary->status == '2')
+                                @if($iteneraryRequest->status == '1' OR $iteneraryRequest->status == '2')
                                 <div class="col-12">
                                     <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
-                                <div class="col-md-6">
-                                    <form action="/hris/pages/employees/iteneraryRequests/updateStatus/{{$iteneraryRequest->id}}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="status" value="1">
-                                        <button type="submit" class="btn btn-primary btn-sm" title="Approve request"><i class="fas fa-check-square"></i></button>
-                                    </form>
+                                <div class="col-4">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
-                                <div class="col-md-6">
-                                    <form action="/hris/pages/employees/iteneraryRequests/updateStatus/{{$iteneraryRequest->id}}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="status" value="2">
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Deny request"><i class="fas fa-times"></i></button>
-                                    </form>
+                                <div class="col-4">
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/updateStatus/1/{{$iteneraryRequest->id}}"><i class="fas fa-check-square"></i></a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-danger btn-sm" href="/hris/pages/employees/iteneraryRequests/updateStatus/2/{{$iteneraryRequest->id}}"><i class="fas fa-times"></i></a>
                                 </div>
                                 @endif
                             </div>
@@ -300,20 +290,10 @@
                                             <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         <div class="col-4">
-                                            <form action="/hris/pages/employees/iteneraryRequests/updateStatus/{{$iteneraryRequest->id}}" method="post">
-                                                @method('PATCH')
-                                                @csrf
-                                                <input type="hidden" name="status" value="1">
-                                                <button type="submit" class="btn btn-success btn-sm" title="Approve request"><i class="fas fa-check-square"></i></button>
-                                            </form>
+                                            <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/updateStatus/1/{{$iteneraryRequest->id}}"><i class="fas fa-check-square"></i></a>
                                         </div>
                                         <div class="col-4">
-                                            <form action="/hris/pages/employees/iteneraryRequests/updateStatus/{{$iteneraryRequest->id}}" method="post">
-                                                @method('PATCH')
-                                                @csrf
-                                                <input type="hidden" name="status" value="2">
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Deny request"><i class="fas fa-times"></i></button>
-                                            </form>
+                                            <a class="btn btn-danger btn-sm" href="/hris/pages/employees/iteneraryRequests/updateStatus/2/{{$iteneraryRequest->id}}"><i class="fas fa-times"></i></a>
                                         </div>
                                         @endif
                                     </div>

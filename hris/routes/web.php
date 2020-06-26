@@ -443,11 +443,14 @@ Route::middleware([CheckUserID::class])->group(function(){
         //edit
         Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/edit', 'IteneraryRequestController@edit');
         Route::patch('/hris/pages/employees/iteneraryRequests/update/{iteneraryRequest}', 'IteneraryRequestController@update');
-        Route::patch('/hris/pages/employees/iteneraryRequests/updateStatus/{iteneraryRequest}', 'IteneraryRequestController@updateStatus');
+        Route::get('/hris/pages/employees/iteneraryRequests/updateStatus/{status}/{iteneraryRequest}', 'IteneraryRequestController@updateStatus');
         //delete
         Route::delete('/hris/pages/employees/iteneraryRequests/delete/{iteneraryRequest}', 'IteneraryRequestController@destroy');
         //show
         Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/show', 'IteneraryRequestController@show');
+        //download
+        Route::get('/hris/pages/employees/iteneraryRequests/download/{attachment}/{iteneraryRequest}', 'IteneraryRequestController@download');
+
 
         // DOCUMENT MANAGEMENT
         // COMPANY DOCUMENTS
@@ -604,6 +607,8 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* UPDATE */
     Route::get('/hris/pages/time/overtime/{overtime}/edit', 'OvertimeController@edit');
     Route::patch('/hris/pages/time/overtime/update/{overtime}', 'OvertimeController@update');
+    Route::get('/hris/pages/time/overtime/{status}/{overtime}/edit', 'OvertimeController@editStatus')->name('editStatus');
+    Route::patch('/hris/pages/time/overtime/update/{status}/{overtime}', 'OvertimeController@updateStatus');
     /* DELETE */
     Route::delete('/hris/pages/time/overtime/delete/{overtime}', 'OvertimeController@destroy');
     /* SHOW */
