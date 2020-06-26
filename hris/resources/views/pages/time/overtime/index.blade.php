@@ -45,13 +45,7 @@
                     @foreach($overtimes as $overtime)
                     <tr>
                         <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                        <td>
-                            @php
-                            $employee = App\hris_employee::find($overtime->employee_id);
-                            $department = App\hris_company_structures::find($employee->department_id);
-                            echo $department->name;
-                            @endphp
-                        </td>
+                        <td>{{$overtime->employee->department->name}}</td>
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                         <td>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
                         <td>

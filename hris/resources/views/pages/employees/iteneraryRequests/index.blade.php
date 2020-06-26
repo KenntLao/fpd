@@ -151,7 +151,7 @@
                         <tbody>
                             @foreach($self as $s)
                             <tr>
-                                <td>{{$s->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</td>
+                                <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
                                 <td>
                                     @if($s->supervisor)
                                     @if($s->role_id == ',1,')
@@ -192,7 +192,7 @@
                                         </div>
                                         @else
                                         <div class="col-4">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         <div class="col-4">
                                             <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
@@ -222,9 +222,6 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Itenerary Request List</h3>
-                <div class="card-tools">
-                    <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
-                </div>
             </div>
             <div class="card-body">
                 @if(count($iteneraryRequests) > 0)

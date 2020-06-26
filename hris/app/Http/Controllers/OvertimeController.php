@@ -112,7 +112,11 @@ class OvertimeController extends Controller
         $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
         $supervisor_id = implode(' ', $supervisor_role_id[0]);
         $employee_supervisor = hris_employee::all()->where('role_id', ','.$supervisor_id.',')->where('department_id', $employee->department_id);
-        return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor'));
+        if ( $id == $employee->supervisor ) {
+            return redirect()->back();
+        } else {
+            return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor'));
+        }
 
     }
     public function editStatus($status, hris_overtime $overtime)
@@ -124,7 +128,11 @@ class OvertimeController extends Controller
         $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
         $supervisor_id = implode(' ', $supervisor_role_id[0]);
         $employee_supervisor = hris_employee::all()->where('role_id', ','.$supervisor_id.',')->where('department_id', $employee->department_id);
-        return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor'));
+        if ( $id == $employee_id ) {
+            return redirect()->back();
+        } else {
+            return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor'));
+        }
 
     }
     public function update(hris_overtime $overtime, Request $request)
@@ -146,17 +154,6 @@ class OvertimeController extends Controller
     }
     public function updateStatus($status, hris_overtime $overtime, Request $request)
     {
-        $id = $_SESSION['sys_id'];
-        $employee_id = $overtime->employee_id;
-        $employee = hris_employee::find($employee_id);
-        $roles = roles::all();
-        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
-        $supervisor_id = implode(' ', $supervisor_role_id[0]);
-        $employee_supervisor = hris_employee::all()->where('role_id', ','.$supervisor_id.',')->where('department_id', $employee->department_id);
-        $es_id = array();
-        foreach ($employee_supervisor as $es) {
-            $es_id[] = $es->id;
-        }
         $id = $_SESSION['sys_id'];
         $employee_id = $overtime->employee_id;
         $employee = hris_employee::find($employee_id);

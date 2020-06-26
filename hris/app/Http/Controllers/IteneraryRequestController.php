@@ -129,8 +129,13 @@ class IteneraryRequestController extends Controller
 
     public function edit(hris_itenerary_requests $iteneraryRequest)
     {
-        $currencies = hris_currencies::all();
-        return view('pages.employees.iteneraryRequests.edit', compact('iteneraryRequest', 'currencies'));
+        $id = $_SESSION['sys_id'];
+        if ( $id == $iteneraryRequest->supervisor_id ) {
+            return redirect()->back();
+        } else {
+            $currencies = hris_currencies::all();
+            return view('pages.employees.iteneraryRequests.edit', compact('iteneraryRequest', 'currencies'));
+        }
     }
 
     public function update(hris_itenerary_requests $iteneraryRequest, Request $request)
@@ -199,40 +204,22 @@ class IteneraryRequestController extends Controller
         foreach ($employee_supervisor as $es) {
             $es_id[] = $es->id;
         }
-        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
-            $id = $iteneraryRequest->id;
-            $model = $iteneraryRequest;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            if ( $status == '1' OR $status == '2' ) {
-                if ( $status == '1' ) {
-                $string = 'accepted';
-                }
-                if ( $status == '2' ) {
-                $string = 'rejected';
-                }
-                $overtime->status = $status;
-            } else {
-                return redirect('/hris/pages/employees/iteneraryRequests/index')->withErrors(['Invalid status!']);
-            }
-            $iteneraryRequest->supervisor_id = $_SESSION['sys_id'];
-            $iteneraryRequest->role_id = $_SESSION['sys_role_ids'];
-            $iteneraryRequest->update();
-            return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request '.$string.'!');
+        if ( $id = $iteneraryRequest->employee_id ) {
+            return back()->withErrors(['You do not have permission to access this page.']);
         } else {
-            if (in_array($id, $es_id)) {
+            if ( $_SESSION['sys_role_ids'] == ',1,' ) {
                 $id = $iteneraryRequest->id;
                 $model = $iteneraryRequest;
                 //DO systemLog function FROM SystemLogController
                 $this->function->updateSystemLog($model,$this->module,$id);
                 if ( $status == '1' OR $status == '2' ) {
                     if ( $status == '1' ) {
-                        $string = 'accepted';
+                    $string = 'accepted';
                     }
                     if ( $status == '2' ) {
-                        $string = 'rejected';
+                    $string = 'rejected';
                     }
-                    $iteneraryRequest->status = $status;
+                    $overtime->status = $status;
                 } else {
                     return redirect('/hris/pages/employees/iteneraryRequests/index')->withErrors(['Invalid status!']);
                 }
@@ -240,6 +227,28 @@ class IteneraryRequestController extends Controller
                 $iteneraryRequest->role_id = $_SESSION['sys_role_ids'];
                 $iteneraryRequest->update();
                 return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request '.$string.'!');
+            } else {
+                if (in_array($id, $es_id)) {
+                    $id = $iteneraryRequest->id;
+                    $model = $iteneraryRequest;
+                    //DO systemLog function FROM SystemLogController
+                    $this->function->updateSystemLog($model,$this->module,$id);
+                    if ( $status == '1' OR $status == '2' ) {
+                        if ( $status == '1' ) {
+                            $string = 'accepted';
+                        }
+                        if ( $status == '2' ) {
+                            $string = 'rejected';
+                        }
+                        $iteneraryRequest->status = $status;
+                    } else {
+                        return redirect('/hris/pages/employees/iteneraryRequests/index')->withErrors(['Invalid status!']);
+                    }
+                    $iteneraryRequest->supervisor_id = $_SESSION['sys_id'];
+                    $iteneraryRequest->role_id = $_SESSION['sys_role_ids'];
+                    $iteneraryRequest->update();
+                    return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request '.$string.'!');
+                }
             }
         }
     }
