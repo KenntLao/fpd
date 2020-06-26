@@ -40,8 +40,30 @@
 @stop
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
+
 <script>
-	
+	$('#department_dropdown').on('change', function() {
+		if ($(this).val() != '') {
+			var department_id = $(this).val();
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('getSupervisor.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					department_id: department_id,
+				},
+				success: function(response) {
+					$('#supervisor').html(response);
+				}
+			});
+		}
+	});
 	//preview image
 	var loadFile = function(event) {
 		var output = document.getElementById('image-preview');

@@ -57,11 +57,13 @@
                         <td>{{$employee->department->name}}</td>
                         <td>{{$employee->gender}}</td>
                         <td>
-                            @foreach($employee_supervisors as $employee_supervisor)
-                            @if($employee->supervisor == $employee_supervisor->id)
-                            {{$employee_supervisor->firstname}} {{$employee_supervisor->lastname}}
-                            @endif
-                            @endforeach
+                            @php
+                            {{
+                                    $emp = App\hris_employee::find($employee->supervisor);  
+                                    echo $emp['firstname'] . ' ' . $emp['lastname'];
+                            }}
+                            @endphp
+
                         </td>
                         <td class="td-action">
                             <div class="row no-gutters">
