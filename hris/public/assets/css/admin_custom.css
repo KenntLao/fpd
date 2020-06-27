@@ -29,6 +29,7 @@ html::-webkit-scrollbar {
 }
 .main-profile-photo {
 	display: inline-block;
+	margin-right: 5px;
 	
 }
 .main-profile-photo img {
