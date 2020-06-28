@@ -618,6 +618,11 @@ return [
             'url' => '#',
             'submenu' => [
                 [
+                    'text' => 'Daily Time Records',
+                    'url' => '/hris/pages/time/dtr/index',
+                    'icon' => 'fas fa-fw fa-history'
+                ],
+                [
                     'text' => 'Work Shift Management',
                     'url' => '/hris/pages/time/workshiftManagement/index',
                     'icon' => 'fas fa-fw fa-clock',
@@ -638,17 +643,7 @@ return [
                     'text' => 'Overtime',
                     'url' => '/hris/pages/time/overtime/index',
                     'icon' => 'fas fa-fw fa-clock'
-                ],
-                [
-                    'text' => 'Time Sheets',
-                    'url' => '/hris/pages/time/timeSheets/index',
-                    'icon' => 'fas fa-fw fa-stopwatch',
-                ],
-                [
-                    'text' => 'Attendance Sheets',
-                    'url' => '/hris/pages/time/attendanceSheets/index',
-                    'icon' => 'fas fa-fw fa-calendar-check',
-                ],
+                ]
             ]
         ],
         [
