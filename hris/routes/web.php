@@ -688,6 +688,17 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE */
     Route::delete('/hris/pages/personalInformation/emergencyContacts/delete/{emergency}', 'EmergencyContactController@destroy');
 
+    //LEAVE MANAGEMENT
+    Route::get('/hris/pages/leaveManagement/leaves/index', 'LeaveController@index');
+    /* ADD */
+    Route::get('/hris/pages/leaveManagement/leaves/create', 'LeaveController@create');
+    Route::post('/hris/pages/leaveManagement/leaves', 'LeaveController@store');
+    /* UPDATE */
+    Route::get('/hris/pages/leaveManagement/leaves/{leave}/edit', 'LeaveController@edit');
+    Route::patch('/hris/pages/leaveManagement/leaves/update/{leave}', 'LeaveController@update');
+    /* DELETE */
+    Route::delete('/hris/pages/leaveManagement/leaves/delete/{leave}', 'LeaveController@destroy');
+
 
 
     Route::get('/hris/', function () {
