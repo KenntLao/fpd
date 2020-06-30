@@ -3,7 +3,7 @@
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-history "></i> Daily Time Records &raquo; 00001 <span>Kennt Gilbert Lao</span></h1>
+        <h1><i class="fas fa-fw fa-history "></i> Daily Time Records &raquo; {{$employee->employee_number}} <span>{{$employee->firstname}} {{$employee->middlename}} {{$employee->lastname}}</span></h1>
     </div>
 </div>
 @stop
@@ -54,7 +54,7 @@
                                         <th>Day</th>
                                         <th>IN</th>
                                         <th>OUT</th>
-                                        <th>INT</th>
+                                        <th>IN</th>
                                         <th>OUT</th>
                                         <th>REMARKS</th>
                                         <th>Leave Type</th>
@@ -62,16 +62,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($employee_attendances as $attendance)
                                     <tr>
-                                        <td>lorem ipsum</td>
-                                        <td>lorem ipsum</td>
-                                        <td>lorem ipsum</td>
-                                        <td>lorem ipsum</td>
+                                        <td>{{$attendance->created_at->format('M d, Y')}}</td>
+                                        <td>{{$attendance->created_at->format('D')}}</td>
+                                        <td>{{$attendance->created_at->format('H:i:s A')}}</td>
+                                        <td>
+                                            @if($attendance->time_out != NULL)
+                                            {{date("h:i:sa", $attendance->time_out)}}
+                                            @else
+                                            -
+                                            @endif
+                                        </td>
                                         <td>lorem ipsum</td>
                                         <td>actions here</td>
                                         <td>lorem ipsum</td>
                                         <td>actions here</td>
                                         <td>lorem ipsum</td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
