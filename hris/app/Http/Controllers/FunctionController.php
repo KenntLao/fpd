@@ -35,26 +35,32 @@ class FunctionController extends Controller
         //GET COLUMN FIELDS
         $field = array_keys($model->getAttributes());
         foreach ($field as $f) {
+            $string = substr($f, '-3');
+            if ($string == '_id') {
+                $data = ucfirst(str_replace("_id", '', $f));
+            } else {
+                $data = $f;
+            }
             if( $f != 'created_at' && $f != 'updated_at' && $f != 'id') {
                 if ( $model->getOriginal($f) != request($f) ) {
                     if ( $model->getOriginal($f) == '' ) {
                         if ( is_array(request($f)) ) {
-                            $msg[] = '. Updated blank data to '.implode(",", request($f));
+                            $msg[] = '. '. $data .' updated to '.implode(",", request($f));
                         } else {
-                            $msg[] = '. Updated blank data to '.request($f);
+                            $msg[] = '. '. $data .' updated to '.request($f);
                         }
                     } elseif ( request($f) == '' ) {
                         if ( request('attachment') == '' ?? request('resume') == '' ?? request('profile_image') == '' ?? request('receipt') == '' ?? request('attachment_1') == '' ?? request('attachment_2') == '' ) {
                             $msg[] = '';
                         } else {
-                            $msg[] = '. Updated '.$model->getOriginal($f).' to blank data';
+                            $msg[] = '. '. $data .' updated from '.$model->getOriginal($f).' to blank data';
                         }
                         
                     } else {
                         if ( is_array(request($f)) ) {
-                            $msg[] = '. Updated '.$model->getOriginal($f).' to '.implode(",", request($f));
+                            $msg[] = '. '. $data .' updated from '.$model->getOriginal($f).' to '.implode(",", request($f));
                         } else {
-                            $msg[] = '. Updated '.$model->getOriginal($f).' to '.request($f);
+                            $msg[] = '. '. $data .' updated from '.$model->getOriginal($f).' to '.request($f);
                         }
                     }
                 } else {

@@ -141,6 +141,7 @@ return array(
     'App\\hris_leave_periods' => $baseDir . '/app/hris_leave_periods.php',
     'App\\hris_leave_rules' => $baseDir . '/app/hris_leave_rules.php',
     'App\\hris_leave_types' => $baseDir . '/app/hris_leave_types.php',
+    'App\\hris_leaves' => $baseDir . '/app/hris_leaves.php',
     'App\\hris_overtime' => $baseDir . '/app/hris_overtime.php',
     'App\\hris_overtime_categories' => $baseDir . '/app/hris_overtime_categories.php',
     'App\\hris_overtime_requests' => $baseDir . '/app/hris_overtime_requests.php',

@@ -628,6 +628,7 @@ class ComposerStaticInit6c181881bffc77215f481f707d408bf5
         'App\\hris_leave_periods' => __DIR__ . '/../..' . '/app/hris_leave_periods.php',
         'App\\hris_leave_rules' => __DIR__ . '/../..' . '/app/hris_leave_rules.php',
         'App\\hris_leave_types' => __DIR__ . '/../..' . '/app/hris_leave_types.php',
+        'App\\hris_leaves' => __DIR__ . '/../..' . '/app/hris_leaves.php',
         'App\\hris_overtime' => __DIR__ . '/../..' . '/app/hris_overtime.php',
         'App\\hris_overtime_categories' => __DIR__ . '/../..' . '/app/hris_overtime_categories.php',
         'App\\hris_overtime_requests' => __DIR__ . '/../..' . '/app/hris_overtime_requests.php',

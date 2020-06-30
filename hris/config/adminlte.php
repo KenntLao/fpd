@@ -656,50 +656,13 @@ return [
                 [
                     'text' => 'Leave',
                     'icon' => 'fas fa-fw fa-calendar-day',
-                    'submenu' => [
-                        [
-                            'text' => 'All My Leaves',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/all/index',
-                            'active' => ['/hris/pages/leaves/all/create', '/hris/pages/leaves/all/index', '/hris/pages/leaves/all/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Leave Entitlement',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/leaveEntitlements/index',
-                            'active' => ['/hris/pages/leaves/leaveEntitlements/create', '/hris/pages/leaves/leaveEntitlements/index', '/hris/pages/leaves/leaveEntitlements/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Approved Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/approvedLeaves/index',
-                            'active' => ['/hris/pages/leaves/approvedLeaves/create', '/hris/pages/leaves/approvedLeaves/index', '/hris/pages/leaves/approvedLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Pending Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/pendingLeaves/index',
-                            'active' => ['/hris/pages/leaves/pendingLeaves/create', '/hris/pages/leaves/pendingLeaves/index', '/hris/pages/leaves/pendingLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Subordinate Leave',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/subordinateLeaves/index',
-                            'active' => ['/hris/pages/leaves/subordinateLeaves/create', '/hris/pages/leaves/subordinateLeaves/index', '/hris/pages/leaves/subordinateLeaves/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Cancellation Requests',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/cancellationRequests/index',
-                            'active' => ['/hris/pages/leaves/cancellationRequests/create', '/hris/pages/leaves/cancellationRequests/index', '/hris/pages/leaves/cancellationRequests/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                        [
-                            'text' => 'Approval Requests',
-                            'icon' => 'fas fa-fw fa-calendar-day',
-                            'url' => '/hris/pages/leaves/approvalRequests/index',
-                            'active' => ['/hris/pages/leaves/approvalRequests/create', '/hris/pages/leaves/approvalRequests/index', '/hris/pages/leaves/approvalRequests/*/edit', 'regex:@^content/[0-9]+$@']
-                        ],
-                    ]
+                    'active' => ['/hris/pages/leaveManagement/leaves/create', '/hris/pages/leaveManagement/leaves/index', '/hris/pages/leaveManagement/leaves/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'url' => '/hris/pages/leaveManagement/leaves/index'
+                ],
+                [
+                    'text' => 'Leave Entitlement',
+                    'icon' => 'fas fa-fw fa-calendar-day',
+                    'url' => '/hris/pages/leaveManagement/leaveEntitlement/index'
                 ],
                 [
                     'text' => 'Leave Calendar',
