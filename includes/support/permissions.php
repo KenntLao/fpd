@@ -49,6 +49,101 @@ $permissions_arr = array(
 			)
 		),
 	),
+	// HRIS TIME MANAGEMENT ===========================================================================
+	// HRIS WORK SHIFT MANAGEMENT ===========================================================================
+	array(
+		array(
+			'permission_code' => 'workshift-management',
+			'permission_name' => array(
+				'Workshift Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access Work Shift Management.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'workshift-add',
+			'permission_name' => array(
+				'Add Work Shift',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to create work shifts.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'workshift-edit',
+			'permission_name' => array(
+				'Update Work Shift',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to update work shifts.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'workshift-delete',
+			'permission_name' => array(
+				'Delete Work Shift',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to delete work shifts.',
+				''
+			)
+		),
+	),
+	// HRIS WORK SHIFT ASSIGNMENT ===========================================================================
+	array(
+		array(
+			'permission_code' => 'workshift-assignment',
+			'permission_name' => array(
+				'Workshift Assignment',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access Work Shift Assignments.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'workshift-add-assignment',
+			'permission_name' => array(
+				'Assign Work Shifts',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to assign work shifts.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'workshift-edit-assignment',
+			'permission_name' => array(
+				'Update Assigned Work Shifts',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to update assigned work shifts.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'workshift-delete-assignment',
+			'permission_name' => array(
+				'Delete Assigned Work Shifts',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to delete assigned work shifts.',
+				''
+			)
+		),
+	),
 
 
     // DASHBOARD CALENDAR ===========================================================================

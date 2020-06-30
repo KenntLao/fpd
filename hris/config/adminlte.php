@@ -619,7 +619,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Daily Time Records',
-                    'url' => '/hris/pages/time/dtr/index',
+                    'url' => '/hris/pages/time/dailyTimeRecords/index',
                     'icon' => 'fas fa-fw fa-history'
                 ],
                 [
