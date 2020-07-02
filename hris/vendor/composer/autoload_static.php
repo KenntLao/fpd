@@ -596,6 +596,7 @@ class ComposerStaticInit6c181881bffc77215f481f707d408bf5
         'App\\hris_countries' => __DIR__ . '/../..' . '/app/hris_countries.php',
         'App\\hris_courses' => __DIR__ . '/../..' . '/app/hris_courses.php',
         'App\\hris_currencies' => __DIR__ . '/../..' . '/app/hris_currencies.php',
+        'App\\hris_daily_time_record' => __DIR__ . '/../..' . '/app/hris_daily_time_record.php',
         'App\\hris_department' => __DIR__ . '/../..' . '/app/hris_department.php',
         'App\\hris_document_types' => __DIR__ . '/../..' . '/app/hris_document_types.php',
         'App\\hris_education_levels' => __DIR__ . '/../..' . '/app/hris_education_levels.php',

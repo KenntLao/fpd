@@ -17,9 +17,21 @@ class EmployeeController extends Controller
     
 //
     public function index(hris_employee $employee){
-        $employees = hris_employee::paginate(10);
-        $roles = roles::all();
-        return view('pages.employees.employee.index', compact('employee','employees'));
+
+        $role_id = trim(str_replace(',','',$_SESSION['sys_role_ids']));
+
+        $sys_id = $_SESSION['sys_id'];
+        if(isset($_SESSION['sys_dep_id'])){
+            $sys_dep_id = $_SESSION['sys_dep_id'];
+            if ($sys_dep_id && $sys_id) {
+                $employees = hris_employee::where('department_id', $sys_dep_id)->where('id', '!=', $sys_id)->where('supervisor', $sys_id)->paginate(10);
+            } else {
+                $employees = hris_employee::paginate(10);
+            }
+        }else {
+            $employees = hris_employee::paginate(10);
+        }
+        return view('pages.employees.employee.index', compact('employee','employees','role_id'));
     }
 
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
@@ -104,7 +116,8 @@ class EmployeeController extends Controller
             $roles = roles::all();
             $departments = hris_company_structures::all();
             $role_ids = explode(',',$employee->role_id);
-            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids'));
+            $supervisor = hris_employee::where('id',$employee->supervisor)->first();
+            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids','supervisor'));
     }
 
     public function update(Request $request, hris_employee $employee){
@@ -184,7 +197,9 @@ class EmployeeController extends Controller
     }
 
     public function show(hris_employee $employee) {
-        return view('pages.employees.employee.show',compact('employee'));
+        
+        $supervisor = hris_employee::where('id',$employee->supervisor)->first();
+        return view('pages.employees.employee.show',compact('employee','supervisor'));
     }
 
     public function destroy(hris_employee $employee)

@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => 'My<b>FPD</b>',
-    'logo_img' => '../public/assets/images/logo.gif',
+    'logo_img' => '../public/assets/images/logo.jpg',
     'logo_img_class' => 'logo-img',
     'logo_img_xl' => null,
     'logo_img_xl_class' => null,
@@ -84,7 +84,7 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_fixed_sidebar' => false,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
 
@@ -618,6 +618,11 @@ return [
             'url' => '#',
             'submenu' => [
                 [
+                    'text' => 'Daily Time Records',
+                    'url' => '/hris/pages/time/dailyTimeRecords/index',
+                    'icon' => 'fas fa-fw fa-history'
+                ],
+                [
                     'text' => 'Work Shift Management',
                     'url' => '/hris/pages/time/workshiftManagement/index',
                     'icon' => 'fas fa-fw fa-clock',
@@ -638,17 +643,7 @@ return [
                     'text' => 'Overtime',
                     'url' => '/hris/pages/time/overtime/index',
                     'icon' => 'fas fa-fw fa-clock'
-                ],
-                [
-                    'text' => 'Time Sheets',
-                    'url' => '/hris/pages/time/timeSheets/index',
-                    'icon' => 'fas fa-fw fa-stopwatch',
-                ],
-                [
-                    'text' => 'Attendance Sheets',
-                    'url' => '/hris/pages/time/attendanceSheets/index',
-                    'icon' => 'fas fa-fw fa-calendar-check',
-                ],
+                ]
             ]
         ],
         [
@@ -748,211 +743,12 @@ return [
             'url' => '#'
         ],
         [
-            'header' => 'SYSTEM MANAGEMENT',
-        ],
-        [
-            'text' => 'System',
-            'icon' => 'fas fa-fw fa-sliders-h',
-            'submenu' => [
-                [
-                    'text' => 'Settings',
-                    'icon' => 'fas fa-fw fa-cogs',
-                    'submenu' => [
-                        [
-                            'text' => 'Company',
-                            'icon' => 'fas fa-fw fa-cogs',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'System',
-                            'icon' => 'fas fa-fw fa-cogs',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Email',
-                            'icon' => 'fas fa-fw fa-cogs',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Leave / PTO',
-                            'icon' => 'fas fa-fw fa-cogs',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'LDAP',
-                            'icon' => 'fas fa-fw fa-cogs',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Attendance',
-                            'icon' => 'fas fa-fw fa-cogs',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Other',
-                            'icon' => 'fas fa-fw fa-cogs',
-                            'url' => '#'
-                        ],
-                    ]
-                ],
-                [
-                    'text' => 'Users',
-                    'icon' => 'fas fa-fw fa-user',
-                    'submenu' => [
-                        [
-                            'text' => 'Users',
-                            'icon' => 'fas fa-fw fa-user',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'User Roles',
-                            'icon' => 'fas fa-fw fa-user',
-                            'url' => '#'
-                        ],
-                    ]
-                ],
-                [
-                    'text' => 'Manage Modules',
-                    'icon' => 'fas fa-fw fa-folder-open',
-                    'submenu' => [
-                        [
-                            'text' => 'Usage',
-                            'icon' => 'fas fa-fw fa-folder-open',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Modules',
-                            'icon' => 'fas fa-fw fa-folder-open',
-                            'url' => '#'
-                        ],
-                    ]
-                ],
-                [
-                    'text' => 'Manage Permissions',
-                    'icon' => 'fas fa-fw fa-unlock',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Manage Metadeta',
-                    'icon' => 'fas fa-fw fa-microchip',
-                    'submenu' => [
-                        [
-                            'text' => 'Countries',
-                            'icon' => 'fas fa-fw fa-microchip',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Provinces',
-                            'icon' => 'fas fa-fw fa-microchip',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Currency Types',
-                            'icon' => 'fas fa-fw fa-microchip',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Nationality',
-                            'icon' => 'fas fa-fw fa-microchip',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Ethnicity',
-                            'icon' => 'fas fa-fw fa-microchip',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Immigration Status',
-                            'icon' => 'fas fa-fw fa-microchip',
-                            'url' => '#'
-                        ],
-                    ]
-                ],
-                [
-                    'text' => 'Data',
-                    'icon' => 'fas fa-fw fa-database',
-                    'submenu' => [
-                        [
-                            'text' => 'Data Importers',
-                            'icon' => 'fas fa-fw fa-database',
-                            'url' => '#'
-                        ],
-                        [
-                            'text' => 'Data Import Files',
-                            'icon' => 'fas fa-fw fa-database',
-                            'url' => '#'
-                        ],
-                    ]
-                ],
-            ]
-        ],
-        [
             'header' => 'INSIGHTS',
         ],
         [
             'text' => 'Time and Management',
             'icon' => 'fas fa-fw fa-user-clock',
             'url' => '#'
-        ],
-        [
-            'header' => 'PAYROLL',
-        ],
-        [
-            'text' => 'Salary',
-            'icon' => 'fas fa-fw fa-file-archive',
-            'submenu' => [
-                [
-                    'text' => 'Salary Component Types',
-                    'icon' => 'fas fa-fw fa-money-check-alt',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Salary Components',
-                    'icon' => 'fas fa-fw fa-money-check-alt',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Employee Salary Components',
-                    'icon' => 'fas fa-fw fa-money-check-alt',
-                    'url' => '#'
-                ],
-            ]
-        ],
-        [
-            'text' => 'Payroll Reports',
-            'icon' => 'fas fa-fw fa-cogs',
-            'submenu' => [
-                [
-                    'text' => 'Company Payroll',
-                    'icon' => 'fas fa-fw fa-cogs',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Payroll Reports',
-                    'icon' => 'fas fa-fw fa-cogs',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Payroll Columns',
-                    'icon' => 'fas fa-fw fa-cogs',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Calculation Groups',
-                    'icon' => 'fas fa-fw fa-cogs',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Calculation Methods',
-                    'icon' => 'fas fa-fw fa-cogs',
-                    'url' => '#'
-                ],
-                [
-                    'text' => 'Payslip Templates',
-                    'icon' => 'fas fa-fw fa-cogs',
-                    'url' => '#'
-                ],
-            ]
         ],
         [
             'header' => 'DOCUMENT MANAGEMENT',

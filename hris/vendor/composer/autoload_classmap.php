@@ -109,6 +109,7 @@ return array(
     'App\\hris_countries' => $baseDir . '/app/hris_countries.php',
     'App\\hris_courses' => $baseDir . '/app/hris_courses.php',
     'App\\hris_currencies' => $baseDir . '/app/hris_currencies.php',
+    'App\\hris_daily_time_record' => $baseDir . '/app/hris_daily_time_record.php',
     'App\\hris_department' => $baseDir . '/app/hris_department.php',
     'App\\hris_document_types' => $baseDir . '/app/hris_document_types.php',
     'App\\hris_education_levels' => $baseDir . '/app/hris_education_levels.php',

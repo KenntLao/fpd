@@ -135,7 +135,11 @@
         <div class="form-group">
             <label class="mr-2" for="supervisor">Supervisor </label>
             <select id="supervisor" class="form-control select2" name="supervisor">
-                <option>-- select one --</option>
+                @if(isset($supervisor))
+                <option value="{{$supervisor->id}}">{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
+                @else
+                <option>--select one--</option>
+                @endif
             </select>
         </div>
     </div>

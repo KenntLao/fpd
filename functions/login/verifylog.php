@@ -65,6 +65,7 @@ if(isset($_POST['submit-login'])) {
 				$_SESSION['sys_firstname'] = $data['firstname'];
 				$_SESSION['sys_lastname'] = $data['lastname'];
 				$_SESSION['sys_fullname'] = $data['firstname'].' '.$data['lastname'];
+				$_SESSION['sys_dep_id'] = $data['department_id'];
 				if($data['employee_photo'] == '') {
 					if($data['gender'] == 0) {
 						$_SESSION['sys_photo'] = '/dist/img/avatar2.png';

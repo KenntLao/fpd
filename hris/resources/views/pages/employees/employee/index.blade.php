@@ -67,6 +67,7 @@
                         </td>
                         <td class="td-action">
                             <div class="row no-gutters">
+                                @if($role_id == 1)
                                 <div class="col-md-6">
                                     <a class="btn btn-success btn-sm" href="/hris/pages/employees/employee/{{$employee->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
@@ -74,6 +75,11 @@
                                     <!-- Button trigger modal -->
                                     <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$employee->id}}" data-name="{{$employee->firstname}} {{$employee->lastname}}"><i class="fa fa-trash"></i></button>
                                 </div>
+                                @else
+                                <div class="col-md-12">
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/employees/employee/{{$employee->id}}/edit"><i class="fas fa-edit"></i></a>
+                                </div>
+                                @endif
                             </div>
                         </td>
                     </tr>

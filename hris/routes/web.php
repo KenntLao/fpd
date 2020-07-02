@@ -573,6 +573,8 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     /* TIME MANAGEMENT */
 
+    /* DAILY TIME RECORDS */
+    Route::get('/hris/pages/time/dailyTimeRecords/index', 'DailyTimeRecordController@index');
     /* WORKSHIFT MANAGEMENT */
     Route::get('/hris/pages/time/workshiftManagement/index', 'WorkShiftManagementController@index');
     /* ADD */

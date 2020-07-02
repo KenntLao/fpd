@@ -119,7 +119,7 @@
                 <div class="form-group">
                     <label class="mr-2" for="supervisor">Supervisor </label>
                     <div class="employee-info">
-                        <span>{{$employee->supervisor}}</span>
+                        <span>{{$supervisor->firstname}} {{$supervisor->lastname}}</span>
                     </div>
                 </div>
             </div>
