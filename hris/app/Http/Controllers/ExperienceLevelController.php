@@ -55,10 +55,21 @@ class ExperienceLevelController extends Controller
         $id = $experienceLevel->id;
         if ($this->validatedData()) {
             $string = 'App\hris_experience_levels';
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($this->module,$string,$id);
-            $experienceLevel->update($this->validatedData());
-            return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level updated!');
+            $experienceLevel->name = request('name');
+            // GET CHANGES
+            $changes = $experienceLevel->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $experienceLevel->update();
+            // GET CHANGES
+            $changed = $experienceLevel->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $experienceLevel->wasChanged() ) {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level updated!');
+            } else {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }

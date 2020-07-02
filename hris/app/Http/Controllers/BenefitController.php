@@ -54,9 +54,21 @@ class BenefitController extends Controller
         $id = $benefit->id;
         if ($this->validatedData()) {
             $string = 'App\hris_benefits';
-            $this->function->updateSystemLog($this->module,$string,$id);
-            $benefit->update($this->validatedData());
-            return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully updated!');
+            $benefit->name = request('name');
+            // GET CHANGES
+            $changes = $benefit->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $benefit->update();
+            // GET CHANGES
+            $changed = $benefit->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $benefit->wasChanged() ) {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully updated!');
+            } else {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index');
+            }
         } else {
             return back()->withErrors($this->validatedData);
         } 

@@ -54,10 +54,21 @@ class JobFunctionController extends Controller
         $id = $jobFunction->id;
         if ($this->validatedData()) {
             $string = 'App\hris_job_functions';
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($this->module,$string,$id);
-            $jobFunction->update($this->validatedData());
-            return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully updated!');
+            $jobFunction->name = request('name');
+            // GET CHANGES
+            $changes = $jobFunction->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $jobFunction->update();
+            // GET CHANGES
+            $changed = $jobFunction->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $jobFunction->wasChanged() ) {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully updated!');
+            } else {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }  

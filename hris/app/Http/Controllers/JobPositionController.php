@@ -125,8 +125,6 @@ class JobPositionController extends Controller
                     $request->image->move($path, $image);
                 }
             }
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($this->module,$string,$id);
             $jobPosition->job_title_id = request('job_title_id');
             $jobPosition->company_name = request('company_name');
             $jobPosition->hiring_manager = request('hiring_manager');
@@ -150,8 +148,20 @@ class JobPositionController extends Controller
             $jobPosition->status = request('status');
             $jobPosition->closing_date = request('closing_date');
             $jobPosition->display_type = request('display_type');
+            // GET CHANGES
+            $changes = $jobPosition->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
             $jobPosition->update();
-            return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
+            // GET CHANGES
+            $changed = $jobPosition->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $jobPosition->wasChanged() ) {
+                return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully updated!');
+            } else {
+                return redirect('/hris/pages/recruitment/jobPositions/index');
+            }
 
         } else {
             return back()->withErrors($this->validatedData());

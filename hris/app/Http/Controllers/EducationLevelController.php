@@ -53,10 +53,21 @@ class EducationLevelController extends Controller
         $id = $educationLevel->id;
         if ($this->validatedData()) {
             $string = 'App\hris_education_levels';
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($this->module,$string,$id);
-            $educationLevel->update($this->validatedData());
-            return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully updated!');
+            $educationLevel->name = request('name');
+            // GET CHANGES
+            $changes = $educationLevel->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $educationLevel->update();
+            // GET CHANGES
+            $changed = $educationLevel->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $educationLevel->wasChanged() ) {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully updated!');
+            } else {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         } 

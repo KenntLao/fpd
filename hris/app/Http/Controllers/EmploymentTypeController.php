@@ -56,10 +56,21 @@ class EmploymentTypeController extends Controller
         $id = $employmentType->id;
         if ($this->validatedData()) {
             $string = 'App\hris_employment_types';
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($this->module,$string,$id);
-            $employmentType->update($this->validatedData());
-            return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully updated!');
+            $employmentType->name = request('name');
+            // GET CHANGES
+            $changes = $employmentType->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employmentType->update();
+            // GET CHANGES
+            $changed = $employmentType->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employmentType->wasChanged() ) {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully updated!');
+            } else {
+                return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         } 

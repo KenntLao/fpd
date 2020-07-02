@@ -47,7 +47,7 @@ class CompanyDocumentController extends Controller
         }
         if($this->storeValidatedData()) {
             if ( $request->hasFile('attachment') ) {
-                $attachment = time() . '.' . $request->attachment->extension();
+                $attachment = time() . 'A.' . $request->attachment->extension();
             }
             $document->name = request('name');
             $document->details = request('details');

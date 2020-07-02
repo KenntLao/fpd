@@ -112,8 +112,6 @@ class CandidateController extends Controller
                     $request->resume->move($pathResume, $resume);
                 }
             }
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($this->module,$string,$id);
             $candidate->job_position_id = request('job_position_id');
             $candidate->hiring_stage = request('hiring_stage');
             $candidate->first_name = request('first_name');
@@ -132,8 +130,20 @@ class CandidateController extends Controller
             $candidate->referees = request('referees');
             $candidate->prefered_industry = request('prefered_industry');
             $candidate->expected_salary = request('expected_salary');
-            $candidate->update();
-            return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
+            // GET CHANGES
+            $changes = $benefit->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $benefit->update();
+            // GET CHANGES
+            $changed = $benefit->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $benefit->wasChanged() ) {
+                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
+            } else {
+                return redirect('/hris/pages/recruitment/candidates/index');
+            }
         } else {
             return back()->withErrors($this->updateValidatedData());
         }

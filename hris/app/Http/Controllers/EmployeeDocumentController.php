@@ -35,7 +35,7 @@ class EmployeeDocumentController extends Controller
     {
         if ($this->storeValidatedData()) {
             if($request->hasFile('attachment')) {
-                $attachment = time() . '.' . $request->attachment->extension();
+                $attachment = time() . 'A.' . $request->attachment->extension();
                 $document->attachment = $attachment;
                 $request->attachment->move(public_path('assets/files/employees/documents/employee_documents'), $attachment);
             }
@@ -78,7 +78,7 @@ class EmployeeDocumentController extends Controller
                 if ($document->attachment != '' && $document->attachment != NULL) {
                     $attachment = $path . $document->attachment;
                     unlink($attachment);
-                    $attachment = time() . '.' . $request->attachment->extension();
+                    $attachment = time() . 'A.' . $request->attachment->extension();
                     $document->attachment = $attachment;
                     $request->attachment->move($path, $attachment);
                 }
