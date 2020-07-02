@@ -32,7 +32,6 @@ class DependentController extends Controller
 
     public function store(hris_employee_dependents $dependent, Request $request)
     {
-        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if($this->validatedData()) {
             $dependent->employee_id = $employee_id;
@@ -42,7 +41,7 @@ class DependentController extends Controller
             $dependent->id_number = request('id_number');
             $dependent->save();
             $id = $dependent->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
@@ -63,11 +62,25 @@ class DependentController extends Controller
     {
         $id = $dependent->id;
         if($this->validatedData()) {
-            $model = $dependent;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $dependent->update($this->validatedData());
-            return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully updated!');
+            $string = 'App\hris_employee_dependents';
+            $dependent->name = request('name');
+            $dependent->relationship = request('relationship');
+            $dependent->birthday = request('birthday');
+            $dependent->id_number = request('id_number');
+            // GET CHANGES
+            $changes = $dependent->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $dependent->update();
+            // GET CHANGES
+            $changed = $dependent->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $dependent->wasChanged() ) {
+                return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully updated!');
+            } else {
+                return redirect('/hris/pages/personalInformation/dependents/index');
+            }
         } else {
             return back()->withErrors($this->validatedData);
         }
@@ -75,13 +88,12 @@ class DependentController extends Controller
 
     public function destroy(hris_employee_dependents $dependent)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $dependent->delete();
             $id = $dependent->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -28,11 +28,10 @@ class CertificationController extends Controller
 
     public function store(hris_certifications $certification, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $certification = hris_certifications::create($this->validatedData());
             $id = $certification->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,11 +52,23 @@ class CertificationController extends Controller
     {
         $id = $certification->id;
         if($this->validatedData()) {
-            $model = $certification;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $certification->update($this->validatedData());
-            return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully updated!');
+            $string = 'App\hris_certifications';
+            $certification->name = request('name');
+            $certification->description = request('description');
+            // GET CHANGES
+            $changes = $certification->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $certification->update();
+            // GET CHANGES
+            $changed = $certification->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $certification->wasChanged() ) {
+                return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/qualifications/certifications/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -65,13 +76,12 @@ class CertificationController extends Controller
 
     public function destroy(hris_certifications $certification)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $certification->delete();
             $id = $certification->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/qualifications/certifications/index')->with('success', 'Certification successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

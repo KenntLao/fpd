@@ -28,11 +28,10 @@ class EducationController extends Controller
 
     public function store(hris_educations $education, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $education = hris_educations::create($this->validatedData());
             $id = $education->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,11 +52,23 @@ class EducationController extends Controller
     {
         $id = $education->id;
         if($this->validatedData()) {
-            $model = $education;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $education->update($this->validatedData());
-            return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully updated!');
+            $string = 'App\hris_educations';
+            $education->name = request('name');
+            $education->description = request('description');
+            // GET CHANGES
+            $changes = $education->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $education->update();
+            // GET CHANGES
+            $changed = $education->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $education->wasChanged() ) {
+                return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/qualifications/educations/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -65,13 +76,12 @@ class EducationController extends Controller
 
     public function destroy(hris_educations $education)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $education->delete();
             $id = $education->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/qualifications/educations/index')->with('success', 'Education successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

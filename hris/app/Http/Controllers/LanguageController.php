@@ -28,11 +28,10 @@ class LanguageController extends Controller
 
     public function store(hris_languages $language, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $language = hris_languages::create($this->validatedData());
             $id = $language->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,11 +52,23 @@ class LanguageController extends Controller
     {
         $id = $language->id;
         if($this->validatedData()) {
-            $model = $language;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $language->update($this->validatedData());
-            return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully updated!');
+            $string = 'App\hris_languages';
+            $language->name = request('name');
+            $language->description = request('description');
+            // GET CHANGES
+            $changes = $language->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $language->update();
+            // GET CHANGES
+            $changed = $language->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $language->wasChanged() ) {
+                return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/qualifications/languages/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -65,13 +76,12 @@ class LanguageController extends Controller
 
     public function destroy(hris_languages $language)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $language->delete();
             $id = $language->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

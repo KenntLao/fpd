@@ -51,7 +51,13 @@
 						<td>{{$jobPosition->job_title->name}}</td>
 						<td>{{$jobPosition->job_title->description}}</td>
 						<td>{{$jobPosition->country}}</td>
-						<td>{{$jobPosition->department->name}}</td>
+						<td>
+							@if($jobPosition->department == '')
+							None
+							@else
+							{{$jobPosition->department->name}}
+							@endif
+						</td>
 						<td class="td-action">
 							<div class="row no-gutters">
 								<div class="col-6">
@@ -59,7 +65,7 @@
 								</div>
 								<div class="col-6">
 									<!-- Button trigger modal -->
-									<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$jobPosition->id}}" data-name="{{$jobPosition->job_title}}"><i class="fa fa-trash"></i></button>
+									<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$jobPosition->id}}" data-name="{{$jobPosition->job_title->name}}"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
 						</td>

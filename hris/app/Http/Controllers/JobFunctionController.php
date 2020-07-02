@@ -28,12 +28,10 @@ class JobFunctionController extends Controller
 
     public function store(hris_job_functions $jobFunction, Request $request)
     {
-        $action = 'add';
-        $systemLog = new SystemLogController;
         if ($this->validatedData()) {
             $jobFunction = hris_job_functions::create($this->validatedData());
             $id = $jobFunction->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -55,9 +53,9 @@ class JobFunctionController extends Controller
     {
         $id = $jobFunction->id;
         if ($this->validatedData()) {
-            $model = $jobFunction;
+            $string = 'App\hris_job_functions';
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($this->module,$string,$id);
             $jobFunction->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success', 'Job function successfully updated!');
         } else {
@@ -67,13 +65,12 @@ class JobFunctionController extends Controller
 
     public function destroy(hris_job_functions $jobFunction)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $jobFunction->delete();
             $id = $jobFunction->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -35,7 +35,7 @@ class EmployeeController extends Controller
         if($this->validatedData()){
             // check data if valid
             if ($request->hasFile('employee_photo')) {
-                $imageName = time() . '.' . $request->employee_photo->extension();
+                $imageName = time() . 'EP.' . $request->employee_photo->extension();
             }
             // CREATE USERNAME
             $employee_firstname = request('firstname');
@@ -120,7 +120,7 @@ class EmployeeController extends Controller
                 unlink($old_file);
             }
             if ($request->hasFile('employee_photo')) {
-                $imageName = time() . '.' . $request->employee_photo->extension();
+                $imageName = time() . 'EP.' . $request->employee_photo->extension();
             }
             // CREATE USERNAME
             $employee_firstname = request('firstname');

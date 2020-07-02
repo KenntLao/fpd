@@ -17,9 +17,12 @@ class CreateHrisSystemLogsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('user');
-            $table->string('account_mode');
+            $table->string('module')->nullable();
             $table->string('action');
-            $table->string('description', 10000);
+            $table->string('action_id')->nullable();
+            $table->string('field')->nullable();
+            $table->text('old_data')->nullable();
+            $table->text('new_data')->nullable();
             $table->datetime('log_date_time');
         });
     }

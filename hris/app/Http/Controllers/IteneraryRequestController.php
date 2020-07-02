@@ -59,7 +59,6 @@ class IteneraryRequestController extends Controller
 
     public function store(hris_itenerary_requests $iteneraryRequest, Request $request)
     {
-        $action = 'add';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( $employee->supervisor == NULL ) {
@@ -96,7 +95,7 @@ class IteneraryRequestController extends Controller
 
                 /* SYSTEM LOG */
                 $id = $iteneraryRequest->id;
-                $this->function->systemLog($this->module,$action,$id);
+                $this->function->addSystemLog($this->module,$id);
                 
                 return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request successfully added!');
             } else {
@@ -141,6 +140,7 @@ class IteneraryRequestController extends Controller
     public function update(hris_itenerary_requests $iteneraryRequest, Request $request)
     {
         $id = $iteneraryRequest->id;
+        $string = 'App\hris_itenerary_requests';
         if ($this->validatedData()) {
             $model = $iteneraryRequest;
             if( $request->hasFile('attachment_1') ) {
@@ -148,6 +148,10 @@ class IteneraryRequestController extends Controller
                 if ($iteneraryRequest->attachment_1 != '' && $iteneraryRequest->attachment_1 != NULL) {
                     $old = $path . $iteneraryRequest->attachment_1;
                     unlink($old);
+                    $attachment_1 = time() . 'A1.' . $request->attachment_1->extension();
+                    $iteneraryRequest->attachment_1 = $attachment_1;
+                    $request->attachment_1->move($path, $attachment_1);
+                } else {
                     $attachment_1 = time() . 'A1.' . $request->attachment_1->extension();
                     $iteneraryRequest->attachment_1 = $attachment_1;
                     $request->attachment_1->move($path, $attachment_1);
@@ -161,6 +165,10 @@ class IteneraryRequestController extends Controller
                     $attachment_2 = time() . 'A2.' . $request->attachment_2->extension();
                     $iteneraryRequest->attachment_2 = $attachment_2;
                     $request->attachment_2->move($path, $attachment_2);
+                } else {
+                    $attachment_2 = time() . 'A2.' . $request->attachment_2->extension();
+                    $iteneraryRequest->attachment_2 = $attachment_2;
+                    $request->attachment_2->move($path, $attachment_2);
                 }
             }
             if( $request->hasFile('attachment_3') ) {
@@ -171,10 +179,12 @@ class IteneraryRequestController extends Controller
                     $attachment_3 = time() . 'A3.' . $request->attachment_3->extension();
                     $iteneraryRequest->attachment_3 = $attachment_3;
                     $request->attachment_3->move($path, $attachment_3);
+                } else {
+                    $attachment_3 = time() . 'A3.' . $request->attachment_3->extension();
+                    $iteneraryRequest->attachment_3 = $attachment_3;
+                    $request->attachment_3->move($path, $attachment_3);
                 }
             }
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
             $iteneraryRequest->transportation = request('transportation');
             $iteneraryRequest->purpose = request('purpose');
             $iteneraryRequest->travel_from = request('travel_from');
@@ -184,8 +194,20 @@ class IteneraryRequestController extends Controller
             $iteneraryRequest->notes = request('notes');
             $iteneraryRequest->currency_id = request('currency_id');
             $iteneraryRequest->total_funding_proposed = request('total_funding_proposed');
+            // GET CHANGES
+            $changes = $iteneraryRequest->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
             $iteneraryRequest->update();
-            return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request successfully updated!');
+            // GET CHANGES
+            $changed = $iteneraryRequest->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $iteneraryRequest->wasChanged() ) {
+                return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request successfully updated!');
+            } else {
+                return redirect('/hris/pages/employees/iteneraryRequests/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -194,6 +216,7 @@ class IteneraryRequestController extends Controller
     public function updateStatus($status, hris_itenerary_requests $iteneraryRequest)
     {
         $id = $_SESSION['sys_id'];
+        $string = 'App\hris_itenerary_requests';
         $employee_id = $iteneraryRequest->employee_id;
         $employee = hris_employee::find($employee_id);
         $roles = roles::all();
@@ -204,20 +227,18 @@ class IteneraryRequestController extends Controller
         foreach ($employee_supervisor as $es) {
             $es_id[] = $es->id;
         }
-        if ( $id = $iteneraryRequest->employee_id ) {
+        if ( $id == $iteneraryRequest->employee_id ) {
             return back()->withErrors(['You do not have permission to access this page.']);
         } else {
             if ( $_SESSION['sys_role_ids'] == ',1,' ) {
                 $id = $iteneraryRequest->id;
-                $model = $iteneraryRequest;
-                //DO systemLog function FROM SystemLogController
-                $this->function->updateSystemLog($model,$this->module,$id);
+                $this->function->statusSystemLog($this->module,$string,$id);
                 if ( $status == '1' OR $status == '2' ) {
                     if ( $status == '1' ) {
-                    $string = 'accepted';
+                    $msg = 'accepted';
                     }
                     if ( $status == '2' ) {
-                    $string = 'rejected';
+                    $msg = 'rejected';
                     }
                     $overtime->status = $status;
                 } else {
@@ -230,15 +251,13 @@ class IteneraryRequestController extends Controller
             } else {
                 if (in_array($id, $es_id)) {
                     $id = $iteneraryRequest->id;
-                    $model = $iteneraryRequest;
-                    //DO systemLog function FROM SystemLogController
-                    $this->function->updateSystemLog($model,$this->module,$id);
+                    $this->function->statusSystemLog($this->module,$string,$id);
                     if ( $status == '1' OR $status == '2' ) {
                         if ( $status == '1' ) {
-                            $string = 'accepted';
+                            $msg = 'accepted';
                         }
                         if ( $status == '2' ) {
-                            $string = 'rejected';
+                            $msg = 'rejected';
                         }
                         $iteneraryRequest->status = $status;
                     } else {
@@ -247,7 +266,7 @@ class IteneraryRequestController extends Controller
                     $iteneraryRequest->supervisor_id = $_SESSION['sys_id'];
                     $iteneraryRequest->role_id = $_SESSION['sys_role_ids'];
                     $iteneraryRequest->update();
-                    return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request '.$string.'!');
+                    return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request '.$msg.'!');
                 }
             }
         }
@@ -271,14 +290,13 @@ class IteneraryRequestController extends Controller
 
     public function destroy(hris_itenerary_requests $iteneraryRequest)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
                 $iteneraryRequest->delete();
                 $id = $iteneraryRequest->id;
-                $this->function->systemLog($this->module,$action,$id);
+                $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success','Itenerary request successfully deleted!');
             } else {
                 return back()->withErrors(['Password does not match.']);
@@ -288,7 +306,7 @@ class IteneraryRequestController extends Controller
             if ( Hash::check(request('upass'), $employee->password) ) {
                 $iteneraryRequest->delete();
                 $id = $iteneraryRequest->id;
-                $this->function->systemLog($this->module,$action,$id);
+                $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/iteneraryRequests/index')->with('success', 'Itenerary request successfully deleted!');
             } else {
                 return back()->withErrors(['Password does not match.']);

@@ -35,11 +35,10 @@ class CompanyController extends Controller
 
     public function store(hris_company_structures $company, Request $request)
     {
-        $action = 'add';
         if ( $this->validatedData() ) {
             $company = hris_company_structures::create($this->validatedData());
             $id = $company->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully added!');
 
         } else {
@@ -65,11 +64,28 @@ class CompanyController extends Controller
     {
         $id = $company->id;
         if ( $this->validatedData() ) {
-            $model = $company;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $company->update($this->validatedData());
-            return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully updated!');
+            $string = 'App\hris_company_structures';
+            $company->name = request('name');
+            $company->details = request('details');
+            $company->address = request('address');
+            $company->type = request('type');
+            $company->country = request('country');
+            $company->timezone = request('timezone');
+            $company->parent_structure = request('parent_structure');
+            // GET CHANGES
+            $changes = $company->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $company->update();
+            // GET CHANGES
+            $changed = $company->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $company->wasChanged() ) {
+                return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/company/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -78,13 +94,12 @@ class CompanyController extends Controller
 
     public function destroy(hris_company_structures $company)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $company->delete();
             $id = $company->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully deleted');
         } else {
             return back()->withErrors(['Password does not match.']);

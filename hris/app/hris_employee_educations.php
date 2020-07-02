@@ -13,4 +13,9 @@ class hris_employee_educations extends Model
     	return $this->belongsTo('App\hris_educations');
     }
 
+    public function employee()
+    {
+    	return $this->belongsTo('App\hris_employee');
+    }
+
 }

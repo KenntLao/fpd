@@ -72,10 +72,10 @@
 	</div>
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
-			<label class="mr-2" for="type">Parent Structure: </label>
+			<label class="mr-2" for="parent_structure">Parent Structure: </label>
 			<select class="form-control select2" name="parent_structure">
 				@if (count($companies) > 0)
-				<option value="None" {{ $company->parent_structure	 == 'None'  ? 'selected' : '' }}>None</option>
+				<option value="None" {{ $company->parent_structure == 'None'  ? 'selected' : '' }}>None</option>
 				@foreach($companies as $company_structure)
 				<option value="{{$company_structure->name}}" {{ $company->parent_structure == $company_structure->name  ? 'selected' : '' }}>{{$company_structure->name}}</option>
 				@endforeach

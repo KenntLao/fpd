@@ -12,5 +12,10 @@ class hris_employee_skills extends Model
     {
     	return $this->belongsTo('App\hris_skills');
     }
+    
+    public function employee()
+    {
+    	return $this->belongsTo('App\hris_employee');
+    }
 
 }

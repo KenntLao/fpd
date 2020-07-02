@@ -163,6 +163,7 @@
                         </div>
                     </div>
                 </div>
+                @if($iteneraryRequest->attachment_1 != NULL ?? $iteneraryRequest->attachment_2 != NULL ?? $iteneraryRequest->attachment_3 != NULL)
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -173,6 +174,8 @@
                         </div>
                     </div>
                 </div>
+                @else
+                @endif
             </div>
         </div>
     </div>

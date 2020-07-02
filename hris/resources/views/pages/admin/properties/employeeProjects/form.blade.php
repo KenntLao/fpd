@@ -24,7 +24,7 @@
 				@if (count($projects) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($projects as $project)
-				<option value="{{$project->id}}" {{ $employeeProject->project == $project->name  ? 'selected' : '' }}>{{$project->name}}</option>
+				<option value="{{$project->id}}" {{ $employeeProject->project_id == $project->id  ? 'selected' : '' }}>{{$project->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>

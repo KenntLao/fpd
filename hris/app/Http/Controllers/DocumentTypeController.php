@@ -30,11 +30,10 @@ class DocumentTypeController extends Controller
 
     public function store(hris_document_types $type, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $type = hris_document_types::create($this->validatedData());
             $id = $type->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/employees/documents/types/index')->with('success', 'Document type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -55,11 +54,27 @@ class DocumentTypeController extends Controller
     {
         $id = $type->id;
         if ($this->validatedData()) {
-            $model = $type;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $type->update($this->validatedData());
-            return redirect('/hris/pages/employees/documents/types/index')->with('success', 'Document type successfully updated!');
+            $string = 'App\hris_document_types';
+            $type->name = request('name');
+            $type->notify_expiry = request('notify_expiry');
+            $type->expire_notification_month = request('expire_notification_month');
+            $type->expire_notification_week = request('expire_notification_week');
+            $type->expire_notification_day = request('expire_notification_day');
+            $type->details = request('details');
+            // GET CHANGES
+            $changes = $type->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $type->update();
+            // GET CHANGES
+            $changed = $type->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $type->wasChanged() ) {
+                return redirect('/hris/pages/employees/documents/types/index')->with('success', 'Document type successfully updated!');
+            } else {
+                return redirect('/hris/pages/employees/documents/types/index');
+            }
         } else {
             return back()->withErrors($this->validatedData);
         } 
@@ -67,13 +82,12 @@ class DocumentTypeController extends Controller
 
     public function destroy(hris_document_types $type)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $type->delete();
             $id = $type->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/employees/documents/types/index')->with('success','Document type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

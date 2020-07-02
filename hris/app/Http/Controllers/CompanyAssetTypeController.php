@@ -29,10 +29,9 @@ class CompanyAssetTypeController extends Controller
 
     public function store(hris_company_asset_types $type, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             if( $request->hasFile('attachment') ) {
-                $attachment = time() . '.' . $request->attachment->extension();
+                $attachment = time() . 'A.' . $request->attachment->extension();
                 $type->attachment = $attachment;
                 $request->attachment->move(public_path('assets/files/companyAssets/types/'), $attachment);
             }
@@ -40,7 +39,7 @@ class CompanyAssetTypeController extends Controller
             $type->description = request('description');
             $type->save();
             $id = $type->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/companyAssets/types/index')->with('success', 'Asset type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -61,23 +60,37 @@ class CompanyAssetTypeController extends Controller
     {
         $id = $type->id;
         if($this->validatedData()) {
-            $model = $type;
+            $string = 'App\hris_company_asset_types';
             if( $request->hasFile('attachment') ) {
             $path = public_path('/assets/files/companyAssets/types/');
                 if ($type->attachment != '' && $type->attachment != NULL) {
                     $old_file_1 = $path . $type->attachment;
                     unlink($old_file_1);
-                    $attachment = time() . '.' . $request->attachment->extension();
+                    $attachment = time() . 'A.' . $request->attachment->extension();
                     $type->attachment = $attachment;
-                    $request->attachment->move(public_path('/assets/files/companyAssets/types/'), $attachment);
+                    $request->attachment->move($path, $attachment);
+                } else {
+                    $attachment = time() . 'A.' . $request->attachment->extension();
+                    $type->attachment = $attachment;
+                    $request->attachment->move($path, $attachment);
                 }
             }
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
             $type->name = request('name');
             $type->description = request('description');
+            // GET CHANGES
+            $changes = $type->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
             $type->update();
-            return redirect('/hris/pages/admin/companyAssets/types/index')->with('success', 'Asset type successfully updated!');
+            // GET CHANGES
+            $changed = $type->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $type->wasChanged() ) {
+                return redirect('/hris/pages/admin/companyAssets/types/index')->with('success', 'Asset type successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/companyAssets/types/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -85,7 +98,6 @@ class CompanyAssetTypeController extends Controller
 
     public function destroy(hris_company_asset_types $type)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
@@ -96,7 +108,7 @@ class CompanyAssetTypeController extends Controller
                 unlink($old_file);
             }
             $id = $type->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/companyAssets/types/index')->with('success','Asset type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

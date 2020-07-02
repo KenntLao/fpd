@@ -28,11 +28,10 @@ class ExpensesCategoryController extends Controller
 
     public function store(hris_expenses_categories $expensesCategory, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $expensesCategory = hris_expenses_categories::create($this->validatedData());
             $id = $expensesCategory->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,11 +52,22 @@ class ExpensesCategoryController extends Controller
     {
         $id = $expensesCategory->id;
         if($this->validatedData()) {
-            $model = $expensesCategory;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $expensesCategory->update($this->validatedData());
-            return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully updated!');
+            $string = 'App\hris_expenses_categories';
+            $expensesCategory->name = request('name');
+            // GET CHANGES
+            $changes = $expensesCategory->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $expensesCategory->update();
+            // GET CHANGES
+            $changed = $expensesCategory->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $expensesCategory->wasChanged() ) {
+                return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/benefits/expensesCategories/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -65,13 +75,12 @@ class ExpensesCategoryController extends Controller
 
     public function destroy(hris_expenses_categories $expensesCategory)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $expensesCategory->delete();
             $id = $expensesCategory->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

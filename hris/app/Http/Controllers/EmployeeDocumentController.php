@@ -32,8 +32,7 @@ class EmployeeDocumentController extends Controller
     }
 
     public function store(hris_employee_documents $document, Request $request)
-    {   
-        $action = 'add';
+    {
         if ($this->storeValidatedData()) {
             if($request->hasFile('attachment')) {
                 $attachment = time() . '.' . $request->attachment->extension();
@@ -41,7 +40,7 @@ class EmployeeDocumentController extends Controller
                 $request->attachment->move(public_path('assets/files/employees/documents/employee_documents'), $attachment);
             }
             $document->employee_id = request('employee_id');
-            $document->type_id = request('type_id');
+            $document->document_type_id = request('document_type_id');
             $document->date_added = request('date_added');
             $document->valid_until = request('valid_until');
             $document->status = request('status');
@@ -49,7 +48,7 @@ class EmployeeDocumentController extends Controller
             $document->attachment = $attachment;
             $document->save();
             $id = $document->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully added!');
 
         } else {
@@ -73,7 +72,7 @@ class EmployeeDocumentController extends Controller
     {   
         $id = $document->id;
         if ($this->updateValidatedData()) {
-            $model = $document;
+            $string = 'App\hris_employee_documents';
             if( $request->hasFile('attachment') ) {
                 $path = public_path('/assets/files/employees/documents/employee_documents/');
                 if ($document->attachment != '' && $document->attachment != NULL) {
@@ -84,16 +83,26 @@ class EmployeeDocumentController extends Controller
                     $request->attachment->move($path, $attachment);
                 }
             }
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
             $document->employee_id = request('employee_id');
-            $document->type_id = request('type_id');
+            $document->document_type_id = request('document_type_id');
             $document->date_added = request('date_added');
             $document->valid_until = request('valid_until');
             $document->status = request('status');
             $document->details = request('details');
+            // GET CHANGES
+            $changes = $document->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
             $document->update();
-            return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully updated!');
+            // GET CHANGES
+            $changed = $document->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $document->wasChanged() ) {
+                return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully updated!');
+            } else {
+                return redirect('/hris/pages/employees/documents/employeeDocuments/index');
+            }
 
         } else {
             return back()->withErrors($this->updateValidatedData());
@@ -103,7 +112,6 @@ class EmployeeDocumentController extends Controller
 
     public function destroy(hris_employee_documents $document)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
@@ -114,7 +122,7 @@ class EmployeeDocumentController extends Controller
                 unlink($old);
             }
             $id = $document->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -125,7 +133,7 @@ class EmployeeDocumentController extends Controller
     {
         return request()->validate([
             'employee_id' => 'required',
-            'type_id' => 'required',
+            'document_type_id' => 'required',
             'date_added' => 'required',
             'valid_until' => 'nullable',
             'status' => 'required',
@@ -137,7 +145,7 @@ class EmployeeDocumentController extends Controller
     {
         return request()->validate([
             'employee_id' => 'required',
-            'type_id' => 'required',
+            'document_type_id' => 'required',
             'date_added' => 'required',
             'valid_until' => 'nullable',
             'status' => 'required',

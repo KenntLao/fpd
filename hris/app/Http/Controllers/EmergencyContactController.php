@@ -32,7 +32,6 @@ class EmergencyContactController extends Controller
 
     public function store(hris_emergency_contacts $emergency, Request $request)
     {
-        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if ($this->validatedData()) {
             $emergency->employee_id = $employee_id;
@@ -43,7 +42,7 @@ class EmergencyContactController extends Controller
             $emergency->mobile_phone = request('mobile_phone');
             $emergency->save();
             $id = $emergency->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -64,9 +63,9 @@ class EmergencyContactController extends Controller
     {
         $id = $emergency->id;
         if ($this->validatedData()) {
-            $model = $emergency;
+            $string = 'App\hris_emergency_contacts';
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($this->module,$string,$id);
             $emergency->update($this->validatedData());
             return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully updated!');
         } else {
@@ -76,13 +75,12 @@ class EmergencyContactController extends Controller
 
     public function destroy(hris_emergency_contacts $emergency)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $emergency->delete();
             $id = $emergency->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

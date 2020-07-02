@@ -35,11 +35,10 @@ class EmployeeLoanController extends Controller
 
     public function store(hris_employee_loans $employeeLoan, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $employeeLoan = hris_employee_loans::create($this->validatedData());
             $id = $employeeLoan->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -63,11 +62,31 @@ class EmployeeLoanController extends Controller
     {
         $id = $employeeLoan->id;
         if($this->validatedData()) {
-            $model = $employeeLoan;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $employeeLoan->update($this->validatedData());
-            return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully updated!');
+            $string = 'App\hris_employee_loans';
+            $employeeLoan->employee_id = request('employee_id');
+            $employeeLoan->loan_type_id = request('loan_type_id');
+            $employeeLoan->loan_start_date = request('loan_start_date');
+            $employeeLoan->last_installment_date = request('last_installment_date');
+            $employeeLoan->loan_period = request('loan_period');
+            $employeeLoan->currency = request('currency');
+            $employeeLoan->loan_amount = request('loan_amount');
+            $employeeLoan->monthly_installment = request('monthly_installment');
+            $employeeLoan->status = request('status');
+            $employeeLoan->details = request('details');
+            // GET CHANGES
+            $changes = $employeeLoan->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employeeLoan->update();
+            // GET CHANGES
+            $changed = $employeeLoan->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employeeLoan->wasChanged() ) {
+                return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/loans/employeeLoans/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -75,13 +94,12 @@ class EmployeeLoanController extends Controller
 
     public function destroy(hris_employee_loans $employeeLoan)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employeeLoan->delete();
             $id = $employeeLoan->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -92,7 +110,7 @@ class EmployeeLoanController extends Controller
     {
         return request()->validate([
             'employee_id' => 'required',
-            'type_id' => 'required',
+            'loan_type_id' => 'required',
             'loan_start_date' => 'required',
             'last_installment_date' => 'required',
             'loan_period' => 'required',

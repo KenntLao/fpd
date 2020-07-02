@@ -17,7 +17,7 @@ class CreateHrisEmployeeLoansTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('employee_id');
-            $table->string('type_id');
+            $table->string('loan_type_id');
             $table->date('loan_start_date');
             $table->date('last_installment_date');
             $table->string('loan_period');

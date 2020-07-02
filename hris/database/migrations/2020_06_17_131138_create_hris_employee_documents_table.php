@@ -17,7 +17,7 @@ class CreateHrisEmployeeDocumentsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->bigInteger('employee_id');
-            $table->bigInteger('type_id');
+            $table->bigInteger('document_type_id');
             $table->date('date_added');
             $table->date('valid_until')->nullable();
             $table->string('status');

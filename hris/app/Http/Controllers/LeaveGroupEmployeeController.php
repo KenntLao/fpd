@@ -33,11 +33,10 @@ class LeaveGroupEmployeeController extends Controller
 
     public function store(hris_leave_group_employees $leaveGroupEmployee, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $leaveGroupEmployee = hris_leave_group_employees::create($this->validatedData());
-            $id = $jobTitle->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $id = $leaveGroupEmployee->id;
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -58,13 +57,25 @@ class LeaveGroupEmployeeController extends Controller
 
     public function update(hris_leave_group_employees $leaveGroupEmployee, Request $request)
     {
-        $id = $jobTitle->id;
+        $id = $leaveGroupEmployee->id;
         if ($this->validatedData()) {
-            $model = $jobTitle;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $leaveGroupEmployee->update($this->validatedData());
-            return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully updated!');
+            $string = 'App\hris_leave_group_employees';
+            $leaveGroupEmployee->employee_id = request('employee_id');
+            $leaveGroupEmployee->leave_group_id = request('leave_group_id');
+            // GET CHANGES
+            $changes = $leaveGroupEmployee->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $leaveGroupEmployee->update();
+            // GET CHANGES
+            $changed = $leaveGroupEmployee->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $leaveGroupEmployee->wasChanged() ) {
+                return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -72,13 +83,12 @@ class LeaveGroupEmployeeController extends Controller
 
     public function destroy(hris_leave_group_employees $leaveGroupEmployee)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveGroupEmployee->delete();
-            $id = $jobTitle->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $id = $leaveGroupEmployee->id;
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

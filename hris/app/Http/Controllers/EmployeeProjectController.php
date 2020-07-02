@@ -34,11 +34,10 @@ class EmployeeProjectController extends Controller
 
     public function store(hris_employee_projects $employeeProject, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $employeeProject = hris_employee_projects::create($this->validatedData());
             $id = $employeeProject->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee project successfully deleted!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -61,11 +60,24 @@ class EmployeeProjectController extends Controller
     {
         $id = $employeeProject->id;
         if($this->validatedData()) {
-            $model = $employeeProject;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $employeeProject->update($this->validatedData());
-            return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully updated!');
+            $string = 'App\hris_employee_projects';
+            $employeeProject->employee_id = request('employee_id');
+            $employeeProject->project_id = request('project_id');
+            $employeeProject->details = request('details');
+            // GET CHANGES
+            $changes = $employeeProject->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employeeProject->update();
+            // GET CHANGES
+            $changed = $employeeProject->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employeeProject->wasChanged() ) {
+                return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/properties/employeeProjects/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -73,13 +85,12 @@ class EmployeeProjectController extends Controller
 
     public function destroy(hris_employee_projects $employeeProject)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employeeProject->delete();
             $id = $employeeProject->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted');
         } else {
             return back()->withErrors(['Password does not match.']);

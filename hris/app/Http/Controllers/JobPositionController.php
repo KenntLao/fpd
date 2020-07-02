@@ -48,10 +48,9 @@ class JobPositionController extends Controller
 
     public function store(hris_job_positions $jobPosition, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             if( $request->hasFile('image') ) {
-                $imageName = time() . '.' . $request->image->extension();
+                $imageName = time() . 'IMG.' . $request->image->extension();
                 $jobPosition->image = $imageName;
                 $request->image->move(public_path('assets/images/job_positions/'), $imageName);
             }
@@ -79,7 +78,7 @@ class JobPositionController extends Controller
             $jobPosition->closing_date = request('closing_date');
             $jobPosition->display_type = request('display_type');
             $id = $jobPosition->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             $jobPosition->save();
             return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully added!');
         } else {
@@ -111,19 +110,23 @@ class JobPositionController extends Controller
     {
         $id = $jobPosition->id;
         if ($this->validatedData()) {
-            $model = $jobPosition;
-            if ( $request->hasFile('image') ) {
-                $imagePath = public_path('assets/images/job_positions/');
+            $string = 'App\hris_job_positions';
+            if( $request->hasFile('image') ) {
+                $path = public_path('assets/images/job_positions/');
                 if ($jobPosition->image != '' && $jobPosition->image != NULL) {
-                    $old_file = $imagePath . $jobPosition->image;
-                    unlink($old_file);
-                    $imageName = time() . '.' . $request->image->extension();
-                    $jobPosition->image = $imageName;
-                    $request->image->move(public_path('assets/images/job_positions/'), $imageName);
+                    $old = $path . $jobPosition->image;
+                    unlink($old);
+                    $image = time() . 'IMG.' . $request->image->extension();
+                    $jobPosition->image = $image;
+                    $request->image->move($path, $image);
+                } else {
+                    $image = time() . 'IMG.' . $request->image->extension();
+                    $jobPosition->image = $image;
+                    $request->image->move($path, $image);
                 }
             }
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($this->module,$string,$id);
             $jobPosition->job_title_id = request('job_title_id');
             $jobPosition->company_name = request('company_name');
             $jobPosition->hiring_manager = request('hiring_manager');
@@ -157,7 +160,6 @@ class JobPositionController extends Controller
 
     public function destroy(hris_job_positions $jobPosition)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
@@ -168,7 +170,7 @@ class JobPositionController extends Controller
                 unlink($old_file);
             }
             $id = $jobPosition->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

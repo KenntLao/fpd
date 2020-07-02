@@ -31,11 +31,10 @@ class WorkWeekController extends Controller
 
     public function store(hris_work_weeks $workWeek, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $workWeek = hris_work_weeks::create($this->validatedData());
             $id = $workWeek->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -57,11 +56,24 @@ class WorkWeekController extends Controller
     {
         $id = $workWeek->id;
         if($this->validatedData()) {
-            $model = $workWeek;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $workWeek->update($this->validatedData());
-            return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully updated!');
+            $string = 'App\hris_work_weeks';
+            $workWeek->day = request('day');
+            $workWeek->status = request('status');
+            $workWeek->country = request('country');
+            // GET CHANGES
+            $changes = $workWeek->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $workWeek->update();
+            // GET CHANGES
+            $changed = $workWeek->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $workWeek->wasChanged() ) {
+                return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/leave/workWeeks/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -69,13 +81,12 @@ class WorkWeekController extends Controller
 
     public function destroy(hris_work_weeks $workWeek)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $workWeek->delete();
             $id = $workWeek->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -76,6 +76,11 @@
 						<td>{{$employeeExpense->status}}</td>
 						<td>
 							<div class="row no-gutters">
+								@if($employeeExpense->status == 'Approved' OR $employeeExpense->status == 'Denied')
+								<div class="col-12">
+									<a class="btn btn-primary btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/show"><i class="fa fa-search"></i></a>
+								</div>
+								@else
 								<div class="col-3">
 									<a class="btn btn-success btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
@@ -91,7 +96,7 @@
 									<form action="/hris/pages/admin/benefits/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
 										@csrf
 										@method('PATCH')
-										<input type="text" name="status" value="Rejected" hidden>
+										<input type="text" name="status" value="Denied" hidden>
 										<button class="btn btn-warning btn-sm" type="submit" title="Reject status."><i class="fa fa-window-close"></i></button>
 									</form>
 								</div>
@@ -99,6 +104,7 @@
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeExpense->id}}" data-name="Employee Expense no. {{$employeeExpense->id}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
 					</tr>

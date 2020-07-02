@@ -28,11 +28,10 @@ class CourseController extends Controller
 
     public function store(hris_courses $course, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $course = hris_courses::create($this->validatedData());
             $id = $course->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,11 +52,30 @@ class CourseController extends Controller
     {
         $id = $course->id;
         if($this->validatedData()) {
-            $model = $course;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $course->update($this->validatedData());
-            return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully updated!');
+            $string = 'App\hris_courses';
+            $course->code = request('code');
+            $course->name = request('name');
+            $course->coordinator = request('coordinator');
+            $course->trainer = request('trainer');
+            $course->trainer_details = request('trainer_details');
+            $course->payment_type = request('payment_type');
+            $course->currency = request('currency');
+            $course->cost = request('cost');
+            $course->status = request('status');
+            // GET CHANGES
+            $changes = $course->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $course->update();
+            // GET CHANGES
+            $changed = $course->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $course->wasChanged() ) {
+                return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/training/courses/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -65,13 +83,12 @@ class CourseController extends Controller
 
     public function destroy(hris_courses $course)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $course->delete();
             $id = $course->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

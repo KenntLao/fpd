@@ -35,11 +35,10 @@ class PaidTimeOffController extends Controller
 
     public function store(hris_paid_time_offs $paidTimeOff, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $paidTimeOff = hris_paid_time_offs::create($this->validatedData());
             $id = $paidTimeOff->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/paidTimeOffs/index')->with('success', 'Paid time off successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -63,11 +62,26 @@ class PaidTimeOffController extends Controller
     {
         $id = $paidTimeOff->id;
         if ($this->validatedData()) {
-            $model = $paidTimeOff;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $paidTimeOff->update($this->validatedData());
-            return redirect('/hris/pages/admin/leave/paidTimeOffs/index')->with('success', 'Paid time off successfully updated!');
+            $string = 'App\hris_paid_time_offs';
+            $paidTimeOff->leave_type_id = request('leave_type_id');
+            $paidTimeOff->employee_id = request('employee_id');
+            $paidTimeOff->leave_period_id = request('leave_period_id');
+            $paidTimeOff->amount = request('amount');
+            $paidTimeOff->note = request('note');
+            // GET CHANGES
+            $changes = $paidTimeOff->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $paidTimeOff->update();
+            // GET CHANGES
+            $changed = $paidTimeOff->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $paidTimeOff->wasChanged() ) {
+                return redirect('/hris/pages/admin/leave/paidTimeOffs/index')->with('success', 'Paid time off successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/leave/paidTimeOffs/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -75,13 +89,12 @@ class PaidTimeOffController extends Controller
 
     public function destroy(hris_paid_time_offs $paidTimeOff)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $paidTimeOff->delete();
             $id = $paidTimeOff->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/paidTimeOffs/index')->with('success','Paid time off successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

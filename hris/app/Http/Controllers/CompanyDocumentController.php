@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\hris_company_documents;
-use App\hris_department;
+use App\hris_company_structures;
 use App\hris_employee;
 use App\users;
 
@@ -26,7 +26,7 @@ class CompanyDocumentController extends Controller
 
     public function create(hris_company_documents $document)
     {
-        $departments = hris_department::all();
+        $departments = hris_company_structures::all();
         $employees = hris_employee::all();
         $department_id = array();
         $employee_id = array();
@@ -35,7 +35,6 @@ class CompanyDocumentController extends Controller
 
     public function store(hris_company_documents $document,Request $request)
     {
-        $action = 'add';
         if ( request('department_id') == NULL ) {
             $department_id = '';
         } else {
@@ -59,7 +58,7 @@ class CompanyDocumentController extends Controller
             $request->attachment->move(public_path('assets/files/employees/documents/company_documents'), $attachment);
             $document->save();
             $id = $document->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success', 'Company document successfully added!');
         } else {
             return back()->withErrors($this->storeValidatedData());
@@ -73,13 +72,17 @@ class CompanyDocumentController extends Controller
 
     public function edit(hris_company_documents $document)
     {
-        $departments = hris_department::all();
+        $departments = hris_company_structures::all();
         $employees = hris_employee::all();
-        $department_id = explode(',', $document->department_id);
-        if ($document->employee_id == NULL) {
+        if ($document->department_id != NULL) {
+            $department_id = explode(',', $document->department_id);
+        } else {
+            $department_id = array();
+        }
+        if ($document->employee_id != NULL) {
             $employee_id = explode(',', $document->employee_id);
         } else {
-            $employee_id = '';
+            $employee_id = array();
         }
         return view('pages.employees.documents.companyDocuments.edit', compact('document', 'departments', 'employees', 'department_id', 'employee_id'));
     }
@@ -98,26 +101,36 @@ class CompanyDocumentController extends Controller
             $employee_id = implode(",", request('employee_id'));
         }
         if($this->updateValidatedData()) {
-            $model = $document;
+            $string = 'App\hris_company_documents';
             if( $request->hasFile('attachment') ) {
                 $path = public_path('/assets/files/employees/documents/company_documents/');
                 if ($document->attachment != '' && $document->attachment != NULL) {
                     $old = $path . $document->attachment;
                     unlink($old);
-                    $attachment = time() . '.' . $request->attachment->extension();
+                    $attachment = time() . 'A.' . $request->attachment->extension();
                     $document->attachment = $attachment;
                     $request->attachment->move($path, $attachment);
                 }
             }
-            $this->function->updateSystemLog($model,$this->module,$id);
             $document->name = request('name');
             $document->details = request('details');
             $document->status = request('status');
             $document->department_id = $department_id;
             $document->employee_id = $employee_id;
+            // GET CHANGES
+            $changes = $document->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
             $document->update();
-            $id = $document->id;
-            return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success', 'Company document successfully updated!');
+            // GET CHANGES
+            $changed = $document->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $document->wasChanged() ) {
+                return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success', 'Company document successfully updated!');
+            } else {
+                return redirect('/hris/pages/employees/documents/companyDocuments/index');
+            }
         } else {
             return back()->withErrors($this->updateValidatedData());
         }
@@ -125,7 +138,6 @@ class CompanyDocumentController extends Controller
 
     public function destroy(hris_company_documents $document)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
@@ -136,7 +148,7 @@ class CompanyDocumentController extends Controller
                 unlink($old);
             }
             $id = $document->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success','Company document successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

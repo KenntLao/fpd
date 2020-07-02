@@ -13,7 +13,7 @@ class hris_employee_loans extends Model
     	return $this->belongsTo('App\hris_employee');
     }
 
-	public function type()
+	public function loan_type()
     {
     	return $this->belongsTo('App\hris_company_loan_types');
     }

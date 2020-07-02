@@ -28,11 +28,10 @@ class EducationLevelController extends Controller
 
     public function store(hris_education_levels $educationLevel, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $educationLevel = hris_education_levels::create($this->validatedData());
             $id = $educationLevel->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,9 +52,9 @@ class EducationLevelController extends Controller
     {
         $id = $educationLevel->id;
         if ($this->validatedData()) {
-            $model = $educationLevel;
+            $string = 'App\hris_education_levels';
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($this->module,$string,$id);
             $educationLevel->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success', 'Education level successfully updated!');
         } else {
@@ -65,13 +64,12 @@ class EducationLevelController extends Controller
 
     public function destroy(hris_education_levels $educationLevel)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $educationLevel->delete();
             $id = $educationLevel->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

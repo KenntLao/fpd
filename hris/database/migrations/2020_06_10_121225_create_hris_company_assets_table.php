@@ -17,9 +17,8 @@ class CreateHrisCompanyAssetsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('code');
-            $table->string('type_id');
+            $table->string('asset_type_id');
             $table->string('employee_id')->nullable();
-            $table->string('department_id')->nullable();
             $table->string('description');
         });
     }

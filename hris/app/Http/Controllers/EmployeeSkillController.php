@@ -34,7 +34,6 @@ class EmployeeSkillController extends Controller
 
     public function store(hris_employee_skills $employeeSkill, Request $request)
     {
-        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if ($this->validatedData()) {
             $employeeSkill->employee_id = $employee_id;
@@ -42,7 +41,7 @@ class EmployeeSkillController extends Controller
             $employeeSkill->details = request('details');
             $employeeSkill->save();
             $id = $employeeSkill->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -64,11 +63,23 @@ class EmployeeSkillController extends Controller
     {
         $id = $employeeSkill->id;
         if ($this->validatedData()) {
-            $model = $employeeSkill;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $employeeSkill->update($this->validatedData());
-            return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully added!');
+            $string = 'App\hris_employee_skills';
+            $employeeSkill->skill_id = request('skill_id');
+            $employeeSkill->details = request('details');
+            // GET CHANGES
+            $changes = $employeeSkill->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employeeSkill->update();
+            // GET CHANGES
+            $changed = $employeeSkill->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employeeSkill->wasChanged() ) {
+                return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully updated!');
+            } else {
+                return redirect('/hris/pages/personalInformation/skills/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -76,13 +87,12 @@ class EmployeeSkillController extends Controller
 
     public function destroy(hris_employee_skills $employeeSkill)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeSkill->delete();
             $id = $employeeSkill->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

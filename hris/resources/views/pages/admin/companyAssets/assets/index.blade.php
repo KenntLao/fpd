@@ -45,8 +45,8 @@
 				<tr>
 					<td>{{$asset->code}}</td>
 					<td>
-						@if($asset->type)
-						{{$asset->type->name}}
+						@if($asset->asset_type)
+						{{$asset->asset_type->name}}
 						@else
 						None
 						@endif
@@ -58,13 +58,7 @@
 						None
 						@endif
 					</td>
-					<td>
-						@if($asset->department)
-						{{$asset->department->name}}
-						@else
-						None
-						@endif
-					</td>
+					<td>{{$asset->employee->department->name}}</td>
 					<td class="td-action">
 						<div class="row no-gutters">
 							<div class="col-6">

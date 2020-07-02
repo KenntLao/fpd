@@ -29,11 +29,10 @@ class LeavePeriodController extends Controller
 
     public function store(hris_leave_periods $leavePeriod, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $leavePeriod = hris_leave_periods::create($this->validatedData());
             $id = $leavePeriod->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -54,11 +53,24 @@ class LeavePeriodController extends Controller
     {
         $id = $leavePeriod->id;
         if($this->validatedData()) {
-            $model = $leavePeriod;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $leavePeriod->update($this->validatedData());
-            return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully updated!');
+            $string = 'App\hris_leave_periods';
+            $leavePeriod->name = request('name');
+            $leavePeriod->start = request('start');
+            $leavePeriod->end = request('end');
+            // GET CHANGES
+            $changes = $leavePeriod->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $leavePeriod->update();
+            // GET CHANGES
+            $changed = $leavePeriod->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $leavePeriod->wasChanged() ) {
+                return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/leave/leavePeriods/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -66,13 +78,12 @@ class LeavePeriodController extends Controller
 
     public function destroy(hris_leave_periods $leavePeriod)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leavePeriod->delete();
             $id = $leavePeriod->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
@@ -83,8 +94,8 @@ class LeavePeriodController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'start' => 'required',
-            'end' => 'required'
+            'start' => 'required|before:end',
+            'end' => 'required|after:start'
         ]);
     }
 

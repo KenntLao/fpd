@@ -13,7 +13,7 @@ class hris_employee_documents extends Model
     	return $this->belongsTo('App\hris_employee');
     }
 
-    public function type()
+    public function document_type()
     {
     	return $this->belongsTo('App\hris_document_types');
     }

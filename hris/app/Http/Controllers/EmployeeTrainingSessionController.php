@@ -32,11 +32,10 @@ class EmployeeTrainingSessionController extends Controller
 
     public function store(hris_employee_training_sessions $employeeTrainingSession, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $employeeTrainingSession = hris_employee_training_sessions::create($this->validatedData());
             $id = $employeeTrainingSession->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully added!');
 
         } else {
@@ -60,11 +59,24 @@ class EmployeeTrainingSessionController extends Controller
     {
         $id = $employeeTrainingSession->id;
         if($this->validatedData()) {
-            $model = $employeeTrainingSession;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $employeeTrainingSession->update($this->validatedData());
-            return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully updated!');
+            $string = 'App\hris_employee_training_sessions';
+            $employeeTrainingSession->employee_id = request('employee_id');
+            $employeeTrainingSession->training_session_id = request('training_session_id');
+            $employeeTrainingSession->status = request('status');
+            // GET CHANGES
+            $changes = $employeeTrainingSession->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employeeTrainingSession->update();
+            // GET CHANGES
+            $changed = $employeeTrainingSession->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employeeTrainingSession->wasChanged() ) {
+                return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/training/employeeTrainingSessions/index');
+            }
 
         } else {
             return back()->withErrors($this->validatedData());
@@ -73,13 +85,12 @@ class EmployeeTrainingSessionController extends Controller
 
     public function destroy(hris_employee_training_sessions $employeeTrainingSession)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employeeTrainingSession->delete();
             $id = $employeeTrainingSession->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

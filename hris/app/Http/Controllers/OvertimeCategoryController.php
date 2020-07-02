@@ -29,11 +29,10 @@ class OvertimeCategoryController extends Controller
 
     public function store(hris_overtime_categories $overtimeCategory, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $overtimeCategory = hris_overtime_categories::create($this->validatedData());
             $id = $overtimeCategory->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -54,11 +53,22 @@ class OvertimeCategoryController extends Controller
     {
         $id = $overtimeCategory->id;
         if($this->validatedData()) {
-            $model = $overtimeCategory;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $overtimeCategory->update($this->validatedData());
-            return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully updated!');
+            $string = 'App\hris_overtime_categories';
+            $overtimeCategory->name = request('name');
+            // GET CHANGES
+            $changes = $overtimeCategory->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $overtimeCategory->update();
+            // GET CHANGES
+            $changed = $overtimeCategory->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $overtimeCategory->wasChanged() ) {
+                return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/overtime/overtimeCategories/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -66,13 +76,12 @@ class OvertimeCategoryController extends Controller
 
     public function destroy(hris_overtime_categories $overtimeCategory)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $overtimeCategory->delete();
             $id = $overtimeCategory->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

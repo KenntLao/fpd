@@ -13,4 +13,9 @@ class hris_employee_languages extends Model
     	return $this->belongsTo('App\hris_languages');
     }
 
+    public function employee()
+    {
+    	return $this->belongsTo('App\hris_employee');
+    }
+
 }

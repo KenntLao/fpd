@@ -34,7 +34,6 @@ class EmployeeLanguageController extends Controller
 
     public function store(hris_employee_languages $employeeLanguage, Request $request)
     {
-        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if ($this->validatedData()) {
             $employeeLanguage->employee_id = $employee_id;
@@ -45,7 +44,7 @@ class EmployeeLanguageController extends Controller
             $employeeLanguage->understanding = request('understanding');
             $employeeLanguage->save();
             $id = $employeeLanguage->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee language successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -67,11 +66,26 @@ class EmployeeLanguageController extends Controller
     {
         $id = $employeeLanguage->id;
         if($this->validatedData()) {
-            $model = $employeeLanguage;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $employeeLanguage->update($this->validatedData());
-            return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee education successfully added!');
+            $string = 'App\hris_employee_languages';
+            $employeeLanguage->language_id = request('language_id');
+            $employeeLanguage->reading = request('reading');
+            $employeeLanguage->speaking = request('speaking');
+            $employeeLanguage->writing = request('writing');
+            $employeeLanguage->understanding = request('understanding');
+            // GET CHANGES
+            $changes = $employeeLanguage->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employeeLanguage->update();
+            // GET CHANGES
+            $changed = $employeeLanguage->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employeeLanguage->wasChanged() ) {
+                return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee education successfully added!');
+            } else {
+                return redirect('/hris/pages/personalInformation/languages/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -79,13 +93,12 @@ class EmployeeLanguageController extends Controller
 
     public function destroy(hris_employee_languages $employeeLanguage)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeLanguage->delete();
             $id = $employeeLanguage->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee skill successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -28,11 +28,10 @@ class BenefitController extends Controller
 
     public function store(hris_benefits $benefit, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $benefit = hris_benefits::create($this->validatedData());
             $id = $benefit->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully added!');
         } else {
             return back()->withErrors($this->validatedData);
@@ -54,9 +53,8 @@ class BenefitController extends Controller
     {
         $id = $benefit->id;
         if ($this->validatedData()) {
-            $model = $benefit;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+            $string = 'App\hris_benefits';
+            $this->function->updateSystemLog($this->module,$string,$id);
             $benefit->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success', 'Benefit successfully updated!');
         } else {
@@ -67,13 +65,12 @@ class BenefitController extends Controller
 
     public function destroy(hris_benefits $benefit)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $benefit->delete();
             $id = $benefit->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success','Benefit successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -55,8 +55,8 @@
 							@endif
 						</td>
 						<td>
-							@if($employeeLoan->type)
-							{{$employeeLoan->type->name}}
+							@if($employeeLoan->loan_type)
+							{{$employeeLoan->loan_type->name}}
 							@else
 							<span class="td-error">ERROR</span>
 							@endif

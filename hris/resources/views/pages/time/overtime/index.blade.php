@@ -92,7 +92,7 @@
                                     <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/edit" title="Approve request"><i class="fas fa-check-square"></i></a>
                                 </div>
                                 <div class="col-md-6">
-                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/edit" title="Deny request"><i class="fas fa-times"></i></a>
+                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/edit" title="Deny request"><i class="fas fa-times"></i></a>
                                 </div>
                                 @endif
                             </div>
@@ -286,7 +286,7 @@
                                             <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/edit" title="Approve request"><i class="fas fa-check-square"></i></a>
                                         </div>
                                         <div class="col-md-6">
-                                            <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/edit" title="Deny request"><i class="fas fa-times"></i></a>
+                                            <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/edit" title="Deny request"><i class="fas fa-times"></i></a>
                                         </div>
                                         @endif
                                     </div>

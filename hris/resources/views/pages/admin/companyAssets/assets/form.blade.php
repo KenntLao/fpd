@@ -12,13 +12,13 @@
 	</div>
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="type_id">Type: </label>
+			<label class="mr-2" for="asset_type_id">Type: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control select2 required" name="type_id" required>
+			<select class="form-control select2 required" name="asset_type_id" required>
 				@if(count($types) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($types as $type)
-				<option value="{{$type->id}}" {{ $asset->type_id == $type->id  ? 'selected' : '' }}>{{$type->name}}</option>
+				<option value="{{$type->id}}" {{ $asset->asset_type_id == $type->id  ? 'selected' : '' }}>{{$type->name}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>
@@ -43,23 +43,6 @@
 			</select>
 		</div>
 	</div>
-	<div class="col-12 col-md-6">
-		<div class="form-group">
-			<label class="mr-2" for="department_id">Department: </label>
-			<select class="form-control select2" name="department_id">
-				@if(count($departments) > 0)
-				<option disabled default selected>--select one--</option>
-				@foreach($departments as $department)
-				<option value="{{$department->id}}" {{ $asset->department_id == $department->id  ? 'selected' : '' }}>{{$department->name}}</option>
-				@endforeach
-				@else
-				<option disabled default selected>--select one--</option>
-				@endif
-			</select>
-		</div>
-	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="description">Description: </label>

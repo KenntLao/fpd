@@ -28,11 +28,10 @@ class EmploymentTypeController extends Controller
 
     public function store(hris_employment_types $employmentType, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $employmentType = hris_employment_types::create($this->validatedData());
             $id = $employmentType->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -56,9 +55,9 @@ class EmploymentTypeController extends Controller
     {
         $id = $employmentType->id;
         if ($this->validatedData()) {
-            $model = $employmentType;
+            $string = 'App\hris_employment_types';
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($this->module,$string,$id);
             $employmentType->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success', 'Employment type successfully updated!');
         } else {
@@ -68,13 +67,12 @@ class EmploymentTypeController extends Controller
 
     public function destroy(hris_employment_types $employmentType)
     {   
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employmentType->delete();
             $id = $employmentType->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success','Employment type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

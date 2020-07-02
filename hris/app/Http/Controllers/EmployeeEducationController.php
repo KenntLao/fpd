@@ -35,7 +35,6 @@ class EmployeeEducationController extends Controller
 
     public function store(hris_employee_educations $employeeEducation, Request $request)
     {
-        $action = 'add';
         $employee_id = $_SESSION['sys_id'];
         if($this->validatedData()) {
             $employeeEducation->employee_id = $employee_id;
@@ -45,7 +44,7 @@ class EmployeeEducationController extends Controller
             $employeeEducation->completed = request('completed');
             $employeeEducation->save();
             $id = $employeeEducation->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -67,11 +66,25 @@ class EmployeeEducationController extends Controller
     {
         $id = $employeeEducation->id;
         if($this->validatedData()) {
-            $model = $employeeEducation;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $employeeEducation->update($this->validatedData());
-            return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully added!');
+            $string = 'App\hris_employee_educations';
+            $employeeEducation->education_id = request('education_id');
+            $employeeEducation->institute = request('institute');
+            $employeeEducation->start_date = request('start_date');
+            $employeeEducation->completed = request('completed');
+            // GET CHANGES
+            $changes = $employeeEducation->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employeeEducation->update();
+            // GET CHANGES
+            $changed = $employeeEducation->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employeeEducation->wasChanged() ) {
+                return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully updated!');
+            } else {
+                return redirect('/hris/pages/personalInformation/educations/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -79,13 +92,12 @@ class EmployeeEducationController extends Controller
 
     public function destroy(hris_employee_educations $employeeEducation)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeEducation->delete();
             $id = $employeeEducation->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

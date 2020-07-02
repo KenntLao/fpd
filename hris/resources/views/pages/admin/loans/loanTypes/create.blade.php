@@ -30,7 +30,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/loans/loanTypes/index"><i class="fa fa-arrow-left"></i> back</a>
-		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save category</button>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> save loan type</button>
 	</div>
 </div>
 @stop

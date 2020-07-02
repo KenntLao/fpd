@@ -31,11 +31,10 @@ class LeaveTypeController extends Controller
 
     public function store(hris_leave_types $leaveType, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $leaveType = hris_leave_types::create($this->validatedData());
             $id = $leaveType->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -57,11 +56,36 @@ class LeaveTypeController extends Controller
     {
         $id = $leaveType->id;
         if($this->validatedData()) {
-            $model = $leaveType;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $leaveType->update($this->validatedData());
-            return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully updated!');
+            $string = 'App\hris_leave_types';
+            $leaveType->name = request('name');
+            $leaveType->leaves_per_period = request('leaves_per_period');
+            $leaveType->supervisor_leave_assign = request('supervisor_leave_assign');
+            $leaveType->employee_can_apply = request('employee_can_apply');
+            $leaveType->apply_beyond_current = request('apply_beyond_current');
+            $leaveType->leave_accrue = request('leave_accrue');
+            $leaveType->carried_forward = request('carried_forward');
+            $leaveType->carried_forward_percentage = request('carried_forward_percentage');
+            $leaveType->max_carried_forward_amount = request('max_carried_forward_amount');
+            $leaveType->carried_forward_leave_availability = request('carried_forward_leave_availability');
+            $leaveType->proportionate_on_joined_date = request('proportionate_on_joined_date');
+            $leaveType->employee_leave_period = request('employee_leave_period');
+            $leaveType->send_notification_emails = request('send_notification_emails');
+            $leaveType->leave_group_id = request('leave_group_id');
+            $leaveType->leave_color = request('leave_color');
+            // GET CHANGES
+            $changes = $leaveType->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $leaveType->update();
+            // GET CHANGES
+            $changed = $leaveType->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $leaveType->wasChanged() ) {
+                return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/leave/leaveTypes/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -69,13 +93,12 @@ class LeaveTypeController extends Controller
 
     public function destroy(hris_leave_types $leaveType)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveType->delete();
             $id = $leaveType->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

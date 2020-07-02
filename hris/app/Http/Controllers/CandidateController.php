@@ -33,15 +33,14 @@ class CandidateController extends Controller
 
     public function store(hris_candidates $candidate, Request $request)
     {
-        $action = 'add';
         if($this->storeValidatedData()) {
             if ( $request->hasFile('profile_image') ) {
-                $imageName = time() . '.' . $request->profile_image->extension();
+                $imageName = time() . 'PI.' . $request->profile_image->extension();
                 $candidate->profile_image = $imageName;
                 $request->profile_image->move(public_path('assets/files/candidates/profile_image'), $imageName);
             }
             if($request->hasFile('resume')) {
-                $resume = time() . '.' . $request->resume->extension();
+                $resume = time() . 'R.' . $request->resume->extension();
                 $candidate->resume = $resume;
                 $request->resume->move(public_path('assets/files/candidates/resume'), $resume);
             }
@@ -65,7 +64,7 @@ class CandidateController extends Controller
             $candidate->expected_salary = request('expected_salary');
             $candidate->save();
             $id = $candidate->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully added!');
         } else {
             return back()->withErrors($this->storeValidatedData());
@@ -88,15 +87,19 @@ class CandidateController extends Controller
     {
         $id = $candidate->id;
         if($this->updateValidatedData()) {
-            $model = $candidate;
+            $string = 'App\hris_candidates';
             if( $request->hasFile('profile_image') ) {
                 $pathCandidate = public_path('/assets/files/candidates/profile_image/');
                 if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
                     $old_file_1 = $pathCandidate . $candidate->profile_image;
                     unlink($old_file_1);
-                    $imageName = time() . '.' . $request->profile_image->extension();
+                    $imageName = time() . 'PI.' . $request->profile_image->extension();
                     $candidate->profile_image = $imageName;
-                    $request->profile_image->move(public_path('/assets/files/candidates/profile_image/'), $imageName);
+                    $request->profile_image->move($pathCandidate, $imageName);
+                } else {
+                    $imageName = time() . 'R.' . $request->profile_image->extension();
+                    $candidate->profile_image = $imageName;
+                    $request->profile_image->move($pathCandidate, $imageName);
                 }
             }
             if( $request->hasFile('resume') ) {
@@ -104,13 +107,13 @@ class CandidateController extends Controller
                 if ($candidate->resume != '' && $candidate->resume != NULL) {
                     $old_file_2 = $pathResume . $candidate->resume;
                     unlink($old_file_2);
-                    $resume = time() . '.' . $request->resume->extension();
+                    $resume = time() . 'R.' . $request->resume->extension();
                     $candidate->resume = $resume;
-                    $request->resume->move(public_path('assets/files/candidates/resume/'), $resume);
+                    $request->resume->move($pathResume, $resume);
                 }
             }
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($this->module,$string,$id);
             $candidate->job_position_id = request('job_position_id');
             $candidate->hiring_stage = request('hiring_stage');
             $candidate->first_name = request('first_name');
@@ -129,7 +132,6 @@ class CandidateController extends Controller
             $candidate->referees = request('referees');
             $candidate->prefered_industry = request('prefered_industry');
             $candidate->expected_salary = request('expected_salary');
-            //GET DATA AND UPDATE
             $candidate->update();
             return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
         } else {
@@ -140,7 +142,6 @@ class CandidateController extends Controller
 
     public function destroy(hris_candidates $candidate)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
@@ -156,7 +157,7 @@ class CandidateController extends Controller
                 unlink($old_file_2);
             }
             $id = $candidate->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -46,7 +46,13 @@
 					@foreach($documents as $document)
 					<tr>
 						<td>{{$document->employee->firstname}} {{$document->employee->lastname}}</td>
-						<td>{{$document->type->name}}</td>
+						<td>
+							@if($document->document_type)
+							{{$document->document_type->name}}
+							@else
+							NONE
+							@endif
+						</td>
 						<td>{{$document->details}}</td>
 						<td>{{$document->date_added}}</td>
 						<td>{{$document->status}}</td>

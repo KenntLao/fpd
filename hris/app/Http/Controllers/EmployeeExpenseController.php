@@ -36,20 +36,19 @@ class EmployeeExpenseController extends Controller
 
     public function store(hris_employee_expenses $employeeExpense,Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             if ( $request->hasFile('receipt') ) {
-                $receipt = time() . '.' . $request->receipt->extension();
+                $receipt = time() . 'RCPT.' . $request->receipt->extension();
                 $employeeExpense->receipt = $receipt;
                 $request->receipt->move(public_path('assets/files/employee_expenses/receipt/'), $receipt);
             }
             if ( $request->hasFile('attachment_1') ) {
-                $attachment_1 = time() . '.' . $request->attachment_1->extension();
+                $attachment_1 = time() . 'A1.' . $request->attachment_1->extension();
                 $employeeExpense->attachment_1 = $attachment_1;
                 $request->attachment_1->move(public_path('assets/files/employee_expenses/attachment_1/'), $attachment_1);
             }
             if ( $request->hasFile('attachment_2') ) {
-                $attachment_2 = time() . '.' . $request->attachment_2->extension();
+                $attachment_2 = time() . 'A2.' . $request->attachment_2->extension();
                 $employeeExpense->attachment_2 = $attachment_2;
                 $request->attachment_2->move(public_path('assets/files/employee_expenses/attachment_2/'), $attachment_2);
             }
@@ -65,7 +64,7 @@ class EmployeeExpenseController extends Controller
             $employeeExpense->status = 'Pending';
             $employeeExpense->save();
             $id = $employeeExpense->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -90,15 +89,19 @@ class EmployeeExpenseController extends Controller
     {
         $id = $employeeExpense->id;
         if($this->validatedData()) {
-            $model = $employeeExpense;
+            $string = 'App\hris_employee_expenses';
             if ( $request->hasFile('receipt') ) {
                 $path = public_path('assets/files/employee_expenses/receipt/');
                 if ($employeeExpense->receipt != '' && $employeeExpense->receipt != NULL) {
                     $old_file = $path . $employeeExpense->receipt;
                     unlink($old_file);
-                    $receipt = time() . '.' . $request->receipt->extension();
+                    $receipt = time() . 'RCPT.' . $request->receipt->extension();
                     $employeeExpense->receipt = $receipt;
                     $request->receipt->move($path, $receipt);
+                } else {
+                    $receipt = time() . 'RCPT.' . $request->receipt->extension();
+                    $employeeExpense->receipt = $receipt;
+                    $request->receipt->move(public_path('assets/files/employee_expenses/receipt/'), $receipt);
                 }
             }
             if ( $request->hasFile('attachment_1') ) {
@@ -106,7 +109,11 @@ class EmployeeExpenseController extends Controller
                 if ($employeeExpense->attachment_1 != '' && $employeeExpense->attachment_1 != NULL) {
                     $old_file = $path . $employeeExpense->attachment_1;
                     unlink($old_file);
-                    $attachment_1 = time() . '.' . $request->attachment_1->extension();
+                    $attachment_1 = time() . 'A1.' . $request->attachment_1->extension();
+                    $employeeExpense->attachment_1 = $attachment_1;
+                    $request->attachment_1->move($path, $attachment_1);
+                } else {
+                    $attachment_1 = time() . 'A1.' . $request->attachment_1->extension();
                     $employeeExpense->attachment_1 = $attachment_1;
                     $request->attachment_1->move($path, $attachment_1);
                 }
@@ -116,13 +123,15 @@ class EmployeeExpenseController extends Controller
                 if ($employeeExpense->attachment_2 != '' && $employeeExpense->attachment_2 != NULL) {
                     $old_file = $path . $employeeExpense->attachment_2;
                     unlink($old_file);
-                    $attachment_2 = time() . '.' . $request->attachment_2->extension();
+                    $attachment_2 = time() . 'A2.' . $request->attachment_2->extension();
+                    $employeeExpense->attachment_2 = $attachment_2;
+                    $request->attachment_2->move($path, $attachment_2);
+                } else {
+                    $attachment_2 = time() . 'A2.' . $request->attachment_2->extension();
                     $employeeExpense->attachment_2 = $attachment_2;
                     $request->attachment_2->move($path, $attachment_2);
                 }
             }
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
             $employeeExpense->employee_id = request('employee_id');
             $employeeExpense->expense_date = request('expense_date');
             $employeeExpense->payment_method_id = request('payment_method_id');
@@ -133,8 +142,20 @@ class EmployeeExpenseController extends Controller
             $employeeExpense->currency = request('currency');
             $employeeExpense->amount = request('amount');
             $employeeExpense->status = 'Pending';
+            // GET CHANGES
+            $changes = $employeeExpense->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
             $employeeExpense->update();
-            return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully added!');
+            // GET CHANGES
+            $changed = $employeeExpense->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employeeExpense->wasChanged() ) {
+                return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/benefits/employeeExpenses/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -142,17 +163,16 @@ class EmployeeExpenseController extends Controller
     public function updateStatus(hris_employee_expenses $employeeExpense, Request $request)
     {
         $id = $employeeExpense->id;
-        $model = $employeeExpense;
+        $string = 'App\hris_employee_expenses';
+        $this->function->statusSystemLog($this->module,$string,$id);
         $employeeExpense->status = request('status');
         //DO systemLog function FROM SystemLogController
-        $this->function->updateSystemLog($model,$this->module,$id);
         $employeeExpense->update();
         return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense status successfully updated!');
     }
 
     public function destroy(hris_employee_expenses $employeeExpense)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
@@ -173,7 +193,7 @@ class EmployeeExpenseController extends Controller
                 unlink($old_file);
             }
             $id = $employeeExpense->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -29,11 +29,10 @@ class ExperienceLevelController extends Controller
 
     public function store(hris_experience_levels $experienceLevel, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $experienceLevel = hris_experience_levels::create($this->validatedData());
             $id = $experienceLevel->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -55,9 +54,9 @@ class ExperienceLevelController extends Controller
     {
         $id = $experienceLevel->id;
         if ($this->validatedData()) {
-            $model = $experienceLevel;
+            $string = 'App\hris_experience_levels';
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+            $this->function->updateSystemLog($this->module,$string,$id);
             $experienceLevel->update($this->validatedData());
             return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success', 'Experience level updated!');
         } else {
@@ -67,13 +66,12 @@ class ExperienceLevelController extends Controller
 
     public function destroy(hris_experience_levels $experienceLevel)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $experienceLevel->delete();
             $id = $experienceLevel->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success','Experience level deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -24,7 +24,7 @@
     </div>
     <div class="card-body">
         @if(\Request::route()->getName() == 'editStatus')
-        <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/update/1/{{$overtime->id}}" id="form">
+        <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/update/{{$status}}/{{$overtime->id}}" id="form">
         @else
         <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/update/{{$overtime->id}}" id="form">
         @endif

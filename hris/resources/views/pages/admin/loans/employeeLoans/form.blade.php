@@ -18,13 +18,13 @@
 	</div>
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="type">Loan Type: </label>
+			<label class="mr-2" for="loan_type_id">Loan Type: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="type_id" required>
+			<select class="form-control required select2" name="loan_type_id" required>
 				@if(count($types) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($types as $type)
-				<option value="{{$type->id}}" {{ $employeeLoan->type_id == $type->id  ? 'selected' : '' }}>{{$type->name}}</option>
+				<option value="{{$type->id}}" {{ $employeeLoan->loan_type_id == $type->id  ? 'selected' : '' }}>{{$type->name}}</option>
 				@endforeach
 				@else 
 				<option disabled default selected>--select one--</option>

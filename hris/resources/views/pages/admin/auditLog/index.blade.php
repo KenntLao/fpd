@@ -42,7 +42,21 @@
 		</div>
 		<div class="log-info">
 			<h5>{{date("M d, Y h:i:s a", strtotime($log->log_date_time))}}</h5>
-			<p>{{$log->description}}</p>
+			@if($log->action == 'add')
+			<p>{{$log->module}} ID: {{$log->action_id}} has been added by {{$log->user}}.</p>
+			@endif
+			@if($log->action == 'update')
+			@if(is_array($log->field))
+			@else
+			<p>{{$log->module}} ID: {{$log->action_id}} has been updated by {{$log->user}}. <span class="field-data bg-secondary">{{$log->field}}</span> : <span class="old-data bg-primary">@if($log->old_data == '') blank data @else{{$log->old_data}}@endif</span>has been updated to<span class="new-data bg-primary">@if($log->new_data == '') blank data @else {{$log->new_data}} @endif</span>.</p>
+			@endif
+			@endif
+			@if($log->action == 'delete')
+			<p>{{$log->module}} ID: {{$log->action_id}} has been deleted by {{$log->user}}.</p>
+			@endif
+			@if($log->action == 'login')
+			<p>Account username: <span class="old-data bg-primary">{{$log->user}}</span> has logged in.</p>
+			@endif
 		</div>
 	</div>
 </div>

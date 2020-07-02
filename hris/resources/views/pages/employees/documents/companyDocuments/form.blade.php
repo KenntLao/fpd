@@ -46,11 +46,11 @@
         <div class="form-group">
             <label class="mr-2" for="department_id">Share Departments: </label>
             <span class="badge badge-danger">Required</span>
-            <select class="required select2" name="department_id[]" multiple="multiple">
+            <select class="form-control required select2" name="department_id[]" multiple="multiple">
                 @if(count($departments) > 0)
                 <option disabled default>--select one --</option>
                 @foreach($departments as $department)
-                <option value="{{$department->id}}" {{ in_array($department->id, $department_id) ? 'selected' : '' }}>{{$department->department_name}}</option>
+                <option value="{{$department->id}}" {{ in_array($department->id, $department_id) ? 'selected' : '' }}>{{$department->name}}</option>
                 @endforeach
                 @else
                 <option disabled default>--select one --</option>
@@ -84,8 +84,9 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label class="mr-2" for="employee_id">Share Employees: </label>
-            <select class="required select2" name="employee_id[]" multiple="multiple">
+            <select class="form-control required select2" name="employee_id[]" multiple="multiple">
                 @if(count($employees) > 0)
+                <option disabled default>--select one --</option>
                 @foreach($employees as $employee)
                 <option value="{{$employee->id}}" {{ in_array($employee->id, $employee_id) ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
                 @endforeach

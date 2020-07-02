@@ -28,11 +28,10 @@ class EmploymentStatusController extends Controller
 
     public function store(hris_employment_statuses $employmentStatus, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $employmentStatus = hris_employment_statuses::create($this->validatedData());
             $id = $employmentStatus->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment status successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,11 +52,23 @@ class EmploymentStatusController extends Controller
     {
         $id = $employmentStatus->id;
         if($this->validatedData()) {
-            $model = $employmentStatus;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $employmentStatus->update($this->validatedData());
-            return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment status successfully added!');
+            $string = 'App\hris_employment_statuses';
+            $employmentStatus->name = request('name');
+            $employmentStatus->description = request('description');
+            // GET CHANGES
+            $changes = $employmentStatus->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employmentStatus->update();
+            // GET CHANGES
+            $changed = $employmentStatus->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employmentStatus->wasChanged() ) {
+                return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment Status successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -65,13 +76,12 @@ class EmploymentStatusController extends Controller
 
     public function destroy(hris_employment_statuses $employmentStatus)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $employmentStatus->delete();
             $id = $employmentStatus->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment status successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

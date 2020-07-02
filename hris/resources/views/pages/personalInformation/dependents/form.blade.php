@@ -27,7 +27,8 @@
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="dependent">Date of Birth: </label>
-			<input class="form-control" type="date" name="birthday" value="{{ old('birthday') ?? $dependent->birthday }}">
+			<span class="badge badge-danger">Required</span>
+			<input class="form-control required" type="date" name="birthday" value="{{ old('birthday') ?? $dependent->birthday }}" required>
 		</div>
 	</div>
 	<div class="col-12 col-md-6">

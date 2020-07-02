@@ -28,11 +28,10 @@ class ClientController extends Controller
 
     public function store(hris_clients $client, Request $request)
     {   
-        $action = 'add';
         if($this->validatedData()) {
             $client = hris_clients::create($this->validatedData());
             $id = $client->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -53,11 +52,29 @@ class ClientController extends Controller
     {
         $id = $client->id;
         if($this->validatedData()) {
-            $model = $client;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $client->update($this->validatedData());
-            return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully updated!');
+            $string = 'App\hris_clients';
+            $client->name = request('name');
+            $client->details = request('details');
+            $client->address = request('address');
+            $client->contact_number = request('contact_number');
+            $client->email = request('email');
+            $client->company_url = request('company_url');
+            $client->status = request('status');
+            $client->first_contact_date = request('first_contact_date');
+            // GET CHANGES
+            $changes = $client->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $client->update();
+            // GET CHANGES
+            $changed = $client->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $client->wasChanged() ) {
+                return redirect('/hris/pages/admin/properties/clients/index')->with('success', $'Client successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/properties/clients/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -65,13 +82,12 @@ class ClientController extends Controller
 
     public function destroy(hris_clients $client)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $client->delete();
             $id = $client->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

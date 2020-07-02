@@ -8,7 +8,7 @@ class hris_company_assets extends Model
 {
     protected $guarded = [];
 
-    public function type()
+    public function asset_type()
     {
     	return $this->belongsTo('App\hris_company_asset_types');
     }

@@ -28,11 +28,10 @@ class LeaveGroupController extends Controller
 
     public function store(hris_leave_groups $leaveGroup, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $leaveGroup = hris_leave_groups::create($this->validatedData());
             $id = $leaveGroup->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully added!');
 
         } else {
@@ -55,11 +54,23 @@ class LeaveGroupController extends Controller
     {
         $id = $leaveGroup->id;
         if ($this->validatedData()) {
-            $model = $leaveGroup;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $leaveGroup->update($this->validatedData());
-            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully updated!');
+            $string = 'App\hris_leave_groups';
+            $leaveGroup->name = request('name');
+            $leaveGroup->details = request('details');
+            // GET CHANGES
+            $changes = $leaveGroup->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $leaveGroup->update();
+            // GET CHANGES
+            $changed = $leaveGroup->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $leaveGroup->wasChanged() ) {
+                return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/leave/leaveGroups/index');
+            }
 
         } else {
             return back()->withErrors($this->validatedData());
@@ -68,13 +79,12 @@ class LeaveGroupController extends Controller
 
     public function destroy(hris_leave_groups $leaveGroup)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $leaveGroup->delete();
             $id = $leaveGroup->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -30,11 +30,10 @@ class ProjectController extends Controller
 
     public function store(hris_projects $project, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $project = hris_projects::create($this->validatedData());
             $id = $project->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -56,11 +55,25 @@ class ProjectController extends Controller
     {
         $id = $project->id;
         if($this->validatedData()) {
-            $model = $project;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $project->update($this->validatedData());
-            return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully updated!');
+            $string = 'App\hris_projects';
+            $project->name = request('name');
+            $project->client_id = request('client_id');
+            $project->status = request('status');
+            $project->details = request('details');
+            // GET CHANGES
+            $changes = $project->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $project->update();
+            // GET CHANGES
+            $changed = $project->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $project->wasChanged() ) {
+                return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/properties/projects/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -68,13 +81,12 @@ class ProjectController extends Controller
 
     public function destroy(hris_projects $project)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $project->delete();
             $id = $project->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

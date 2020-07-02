@@ -31,11 +31,10 @@ class HolidayController extends Controller
 
     public function store(hris_holidays $holiday, Request $request)
     {
-        $action = 'add';
         if($this->validatedData()) {
             $holiday = hris_holidays::create($this->validatedData());
             $id = $holiday->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -57,11 +56,25 @@ class HolidayController extends Controller
     {
         $id = $holiday->id;
         if($this->validatedData()) {
-            $model = $holiday;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $holiday->update($this->validatedData());
-            return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully updated!');
+            $string = 'App\hris_holidays';
+            $holiday->name = request('name');
+            $holiday->holiday_date = request('holiday_date');
+            $holiday->status = request('status');
+            $holiday->country = request('country');
+            // GET CHANGES
+            $changes = $holiday->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $holiday->update();
+            // GET CHANGES
+            $changed = $holiday->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $holiday->wasChanged() ) {
+                return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/leave/holidays/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -69,13 +82,12 @@ class HolidayController extends Controller
 
     public function destroy(hris_holidays $holiday)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $holiday->delete();
             $id = $holiday->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

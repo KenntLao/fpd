@@ -30,11 +30,10 @@ class JobTitleController extends Controller
 
     public function store(hris_job_titles $jobTitle, Request $request)
     {
-        $action = 'add';
         if ($this->validatedData()) {
             $jobTitle = hris_job_titles::create($this->validatedData());
             $id = $jobTitle->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -56,11 +55,25 @@ class JobTitleController extends Controller
     {
         $id = $jobTitle->id;
         if($this->validatedData()) {
-            $model = $jobTitle;
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $jobTitle->update($this->validatedData());
-            return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully updated!');
+            $string = 'App\hris_job_titles';
+            $jobTitle->code = request('code');
+            $jobTitle->name = request('name');
+            $jobTitle->description = request('description');
+            $jobTitle->specification = request('specification');
+            // GET CHANGES
+            $changes = $jobTitle->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $jobTitle->update();
+            // GET CHANGES
+            $changed = $jobTitle->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $jobTitle->wasChanged() ) {
+                return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully updated!');
+            } else {
+                return redirect('/hris/pages/admin/jobDetails/jobTitles/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -68,13 +81,12 @@ class JobTitleController extends Controller
 
     public function destroy(hris_job_titles $jobTitle)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ( $upass == request('upass') ) {
             $jobTitle->delete();
             $id = $jobTitle->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

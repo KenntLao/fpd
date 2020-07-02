@@ -664,6 +664,7 @@ textarea.form-control {
 	font-size: 12px;
 }
 .log-info > p {
+	line-height: 2;
 	color: #000;
 	font-size: 12px;
 	margin-bottom: 0;
@@ -686,4 +687,22 @@ textarea.form-control {
 .download-link:hover {
 	background: #FFFF00;
 	color: #041E42;
+}
+
+.field-data {
+	text-transform: capitalize;
+	padding: 2px 4px;
+	border-radius: 4px;
+	margin: 0 5px;
+}
+
+.old-data {
+	padding: 2px 4px;
+	border-radius: 4px;
+	margin: 0 5px;
+}
+.new-data {
+	padding: 2px 4px;
+	border-radius: 4px;
+	margin: 0 5px;
 }
