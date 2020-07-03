@@ -49,34 +49,19 @@ class JobPositionController extends Controller
     public function store(hris_job_positions $jobPosition, Request $request)
     {
         if ($this->validatedData()) {
+            $attributes = \Schema::getColumnListing($jobPosition->getTable());
             if( $request->hasFile('image') ) {
                 $imageName = time() . 'IMG.' . $request->image->extension();
                 $jobPosition->image = $imageName;
                 $request->image->move(public_path('assets/images/job_positions/'), $imageName);
             }
-            $jobPosition->job_title_id = request('job_title_id');
-            $jobPosition->company_name = request('company_name');
-            $jobPosition->hiring_manager = request('hiring_manager');
-            $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
-            $jobPosition->short_description = request('short_description');
-            $jobPosition->requirements = request('requirements');
-            $jobPosition->benefit_id = request('benefit_id');
-            $jobPosition->country = request('country');
-            $jobPosition->city = request('city');
-            $jobPosition->postal_code = request('postal_code');
-            $jobPosition->department_id = request('department_id');
-            $jobPosition->employment_type_id = request('employment_type_id');
-            $jobPosition->exp_level_id = request('exp_level_id');
-            $jobPosition->job_function_id = request('job_function_id');
-            $jobPosition->education_level_id = request('education_level_id');
-            $jobPosition->show_salary = request('show_salary');
-            $jobPosition->currency = request('currency');
-            $jobPosition->salary_min = request('salary_min');
-            $jobPosition->salary_max = request('salary_max');
-            $jobPosition->keywords = request('keywords');
-            $jobPosition->status = request('status');
-            $jobPosition->closing_date = request('closing_date');
-            $jobPosition->display_type = request('display_type');
+            foreach ($attributes as $field) {
+                if ( $field != 'id' AND $field != 'created_at' AND $field != 'updated_at' AND $field != 'image' ) {
+                    if ( $jobPosition->getOriginal($field) != request($field) ) {
+                        $jobPosition->$field = request($field);
+                    }
+                }
+            }
             $id = $jobPosition->id;
             $this->function->addSystemLog($this->module,$id);
             $jobPosition->save();
@@ -111,6 +96,7 @@ class JobPositionController extends Controller
         $id = $jobPosition->id;
         if ($this->validatedData()) {
             $string = 'App\hris_job_positions';
+            $attributes = array_keys($jobPosition->getAttributes());
             if( $request->hasFile('image') ) {
                 $path = public_path('assets/images/job_positions/');
                 if ($jobPosition->image != '' && $jobPosition->image != NULL) {
@@ -125,29 +111,13 @@ class JobPositionController extends Controller
                     $request->image->move($path, $image);
                 }
             }
-            $jobPosition->job_title_id = request('job_title_id');
-            $jobPosition->company_name = request('company_name');
-            $jobPosition->hiring_manager = request('hiring_manager');
-            $jobPosition->show_hiring_manager_name = request('show_hiring_manager_name');
-            $jobPosition->short_description = request('short_description');
-            $jobPosition->requirements = request('requirements');
-            $jobPosition->benefit_id = request('benefit_id');
-            $jobPosition->country = request('country');
-            $jobPosition->city = request('city');
-            $jobPosition->postal_code = request('postal_code');
-            $jobPosition->department_id = request('department_id');
-            $jobPosition->employment_type_id = request('employment_type_id');
-            $jobPosition->exp_level_id = request('exp_level_id');
-            $jobPosition->job_function_id = request('job_function_id');
-            $jobPosition->education_level_id = request('education_level_id');
-            $jobPosition->show_salary = request('show_salary');
-            $jobPosition->currency = request('currency');
-            $jobPosition->salary_min = request('salary_min');
-            $jobPosition->salary_max = request('salary_max');
-            $jobPosition->keywords = request('keywords');
-            $jobPosition->status = request('status');
-            $jobPosition->closing_date = request('closing_date');
-            $jobPosition->display_type = request('display_type');
+            foreach ($attributes as $field) {
+                if ( $field != 'id' AND $field != 'created_at' AND $field != 'updated_at' AND $field != 'image' ) {
+                    if ( $jobPosition->getOriginal($field) != request($field) ) {
+                        $jobPosition->$field = request($field);
+                    }
+                }
+            }
             // GET CHANGES
             $changes = $jobPosition->getDirty();
             // GET ORIGINAL DATA
