@@ -26,7 +26,7 @@ class hris_job_positions extends Model
     }
     public function job_function()
     {
-        return $this->belongsTo('App\hris_job_function');
+        return $this->belongsTo('App\hris_job_functions');
     }
     public function department()
     {

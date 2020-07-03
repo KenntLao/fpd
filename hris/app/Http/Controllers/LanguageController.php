@@ -53,8 +53,14 @@ class LanguageController extends Controller
         $id = $language->id;
         if($this->validatedData()) {
             $string = 'App\hris_languages';
-            $language->name = request('name');
-            $language->description = request('description');
+            $attributes = array_keys($language->getAttributes());
+            foreach ($attributes as $field) {
+                if ( $field != 'id' AND $field != 'created_at' AND $field != 'updated_at' ) {
+                    if ( $language->getOriginal($field) != request($field) ) {
+                        $language->$field = request($field);
+                    }
+                }
+            }
             // GET CHANGES
             $changes = $language->getDirty();
             // GET ORIGINAL DATA

@@ -78,4 +78,39 @@ class hris_functions extends Model
         return $this->belongsTo('App\hris_currencies');
     }
 
+    public function job_function()
+    {
+        return $this->belongsTo('App\hris_job_functions');
+    }
+
+    public function job_position()
+    {
+        return $this->belongsTo('App\hris_job_positions');
+    }
+
+    public function benefit()
+    {
+        return $this->belongsTo('App\hris_benefits');
+    }
+
+    public function education_level()
+    {
+        return $this->belongsTo('App\hris_education_levels');
+    }
+
+    public function employment_type()
+    {
+        return $this->belongsTo('App\hris_employment_type');
+    }
+
+    public function exp_level()
+    {
+        return $this->belongsTo('App\hris_experience_levels');
+    }
+
+    public function candidate()
+    {
+        return $this->belongsTo('App\hris_candidates');
+    }
+
 }

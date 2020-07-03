@@ -97,7 +97,7 @@ class CandidateController extends Controller
                     $candidate->profile_image = $imageName;
                     $request->profile_image->move($pathCandidate, $imageName);
                 } else {
-                    $imageName = time() . 'R.' . $request->profile_image->extension();
+                    $imageName = time() . 'PI.' . $request->profile_image->extension();
                     $candidate->profile_image = $imageName;
                     $request->profile_image->move($pathCandidate, $imageName);
                 }
@@ -110,36 +110,30 @@ class CandidateController extends Controller
                     $resume = time() . 'R.' . $request->resume->extension();
                     $candidate->resume = $resume;
                     $request->resume->move($pathResume, $resume);
+                } else {
+                    $resume = time() . 'R.' . $request->resume->extension();
+                    $candidate->resume = $resume;
+                    $request->resume->move($pathResume, $resume);
                 }
             }
-            $candidate->job_position_id = request('job_position_id');
-            $candidate->hiring_stage = request('hiring_stage');
-            $candidate->first_name = request('first_name');
-            $candidate->last_name = request('last_name');
-            $candidate->gender = request('gender');
-            $candidate->city = request('city');
-            $candidate->country = request('country');
-            $candidate->telephone = request('telephone');
-            $candidate->email = request('email');
-            $candidate->resume_headline = request('resume_headline');
-            $candidate->profile_summary = request('profile_summary');
-            $candidate->total_years_exp = request('total_years_exp');
-            $candidate->work_history = request('work_history');
-            $candidate->education = request('education');
-            $candidate->skills = request('skills');
-            $candidate->referees = request('referees');
-            $candidate->prefered_industry = request('prefered_industry');
-            $candidate->expected_salary = request('expected_salary');
+            $attributes = array_keys($candidate->getAttributes());
+            foreach ($attributes as $field) {
+                if ( $field != 'id' AND $field != 'created_at' AND $field != 'updated_at' AND $field != 'resume' AND $field != 'profile_image' ) {
+                    if ( $candidate->getOriginal($field) != request($field) ) {
+                        $candidate->$field = request($field);
+                    }
+                }
+            }
             // GET CHANGES
-            $changes = $benefit->getDirty();
+            $changes = $candidate->getDirty();
             // GET ORIGINAL DATA
             $this->function->getOldData($this->module,$string,$changes,$id);
-            $benefit->update();
+            $candidate->update();
             // GET CHANGES
-            $changed = $benefit->getChanges();
+            $changed = $candidate->getChanges();
             // USE UPDATESYSTEMLOG FUNCTION
             $this->function->updateSystemLog($this->module,$changed,$string,$id);
-            if ( $benefit->wasChanged() ) {
+            if ( $candidate->wasChanged() ) {
                 return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully updated!');
             } else {
                 return redirect('/hris/pages/recruitment/candidates/index');
