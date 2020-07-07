@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="mr-2" for="job_postion">Job Positions </label>
+                            <label class="mr-2" for="job_postion">Job Position</label>
                             <div class="employee-info">
                                 <span>{{$employee->job_position}}</span>
                             </div>
@@ -119,7 +119,11 @@
                 <div class="form-group">
                     <label class="mr-2" for="supervisor">Supervisor </label>
                     <div class="employee-info">
-                        <span>{{$supervisor->firstname}} {{$supervisor->lastname}}</span>
+                        <span>
+                            @if(isset($supervisor))
+                            {{$supervisor->firstname}} {{$supervisor->lastname}}
+                            @endif
+                        </span>
                     </div>
                 </div>
             </div>

@@ -62,10 +62,10 @@
 				<tbody>
 					@foreach($attendances as $attendance)
 					<tr>
-						<td>{{date("M d, Y - h:i:sa", $attendance->time_in)}}</td>
+						<td>{{date('M d, Y - h:i:sa', strtotime($attendance->time_in))}}</td>
 						<td>
 							@if($attendance->time_out)
-							{{date("M d, Y - h:i:sa", $attendance->time_in)}}
+							{{date('M d, Y - h:i:sa', strtotime($attendance->time_out))}}
 							@endif
 						</td>
 					</tr>

@@ -7,6 +7,7 @@ use App\hris_workshift_assignment;
 use App\hris_work_shift_management;
 use App\hris_employee;
 use App\users;
+use App\Notifications\WorkShiftNotif;
 
 class WorkShiftAssignmentController extends Controller
 {
@@ -21,10 +22,7 @@ class WorkShiftAssignmentController extends Controller
     public function index(hris_workshift_assignment $workshift_assignment)
     {
         $workshift_assignment = hris_workshift_assignment::paginate(10);
-
-        $employee = hris_employee::join('hris_workshift_assignments', 'hris_workshift_assignments.employee_id', '=', 'hris_employees.id')->get();
-        $workshift = hris_work_shift_management::join('hris_workshift_assignments', 'hris_workshift_assignments.workshift_id', '=', 'hris_work_shift_managements.id')->get();
-        return view('pages.time.workshiftAssignment.index', compact('workshift_assignment', 'employee', 'workshift'));
+        return view('pages.time.workshiftAssignment.index', compact('workshift_assignment'));
     }
     public function create(hris_workshift_assignment $workshift_assignment, hris_employee $employees, hris_work_shift_management $work_shift)
     {
@@ -32,13 +30,22 @@ class WorkShiftAssignmentController extends Controller
         $work_shift = hris_work_shift_management::all();
         return view('pages.time.workshiftAssignment.create', compact('workshift_assignment', 'employees', 'work_shift'));
     }
-    public function store(hris_workshift_assignment $workshift_assignment)
+    public function store(Request $request, hris_workshift_assignment $workshift_assignment)
     {
         $action = 'add';
         if ($this->validatedData()) {
             $workshift_assignment = hris_workshift_assignment::create($this->validatedData());
             $id = $workshift_assignment->id;
             $this->function->systemLog($this->module,$action,$id);
+
+
+            // WORKSHIFT NOTIFICATION
+            $employee_req = $request->employee_id;
+            $employee = hris_employee::find($_SESSION['sys_id']);
+            $employee_receiver = hris_employee::find($employee_req);
+            $employee_receiver->notify(new WorkShiftNotif($employee));
+
+            
             return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -70,7 +77,7 @@ class WorkShiftAssignmentController extends Controller
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ($upass == request('upass')) {
             $workshift_assignment->delete();
-            $id = $benefit->id;
+            $id = $workshift_assignment->id;
             $this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');
         } else {

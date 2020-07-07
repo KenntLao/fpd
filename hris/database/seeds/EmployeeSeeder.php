@@ -9,6 +9,10 @@ class EmployeeSeeder extends Seeder
      *
      * @return void
      */
+
+
+    
+    
     public function run()
     {
         factory(App\hris_employee::class, 4)->create();
