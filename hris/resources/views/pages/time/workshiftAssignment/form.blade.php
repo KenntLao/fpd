@@ -5,8 +5,8 @@
 			<label class="mr-2" for="employee_name">Select Employee</label>
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="employee_id" required>
-				@if(isset($employee))
-				<option selected value="{{$workshift_assignment->employee_id}}">{{$employee->firstname}} {{$employee->lastname}}</option>
+				@if(isset($workshift_assignment->employee->id))
+				<option selected value="{{$workshift_assignment->employee->id}}">{{$workshift_assignment->employee->firstname}} {{$workshift_assignment->employee->lastname}}</option>
 				@else
 				<option selected default disabled>-- select one --</option>
 				@endif
@@ -21,8 +21,8 @@
 			<label class="mr-2" for="employee_name">Select Work Shift</label>
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="workshift_id" required>
-				@if(isset($workshift_rel))
-				<option selected value="{{$workshift_assignment->workshift_id}}">{{$workshift_rel->workshift_name}}</option>
+				@if(isset($workshift_assignment->workshift->id))
+				<option selected value="{{$workshift_assignment->workshift->id}}">{{$workshift_assignment->workshift->workshift_name}}</option>
 				@else
 				<option selected default disabled>-- select one --</option>
 				@endif

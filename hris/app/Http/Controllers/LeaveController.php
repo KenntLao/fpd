@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\hris_leaves;
 
 class LeaveController extends Controller
 {
     public function index()
     {
-
+        $leaves = hris_leaves::paginate(10);
+        return view('pages.leaveManagement.leaves.index', compact('leaves'));
     }
 
     public function create()

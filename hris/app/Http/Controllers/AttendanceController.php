@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\hris_attendances;
+use Carbon\Traits\Timestamp;
 
 class AttendanceController extends Controller
 {
@@ -29,7 +30,7 @@ class AttendanceController extends Controller
             
             $attendance->employee_id = $employee_id;
             $attendance->time_in_photo = $file_name;
-            $attendance->time_in = time();
+            $attendance->time_in = date('Y-m-d H:i:s');
             $attendance->status = 1;
 
             $attendance->save();
@@ -42,7 +43,7 @@ class AttendanceController extends Controller
     }
 
     public function punchout(Request $request, hris_attendances $attendance){
-        $attendance->time_out = time();
+        $attendance->time_out = date('Y-m-d H:i:s');
         $attendance->status = $request->status;
         $attendance->update();
         return redirect('/hris/pages/time/attendances/index')->with('success', 'Punch out successful!');

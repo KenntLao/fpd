@@ -247,7 +247,6 @@ class EmployeeController extends Controller
             $output .= '<option value="' . $supervisor->id . '">' . $supervisor->firstname . ' '. $supervisor->lastname .'</option>';
         }
         echo $output;
-
     }
     protected function validatedData()
     {

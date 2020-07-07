@@ -44,12 +44,8 @@
                     @foreach($workshift_assignment as $assignment)
 
                     <tr>
-                        @foreach($employee as $emp_data)
-                        <td>{{$emp_data->firstname}} {{$emp_data->lastname}}</td>
-                        @endforeach
-                        @foreach($workshift as $shift)
-                        <td>{{$shift->workshift_name}}</td>
-                        @endforeach
+                        <td>{{$assignment->employee->firstname}} {{$assignment->employee->lastname}}</td>
+                        <td>{{$assignment->workshift->workshift_name}}</td>
                         <td>{{$assignment->date_from}}</td>
                         <td>{{$assignment->date_to}}</td>
                         <td class="td-action">
