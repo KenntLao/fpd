@@ -96,7 +96,7 @@ class EmployeeCertificationController extends Controller
         if ( Hash::check(request('password'), $employee->password) ) {
             $employeeCertification->delete();
             $id = $employeeCertification->id;
-            $this->function->deleteSystemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module,$id);
             return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee education successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

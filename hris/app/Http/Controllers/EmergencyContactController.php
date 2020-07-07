@@ -64,10 +64,25 @@ class EmergencyContactController extends Controller
         $id = $emergency->id;
         if ($this->validatedData()) {
             $string = 'App\hris_emergency_contacts';
-            //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($this->module,$string,$id);
-            $emergency->update($this->validatedData());
-            return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully updated!');
+            $emergency->name = request('name');
+            $emergency->relationship = request('relationship');
+            $emergency->home_phone = request('home_phone');
+            $emergency->work_phone = request('work_phone');
+            $emergency->mobile_phone = request('mobile_phone');
+            // GET CHANGES
+            $changes = $emergency->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $emergency->update();
+            // GET CHANGES
+            $changed = $emergency->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $emergency->wasChanged() ) {
+                return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully updated!');
+            } else {
+                return redirect('/hris/pages/personalInformation/emergencyContacts/index');
+            }
         } else {
             return back()->withErrors($this->validatedData());
         }
