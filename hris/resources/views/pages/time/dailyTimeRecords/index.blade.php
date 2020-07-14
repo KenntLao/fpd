@@ -40,7 +40,7 @@
                         echo '<select name="month" class="monthDropdown form-control">';
                         while (strtotime($start_date) <= strtotime($end_date)) {
                             
-                            echo '<option value="'.date('Ym',strtotime($start_date)).'">'.date("F Y", strtotime($start_date)).'</option>';
+                            echo '<option value="'.date('Ym',strtotime($start_date)).'">'.date("M Y", strtotime($start_date)).'</option>';
                             
                             $start_date = date("Y-m-d", strtotime("+1 month", strtotime($start_date)));
                         }
