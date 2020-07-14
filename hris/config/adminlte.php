@@ -221,253 +221,288 @@ return [
                     'text' => 'Company Structure',
                     'icon' => 'fas fa-fw fa-building',
                     'url' => '/hris/pages/admin/company/index',
-                    'active' => ['/hris/pages/admin/company/create', '/hris/pages/admin/company/index', '/hris/pages/admin/company/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/admin/company/create', '/hris/pages/admin/company/index', '/hris/pages/admin/company/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'company-structure',
                 ],
                 [
                     'text' => 'Job Details Setup',
                     'icon' => 'fas fa-fw fa-columns',
+                    'can' => ['job-title','pay-grade','employment-status'],
                     'submenu' => [
                         [
                             'text' => 'Job Titles',
                             'icon' => 'fas fa-fw fa-columns',
                             'url' => '/hris/pages/admin/jobDetails/jobTitles/index',
-                            'active' => ['/hris/pages/admin/jobDetails/jobTitles/create', '/hris/pages/admin/jobDetails/jobTitles/index', '/hris/pages/admin/jobDetails/jobTitles/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/jobDetails/jobTitles/create', '/hris/pages/admin/jobDetails/jobTitles/index', '/hris/pages/admin/jobDetails/jobTitles/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'job-title',
                         ],
                         [
                             'text' => 'Pay Grades',
                             'icon' => 'fas fa-fw fa-columns',
                             'url' => '/hris/pages/admin/jobDetails/payGrades/index',
-                            'active' => ['/hris/pages/admin/jobDetails/payGrades/create', '/hris/pages/admin/jobDetails/payGrades/index', '/hris/pages/admin/jobDetails/payGrades/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/jobDetails/payGrades/create', '/hris/pages/admin/jobDetails/payGrades/index', '/hris/pages/admin/jobDetails/payGrades/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'pay-grade',
                         ],
                         [
                             'text' => 'Employment Status',
                             'icon' => 'fas fa-fw fa-columns',
                             'url' => '/hris/pages/admin/jobDetails/employmentStatuses/index',
-                            'active' => ['/hris/pages/admin/jobDetails/employmentStatuses/create', '/hris/pages/admin/jobDetails/employmentStatuses/index', '/hris/pages/admin/jobDetails/employmentStatuses/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/jobDetails/employmentStatuses/create', '/hris/pages/admin/jobDetails/employmentStatuses/index', '/hris/pages/admin/jobDetails/employmentStatuses/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employment-status',
                         ],
                     ]
                 ],
                 [
                     'text' => 'Qualifications Setup',
                     'icon' => 'fas fa-fw fa-check-square',
+                    'can' => ['skill','education','certification','language'],
                     'submenu' => [
                         [
                             'text' => 'Skills',
                             'icon' => 'fas fa-fw fa-check-square',
                             'url' => '/hris/pages/admin/qualifications/skills/index',
-                            'active' => ['/hris/pages/admin/qualifications/skills/create', '/hris/pages/admin/qualifications/skills/index', '/hris/pages/admin/qualifications/skills/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/qualifications/skills/create', '/hris/pages/admin/qualifications/skills/index', '/hris/pages/admin/qualifications/skills/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'skill',
                         ],
                         [
                             'text' => 'Education',
                             'icon' => 'fas fa-fw fa-check-square',
                             'url' => '/hris/pages/admin/qualifications/educations/index',
-                            'active' => ['/hris/pages/admin/qualifications/educations/create', '/hris/pages/admin/qualifications/educations/index', '/hris/pages/admin/qualifications/educations/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/qualifications/educations/create', '/hris/pages/admin/qualifications/educations/index', '/hris/pages/admin/qualifications/educations/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'education',
                         ],
                         [
                             'text' => 'Certifications',
                             'icon' => 'fas fa-fw fa-check-square',
                             'url' => '/hris/pages/admin/qualifications/certifications/index',
-                            'active' => ['/hris/pages/admin/qualifications/certifications/create', '/hris/pages/admin/qualifications/certifications/index', '/hris/pages/admin/qualifications/certifications/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/qualifications/certifications/create', '/hris/pages/admin/qualifications/certifications/index', '/hris/pages/admin/qualifications/certifications/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'certification',
                         ],
                         [
                             'text' => 'Languages',
                             'icon' => 'fas fa-fw fa-check-square',
                             'url' => '/hris/pages/admin/qualifications/languages/index',
-                            'active' => ['/hris/pages/admin/qualifications/languages/create', '/hris/pages/admin/qualifications/languages/index', '/hris/pages/admin/qualifications/languages/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/qualifications/languages/create', '/hris/pages/admin/qualifications/languages/index', '/hris/pages/admin/qualifications/languages/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'language',
                         ]
                     ]
                 ],
                 [
                     'text' => 'Training Setup',
                     'icon' => 'fas fa-fw fa-briefcase',
+                    'can' => ['course','training-session','employee-training-session'],
                     'submenu' => [
                         [
                             'text' => 'Courses',
                             'icon' => 'fas fa-fw fa-briefcase',
                             'url' => '/hris/pages/admin/training/courses/index',
-                            'active' => ['/hris/pages/admin/training/courses/create', '/hris/pages/admin/training/courses/index', '/hris/pages/admin/training/courses/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/training/courses/create', '/hris/pages/admin/training/courses/index', '/hris/pages/admin/training/courses/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'course',
                         ],
                         [
                             'text' => 'Training Sessions',
                             'icon' => 'fas fa-fw fa-briefcase',
                             'url' => '/hris/pages/admin/training/trainingSessions/index',
-                            'active' => ['/hris/pages/admin/training/trainingSessions/create', '/hris/pages/admin/training/trainingSessions/index', '/hris/pages/admin/training/trainingSessions/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/training/trainingSessions/create', '/hris/pages/admin/training/trainingSessions/index', '/hris/pages/admin/training/trainingSessions/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'training-session',
                         ],
                         [
                             'text' => 'Employee Training Sessions',
                             'icon' => 'fas fa-fw fa-briefcase',
                             'url' => '/hris/pages/admin/training/employeeTrainingSessions/index',
-                            'active' => ['/hris/pages/admin/training/employeeTrainingSessions/create', '/hris/pages/admin/training/employeeTrainingSessions/index', '/hris/pages/admin/training/employeeTrainingSessions/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/training/employeeTrainingSessions/create', '/hris/pages/admin/training/employeeTrainingSessions/index', '/hris/pages/admin/training/employeeTrainingSessions/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-training-session',
                         ]
                     ]
                 ],
                 [
                     'text' => 'Properties Setup',
                     'icon' => 'fas fa-fw fa-list-alt',
+                    'can' => ['client','project','employee-project'],
                     'submenu' => [
                         [
                             'text' => 'Clients',
                             'icon' => 'fas fa-fw fa-list-alt',
                             'url' => '/hris/pages/admin/properties/clients/index',
-                            'active' => ['/hris/pages/admin/properties/clients/create', '/hris/pages/admin/properties/clients/index', '/hris/pages/admin/properties/clients/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/properties/clients/create', '/hris/pages/admin/properties/clients/index', '/hris/pages/admin/properties/clients/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'client',
                         ],
                         [
                             'text' => 'Projects',
                             'icon' => 'fas fa-fw fa-list-alt',
                             'url' => '/hris/pages/admin/properties/projects/index',
-                            'active' => ['/hris/pages/admin/properties/projects/create', '/hris/pages/admin/properties/projects/index', '/hris/pages/admin/training/properties/projects/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/properties/projects/create', '/hris/pages/admin/properties/projects/index', '/hris/pages/admin/training/properties/projects/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'project',
                         ],
                         [
                             'text' => 'Employee Projects',
                             'icon' => 'fas fa-fw fa-list-alt',
                             'url' => '/hris/pages/admin/properties/employeeProjects/index',
-                            'active' => ['/hris/pages/admin/properties/employeeProjects/create', '/hris/pages/admin/properties/employeeProjects/index', '/hris/pages/admin/properties/employeeProjects/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/properties/employeeProjects/create', '/hris/pages/admin/properties/employeeProjects/index', '/hris/pages/admin/properties/employeeProjects/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-project',
                         ]
                     ]
                 ],
                 [
                     'text' => 'Leave Settings',
                     'icon' => 'fas fa-fw fa-pause',
+                    'can' => ['leave-type','leave-period','work-week','holiday','leave-rule','paid-time-off','leave-group','leave-group-employee','employee-leave-list'],
                     'submenu' => [
                         [
                             'text' => 'Leave Types',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/leaveTypes/index',
-                            'active' => ['/hris/pages/admin/leave/leaveTypes/create', '/hris/pages/admin/leave/leaveTypes/index', '/hris/pages/admin/leave/leaveTypes/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/leaveTypes/create', '/hris/pages/admin/leave/leaveTypes/index', '/hris/pages/admin/leave/leaveTypes/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'leave-type',
                         ],
                         [
                             'text' => 'Leave Period',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/leavePeriods/index',
-                            'active' => ['/hris/pages/admin/leave/leavePeriods/create', '/hris/pages/admin/leave/leavePeriods/index', '/hris/pages/admin/leave/leavePeriods/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/leavePeriods/create', '/hris/pages/admin/leave/leavePeriods/index', '/hris/pages/admin/leave/leavePeriods/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'leave-period',
                         ],
                         [
                             'text' => 'Work Week',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/workWeeks/index',
-                            'active' => ['/hris/pages/admin/leave/workWeeks/create', '/hris/pages/admin/leave/workWeeks/index', '/hris/pages/admin/leave/workWeeks/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/workWeeks/create', '/hris/pages/admin/leave/workWeeks/index', '/hris/pages/admin/leave/workWeeks/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'work-week',
                         ],
                         [
                             'text' => 'Holidays',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/holidays/index',
-                            'active' => ['/hris/pages/admin/leave/holidays/create', '/hris/pages/admin/leave/holidays/index', '/hris/pages/admin/leave/holidays/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/holidays/create', '/hris/pages/admin/leave/holidays/index', '/hris/pages/admin/leave/holidays/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'holiday',
                         ],
                         [
                             'text' => 'Leave Rules',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/leaveRules/index',
-                            'active' => ['/hris/pages/admin/leave/leaveRules/create', '/hris/pages/admin/leave/leaveRules/index', '/hris/pages/admin/leave/leaveRules/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/leaveRules/create', '/hris/pages/admin/leave/leaveRules/index', '/hris/pages/admin/leave/leaveRules/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'leave-rule',
                         ],
                         [
                             'text' => 'Paid Time Off',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/paidTimeOffs/index',
-                            'active' => ['/hris/pages/admin/leave/paidTimeOffs/create', '/hris/pages/admin/leave/paidTimeOffs/index', '/hris/pages/admin/leave/paidTimeOffs/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/paidTimeOffs/create', '/hris/pages/admin/leave/paidTimeOffs/index', '/hris/pages/admin/leave/paidTimeOffs/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'paid-time-off',
                         ],
                         [
                             'text' => 'Leave Groups',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/leaveGroups/index',
-                            'active' => ['/hris/pages/admin/leave/leaveGroups/create', '/hris/pages/admin/leave/leaveGroups/index', '/hris/pages/admin/leave/leaveGroups/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/leaveGroups/create', '/hris/pages/admin/leave/leaveGroups/index', '/hris/pages/admin/leave/leaveGroups/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'leave-group',
                         ],
                         [
                             'text' => 'Leave Group Employee',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/leaveGroupEmployees/index',
-                            'active' => ['/hris/pages/admin/leave/leaveGroupEmployees/create', '/hris/pages/admin/leave/leaveGroupEmployees/index', '/hris/pages/admin/leave/leaveGroupEmployees/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/leaveGroupEmployees/create', '/hris/pages/admin/leave/leaveGroupEmployees/index', '/hris/pages/admin/leave/leaveGroupEmployees/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'leave-group-employee',
                         ],
                         [
                             'text' => 'Employee Leave List',
                             'icon' => 'fas fa-fw fa-pause',
                             'url' => '/hris/pages/admin/leave/employeeLeaveList/index',
-                            'active' => ['/hris/pages/admin/leave/employeeLeaveList/create', '/hris/pages/admin/leave/employeeLeaveList/index', '/hris/pages/admin/leave/employeeLeaveList/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/leave/employeeLeaveList/create', '/hris/pages/admin/leave/employeeLeaveList/index', '/hris/pages/admin/leave/employeeLeaveList/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-leave-list',
                         ]
                     ]
                 ],
                 [
                     'text' => 'Benefits Administration',
                     'icon' => 'fas fa-fw fa-bars',
+                    'can' => ['expense-category','payment-method','employee-expense'],
                     'submenu' => [
                         [
                             'text' => 'Expenses Categories',
                             'icon' => 'fas fa-fw fa-bars',
                             'url' => '/hris/pages/admin/benefits/expensesCategories/index',
-                            'active' => ['/hris/pages/admin/benefits/expensesCategories/create', '/hris/pages/admin/benefits/expensesCategories/index', '/hris/pages/admin/benefits/expensesCategories/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/benefits/expensesCategories/create', '/hris/pages/admin/benefits/expensesCategories/index', '/hris/pages/admin/benefits/expensesCategories/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'expense-category',
                         ],
                         [
                             'text' => 'Payment Methods',
                             'icon' => 'fas fa-fw fa-bars',
                             'url' => '/hris/pages/admin/benefits/paymentMethods/index',
-                            'active' => ['/hris/pages/admin/benefits/paymentMethods/create', '/hris/pages/admin/benefits/paymentMethods/index', '/hris/pages/admin/benefits/paymentMethods/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/benefits/paymentMethods/create', '/hris/pages/admin/benefits/paymentMethods/index', '/hris/pages/admin/benefits/paymentMethods/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'payment-method',
                         ],
                         [
                             'text' => 'Employee Expenses',
                             'icon' => 'fas fa-fw fa-bars',
                             'url' => '/hris/pages/admin/benefits/employeeExpenses/index',
-                            'active' => ['/hris/pages/admin/benefits/employeeExpenses/create', '/hris/pages/admin/benefits/employeeExpenses/index', '/hris/pages/admin/benefits/employeeExpenses/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/benefits/employeeExpenses/create', '/hris/pages/admin/benefits/employeeExpenses/index', '/hris/pages/admin/benefits/employeeExpenses/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-expense',
                         ]
                     ]
                 ],
                 [
                     'text' => 'Overtime Administration',
                     'icon' => 'fas fa-fw fa-align-center',
+                    'can' => 'overtime-category',
                     'submenu' => [
                         [
                             'text' => 'Categories',
                             'icon' => 'fas fa-fw fa-align-center',
                             'url' => '/hris/pages/admin/overtime/overtimeCategories/index',
-                            'active' => ['/hris/pages/admin/overtime/overtimeCategories/create', '/hris/pages/admin/overtime/overtimeCategories/index', '/hris/pages/admin/overtime/overtimeCategories/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/overtime/overtimeCategories/create', '/hris/pages/admin/overtime/overtimeCategories/index', '/hris/pages/admin/overtime/overtimeCategories/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'overtime-category',
                         ]
                     ]
                 ],
                 [
                     'text' => 'Company Loans',
                     'icon' => 'fas fa-fw fa-money-check',
+                    'can' => ['loan-type','employee-loan'],
                     'submenu' => [
                         [
                             'text' => 'Loan Types',
                             'icon' => 'fas fa-fw fa-money-check',
                             'url' => '/hris/pages/admin/loans/loanTypes/index',
-                            'active' => ['/hris/pages/admin/loans/loanTypes/create', '/hris/pages/admin/loans/loanTypes/index', '/hris/pages/admin/loans/loanTypes/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/loans/loanTypes/create', '/hris/pages/admin/loans/loanTypes/index', '/hris/pages/admin/loans/loanTypes/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'loan-type',
                         ],
                         [
                             'text' => 'Employee Loans',
                             'icon' => 'fas fa-fw fa-money-check',
                             'url' => '/hris/pages/admin/loans/employeeLoans/index',
-                            'active' => ['/hris/pages/admin/loans/employeeLoans/create', '/hris/pages/admin/loans/employeeLoans/index', '/hris/pages/admin/loans/employeeLoans/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/loans/employeeLoans/create', '/hris/pages/admin/loans/employeeLoans/index', '/hris/pages/admin/loans/employeeLoans/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-loan',
                         ],
                     ]
                 ],
                 [
                     'text' => 'Company Assets',
                     'icon' => 'fas fa-fw fa-archive',
+                    'can' => ['company-asset-type','company-asset'],
                     'submenu' => [
                         [
                             'text' => 'Asset Types',
                             'icon' => 'fas fa-fw fa-archive',
                             'url' => '/hris/pages/admin/companyAssets/types/index',
-                            'active' => ['/hris/pages/admin/companyAssets/types/create', '/hris/pages/admin/companyAssets/types/index', '/hris/pages/admin/companyAssets/types/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/companyAssets/types/create', '/hris/pages/admin/companyAssets/types/index', '/hris/pages/admin/companyAssets/types/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'company-asset-type',
                         ],
                         [
                             'text' => 'Assets',
                             'icon' => 'fas fa-fw fa-archive',
                             'url' => '/hris/pages/admin/companyAssets/assets/index',
-                            'active' => ['/hris/pages/admin/companyAssets/assets/create', '/hris/pages/admin/companyAssets/assets/index', '/hris/pages/admin/companyAssets/assets/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/admin/companyAssets/assets/create', '/hris/pages/admin/companyAssets/assets/index', '/hris/pages/admin/companyAssets/assets/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'company-asset',
                         ],
                     ]
                 ],
                 [
                     'text' => 'Audit Log',
                     'icon' => 'fas fa-fw fa-compass',
-                    'url' => '/hris/pages/admin/auditLog/index'
-                ],
-                [
-                    'text' => 'Departments',
-                    'icon' => 'fas fa-fw fa-building',
-                    'url' => '/hris/pages/admin/department/index',
-                    'active' => ['/hris/pages/admin/department/create', '/hris/pages/admin/department/index', '/hris/pages/admin/department/*/edit', 'regex:@^content/[0-9]+$@'],
-                ],
+                    'url' => '/hris/pages/admin/auditLog/index',
+                    'can' => 'audit-log',
+                ]
             ]
         ],
         [
@@ -496,25 +531,29 @@ return [
                             'text' => 'Skills',
                             'icon' => 'fas fa-fw fa-graduation-cap',
                             'url' => '/hris/pages/personalInformation/skills/index',
-                            'active' => ['/hris/pages/personalInformation/skills/create', '/hris/pages/personalInformation/skills/index', '/hris/pages/personalInformation/skills/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/personalInformation/skills/create', '/hris/pages/personalInformation/skills/index', '/hris/pages/personalInformation/skills/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-skill',
                         ],
                         [
                             'text' => 'Education',
                             'icon' => 'fas fa-fw fa-graduation-cap',
                             'url' => '/hris/pages/personalInformation/educations/index',
-                            'active' => ['/hris/pages/personalInformation/educations/create', '/hris/pages/personalInformation/educations/index', '/hris/pages/personalInformation/educations/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/personalInformation/educations/create', '/hris/pages/personalInformation/educations/index', '/hris/pages/personalInformation/educations/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-education',
                         ],
                         [
                             'text' => 'Certifications',
                             'icon' => 'fas fa-fw fa-graduation-cap',
                             'url' => '/hris/pages/personalInformation/certifications/index',
-                            'active' => ['/hris/pages/personalInformation/certifications/create', '/hris/pages/personalInformation/certifications/index', '/hris/pages/personalInformation/certifications/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/personalInformation/certifications/create', '/hris/pages/personalInformation/certifications/index', '/hris/pages/personalInformation/certifications/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-certification',
                         ],
                         [
                             'text' => 'Languages',
                             'icon' => 'fas fa-fw fa-graduation-cap',
                             'url' => '/hris/pages/personalInformation/languages/index',
-                            'active' => ['/hris/pages/personalInformation/languages/create', '/hris/pages/personalInformation/languages/index', '/hris/pages/personalInformation/languages/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/personalInformation/languages/create', '/hris/pages/personalInformation/languages/index', '/hris/pages/personalInformation/languages/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employee-language',
                         ],
                     ]
                 ],
@@ -522,13 +561,15 @@ return [
                     'text' => 'Dependents',
                     'icon' => 'fas fa-fw fa-expand',
                     'url' => '/hris/pages/personalInformation/dependents/index',
-                    'active' => ['/hris/pages/personalInformation/dependents/create', '/hris/pages/personalInformation/dependents/index', '/hris/pages/personalInformation/dependents/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/personalInformation/dependents/create', '/hris/pages/personalInformation/dependents/index', '/hris/pages/personalInformation/dependents/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'employee-dependent',
                 ],
                 [
                     'text' => 'Emergency Contacts',
                     'icon' => 'fas fa-fw fa-phone-square',
                     'url' => '/hris/pages/personalInformation/emergencyContacts/index',
-                    'active' => ['/hris/pages/personalInformation/emergencyContacts/create', '/hris/pages/personalInformation/emergencyContacts/index', '/hris/pages/personalInformation/emergencyContacts/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/personalInformation/emergencyContacts/create', '/hris/pages/personalInformation/emergencyContacts/index', '/hris/pages/personalInformation/emergencyContacts/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'emergency-contact',
                 ],
             ]
         ],
@@ -552,7 +593,6 @@ return [
                     'text' => 'Employee History',
                     'url'  => '/hris/pages/employee/employee_history/',
                     'icon'    => 'fas fa-fw fa-history',
-                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
                 [
                     'text' => 'HR Form',
@@ -565,7 +605,7 @@ return [
                     'url'  => '/hris/pages/employees/iteneraryRequests/index',
                     'icon'    => 'fas fa-fw fa-plane-departure',
                     'active' => ['/hris/pages/employees/iteneraryRequests/create', '/hris/pages/employees/iteneraryRequests/index', '/hris/pages/employees/iteneraryRequests/*/edit', 'regex:@^content/[0-9]+$@'],
-                    'can' => 'employees'
+                    'can' => 'itenerary-request'
                 ],
                 [
                     'text' => 'Monitor Attendance',
@@ -589,21 +629,21 @@ return [
                             'url'  => '/hris/pages/employees/documents/companyDocuments/index',
                             'icon'    => 'fas fa-fw fa-file',
                             'active' => ['/hris/pages/employees/documents/companyDocuments/create', '/hris/pages/employees/documents/companyDocuments/index', '/hris/pages/employees/documents/companyDocuments/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => ['employee-add', 'employee-edit', 'employee-delete']
+                            'can' => 'company-document'
                         ],
                         [
                             'text' => 'Document Types',
                             'url'  => '/hris/pages/employees/documents/types/index',
                             'icon'    => 'fas fa-fw fa-file',
                             'active' => ['/hris/pages/employees/documents/types/create', '/hris/pages/employees/documents/types/index', '/hris/pages/employees/documents/types/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => ['employee-add', 'employee-edit', 'employee-delete']
+                            'can' => 'document-type'
                         ],
                         [
                             'text' => 'Employee Documents',
                             'url'  => '/hris/pages/employees/documents/employeeDocuments/index',
                             'icon'    => 'fas fa-fw fa-file',
                             'active' => ['/hris/pages/employees/documents/employeeDocuments/create', '/hris/pages/employees/documents/employeeDocuments/index', '/hris/pages/employees/documents/employeeDocuments/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => ['employee-add', 'employee-edit', 'employee-delete']
+                            'can' => 'employee-document'
                         ],
                     ]
                 ],
@@ -611,38 +651,45 @@ return [
         ],
         [
             'header' => 'TIME MANAGEMENT',
+            'can' => ['daily-time-records','workshift-management','workshift-assignment','attendance','overtime'],
         ],
         [
             'text' => 'Time Management',
             'icon' => 'fas fa-fw fa-hourglass-half',
+            'can' => ['daily-time-records','workshift-management','workshift-assignment','attendance','overtime'],
             'url' => '#',
             'submenu' => [
                 [
                     'text' => 'Daily Time Records',
                     'url' => '/hris/pages/time/dailyTimeRecords/index',
-                    'icon' => 'fas fa-fw fa-history'
+                    'icon' => 'fas fa-fw fa-history',
+                    'can' => 'daily-time-records'
                 ],
                 [
                     'text' => 'Work Shift Management',
                     'url' => '/hris/pages/time/workshiftManagement/index',
                     'icon' => 'fas fa-fw fa-clock',
-                    'active' => ['/hris/pages/time/workshiftManagement/create', '/hris/pages/time/workshiftManagement/index', '/hris/pages/time/workshiftManagement/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/time/workshiftManagement/create', '/hris/pages/time/workshiftManagement/index', '/hris/pages/time/workshiftManagement/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'workshift-management'
                 ],
                 [
                     'text' => 'Work Shift Assignment',
                     'url' => '/hris/pages/time/workshiftAssignment/index',
                     'icon' => 'fas fa-fw fa-tasks',
-                    'active' => ['/hris/pages/time/workshiftAssignment/create', '/hris/pages/time/workshiftAssignment/index', '/hris/pages/time/workshiftAssignment/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/time/workshiftAssignment/create', '/hris/pages/time/workshiftAssignment/index', '/hris/pages/time/workshiftAssignment/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'workshift-assignment'
                 ],
                 [
                     'text' => 'Attendance',
                     'url' => '/hris/pages/time/attendances/index',
-                    'icon' => 'fas fa-fw fa-calendar-check'
+                    'icon' => 'fas fa-fw fa-calendar-check',
+                    'can' => 'attendance'
                 ],
                 [
                     'text' => 'Overtime',
                     'url' => '/hris/pages/time/overtime/index',
-                    'icon' => 'fas fa-fw fa-clock'
+                    'icon' => 'fas fa-fw fa-clock',
+                    'can' => 'overtime'
                 ]
             ]
         ],
@@ -677,41 +724,48 @@ return [
         [
             'text'    => 'Recruitment',
             'icon' => 'fas fa-fw fa-th',
+            'can' => ['benefit','education-level','employment-type','experience-level','job-function','candidate','job-position'],
             'submenu' => [
                 [
                     'text'    => 'Recruitment Setup',
                     'url'     => '#',
                     'icon'    => 'fas fa-fw fa-random',
+                    'can' => ['benefit','education-level','employment-type','experience-level','job-function'],
                     'submenu' => [
                         [
                             'text'    => 'Benefits',
                             'url'     => '/hris/pages/recruitment/recruitmentSetup/benefits/index',
                             'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/benefits/create', '/hris/pages/recruitment/recruitmentSetup/benefits/index', '/hris/pages/recruitment/recruitmentSetup/benefits/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/benefits/create', '/hris/pages/recruitment/recruitmentSetup/benefits/index', '/hris/pages/recruitment/recruitmentSetup/benefits/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'benefit'
                         ],
                         [
                             'text' => 'Education Levels',
                             'url'  => '/hris/pages/recruitment/recruitmentSetup/educationLevels/index',
                             'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/educationLevels/create', '/hris/pages/recruitment/recruitmentSetup/educationLevels/index', '/hris/pages/recruitment/recruitmentSetup/educationLevels/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/educationLevels/create', '/hris/pages/recruitment/recruitmentSetup/educationLevels/index', '/hris/pages/recruitment/recruitmentSetup/educationLevels/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'education-level'
                         ],
                         [
                             'text' => 'Employment Types',
                             'url'  => '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index',
                             'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/employmentTypes/create', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/employmentTypes/create', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/index', '/hris/pages/recruitment/recruitmentSetup/employmentTypes/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'employment-type'
                         ],
                         [
                             'text' => 'Experience Levels',
                             'url'  => '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index',
                             'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/experienceLevels/create', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/experienceLevels/create', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/index', '/hris/pages/recruitment/recruitmentSetup/experienceLevels/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'experience-level'
                         ],
                         [
                             'text' => 'Job Functions',
                             'url'  => '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index',
                             'icon'    => 'fas fa-fw fa-random',
-                            'active' => ['/hris/pages/recruitment/recruitmentSetup/jobFunctions/create', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/*/edit', 'regex:@^content/[0-9]+$@']
+                            'active' => ['/hris/pages/recruitment/recruitmentSetup/jobFunctions/create', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/index', '/hris/pages/recruitment/recruitmentSetup/jobFunctions/*/edit', 'regex:@^content/[0-9]+$@'],
+                            'can' => 'job-function'
                         ],
                     ],
                 ],
@@ -719,13 +773,15 @@ return [
                     'text' => 'Job Positions',
                     'url'  => '/hris/pages/recruitment/jobPositions/index',
                     'icon' => 'fas fa-fw fa-columns',
-                    'active' => ['/hris/pages/recruitment/jobPositions/create', '/hris/pages/recruitment/jobPositions/index', '/hris/pages/recruitment/jobPositions/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/recruitment/jobPositions/create', '/hris/pages/recruitment/jobPositions/index', '/hris/pages/recruitment/jobPositions/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'job-position'
                 ],
                 [
                     'text' => 'Candidates',
                     'url'  => '/hris/pages/recruitment/candidates/index',
                     'icon' => 'fas fa-fw fa-user-friends',
-                    'active' => ['/hris/pages/recruitment/candidates/create', '/hris/pages/recruitment/candidates/index', '/hris/pages/recruitment/candidates/*/edit', 'regex:@^content/[0-9]+$@']
+                    'active' => ['/hris/pages/recruitment/candidates/create', '/hris/pages/recruitment/candidates/index', '/hris/pages/recruitment/candidates/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'candidate'
                 ],
             ],
         ],

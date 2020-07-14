@@ -17,21 +17,47 @@ $(document).ready(function() {
 			picker.container.find(".calendar-table").hide();
 	});
 
-	$('.work_sched, .overtime_date').daterangepicker({
+	$('.work_sched, .overtime_date, .ts_date').daterangepicker({
+		autoUpdateInput: false,
 	    singleDatePicker: true,
 	    showDropdowns: true,
 		minYear: 2020,
 		locale: {
 		    format: 'M-DD-Y'
 		}
-	});
-	$('.travel_date').daterangepicker({
+	}).on('apply.daterangepicker', function (ev, picker) {
+        $(this).val(picker.startDate.format('M-DD-Y'));
+		var parent = $(this).parents('.form-group').parent();
+		if ( parent ) {
+			parent.find('.badge').addClass('badge-success').removeClass('badge-danger');
+		}
+ 	}).on('cancel.daterangepicker', function (ev, picker) {
+        $(this).val('');
+		var parent = $(this).parents('.form-group').parent();
+		if ( parent ) {
+			parent.find('.badge').addClass('badge-danger').removeClass('badge-success');
+		}
+ 	});
+	$('.travel_date, .ts_datetime').daterangepicker({
+		autoUpdateInput: false,
 	    singleDatePicker: true,
     	timePicker: true,
 	    locale: {
 	      	format: 'MM-DD-Y hh:mm A'
 	    }
-	});
+	}).on('apply.daterangepicker', function (ev, picker) {
+        $(this).val(picker.startDate.format('MM-DD-Y hh:mm A'));
+		var parent = $(this).parents('.form-group').parent();
+		if ( parent ) {
+			parent.find('.badge').addClass('badge-success').removeClass('badge-danger');
+		}
+ 	}).on('cancel.daterangepicker', function (ev, picker) {
+        $(this).val('');
+		var parent = $(this).parents('.form-group').parent();
+		if ( parent ) {
+			parent.find('.badge').addClass('badge-danger').removeClass('badge-success');
+		}
+ 	});
 
 	$('.shift_time').hide()
 

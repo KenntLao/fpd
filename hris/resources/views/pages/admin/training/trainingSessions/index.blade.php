@@ -55,7 +55,7 @@
 							<span class="td-error">ERROR</span>
 							@endif
 						</td>
-						<td>{{date("M d, Y - h:i:sa", strtotime($trainingSession->scheduled_time))}}</td>
+						<td>{{date_format(date_create_from_format('m-d-Y h:i A', $trainingSession->scheduled_time), 'M d, Y - h:i A')}}</td>
 						<td>
 							@if($trainingSession->course)
 							{{$trainingSession->course->status}}

@@ -105,7 +105,12 @@ class FunctionController extends Controller
                                 $name = $data;
                             }
                             if ( $data != 'employee' AND $data != 'supervisor' AND $data != 'department' AND $data != 'role') {
-                                if ( $model->$data != $this->old_id[$f] ) {
+                                if ( $model->$data == NULL ) {
+                                    $data_name = '';
+                                } else {
+                                    $data_name = $model->$data->name;
+                                }
+                                if ( $data_name != $this->old_id[$f] ) {
                                     $systemLog = new hris_system_logs();
                                     $systemLog->user = $user;
                                     $systemLog->module = $module;

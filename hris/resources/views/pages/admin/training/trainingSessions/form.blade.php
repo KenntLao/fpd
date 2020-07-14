@@ -41,13 +41,13 @@
 		<div class="form-group">
 			<label class="mr-2" for="scheduled_time">Scheduled Time: </label>
 			<span class="badge badge-danger">Required</span>
-			<input class="form-control required" type="datetime-local" name="scheduled_time" value="{{ old('scheduled_time') ??  date('Y-m-d\TH:i', strtotime($trainingSession->scheduled_time)) }}" required>
+			<input class="ts_datetime required form-control" type="text" value="{{old('scheduled_time') ?? $trainingSession->scheduled_time }}" name="scheduled_time" required>
 		</div>
 	</div>
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="assignment_due_date">Assignment Due Date: </label>
-			<input class="form-control" type="date" value="{{old('assignment_due_date') ?? $trainingSession->assignment_due_date}}" name="assignment_due_date">
+			<input class="ts_date form-control" type="text" name="assignment_due_date" value="{{old('assignment_due_date') ?? $trainingSession->assignment_due_date }}">
 		</div>
 	</div>
 	<div class="col-12 col-md-6 col-xl-3">

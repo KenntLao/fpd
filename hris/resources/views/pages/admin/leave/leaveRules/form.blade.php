@@ -117,21 +117,6 @@
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="department_id">Department: </label>
-			<select class="form-control select2" name="department_id">
-				@if(count($departments) > 0)
-				<option disabled default selected>--select one--</option>
-				@foreach($departments as $department)
-				<option value="{{$department->id}}" {{ $leaveRule->department_id == $department->id  ? 'selected' : '' }}>{{$department->name}}</option>
-				@endforeach
-				@else
-				<option disabled default selected>--select one--</option>
-				@endif
-			</select>
-		</div>
-	</div>
-	<div class="col-12 col-md-6">
-		<div class="form-group">
 			<label class="mr-2" for="leave_period_id">Leave Period: </label>
 			<select class="form-control select2" name="leave_period_id">
 				@if(count($leavePeriods) > 0)
@@ -145,8 +130,6 @@
 			</select>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="default_per_year">Leaves Per Leave Period: </label>
@@ -180,6 +163,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="supervisor_leave_assign">Admin can assign leave to employees: </label>
@@ -213,8 +198,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="employee_can_apply">Employees can apply for this leave type: </label>
@@ -225,6 +208,8 @@
 			</select>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="apply_beyond_current">Employees can apply beyond the current leave balance: </label>
@@ -235,8 +220,6 @@
 			</select>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="leave_accrue">Leave Accrue Enabled: </label>
@@ -247,6 +230,8 @@
 			</select>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="carried_forward">Leave Carried Forward: </label>
@@ -280,8 +265,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="carried_forward_percentage">Percentage of Leave Carried Forward: </label>
@@ -315,6 +298,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="max_carried_forward_amount">Maximum Carried Forward Amount: </label>
@@ -348,8 +333,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="carried_forward_leave_availability">Carried Forward Leave Availability Period: </label>
@@ -394,6 +377,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="proportionate_on_joined_date">Proportionate leaves on Joined Date: </label>
@@ -427,8 +412,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="employee_leave_period">Use Employee Leave Period: </label>

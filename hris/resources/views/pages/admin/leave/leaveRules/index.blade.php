@@ -72,8 +72,8 @@
 						@endif
 					</td>
 					<td>
-						@if($leaveRule->department)
-						{{$leaveRule->department->name}}
+						@if($leaveRule->employee)
+						{{$leaveRule->employee->department->name}}
 						@else
 						None
 						@endif
@@ -102,9 +102,9 @@
 					<td>{{$leaveRule->exp_days}}</td>
 					<td>{{$leaveRule->default_per_year}}</td>
 					<td>
-						<a class="btn btn-success btn-sm" href="/hris/pages/admin/leave/leaveRules/{{$leaveRule->id}}/edit"><i class="fa fa-edit"></i></a>
+						<a class="btn btn-success btn-sm" href="/hris/pages/admin/leave/leaveRules/{{$leaveRule->id}}/edit" style="margin: 2px"><i class="fa fa-edit"></i></a>
 						<!-- Button trigger modal -->
-						<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$leaveRule->id}}" data-name="Leave Rule ID: {{$leaveRule->id}}"><i class="fa fa-trash"></i></button>
+						<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$leaveRule->id}}" data-name="Leave Rule ID: {{$leaveRule->id}}" style="margin: 2px"><i class="fa fa-trash"></i></button>
 					</td>
 				</tr>
 				@endforeach

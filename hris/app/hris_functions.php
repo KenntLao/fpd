@@ -8,6 +8,11 @@ class hris_functions extends Model
 {
     protected $guarded = [];
 
+    public function job_title()
+    {
+        return $this->belongsTo('App\hris_job_titles');
+    }
+
     public function course()
     {
         return $this->belongsTo('App\hris_courses');

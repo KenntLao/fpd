@@ -29,10 +29,15 @@ class PayGradeController extends Controller
     public function store(hris_pay_grades $payGrade, Request $request)
     {
         if ($this->validatedData()) {
-            $payGrade = hris_pay_grades::create($this->validatedData());
-            $id = $payGrade->id;
-            $this->function->addSystemLog($this->module,$id);
-            return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully added!');
+            $count = hris_pay_grades::where('name', request('name'))->get()->count();
+            if ( $count == 1 ) {
+                return redirect('hris/pages/admin/jobDetails/payGrades/index')->withErrors(['Pay grade already exists.']);
+            } else {
+                $payGrade = hris_pay_grades::create($this->validatedData());
+                $payGrade->save();
+                return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully updated!');
+            }
+            
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -52,24 +57,52 @@ class PayGradeController extends Controller
     {
         $id = $payGrade->id;
         if($this->validatedData()) {
-            $string = 'App\hris_pay_grades';
-            $payGrade->name = request('name');
-            $payGrade->currency = request('currency');
-            $payGrade->min_salary = request('min_salary');
-            $payGrade->max_salary = request('max_salary');
-            // GET CHANGES
-            $changes = $payGrade->getDirty();
-            // GET ORIGINAL DATA
-            $this->function->getOldData($this->module,$string,$changes,$id);
-            $payGrade->update();
-            // GET CHANGES
-            $changed = $payGrade->getChanges();
-            // USE UPDATESYSTEMLOG FUNCTION
-            $this->function->updateSystemLog($this->module,$changed,$string,$id);
-            if ( $payGrade->wasChanged() ) {
-                return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully updated!');
+            $check = hris_pay_grades::where('name', request('name'))->first();
+            $count = hris_pay_grades::where('name', request('name'))->get()->count();
+            if ( $count == 1 ) {
+                if ( $check->id == $id ) {
+                    $string = 'App\hris_pay_grades';
+                    $payGrade->name = request('name');
+                    $payGrade->currency = request('currency');
+                    $payGrade->min_salary = request('min_salary');
+                    $payGrade->max_salary = request('max_salary');
+                    // GET CHANGES
+                    $changes = $payGrade->getDirty();
+                    // GET ORIGINAL DATA
+                    $this->function->getOldData($this->module,$string,$changes,$id);
+                    $payGrade->update();
+                    // GET CHANGES
+                    $changed = $payGrade->getChanges();
+                    // USE UPDATESYSTEMLOG FUNCTION
+                    $this->function->updateSystemLog($this->module,$changed,$string,$id);
+                    if ( $payGrade->wasChanged() ) {
+                        return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully updated!');
+                    } else {
+                        return redirect('/hris/pages/admin/jobDetails/payGrades/index');
+                    }
+                } else {
+                    return back()->withErrors(['Pay grade already exists.']);
+                }
             } else {
-                return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully updated!');
+                $string = 'App\hris_pay_grades';
+                $payGrade->name = request('name');
+                $payGrade->currency = request('currency');
+                $payGrade->min_salary = request('min_salary');
+                $payGrade->max_salary = request('max_salary');
+                // GET CHANGES
+                $changes = $payGrade->getDirty();
+                // GET ORIGINAL DATA
+                $this->function->getOldData($this->module,$string,$changes,$id);
+                $payGrade->update();
+                // GET CHANGES
+                $changed = $payGrade->getChanges();
+                // USE UPDATESYSTEMLOG FUNCTION
+                $this->function->updateSystemLog($this->module,$changed,$string,$id);
+                if ( $payGrade->wasChanged() ) {
+                    return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully updated!');
+                } else {
+                    return redirect('/hris/pages/admin/jobDetails/payGrades/index');
+                }
             }
         } else {
             return back()->withErrors($this->validatedData());

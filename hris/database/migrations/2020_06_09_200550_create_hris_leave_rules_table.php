@@ -22,7 +22,6 @@ class CreateHrisLeaveRulesTable extends Migration
             $table->string('employment_status_id')->nullable();
             $table->string('employee_id')->nullable();
             $table->string('exp_days');
-            $table->string('department_id')->nullable();
             $table->string('leave_period_id')->nullable();
             $table->string('default_per_year');
             $table->string('supervisor_assign_leave');

@@ -25,7 +25,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter minimum salary</p>
-				<input class="form-control required" type="text" name="min_salary" value="{{old('min_salary') ?? $payGrade->min_salary}}" required>
+				<input class="form-control required" type="text" name="min_salary" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required maxlength="6" value="{{old('min_salary') ?? $payGrade->min_salary}}">
 			</div>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter maximum salary</p>
-				<input class="form-control required" type="text" name="max_salary" value="{{old('max_salary') ?? $payGrade->max_salary}}" required>
+				<input class="form-control required" type="text" name="max_salary" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required maxlength="6" value="{{old('max_salary') ?? $payGrade->max_salary}}">
 			</div>
 		</div>
 	</div>

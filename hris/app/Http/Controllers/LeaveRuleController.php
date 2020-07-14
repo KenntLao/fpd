@@ -12,7 +12,6 @@ use App\hris_leave_periods;
 use App\hris_job_titles;
 use App\hris_employment_statuses;
 use App\hris_employee;
-use App\hris_company_structures;
 
 class LeaveRuleController extends Controller
 {
@@ -37,9 +36,8 @@ class LeaveRuleController extends Controller
         $leaveRules = hris_job_titles::all();
         $employmentStatuses = hris_employment_statuses::all();
         $employees = hris_employee::all();
-        $departments = hris_company_structures::all();
         $jobTitles = hris_job_titles::all();
-        return view('pages.admin.leave.leaveRules.create', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'leaveRules', 'employmentStatuses', 'employees', 'departments', 'jobTitles'));
+        return view('pages.admin.leave.leaveRules.create', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'leaveRules', 'employmentStatuses', 'employees', 'jobTitles'));
     }
 
     public function store(hris_leave_rules $leaveRule, Request $request)
@@ -67,9 +65,8 @@ class LeaveRuleController extends Controller
         $leaveRules = hris_job_titles::all();
         $employmentStatuses = hris_employment_statuses::all();
         $employees = hris_employee::all();
-        $departments = hris_company_structures::all();
         $jobTitles = hris_job_titles::all();
-        return view('pages.admin.leave.leaveRules.edit', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'leaveRules', 'employmentStatuses', 'employees', 'departments', 'jobTitles'));
+        return view('pages.admin.leave.leaveRules.edit', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'leaveRules', 'employmentStatuses', 'employees', 'jobTitles'));
     }
 
     public function update(hris_leave_rules $leaveRule, Request $request)
@@ -83,7 +80,6 @@ class LeaveRuleController extends Controller
             $leaveRule->employment_status_id = request('employment_status_id');
             $leaveRule->employee_id = request('employee_id');
             $leaveRule->exp_days = request('exp_days');
-            $leaveRule->department_id = request('department_id');
             $leaveRule->leave_period_id = request('leave_period_id');
             $leaveRule->default_per_year = request('default_per_year');
             $leaveRule->supervisor_assign_leave = request('supervisor_assign_leave');
@@ -138,7 +134,6 @@ class LeaveRuleController extends Controller
             'employment_status_id' => 'nullable',
             'employee_id' => 'nullable',
             'exp_days' => 'required',
-            'department_id' => 'nullable',
             'leave_period_id' => 'nullable',
             'default_per_year' => 'required',
             'supervisor_assign_leave' => 'required',

@@ -1,7 +1,2129 @@
 <?php
 $permissions_arr = array(
 
-
+	// HRIS ADMINISTRATION MODULE =========================================================================================
+	array(
+		array(
+			'permission_code' => 'admin',
+			'permission_name' => array(
+				'Administration Module',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access administration module.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'company-structure',
+			'permission_name' => array(
+				'Company Structure Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access company structure list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-structure-add',
+			'permission_name' => array(
+				'Create Company Structure',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create company structure.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-structure-edit',
+			'permission_name' => array(
+				'Update Company Structure',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update company structure.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-structure-delete',
+			'permission_name' => array(
+				'Delete Company Structure',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete company structure.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'job-title',
+			'permission_name' => array(
+				'Job Title Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access job title list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-title-add',
+			'permission_name' => array(
+				'Create Job Title',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create job title.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-title-edit',
+			'permission_name' => array(
+				'Update Job Title',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update job title.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-title-delete',
+			'permission_name' => array(
+				'Delete Job Title',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete job title.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'pay-grade',
+			'permission_name' => array(
+				'Pay Grade Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access pay grade list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'pay-grade-add',
+			'permission_name' => array(
+				'Create Pay Grade',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create pay grade.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'pay-grade-edit',
+			'permission_name' => array(
+				'Update Pay Grade',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update pay grade.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'pay-grade-delete',
+			'permission_name' => array(
+				'Delete Pay Grade',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete pay grade.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employment-status',
+			'permission_name' => array(
+				'Employment Status Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employment status list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employment-status-add',
+			'permission_name' => array(
+				'Create Employment Status',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create employment status.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employment-status-edit',
+			'permission_name' => array(
+				'Update Employment Status',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update employment status.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employment-status-delete',
+			'permission_name' => array(
+				'Delete Employment Status',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete employment status.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'skill',
+			'permission_name' => array(
+				'Skill Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access skill list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'skill-add',
+			'permission_name' => array(
+				'Create Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create skill.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'skill-edit',
+			'permission_name' => array(
+				'Update Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update skill.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'skill-delete',
+			'permission_name' => array(
+				'Delete Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete skill.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'education',
+			'permission_name' => array(
+				'Education Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access education list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'education-add',
+			'permission_name' => array(
+				'Create Education',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create education.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'education-edit',
+			'permission_name' => array(
+				'Update Education',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update education.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'education-delete',
+			'permission_name' => array(
+				'Delete Education',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete education.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'certification',
+			'permission_name' => array(
+				'Certification Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access certification list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'certification-add',
+			'permission_name' => array(
+				'Create Certification',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create certification.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'certification-edit',
+			'permission_name' => array(
+				'Update Certification',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update certification.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'certification-delete',
+			'permission_name' => array(
+				'Delete Certification',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete certification.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'language',
+			'permission_name' => array(
+				'Language Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access language list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'language-add',
+			'permission_name' => array(
+				'Create Language',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create language.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'language-edit',
+			'permission_name' => array(
+				'UpdateLanguage',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update language.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'language-delete',
+			'permission_name' => array(
+				'Delete Language',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete language.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'course',
+			'permission_name' => array(
+				'Course Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access course list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'course-add',
+			'permission_name' => array(
+				'Create Course',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create course.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'course-edit',
+			'permission_name' => array(
+				'Update Course',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update course.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'course-delete',
+			'permission_name' => array(
+				'Delete Course',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete course.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'training-session',
+			'permission_name' => array(
+				'Training Session Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access training session list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'training-session-add',
+			'permission_name' => array(
+				'Create Training Session',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create training session.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'training-session-edit',
+			'permission_name' => array(
+				'Update Training Session',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update training session.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'training-session-delete',
+			'permission_name' => array(
+				'Delete Training Session',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete training session.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-training-session',
+			'permission_name' => array(
+				'Employee Training Session Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employee training session list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-training-session-add',
+			'permission_name' => array(
+				'Create Employee Training Session',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create employee training session.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-training-session-edit',
+			'permission_name' => array(
+				'Update Employee Training Session',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update employee training session.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-training-session-delete',
+			'permission_name' => array(
+				'Delete Employee Training Session',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete employee training session.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'client',
+			'permission_name' => array(
+				'Client Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access client list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'client-add',
+			'permission_name' => array(
+				'Create Client',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create client.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'client-edit',
+			'permission_name' => array(
+				'Update Client',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update client.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'client-delete',
+			'permission_name' => array(
+				'Delete Client',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete client.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'project',
+			'permission_name' => array(
+				'Project Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access project list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'project-add',
+			'permission_name' => array(
+				'Create Project',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create project.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'project-edit',
+			'permission_name' => array(
+				'Update Project',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update project.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'project-delete',
+			'permission_name' => array(
+				'Delete Project',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete project.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-project',
+			'permission_name' => array(
+				'Employee Project Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employee project list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-project-add',
+			'permission_name' => array(
+				'Create Employee Project',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create employee project.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-project-edit',
+			'permission_name' => array(
+				'Update Employee Project',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update employee project.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-project-delete',
+			'permission_name' => array(
+				'Delete Employee Project',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete employee project.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'leave-type',
+			'permission_name' => array(
+				'Leave Type Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access leave type list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-type-add',
+			'permission_name' => array(
+				'Create Leave Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create leave type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-type-edit',
+			'permission_name' => array(
+				'Update Leave Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update leave type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-type-delete',
+			'permission_name' => array(
+				'Delete Leave Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete leave type.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'leave-period',
+			'permission_name' => array(
+				'Leave Period Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access leave period list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-period-add',
+			'permission_name' => array(
+				'Create Leave Period',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create leave period.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-period-edit',
+			'permission_name' => array(
+				'Update Leave Period',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update leave period.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-period-delete',
+			'permission_name' => array(
+				'Delete Leave Period',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete leave period.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'work-week',
+			'permission_name' => array(
+				'Work Week Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access work week list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'work-week-add',
+			'permission_name' => array(
+				'Create Work Week',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create work week.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'work-week-edit',
+			'permission_name' => array(
+				'Update Work Week',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update work week.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'work-week-delete',
+			'permission_name' => array(
+				'Delete Work Week',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete work week.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'holiday',
+			'permission_name' => array(
+				'Holiday Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access holiday list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'holiday-add',
+			'permission_name' => array(
+				'Create Holiday',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create holiday.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'holiday-edit',
+			'permission_name' => array(
+				'Update Holiday',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update holiday.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'holiday-delete',
+			'permission_name' => array(
+				'Delete Holiday',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete holiday.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'leave-rule',
+			'permission_name' => array(
+				'Leave Rule Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access leave rule list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-rule-add',
+			'permission_name' => array(
+				'Create Leave Rule',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create leave rule.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-rule-edit',
+			'permission_name' => array(
+				'Update Leave Rule',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update leave rule.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-rule-delete',
+			'permission_name' => array(
+				'Delete Leave Rule',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete leave rule.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'paid-time-off',
+			'permission_name' => array(
+				'Paid Time Off Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access paid time off list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'paid-time-off-add',
+			'permission_name' => array(
+				'Create Paid Time Off',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create paid time off.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'paid-time-off-edit',
+			'permission_name' => array(
+				'Update Paid Time Off',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update paid time off.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'paid-time-off-delete',
+			'permission_name' => array(
+				'Delete Paid Time Off',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete paid time off.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'skill',
+			'permission_name' => array(
+				'Skill Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access skill list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'skill-add',
+			'permission_name' => array(
+				'Create Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create skill.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'skill-edit',
+			'permission_name' => array(
+				'Update Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update skill.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'skill-delete',
+			'permission_name' => array(
+				'Delete Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete skill.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'leave-group',
+			'permission_name' => array(
+				'Leave Group Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access leave group list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-group-add',
+			'permission_name' => array(
+				'Create Leave Group',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create leave group.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-group-edit',
+			'permission_name' => array(
+				'Update Leave Group',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update leave group.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-group-delete',
+			'permission_name' => array(
+				'Delete Leave Group',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete leave group.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'leave-group-employee',
+			'permission_name' => array(
+				'Leave Group Employee Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access leave group employee list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-group-employee-add',
+			'permission_name' => array(
+				'Create Leave Group Employee',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create leave group employee.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-group-employee-edit',
+			'permission_name' => array(
+				'Update Leave Group Employee',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update leave group employee.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'leave-group-employee-delete',
+			'permission_name' => array(
+				'Delete Leave Group Employee',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete leave group employee.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-leave-list',
+			'permission_name' => array(
+				'Employee Leave List Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employee leave list.',
+				''
+			)
+		)
+	),
+	array(
+		array(
+			'permission_code' => 'expense-category',
+			'permission_name' => array(
+				'Expense Category Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access expense category list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'expense-category-add',
+			'permission_name' => array(
+				'Create Expense Category',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create expense category.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'expense-category-edit',
+			'permission_name' => array(
+				'Update Expense Category',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update expense category.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'expense-category-delete',
+			'permission_name' => array(
+				'Delete Expense Category',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete expense category.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'payment-method',
+			'permission_name' => array(
+				'Payment Method Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access payment method list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'payment-method-add',
+			'permission_name' => array(
+				'Create Payment Method',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create payment method.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'payment-method-edit',
+			'permission_name' => array(
+				'Update Payment Method',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update payment method.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'payment-method-delete',
+			'permission_name' => array(
+				'Delete Payment Method',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete payment method.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-expense',
+			'permission_name' => array(
+				'Employee Expense Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employee expense list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-expense-add',
+			'permission_name' => array(
+				'Create Employee Expense',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create employee expense.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-expense-edit',
+			'permission_name' => array(
+				'Update Employee Expense',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update employee expense.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-expense-delete',
+			'permission_name' => array(
+				'Delete Employee Expense',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete employee expense.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'overtime-category',
+			'permission_name' => array(
+				'Overtime Category Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access overtime category list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-category-add',
+			'permission_name' => array(
+				'Create Overtime Category',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create overtime category.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-category-edit',
+			'permission_name' => array(
+				'Update Overtime Category',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update overtime category.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-category-delete',
+			'permission_name' => array(
+				'Delete Overtime Category',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete overtime category.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'loan-type',
+			'permission_name' => array(
+				'Loan Type Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access loan type list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'loan-type-add',
+			'permission_name' => array(
+				'Create Loan Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create loan type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'loan-type-edit',
+			'permission_name' => array(
+				'Update Loan Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update loan type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'loan-type-delete',
+			'permission_name' => array(
+				'Delete Loan Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete loan type.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-loan',
+			'permission_name' => array(
+				'Employee Loan Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employee loan list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-loan-add',
+			'permission_name' => array(
+				'Create Employee Loan',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create employee loan.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-loan-edit',
+			'permission_name' => array(
+				'Update Employee Loan',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update employee loan.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-loan-delete',
+			'permission_name' => array(
+				'Delete Employee Loan',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete employee loan.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'company-asset-type',
+			'permission_name' => array(
+				'Company Asset Type Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access company asset type list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-asset-type-add',
+			'permission_name' => array(
+				'Create Company Asset Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create company asset type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-asset-type-edit',
+			'permission_name' => array(
+				'Update Company Asset Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update company asset type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-asset-type-delete',
+			'permission_name' => array(
+				'Delete Company Asset Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete company asset type.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'company-asset',
+			'permission_name' => array(
+				'Company Asset Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access company asset list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-asset-add',
+			'permission_name' => array(
+				'Create Company Asset',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create company asset.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-asset-edit',
+			'permission_name' => array(
+				'Update Company Asset',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update company asset.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-asset-delete',
+			'permission_name' => array(
+				'Delete Company Asset',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete company asset.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'audit-log',
+			'permission_name' => array(
+				'Audit Logs',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access audit log.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-skill',
+			'permission_name' => array(
+				'Employee Skill Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access own skill list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-skill-add',
+			'permission_name' => array(
+				'Create Employee Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create own skill.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-skill-edit',
+			'permission_name' => array(
+				'Update Employee Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update own skill.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-skill-delete',
+			'permission_name' => array(
+				'Delete Employee Skill',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete own skill.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-education',
+			'permission_name' => array(
+				'Employee Education Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access own education list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-education-add',
+			'permission_name' => array(
+				'Create Employee Education',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create own education.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-education-edit',
+			'permission_name' => array(
+				'Update Employee Education',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update own education.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-education-delete',
+			'permission_name' => array(
+				'Delete Employee Education',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete own education.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-certification',
+			'permission_name' => array(
+				'Employee Certification Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access own certification list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-certification-add',
+			'permission_name' => array(
+				'Create Employee Certification',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create own certification.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-certification-edit',
+			'permission_name' => array(
+				'Update Employee Certification',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update own certification.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-certification-delete',
+			'permission_name' => array(
+				'Delete Employee Certification',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete own certification.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-language',
+			'permission_name' => array(
+				'Employee Language Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access own language list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-language-add',
+			'permission_name' => array(
+				'Create Employee Language',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create own language.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-language-edit',
+			'permission_name' => array(
+				'Update Employee Language',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update own language.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-language-delete',
+			'permission_name' => array(
+				'Delete Employee Language',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete own language.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-dependent',
+			'permission_name' => array(
+				'Employee Dependent Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access own dependent list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-dependent-add',
+			'permission_name' => array(
+				'Create Employee Dependent',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create own dependent.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-dependent-edit',
+			'permission_name' => array(
+				'Update Employee Dependent',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update own dependent.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-dependent-delete',
+			'permission_name' => array(
+				'Delete Employee Dependent',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete own dependent.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'emergency-contact',
+			'permission_name' => array(
+				'Emergency Contact Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access own emergency contact list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'emergency-contact-add',
+			'permission_name' => array(
+				'Create Emergency Contact',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create own emergency contact.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'emergency-contact-edit',
+			'permission_name' => array(
+				'Update Emergency Contact',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update own emergency contact.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'emergency-contact-delete',
+			'permission_name' => array(
+				'Delete Emergency Contact',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete own emergency contact.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'daily-time-records',
+			'permission_name' => array(
+				'Daily Time Records',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access own daily time record list.',
+				''
+			)
+		)
+	),
+	array(
+		array(
+			'permission_code' => 'overtime',
+			'permission_name' => array(
+				'Overtime Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access overtime list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-add',
+			'permission_name' => array(
+				'Create Overtime',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create overtime.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-edit',
+			'permission_name' => array(
+				'Update Overtime',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update overtime.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-delete',
+			'permission_name' => array(
+				'Delete Overtime',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete overtime.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'benefit',
+			'permission_name' => array(
+				'Benefit Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access benefit list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'benefit-add',
+			'permission_name' => array(
+				'Create Benefit',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create benefit.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'benefit-edit',
+			'permission_name' => array(
+				'Update Benefit',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update benefit.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'benefit-delete',
+			'permission_name' => array(
+				'Delete Benefit',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete benefit.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'education-level',
+			'permission_name' => array(
+				'Education Level Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access education level list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'education-level-add',
+			'permission_name' => array(
+				'Create Education Level',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create education level.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'education-level-edit',
+			'permission_name' => array(
+				'Update Education Level',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update education level.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'education-level-delete',
+			'permission_name' => array(
+				'Delete Education Level',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete education level.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employment-type',
+			'permission_name' => array(
+				'Employment Type Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employment type list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employment-type-add',
+			'permission_name' => array(
+				'Create Employment Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create employment type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employment-type-edit',
+			'permission_name' => array(
+				'Update Employment Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update employment type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employment-type-delete',
+			'permission_name' => array(
+				'Delete Employment Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete employment type.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'experience-level',
+			'permission_name' => array(
+				'Experience Level Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access experience level list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'experience-level-add',
+			'permission_name' => array(
+				'Create Experience Level',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create experience level.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'experience-level-edit',
+			'permission_name' => array(
+				'Update Experience Level',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update experience level.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'experience-level-delete',
+			'permission_name' => array(
+				'Delete Experience Level',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete experience level.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'job-function',
+			'permission_name' => array(
+				'Job Function Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access job function list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-function-add',
+			'permission_name' => array(
+				'Create Job Function',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create job function.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-function-edit',
+			'permission_name' => array(
+				'Update Job Function',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update job function.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-function-delete',
+			'permission_name' => array(
+				'Delete Job Function',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete job function.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'job-position',
+			'permission_name' => array(
+				'Job Position Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access job position list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-position-add',
+			'permission_name' => array(
+				'Create Job Position',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create job position.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-position-edit',
+			'permission_name' => array(
+				'Update Job Position',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update job position.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-position-delete',
+			'permission_name' => array(
+				'Delete Job Position',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete job position.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'candidate',
+			'permission_name' => array(
+				'Candidate Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access candidate list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'candidate-add',
+			'permission_name' => array(
+				'Create Candidate',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create candidate.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'candidate-edit',
+			'permission_name' => array(
+				'Update Candidate',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update candidate.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'candidate-delete',
+			'permission_name' => array(
+				'Delete Candidate',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete candidate.',
+				''
+			)
+		),
+	),
 	// HRIS EMPLOYEES ===========================================================================
 	array(
 		array(
@@ -45,6 +2167,190 @@ $permissions_arr = array(
 			),
 			'permission_description' => array(
 				'Allow account to access delete employee.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'itenerary-request',
+			'permission_name' => array(
+				'Itenerary Request Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access itenerary request list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'itenerary-request-add',
+			'permission_name' => array(
+				'Create Itenerary Request',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create itenerary request.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'itenerary-request-edit',
+			'permission_name' => array(
+				'Update Itenerary Request',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update itenerary request.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'itenerary-request-delete',
+			'permission_name' => array(
+				'Delete Itenerary Request',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete itenerary request.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'company-document',
+			'permission_name' => array(
+				'Company Document Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access company document list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-document-add',
+			'permission_name' => array(
+				'Create Company Document',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create company document.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-document-edit',
+			'permission_name' => array(
+				'Update Company Document',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update company document.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'company-document-delete',
+			'permission_name' => array(
+				'Delete Company Document',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete company document.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'document-type',
+			'permission_name' => array(
+				'Document Type Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access document type list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'document-type-add',
+			'permission_name' => array(
+				'Create Document Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create document type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'document-type-edit',
+			'permission_name' => array(
+				'Update Document Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update document type.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'document-type-delete',
+			'permission_name' => array(
+				'Delete Document Type',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete document type.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'employee-document',
+			'permission_name' => array(
+				'Employee Document Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access employee document list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-document-add',
+			'permission_name' => array(
+				'Create Employee Document',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create employee document.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-document-edit',
+			'permission_name' => array(
+				'Update Employee Document',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update employee document.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'employee-document-delete',
+			'permission_name' => array(
+				'Delete Employee Document',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete employee document.',
 				''
 			)
 		),
