@@ -62,45 +62,57 @@
                     $sunday_time_in = $shift->sunday_time_in;
                     $sunday_time_out = $shift->sunday_time_out;
 
-                    if($monday_time_in == '00:00 AM' && $monday_time_out == '00:00 AM' ) {
-                    $monday_time_in = '-';
-                    $monday_time_out = '-';
-                    }
-                    if($tuesday_time_in == '00:00 AM' && $tuesday_time_out == '00:00 AM' ) {
-                    $tuesday_time_in = '-';
-                    $tuesday_time_out = '-';
-                    }
-                    if($wednesday_time_in == '00:00 AM' && $wednesday_time_out == '00:00 AM' ) {
-                    $wednesday_time_in = '-';
-                    $wednesday_time_out = '-';
-                    }
-                    if($thursday_time_in == '00:00 AM' && $thursday_time_out == '00:00 AM' ) {
-                    $thursday_time_in = '-';
-                    $thursday_time_out = '-';
-                    }
-                    if($friday_time_in == '00:00 AM' && $friday_time_out == '00:00 AM' ) {
-                    $friday_time_in = '-';
-                    $friday_time_out = '-';
-                    }
-                    if($saturday_time_in == '00:00 AM' && $saturday_time_out == '00:00 AM' ) {
-                    $saturday_time_in = '-';
-                    $saturday_time_out = '-';
-                    }
-                    if($sunday_time_in == '00:00 AM' && $sunday_time_out == '00:00 AM' ) {
-                    $sunday_time_in = '-';
-                    $sunday_time_out = '-';
-                    }
-
                     @endphp
                     <tr>
                         <td>{{$shift->workshift_name}}</td>
-                        <td>{{date('h:i a', strtotime($monday_time_in))}} - {{date('h:i a', strtotime($monday_time_out))}}</td>
-                        <td>{{date('h:i a', strtotime($tuesday_time_in))}} - {{date('h:i a', strtotime($tuesday_time_out))}}</td>
-                        <td>{{date('h:i a', strtotime($wednesday_time_in))}} - {{date('h:i a', strtotime($wednesday_time_out))}}</td>
-                        <td>{{date('h:i a', strtotime($thursday_time_in))}} - {{date('h:i a', strtotime($thursday_time_out))}}</td>
-                        <td>{{date('h:i a', strtotime($friday_time_in))}} - {{date('h:i a', strtotime($friday_time_out))}}</td>
-                        <td>{{date('h:i a', strtotime($saturday_time_in))}} - {{date('h:i a', strtotime($saturday_time_out))}}</td>
-                        <td>{{date('h:i a', strtotime($sunday_time_in))}} - {{date('h:i a', strtotime($sunday_time_out))}}</td>
+                        <td>
+                            @if($monday_time_in == 0000 && $monday_time_out == 0000 )
+                            -
+                            @else
+                            {{date('h:i a', strtotime($monday_time_in))}} - {{date('h:i a', strtotime($monday_time_out))}}
+                            @endif
+                        </td>
+                        <td>
+                            @if($tuesday_time_in == 0000 && $tuesday_time_out == 0000 )
+                            -
+                            @else
+                            {{date('h:i a', strtotime($tuesday_time_in))}} - {{date('h:i a', strtotime($tuesday_time_out))}}
+                            @endif
+                        </td>
+                        <td>
+                            @if($wednesday_time_in == 0000 && $wednesday_time_out == 0000)
+                            -
+                            @else
+                            {{date('h:i a', strtotime($wednesday_time_in))}} - {{date('h:i a', strtotime($wednesday_time_out))}}
+                            @endif
+                        </td>
+                        <td>
+                            @if($thursday_time_in == 0000 && $thursday_time_out == 0000)
+                            -
+                            @else
+                            {{date('h:i a', strtotime($thursday_time_in))}} - {{date('h:i a', strtotime($thursday_time_out))}}
+                            @endif
+                        </td>
+                        <td>
+                            @if($friday_time_in == 0000 && $friday_time_out == 0000)
+                            -
+                            @else
+                            {{date('h:i a', strtotime($friday_time_in))}} - {{date('h:i a', strtotime($friday_time_out))}}
+                            @endif
+                        </td>
+                        <td>
+                            @if($saturday_time_in == 0000 && $saturday_time_out == 0000)
+                            -
+                            @else
+                            {{date('h:i a', strtotime($saturday_time_in))}} - {{date('h:i a', strtotime($saturday_time_out))}}
+                            @endif
+                        </td>
+                        <td>
+                            @if($sunday_time_in == 0000 && $sunday_time_out == 0000 )
+                            -
+                            @else {{date('h:i a', strtotime($sunday_time_in))}} - {{date('h:i a', strtotime($sunday_time_out))}}
+                            @endif
+                        </td>
                         <td class="td-action">
                             <div class="row no-gutters">
                                 <div class="col-md-6">

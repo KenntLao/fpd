@@ -34,7 +34,7 @@
                     @csrf
                         @php
                         // Start date
-                        $start_date = '2020-7-01';
+                        $start_date = '2020-07-01';
                         // End date
                         $end_date = date('Y-m',strtotime('+2 months'));
                         echo '<select name="month" class="monthDropdown form-control">';

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\hris_workshift_assignment;
 use App\hris_work_shift_management;
 use App\hris_employee;
@@ -67,24 +68,42 @@ class WorkShiftAssignmentController extends Controller
     public function update(Request $request, hris_workshift_assignment $workshift_assignment){
         $id = $workshift_assignment->id;
         if ($this->validatedData()) {
-            $model = $workshift_assignment;
+            $string = 'App\hris_workshift_assignment';
+            $workshift_assignment->employee_id = $request->employee_id;
+            $workshift_assignment->workshift_id = $request->workshift_id;
+            $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
+            $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
+            $workshift_assignment->status = 0;
+            $workshift_assignment->update();
+
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
-            $workshift_assignment->update($this->validatedData());
-            return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
+            // GET CHANGES
+            $changes = $workshift_assignment->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module, $string, $changes, $id);
+            $workshift_assignment->update();
+            // GET CHANGES
+            $changed = $workshift_assignment->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module, $changed, $string, $id);
+            if ($workshift_assignment->wasChanged()) {
+                return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
+            } else {
+                return redirect('/hris/pages/time/workshiftAssignment/index');
+            }
+            
         } else {
             return back()->withErrors($this->validatedData());
         }
     }
     public function destroy(hris_workshift_assignment $workshift_assignment)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ($upass == request('upass')) {
+        $employee = hris_employee::find($id);
+        if (Hash::check(request('upass'), $employee->password)) {
             $workshift_assignment->delete();
             $id = $workshift_assignment->id;
-            //$this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module, $id);
             return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);
