@@ -27,7 +27,29 @@
             <div class="card-header">
                 <h3 class="card-title">Month</h3>
             </div>
-            <div class="card-body"></div>
+            <div class="card-body">
+                <div class="renderMonth">
+                    
+                    <form>
+                    @csrf
+                        @php
+                        // Start date
+                        $start_date = '2020-7-01';
+                        // End date
+                        $end_date = date('Y-m',strtotime('+2 months'));
+                        echo '<select name="month" class="monthDropdown form-control">';
+                        while (strtotime($start_date) <= strtotime($end_date)) {
+                            
+                            echo '<option value="'.date('Ym',strtotime($start_date)).'">'.date("F Y", strtotime($start_date)).'</option>';
+                            
+                            $start_date = date("Y-m-d", strtotime("+1 month", strtotime($start_date)));
+                        }
+                        echo '</select>';
+                        @endphp
+                         
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-10">
@@ -35,7 +57,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Hours:</h3>
+                        <h3 class="card-title">Hours: </h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -60,19 +82,9 @@
                                         <th>Days</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
 
-                                        </td>
-                                        <td>lorem ipsum</td>
-                                        <td>actions here</td>
-                                        <td>lorem ipsum</td>
-                                        <td>actions here</td>
-                                        <td>lorem ipsum</td>
-                                    </tr>
+                                <tbody id="dtr-table">
+
                                 </tbody>
                             </table>
                         </div>
@@ -89,6 +101,42 @@
 @stop
 @section('js')
 <script>
+    $(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{route('getDtr.fetch')}}",
+            method: "GET",
+            success: function(response) {
+                $('#dtr-table').html(response);
+            }
+        });
 
+    });
+
+    $('.monthDropdown').on('change', function() {
+
+        var monthValue = $(this).val();
+        var _token = $('input[name="_token"]').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ route('getMonth.fetch')}}",
+            method: "POST",
+            data: {
+                _token: _token,
+                monthValue: monthValue,
+            },
+            success: function(response) {
+                $('#dtr-table').html(response);
+            }
+        });
+    });
 </script>
 @stop

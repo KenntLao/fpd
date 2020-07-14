@@ -5,19 +5,37 @@ $(document).ready(function() {
 		placeholder: "Select Roles",
 	});
 
-	$('.workshift_time, .overtime_time').daterangepicker({
+	$('.overtime_time').daterangepicker({
 		timePicker: true,
 		singleDatePicker: true,
 		timePicker24Hour: true,
 		timePickerIncrement: 1,
 		locale: {
-			format: 'HH:mm'
+			format: 'HH:mm A'
 		}
 		}).on('show.daterangepicker', function (ev, picker) {
 			picker.container.find(".calendar-table").hide();
 	});
-
-	$('.work_sched, .overtime_date').daterangepicker({
+	$('.workshift_time').daterangepicker({
+	    timePicker: true,
+	    singleDatePicker: true,
+	    timePicker24Hour: true,
+	    timePickerIncrement: 1,
+	    locale: {
+	        format: 'HH:mm'
+	    }
+	}).on('show.daterangepicker', function (ev, picker) {
+	    picker.container.find(".calendar-table").hide();
+	});
+	$('.work_sched').daterangepicker({
+		singleDatePicker: true,
+		showDropdowns: true,
+		minYear: 2020,
+		locale: {
+			format: 'Y-M-D'
+		}
+	});
+	$('.overtime_date').daterangepicker({
 	    singleDatePicker: true,
 	    showDropdowns: true,
 		minYear: 2020,

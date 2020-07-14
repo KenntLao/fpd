@@ -72,30 +72,30 @@ class WorkShiftManagementController extends Controller
 
             $work_shift->workshift_name = request('workshift_name');
             $work_shift->monday_shift = $monday_shift;
-            $work_shift->monday_time_in = strtotime(request('monday_time_in'));
-            $work_shift->monday_time_out = strtotime(request('monday_time_out'));
+            $work_shift->monday_time_in = str_replace(":","",request('monday_time_in'));
+            $work_shift->monday_time_out = str_replace(":", "", request('monday_time_out'));
             $work_shift->tuesday_shift = $tuesday_shift;
-            $work_shift->tuesday_time_in = strtotime(request('tuesday_time_in'));
-            $work_shift->tuesday_time_out = strtotime(request('tuesday_time_out'));
+            $work_shift->tuesday_time_in = str_replace(":", "", request('tuesday_time_in'));
+            $work_shift->tuesday_time_out = str_replace(":", "", request('tuesday_time_out'));
             $work_shift->wednesday_shift = $wednesday_shift;
-            $work_shift->wednesday_time_in = strtotime(request('wednesday_time_in'));
-            $work_shift->wednesday_time_out = strtotime(request('wednesday_time_out'));
+            $work_shift->wednesday_time_in = str_replace(":", "", request('wednesday_time_in'));
+            $work_shift->wednesday_time_out = str_replace(":", "", request('wednesday_time_out'));
             $work_shift->thursday_shift = $thursday_shift;
-            $work_shift->thursday_time_in = strtotime(request('thursday_time_in'));
-            $work_shift->thursday_time_out = strtotime(request('thursday_time_out'));
+            $work_shift->thursday_time_in = str_replace(":", "", request('thursday_time_in'));
+            $work_shift->thursday_time_out = str_replace(":", "", request('thursday_time_out'));
             $work_shift->friday_shift = $friday_shift;
-            $work_shift->friday_time_in = strtotime(request('friday_time_in'));
-            $work_shift->friday_time_out = strtotime(request('friday_time_out'));
+            $work_shift->friday_time_in = str_replace(":", "", request('friday_time_in'));
+            $work_shift->friday_time_out = str_replace(":", "", request('friday_time_out'));
             $work_shift->saturday_shift = $saturday_shift;
-            $work_shift->saturday_time_in = strtotime(request('saturday_time_in'));
-            $work_shift->saturday_time_out = strtotime(request('saturday_time_out'));
+            $work_shift->saturday_time_in = str_replace(":", "", request('saturday_time_in'));
+            $work_shift->saturday_time_out = str_replace(":", "", request('saturday_time_out'));
             $work_shift->sunday_shift = $sunday_shift;
-            $work_shift->sunday_time_in = strtotime(request('sunday_time_in'));
-            $work_shift->sunday_time_out = strtotime(request('sunday_time_out'));
+            $work_shift->sunday_time_in = str_replace(":", "", request('sunday_time_in'));
+            $work_shift->sunday_time_out = str_replace(":", "", request('sunday_time_out'));
 
             $work_shift->save();
             $id = $work_shift->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->AddSystemLog($this->module,$action,$id);
             return redirect('/hris/pages/time/workshiftManagement/index')->with('success', 'Work Shift successfully added!');
         } else {
             return back()->withErrors($this->validatedData());
@@ -180,29 +180,29 @@ class WorkShiftManagementController extends Controller
             }
 
             //DO systemLog function FROM SystemLogController
-            $this->function->updateSystemLog($model,$this->module,$id);
+           // $this->function->updateSystemLog($model,$this->module,$id);
             $work_shift->workshift_name = request('workshift_name');
             $work_shift->monday_shift = $monday_shift;
-            $work_shift->monday_time_in = strtotime($monday_time_in);
-            $work_shift->monday_time_out = strtotime($monday_time_out);
+            $work_shift->monday_time_in = str_replace(":", "", $monday_time_in);
+            $work_shift->monday_time_out = str_replace(":", "", $monday_time_out);
             $work_shift->tuesday_shift = $tuesday_shift;
-            $work_shift->tuesday_time_in = strtotime(request('tuesday_time_in'));
-            $work_shift->tuesday_time_out = strtotime(request('tuesday_time_out'));
+            $work_shift->tuesday_time_in = str_replace(":", "", $tuesday_time_in);
+            $work_shift->tuesday_time_out = str_replace(":", "", $tuesday_time_out);
             $work_shift->wednesday_shift = $wednesday_shift;
-            $work_shift->wednesday_time_in = strtotime(request('wednesday_time_in'));
-            $work_shift->wednesday_time_out = strtotime(request('wednesday_time_out'));
+            $work_shift->wednesday_time_in = str_replace(":", "", $wednesday_time_in);
+            $work_shift->wednesday_time_out = str_replace(":", "", $wednesday_time_out);
             $work_shift->thursday_shift = $thursday_shift;
-            $work_shift->thursday_time_in = strtotime(request('thursday_time_in'));
-            $work_shift->thursday_time_out = strtotime(request('thursday_time_out'));
+            $work_shift->thursday_time_in = str_replace(":", "", $thursday_time_in);
+            $work_shift->thursday_time_out = str_replace(":", "", $thursday_time_out);
             $work_shift->friday_shift = $friday_shift;
-            $work_shift->friday_time_in = strtotime(request('friday_time_in'));
-            $work_shift->friday_time_out = strtotime(request('friday_time_out'));
+            $work_shift->friday_time_in = str_replace(":", "", $friday_time_in);
+            $work_shift->friday_time_out = str_replace(":", "", $friday_time_out);
             $work_shift->saturday_shift = $saturday_shift;
-            $work_shift->saturday_time_in = strtotime(request('saturday_time_in'));
-            $work_shift->saturday_time_out = strtotime(request('saturday_time_out'));
+            $work_shift->saturday_time_in = str_replace(":", "", $saturday_time_in);
+            $work_shift->saturday_time_out = str_replace(":", "", $saturday_time_out);
             $work_shift->sunday_shift = $sunday_shift;
-            $work_shift->sunday_time_in = strtotime(request('sunday_time_in'));
-            $work_shift->sunday_time_out = strtotime(request('sunday_time_out'));
+            $work_shift->sunday_time_in = str_replace(":", "", $sunday_time_in);
+            $work_shift->sunday_time_out = str_replace(":", "", $sunday_time_out);
 
             $work_shift->update();
             return redirect('/hris/pages/time/workshiftManagement/index')->with('success', 'Work Shift successfully updated!');
@@ -217,8 +217,8 @@ class WorkShiftManagementController extends Controller
         $upass = $this->function->decryptStr(users::find($id)->upass);
         if ($upass == request('upass')) {
             $work_shift->delete();
-            $id = $benefit->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $id = $work_shift->id;
+            //$this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/time/workshiftManagement/index')->with('success', 'Work Shift successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

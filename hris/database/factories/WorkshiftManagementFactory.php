@@ -6,8 +6,11 @@ use Faker\Generator as Faker;
 use App\hris_work_shift_management;
 
 $factory->define(App\hris_work_shift_management::class, function (Faker $faker) {
-    $time_in = rand(1, time());
-    $time_out = $time_in + 32400;
+    $ti = strtotime(rand(0, 23) . ":" . str_pad(rand(0, 0), 2, "0", STR_PAD_LEFT));
+    $to = $ti + 32400;
+    $time_in = date('hi', $ti);
+    $time_out = date('hi', $to);
+
     return [
         //
         'workshift_name' => $faker->numerify('Workshift ###'),

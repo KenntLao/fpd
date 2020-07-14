@@ -42,12 +42,11 @@
                 </thead>
                 <tbody>
                     @foreach($workshift_assignment as $assignment)
-
                     <tr>
                         <td>{{$assignment->employee->firstname}} {{$assignment->employee->lastname}}</td>
-                        <td>{{$assignment->workshift->workshift_name}}</td>
-                        <td>{{$assignment->date_from}}</td>
-                        <td>{{$assignment->date_to}}</td>
+                        <td>{{!empty($assignment->workshift) ? $assignment->workshift->workshift_name:''}} </td>
+                        <td>{{date('Y-m-d', strtotime($assignment->date_from))}}</td>
+                        <td>{{date('Y-m-d', strtotime($assignment->date_to))}}</td>
                         <td class="td-action">
                             <div class="row no-gutters">
                                 <div class="col-md-6">
