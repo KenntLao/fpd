@@ -170,10 +170,13 @@ class OvertimeController extends Controller
         $roles = roles::all();
         $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
         $supervisor_id = implode(' ', $supervisor_role_id[0]);
-        $employee_supervisor = hris_employee::all()->where('role_id', ','.$supervisor_id.',')->where('department_id', $employee->department_id);
+        $department_employee = hris_employee::all()->where('department_id', $employee->department_id);
         $es_id = array();
-        foreach ($employee_supervisor as $es) {
-            $es_id[] = $es->id;
+        foreach ($department_employee as $de) {
+            $e_rid = explode(',', $de->role_id);
+            if ( in_array($supervisor_id, $e_rid) ) {
+                $es_id[] = $de->id;
+            }
         }
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
             $id = $overtime->id;

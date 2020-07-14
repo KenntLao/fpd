@@ -575,12 +575,12 @@ return [
         ],
         [
             'header' => 'EMPLOYEE MANAGEMENT',
-            'can' => 'employees',
+            'can' => ['employees', 'itenerary-request', 'company-document', 'document-type', 'employee-document'],
         ],
         [
             'text'    => 'Employees',
             'icon'    => 'fas fa-fw fa-users',
-            'can' => 'employees',
+            'can' => ['employees', 'itenerary-request', 'company-document', 'document-type', 'employee-document'],
             'submenu' => [
                 [
                     'text' => 'Employees',
@@ -597,8 +597,7 @@ return [
                 [
                     'text' => 'HR Form',
                     'url'  => '/hris/pages/employee/hr_form/',
-                    'icon'    => 'fas fa-fw fa-folder',
-                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
+                    'icon'    => 'fas fa-fw fa-folder'
                 ],
                 [
                     'text' => 'Itenerary Request',
@@ -610,19 +609,17 @@ return [
                 [
                     'text' => 'Monitor Attendance',
                     'url'  => '/hris/pages/employee/monitor_attendance/',
-                    'icon'    => 'fas fa-fw fa-clock',
-                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
+                    'icon'    => 'fas fa-fw fa-clock'
                 ],
                 [
                     'text' => 'Performance Review',
                     'url'  => '/hris/pages/employee/performance_review/',
-                    'icon'    => 'fas fa-fw fa-chart-bar',
-                    'can' => ['employee-add', 'employee-edit', 'employee-delete']
+                    'icon'    => 'fas fa-fw fa-chart-bar'
                 ],
                 [
                     'text' => 'Document Management',
                     'icon'    => 'fas fa-fw fa-file',
-                    'can' => 'document-management',
+                    'can' => ['company-document', 'document-type', 'employee-document'],
                     'submenu' => [
                         [
                             'text' => 'Company Documents',
