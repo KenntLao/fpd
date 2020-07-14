@@ -32,10 +32,10 @@
 			<label class="mr-2" for="status">Status: </label>
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="status" required>
-				<option value="Active" {{ $project->client == 'Active'  ? 'selected' : '' }}>Active</option>
-				<option value="On Hold" {{ $project->client == 'On Hold'  ? 'selected' : '' }}>On Hold</option>
-				<option value="Completed" {{ $project->client == 'Completed'  ? 'selected' : '' }}>Completed</option>
-				<option value="Dropped" {{ $project->client == 'Dropped'  ? 'selected' : '' }}>Dropped</option>
+				<option value="Active" {{ $project->status == 'Active'  ? 'selected' : '' }}>Active</option>
+				<option value="On Hold" {{ $project->status == 'On Hold'  ? 'selected' : '' }}>On Hold</option>
+				<option value="Completed" {{ $project->status == 'Completed'  ? 'selected' : '' }}>Completed</option>
+				<option value="Dropped" {{ $project->status == 'Dropped'  ? 'selected' : '' }}>Dropped</option>
 			</select>
 		</div>
 	</div>

@@ -71,7 +71,7 @@ class ClientController extends Controller
             // USE UPDATESYSTEMLOG FUNCTION
             $this->function->updateSystemLog($this->module,$changed,$string,$id);
             if ( $client->wasChanged() ) {
-                return redirect('/hris/pages/admin/properties/clients/index')->with('success', $'Client successfully updated!');
+                return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully updated!');
             } else {
                 return redirect('/hris/pages/admin/properties/clients/index');
             }

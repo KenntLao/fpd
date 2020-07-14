@@ -94,7 +94,7 @@
 					</td>
 					<td>
 						@if($leaveRule->employee)
-						{{$leaveRule->employee->name}}
+						{{$leaveRule->employee->firstname}} {{$leaveRule->employee->lastname}}
 						@else
 						None
 						@endif
