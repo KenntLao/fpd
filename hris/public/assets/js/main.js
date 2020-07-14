@@ -17,7 +17,29 @@ $(document).ready(function() {
 			picker.container.find(".calendar-table").hide();
 	});
 
-	$('.work_sched, .overtime_date, .ts_date').daterangepicker({
+	$('.work_sched').daterangepicker({
+	    autoUpdateInput: false,
+	    singleDatePicker: true,
+	    showDropdowns: true,
+	    minYear: 2020,
+	    locale: {
+	        format: 'Y-MM-d'
+	    }
+	}).on('apply.daterangepicker', function (ev, picker) {
+	    $(this).val(picker.startDate.format('Y-MM-DD'));
+	    var parent = $(this).parents('.form-group').parent();
+	    if (parent) {
+	        parent.find('.badge').addClass('badge-success').removeClass('badge-danger');
+	    }
+	}).on('cancel.daterangepicker', function (ev, picker) {
+	    $(this).val('');
+	    var parent = $(this).parents('.form-group').parent();
+	    if (parent) {
+	        parent.find('.badge').addClass('badge-danger').removeClass('badge-success');
+	    }
+	});
+
+	$('.work_sched .overtime_date, .ts_date').daterangepicker({
 		autoUpdateInput: false,
 	    singleDatePicker: true,
 	    showDropdowns: true,
@@ -37,7 +59,8 @@ $(document).ready(function() {
 		if ( parent ) {
 			parent.find('.badge').addClass('badge-danger').removeClass('badge-success');
 		}
- 	});
+	 });
+	 
 	$('.travel_date, .ts_datetime').daterangepicker({
 		autoUpdateInput: false,
 	    singleDatePicker: true,

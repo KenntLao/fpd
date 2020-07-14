@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\hris_work_shift_management;
 use App\users;
+use Illuminate\Support\Facades\Hash;
+use App\hris_employee;
 
 class WorkShiftManagementController extends Controller
 {
@@ -212,13 +214,12 @@ class WorkShiftManagementController extends Controller
     }
     public function destroy(hris_work_shift_management $work_shift)
     {
-        $action = 'delete';
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ($upass == request('upass')) {
+        $employee = hris_employee::find($id);
+        if (Hash::check(request('upass'), $employee->password)) {
             $work_shift->delete();
             $id = $work_shift->id;
-            //$this->function->systemLog($this->module,$action,$id);
+            $this->function->deleteSystemLog($this->module, $id);
             return redirect('/hris/pages/time/workshiftManagement/index')->with('success', 'Work Shift successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

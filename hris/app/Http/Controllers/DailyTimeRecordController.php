@@ -91,11 +91,16 @@ class DailyTimeRecordController extends Controller
 
             // check if rest day or not
             if (!$day_shift) {
-                echo '<tr><td>Rest Day</td></tr>';
+                echo '<tr>
+                        <td>' . date('Y M d', strtotime($date_code)) . '</td>
+                        <td>' . date('D', strtotime($date_code)) . '</td>
+                        <td>Rest Day</td>
+                        <td>Rest Day</td>
+                    </tr>';
             } else {
 
                 // define array for emp time in sessions
-
+                
                 $day_sessions_arr = array();
 
 
@@ -155,8 +160,8 @@ class DailyTimeRecordController extends Controller
                     $day_attendance_time_out = '-';
                     $result = '';
                     $result .= '<tr>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td>' . date('Y M d', strtotime($date_code)) . '</td>
+                                    <td>' . date('D', strtotime($date_code)) . '</td>
                                     <td>' . $day_attendance_time_in . '</td><td>' . $day_attendance_time_out . '</td>
                                 </tr>';
                 } else {
