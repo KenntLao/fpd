@@ -18,8 +18,8 @@ class CreateHrisAttendancesTable extends Migration
             $table->timestamps();
             $table->bigInteger('employee_id');
             $table->string('time_in_photo');
-            $table->timestamp('time_in');
-            $table->timestamp('time_out')->nullable();
+            $table->bigInteger('time_in');
+            $table->bigInteger('time_out')->nullable();
             $table->integer('status')->default('0');
         });
     }

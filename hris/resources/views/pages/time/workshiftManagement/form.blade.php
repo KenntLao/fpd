@@ -13,20 +13,20 @@
 </div>
 
 @php
-$monday_time_in = date('G:i A',$work_shift->monday_time_in);
-$monday_time_out = date('G:i A',$work_shift->monday_time_out);
-$tuesday_time_in = date('G:i A',$work_shift->tuesday_time_in);
-$tuesday_time_out = date('G:i A',$work_shift->tuesday_time_out);
-$wednesday_time_in = date('G:i A',$work_shift->wednesday_time_in);
-$wednesday_time_out = date('G:i A',$work_shift->wednesday_time_out);
-$thursday_time_in = date('G:i A',$work_shift->thursday_time_in);
-$thursday_time_out = date('G:i A',$work_shift->thursday_time_out);
-$friday_time_in = date('G:i A',$work_shift->friday_time_in);
-$friday_time_out = date('G:i A',$work_shift->friday_time_out);
-$saturday_time_in = date('G:i A',$work_shift->saturday_time_in);
-$saturday_time_out = date('G:i A',$work_shift->saturday_time_out);
-$sunday_time_in = date('G:i A',$work_shift->sunday_time_in);
-$sunday_time_out = date('G:i A',$work_shift->sunday_time_out);
+$monday_time_in = $work_shift->monday_time_in;
+$monday_time_out = $work_shift->monday_time_out;
+$tuesday_time_in = $work_shift->tuesday_time_in;
+$tuesday_time_out = $work_shift->tuesday_time_out;
+$wednesday_time_in = $work_shift->wednesday_time_in;
+$wednesday_time_out = $work_shift->wednesday_time_out;
+$thursday_time_in = $work_shift->thursday_time_in;
+$thursday_time_out = $work_shift->thursday_time_out;
+$friday_time_in = $work_shift->friday_time_in;
+$friday_time_out = $work_shift->friday_time_out;
+$saturday_time_in = $work_shift->saturday_time_in;
+$saturday_time_out = $work_shift->saturday_time_out;
+$sunday_time_in = $work_shift->sunday_time_in;
+$sunday_time_out = $work_shift->sunday_time_out;
 @endphp
 <div class="row">
 	<div class="col-12 col-md-6">

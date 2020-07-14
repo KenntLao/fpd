@@ -34,9 +34,15 @@ class WorkShiftAssignmentController extends Controller
     {
         $action = 'add';
         if ($this->validatedData()) {
-            $workshift_assignment = hris_workshift_assignment::create($this->validatedData());
+            $workshift_assignment->employee_id = $request->employee_id;
+            $workshift_assignment->workshift_id = $request->workshift_id;
+            $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
+            $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
+            $workshift_assignment->status = 0;
+            $workshift_assignment->save();
+
             $id = $workshift_assignment->id;
-            $this->function->systemLog($this->module,$action,$id);
+            $this->function->addSystemLog($this->module,$action,$id);
 
 
             // WORKSHIFT NOTIFICATION
@@ -78,7 +84,7 @@ class WorkShiftAssignmentController extends Controller
         if ($upass == request('upass')) {
             $workshift_assignment->delete();
             $id = $workshift_assignment->id;
-            $this->function->systemLog($this->module,$action,$id);
+            //$this->function->systemLog($this->module,$action,$id);
             return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');
         } else {
             return back()->withErrors(['Password does not match.']);

@@ -47,46 +47,46 @@
                 <tbody>
                     @foreach($work_shift as $shift)
                     @php
-                    $monday_time_in = date('G:i A',$shift->monday_time_in);
-                    $monday_time_out = date('G:i A',$shift->monday_time_out);
-                    $tuesday_time_in = date('G:i A',$shift->tuesday_time_in);
-                    $tuesday_time_out = date('G:i A',$shift->tuesday_time_out);
-                    $wednesday_time_in = date('G:i A',$shift->wednesday_time_in);
-                    $wednesday_time_out = date('G:i A',$shift->wednesday_time_out);
-                    $thursday_time_in = date('G:i A',$shift->thursday_time_in);
-                    $thursday_time_out = date('G:i A',$shift->thursday_time_out);
-                    $friday_time_in = date('G:i A',$shift->friday_time_in);
-                    $friday_time_out = date('G:i A',$shift->friday_time_out);
-                    $saturday_time_in = date('G:i A',$shift->saturday_time_in);
-                    $saturday_time_out = date('G:i A',$shift->saturday_time_out);
-                    $sunday_time_in = date('G:i A',$shift->sunday_time_in);
-                    $sunday_time_out = date('G:i A',$shift->sunday_time_out);
+                    $monday_time_in = $shift->monday_time_in;
+                    $monday_time_out = $shift->monday_time_out;
+                    $tuesday_time_in = $shift->tuesday_time_in;
+                    $tuesday_time_out = $shift->tuesday_time_out;
+                    $wednesday_time_in = $shift->wednesday_time_in;
+                    $wednesday_time_out = $shift->wednesday_time_out;
+                    $thursday_time_in = $shift->thursday_time_in;
+                    $thursday_time_out = $shift->thursday_time_out;
+                    $friday_time_in = $shift->friday_time_in;
+                    $friday_time_out = $shift->friday_time_out;
+                    $saturday_time_in = $shift->saturday_time_in;
+                    $saturday_time_out = $shift->saturday_time_out;
+                    $sunday_time_in = $shift->sunday_time_in;
+                    $sunday_time_out = $shift->sunday_time_out;
 
-                    if($monday_time_in == '0:00 AM' && $monday_time_out == '0:00 AM' ) {
+                    if($monday_time_in == '00:00 AM' && $monday_time_out == '00:00 AM' ) {
                     $monday_time_in = '-';
                     $monday_time_out = '-';
                     }
-                    if($tuesday_time_in == '0:00 AM' && $tuesday_time_out == '0:00 AM' ) {
+                    if($tuesday_time_in == '00:00 AM' && $tuesday_time_out == '00:00 AM' ) {
                     $tuesday_time_in = '-';
                     $tuesday_time_out = '-';
                     }
-                    if($wednesday_time_in == '0:00 AM' && $wednesday_time_out == '0:00 AM' ) {
+                    if($wednesday_time_in == '00:00 AM' && $wednesday_time_out == '00:00 AM' ) {
                     $wednesday_time_in = '-';
                     $wednesday_time_out = '-';
                     }
-                    if($thursday_time_in == '0:00 AM' && $thursday_time_out == '0:00 AM' ) {
+                    if($thursday_time_in == '00:00 AM' && $thursday_time_out == '00:00 AM' ) {
                     $thursday_time_in = '-';
                     $thursday_time_out = '-';
                     }
-                    if($friday_time_in == '0:00 AM' && $friday_time_out == '0:00 AM' ) {
+                    if($friday_time_in == '00:00 AM' && $friday_time_out == '00:00 AM' ) {
                     $friday_time_in = '-';
                     $friday_time_out = '-';
                     }
-                    if($saturday_time_in == '0:00 AM' && $saturday_time_out == '0:00 AM' ) {
+                    if($saturday_time_in == '00:00 AM' && $saturday_time_out == '00:00 AM' ) {
                     $saturday_time_in = '-';
                     $saturday_time_out = '-';
                     }
-                    if($sunday_time_in == '0:00 AM' && $sunday_time_out == '0:00 AM' ) {
+                    if($sunday_time_in == '00:00 AM' && $sunday_time_out == '00:00 AM' ) {
                     $sunday_time_in = '-';
                     $sunday_time_out = '-';
                     }
@@ -94,13 +94,13 @@
                     @endphp
                     <tr>
                         <td>{{$shift->workshift_name}}</td>
-                        <td>{{$monday_time_in}} - {{$monday_time_out}}</td>
-                        <td>{{$tuesday_time_in}} - {{$tuesday_time_out}}</td>
-                        <td>{{$wednesday_time_in}} - {{$wednesday_time_out}}</td>
-                        <td>{{$thursday_time_in}} - {{$thursday_time_out}}</td>
-                        <td>{{$friday_time_in}} - {{$friday_time_out}}</td>
-                        <td>{{$saturday_time_in}} - {{$saturday_time_out}}</td>
-                        <td>{{$sunday_time_in}} - {{$sunday_time_out}}</td>
+                        <td>{{date('h:i a', strtotime($monday_time_in))}} - {{date('h:i a', strtotime($monday_time_out))}}</td>
+                        <td>{{date('h:i a', strtotime($tuesday_time_in))}} - {{date('h:i a', strtotime($tuesday_time_out))}}</td>
+                        <td>{{date('h:i a', strtotime($wednesday_time_in))}} - {{date('h:i a', strtotime($wednesday_time_out))}}</td>
+                        <td>{{date('h:i a', strtotime($thursday_time_in))}} - {{date('h:i a', strtotime($thursday_time_out))}}</td>
+                        <td>{{date('h:i a', strtotime($friday_time_in))}} - {{date('h:i a', strtotime($friday_time_out))}}</td>
+                        <td>{{date('h:i a', strtotime($saturday_time_in))}} - {{date('h:i a', strtotime($saturday_time_out))}}</td>
+                        <td>{{date('h:i a', strtotime($sunday_time_in))}} - {{date('h:i a', strtotime($sunday_time_out))}}</td>
                         <td class="td-action">
                             <div class="row no-gutters">
                                 <div class="col-md-6">

@@ -42,7 +42,7 @@
 				<label class="mr-2" for="date_from">Date From: </label>
 				<span class="badge badge-danger">Required</span>
 				<div class="input">
-					<input class="form-control required work_sched" type="text" name="date_from" value="{{old('date_from') ?? $workshift_assignment->date_from}}" required>
+					<input class="form-control required work_sched" type="text" name="date_from" value="@if($workshift_assignment->date_from) {{date('Y-m-d', strtotime($workshift_assignment->date_from))}} @else{{old('date_from')}}@endif" required>
 				</div>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 				<label class="mr-2" for="date_to">Date To: </label>
 				<span class="badge badge-danger">Required</span>
 				<div class="input">
-					<input class="form-control required work_sched" type="text" name="date_to" value="{{old('date_to') ?? $workshift_assignment->date_to}}" required>
+					<input class="form-control required work_sched" type="text" name="date_to" value="@if($workshift_assignment->date_to) {{date('Y-m-d', strtotime($workshift_assignment->date_to))}} @else{{old('date_to')}}@endif" required>
 				</div>
 			</div>
 		</div>
