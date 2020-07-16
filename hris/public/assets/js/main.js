@@ -39,7 +39,7 @@ $(document).ready(function() {
 	    }
 	});
 
-	$('.work_sched .overtime_date, .ts_date').daterangepicker({
+	$('.work_sched, .overtime_date, .ts_date').daterangepicker({
 		autoUpdateInput: false,
 	    singleDatePicker: true,
 	    showDropdowns: true,

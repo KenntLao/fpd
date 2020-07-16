@@ -29,24 +29,22 @@
             </div>
             <div class="card-body">
                 <div class="renderMonth">
-                    
+
                     <form>
-                    @csrf
+                        @csrf
                         @php
                         // Start date
                         $start_date = '2020-07-01';
                         // End date
                         $end_date = date('Y-m',strtotime('+2 months'));
                         echo '<select name="month" class="monthDropdown form-control">';
-                        while (strtotime($start_date) <= strtotime($end_date)) {
-                            
-                            echo '<option value="'.date('Ym',strtotime($start_date)).'">'.date("M Y", strtotime($start_date)).'</option>';
-                            
-                            $start_date = date("Y-m-d", strtotime("+1 month", strtotime($start_date)));
-                        }
-                        echo '</select>';
+                            while (strtotime($start_date) <= strtotime($end_date)) { echo '<option value="' .date('Ym',strtotime($start_date)).'">'.date("M Y", strtotime($start_date)).'</option>';
+
+                                $start_date = date("Y-m-d", strtotime("+1 month", strtotime($start_date)));
+                                }
+                                echo '</select>';
                         @endphp
-                         
+
                     </form>
                 </div>
             </div>
@@ -57,7 +55,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Hours: </h3>
+                        <!-- <h3 class="card-title">Hours: </h3> -->
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -66,7 +64,7 @@
                                     <tr>
                                         <th></th>
                                         <th></th>
-                                        <th colspan="2" scope="colgroup">Attendance</th>
+                                        <th colspan="3" scope="colgroup">Attendance</th>
                                         <th colspan="3" scope="colgroup">Overtime</th>
                                         <th colspan="2" scope="colgroup">Leaves</th>
                                     </tr>
@@ -75,6 +73,7 @@
                                         <th>Day</th>
                                         <th>IN</th>
                                         <th>OUT</th>
+                                        <th>Hours</th>
                                         <th>IN</th>
                                         <th>OUT</th>
                                         <th>REMARKS</th>
@@ -88,6 +87,9 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="card-footer">
+                        <h3 class="card-title">Total Hours: </h3>
                     </div>
                 </div>
             </div>

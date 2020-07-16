@@ -1758,6 +1758,19 @@ $permissions_arr = array(
 	),
 	array(
 		array(
+			'permission_code' => 'attendance',
+			'permission_name' => array(
+				'Attendance',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to Time in / Time out.',
+				''
+			)
+		),
+	),
+	array(
+		array(
 			'permission_code' => 'overtime',
 			'permission_name' => array(
 				'Overtime Management',

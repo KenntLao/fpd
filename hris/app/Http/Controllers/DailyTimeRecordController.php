@@ -91,12 +91,8 @@ class DailyTimeRecordController extends Controller
 
             // check if rest day or not
             if (!$day_shift) {
-                echo '<tr>
-                        <td>' . date('Y M d', strtotime($date_code)) . '</td>
-                        <td>' . date('D', strtotime($date_code)) . '</td>
-                        <td>Rest Day</td>
-                        <td>Rest Day</td>
-                    </tr>';
+                $day_attendance_time_in = 'Rest Day';
+                $day_attendance_time_out = 'Rest Day';
             } else {
 
                 // define array for emp time in sessions
@@ -106,7 +102,7 @@ class DailyTimeRecordController extends Controller
 
                 // convert time in/out to EPOCH
                 $day_time_in = strtotime($date_code.' '.$day_time_in);
-
+                $date_code = date('Ymd', strtotime($date_code . ' -1 days'));
                 if($day_time_in > $day_time_out) {
                     $date_code = date('Ymd',strtotime($date_code.' +1 days'));
                     $day_time_out = strtotime($date_code.' '.$day_time_out);
@@ -154,28 +150,35 @@ class DailyTimeRecordController extends Controller
                         array_push($day_sessions_arr, $employee_attendances[$i]);
                     }
                 }
-                // get time in
+                // get time in sessions
+                // NO TIME IN FOR THE DAY
                 if($day_sessions_arr == []){
                     $day_attendance_time_in = '-';
                     $day_attendance_time_out = '-';
-                    $result = '';
-                    $result .= '<tr>
-                                    <td>' . date('Y M d', strtotime($date_code)) . '</td>
-                                    <td>' . date('D', strtotime($date_code)) . '</td>
-                                    <td>' . $day_attendance_time_in . '</td><td>' . $day_attendance_time_out . '</td>
-                                </tr>';
-                } else {
+
+                } else { // have time in
                     $day_attendance_time_in = $day_sessions_arr[0]['time_in'];
                     $day_attendance_time_out = $day_sessions_arr[count($day_sessions_arr) - 1]['time_out'];
-                    $result = '';
-                    $result .= '<tr>
-                                    <td>' . date('Y M d',strtotime($date_code)) . '</td>
-                                    <td>' . date('D', strtotime($date_code)) . '</td>
-                                    <td>' . date('h:i:s a',$day_attendance_time_in) . '</td><td>' . date('h:i:s a', $day_attendance_time_out) . '</td>
-                                </tr>';
                 }
-                echo $result.'<br>';
             }
+            $result = '';
+            if($day_attendance_time_in == 'Rest Day' && $day_attendance_time_out == 'Rest Day' || $day_attendance_time_in == '-' && $day_attendance_time_out == '-'){
+                $result .= '<tr>
+                            <td>' . date('Y M d', strtotime($date_code)) . '</td>
+                            <td>' . date('D', strtotime($date_code)) . '</td>
+                            <td>' . $day_attendance_time_in . '</td>
+                            <td>' . $day_attendance_time_out . '</td>
+                        </tr>';
+            }else {
+                $result .= '<tr>
+                            <td>' . date('Y M d', strtotime($date_code)) . '</td>
+                            <td>' . date('D', strtotime($date_code)) . '</td>
+                            <td>' . date('h:i:s', $day_attendance_time_in) . '</td>
+                            <td>' . date('h:i:s', $day_attendance_time_out) . '</td>
+                        </tr>';
+            }
+            
+            echo $result . '<br>';
         }
     }
     
