@@ -25,9 +25,21 @@
 </div>
 @endif
 <div class="card">
+    @if ($iteneraryRequest->status == 0)
     <div class="card-header">
-        <h3 class="card-title">Itenerary Request</h3>
+        <h3 class="card-title">itenerary request - pending</h3>
     </div>
+    @endif
+    @if ($iteneraryRequest->status == 1)
+    <div class="card-header" style="background: #28a745">
+        <h3 class="card-title">itenerary request - approved</h3>
+    </div>
+    @endif
+    @if ($iteneraryRequest->status == 2)
+    <div class="card-header" style="background: #dc3545">
+        <h3 class="card-title">itenerary request - denied</h3>
+    </div>
+    @endif
     <div class="card-body">
         <div class="row mb-4">
             <div class="col-12 col-sm-2">
@@ -168,9 +180,15 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>Attachments: </label>
+                            @if($iteneraryRequest->attachment_1)
                             <p><a class="download-link" href="/hris/pages/employees/iteneraryRequests/download/1/{{$iteneraryRequest->id}}" title="Download attachment"><i class="fas fa-cloud-download-alt mr-2"></i>{{$iteneraryRequest->attachment_1}}</a></p>
+                            @endif
+                            @if($iteneraryRequest->attachment_2)
                             <p><a class="download-link" href="/hris/pages/employees/iteneraryRequests/download/2/{{$iteneraryRequest->id}}" title="Download attachment"><i class="fas fa-cloud-download-alt mr-2"></i>{{$iteneraryRequest->attachment_2}}</a></p>
+                            @endif
+                            @if($iteneraryRequest->attachment_3)
                             <p><a class="download-link" href="/hris/pages/employees/iteneraryRequests/download/3/{{$iteneraryRequest->id}}" title="Download attachment"><i class="fas fa-cloud-download-alt mr-2"></i>{{$iteneraryRequest->attachment_3}}</a></p>
+                            @endif
                         </div>
                     </div>
                 </div>

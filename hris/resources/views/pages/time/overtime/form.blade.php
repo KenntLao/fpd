@@ -124,6 +124,35 @@
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
+			<label class="mr-2" for="overtime_category_id">Category: </label>
+			<span class="badge badge-danger">Required</span>
+			@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
+			<select class="form-control required" name="overtime_category_id" required readonly>
+				@if(count($categories) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($categories as $category)
+				<option value="{{$category->id}}" {{ $overtime->overtime_category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
+			</select>
+			@else
+			<select class="form-control required" name="overtime_category_id" required>
+				@if(count($categories) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($categories as $category)
+				<option value="{{$category->id}}" {{ $overtime->overtime_category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
+			</select>
+			@endif
+		</div>
+	</div>
+	<div class="col-12 col-md-6">
+		<div class="form-group">
 			<label class="mr-2" for="employee_remarks">Employee Remarks: </label>
 			<span class="badge badge-danger">Required</span>
 			<div class="input">

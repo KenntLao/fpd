@@ -4,7 +4,6 @@ $(document).ready(function() {
 	$('.select-role').select2({
 		placeholder: "Select Roles",
 	});
-
 	$('.workshift_time, .overtime_time').daterangepicker({
 		timePicker: true,
 		singleDatePicker: true,

@@ -150,7 +150,12 @@
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Supervisor</label>
-						<p>{{$employee->supervisor}}</p>
+						<p>
+							@php
+								$supervisor = App\hris_employee::find($employee->supervisor);
+								echo $supervisor->firstname.' '.$supervisor->lastname;
+							@endphp
+						</p>
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Department</label>

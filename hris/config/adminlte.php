@@ -210,12 +210,12 @@ return [
     'menu' => [
         [
             'header' => 'ADMINISTRATION',
-            'can' => 'admin',
+            'can' => ['company-structure', 'job-title', 'pay-grade', 'employment-status', 'skill', 'education', 'certification','language', 'course', 'training-session', 'employee-training-session', 'client', 'project', 'employee-project', 'leave-type', 'leave-period', 'work-week', 'holiday', 'leave-rule', 'paid-time-off', 'leave-group','leave-group-employee', 'employee-leave-list', 'expense-category','payment-method','employee-expense', 'overtime-category', 'loan-type','employee-loan', 'company-asset-type','company-asset', 'audit-log']
         ],
         [
             'text' => 'Admin',
             'icon' => 'fas fa-fw fa-cubes',
-            'can' => 'admin',
+            'can' => ['company-structure', 'job-title', 'pay-grade', 'employment-status', 'skill', 'education', 'certification','language', 'course', 'training-session', 'employee-training-session', 'client', 'project', 'employee-project', 'leave-type', 'leave-period', 'work-week', 'holiday', 'leave-rule', 'paid-time-off', 'leave-group','leave-group-employee', 'employee-leave-list', 'expense-category','payment-method','employee-expense', 'overtime-category', 'loan-type','employee-loan', 'company-asset-type','company-asset', 'audit-log'],
             'submenu' => [
                 [   
                     'text' => 'Company Structure',

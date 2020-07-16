@@ -1,0 +1,37 @@
+WEBSITE 101
+
+Benefits of a website ( isip ng title kung ano pwede or eto na lang )
+
+- it improves the credibility of your business
+- it is an efficient way to promote your business
+- it can boost your reputation
+- you can showcase your work/products or whatever
+- can keep track of your business in real time
+- it can expand your market reach and coverage
+- it will be easier for clients to find you
+- it can open new streams of revenue
+- it can act as your online brochure or catalog
+- improve productivity
+- educate your customers
+- promote and sell products and services
+- improve customer service
+
+Knowing the basics ( isip ng title kung ano pwede or eto na lang )
+
+header
+
+navigation bar
+
+sidebar
+
+main content
+
+footer
+
+*Process ( isip pa ng title )
+-planning
+-designing
+-database structure
+-development
+-production
+

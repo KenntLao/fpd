@@ -61,7 +61,7 @@ class EmployeeExpenseController extends Controller
             $employeeExpense->notes = request('notes');
             $employeeExpense->currency = request('currency');
             $employeeExpense->amount = request('amount');
-            $employeeExpense->status = 'Pending';
+            $employeeExpense->status = '0';
             $employeeExpense->save();
             $id = $employeeExpense->id;
             $this->function->addSystemLog($this->module,$id);
@@ -71,9 +71,9 @@ class EmployeeExpenseController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(hris_employee_expenses $employeeExpense)
     {
-
+        return view('pages.admin.benefits.employeeExpenses.show', compact('employeeExpense'));
     }
 
     public function edit(hris_employee_expenses $employeeExpense)
@@ -141,7 +141,7 @@ class EmployeeExpenseController extends Controller
             $employeeExpense->notes = request('notes');
             $employeeExpense->currency = request('currency');
             $employeeExpense->amount = request('amount');
-            $employeeExpense->status = 'Pending';
+            $employeeExpense->status = '0';
             // GET CHANGES
             $changes = $employeeExpense->getDirty();
             // GET ORIGINAL DATA
@@ -160,15 +160,24 @@ class EmployeeExpenseController extends Controller
             return back()->withErrors($this->validatedData());
         }
     }
-    public function updateStatus(hris_employee_expenses $employeeExpense, Request $request)
+    public function updateStatus($status, hris_employee_expenses $employeeExpense)
     {
         $id = $employeeExpense->id;
         $string = 'App\hris_employee_expenses';
         $this->function->statusSystemLog($this->module,$string,$id);
-        $employeeExpense->status = request('status');
-        //DO systemLog function FROM SystemLogController
+        if ( $status == '1' OR $status == '2' ) {
+            if ( $status == '1' ) {
+                $msg = 'accepted';
+            }
+            if ( $status == '2' ) {
+                $msg = 'rejected';
+            }
+            $employeeExpense->status = $status;
+        } else {
+            return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->withErrors(['Invalid status!']);
+        }
         $employeeExpense->update();
-        return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense status successfully updated!');
+        return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee expense '.$msg.'!');
     }
 
     public function destroy(hris_employee_expenses $employeeExpense)

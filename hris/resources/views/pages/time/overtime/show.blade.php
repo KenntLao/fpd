@@ -19,9 +19,21 @@
 </div>
 @endif
 <div class="card">
+    @if ($overtime->status == 0)
     <div class="card-header">
-        <h3 class="card-title">overtime request</h3>
+        <h3 class="card-title">overtime request - pending</h3>
     </div>
+    @endif
+    @if ($overtime->status == 1)
+    <div class="card-header" style="background: #28a745">
+        <h3 class="card-title">overtime request - approved</h3>
+    </div>
+    @endif
+    @if ($overtime->status == 2)
+    <div class="card-header" style="background: #dc3545">
+        <h3 class="card-title">overtime request - denied</h3>
+    </div>
+    @endif
     <div class="card-body">
         <div class="row mb-4">
             <div class="col-3 col-sm-2">
@@ -88,24 +100,32 @@
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label class="mr-2" for="ot_date">Approved by: </label>
-                            <p>{{$user}}</p>
+                            <label class="mr-2" for="overtime_category_id">Category: </label>
+                            <p>{{$overtime->overtime_category->name}}</p>
                         </div>
                     </div>
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label class="mr-2" for="ot_date">Approved Date and Time: </label>
-                            <p>{{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}</p>
+                            <label class="mr-2" for="ot_date">Approved by: </label>
+                            <p>{{$user}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
+                            <label class="mr-2" for="ot_date">Approved Date and Time: </label>
+                            <p>{{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6">
+                        <div class="form-group">
                             <label class="mr-2" for="ot_date">Overtime Request Date and Time: </label>
                             <p>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</p>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
                             <label class="mr-2" for="status">Status: </label>
@@ -113,19 +133,19 @@
                                 @if($overtime->status == '1')
                                 Approved
                                 @else
-                                Rejected
+                                Denied
                                 @endif
                             </p>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
                             <label class="mr-2" for="ot_time_in">Employee remarks: </label>
                             <p>{{$overtime->employee_remarks}}</p>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
                             <label class="mr-2" for="ot_time_in">Supervisor remarks: </label>

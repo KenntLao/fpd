@@ -19,8 +19,9 @@ class DependentController extends Controller
     }
     public function index()
     {
+        $id = $_SESSION['sys_id'];
         if ($_SESSION['sys_account_mode'] == 'employee') {
-            $dependents = hris_employee_dependents::paginate(10);
+            $dependents = hris_employee_dependents::where('employee_id', $id)->paginate(10);
             return view('pages.personalInformation.dependents.index', compact('dependents'));
         }
     }

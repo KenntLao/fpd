@@ -46,7 +46,7 @@
         <div class="form-group">
             <label class="mr-2" for="department_id">Share Departments: </label>
             <span class="badge badge-danger">Required</span>
-            <select class="form-control required select2" name="department_id[]" multiple="multiple">
+            <select id="department_dropdown" class="form-control required select2" name="department_id[]" multiple="multiple">
                 @if(count($departments) > 0)
                 <option disabled default>--select one --</option>
                 @foreach($departments as $department)
@@ -84,14 +84,16 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label class="mr-2" for="employee_id">Share Employees: </label>
-            <select class="form-control required select2" name="employee_id[]" multiple="multiple">
-                @if(count($employees) > 0)
-                <option disabled default>--select one --</option>
-                @foreach($employees as $employee)
-                <option value="{{$employee->id}}" {{ in_array($employee->id, $employee_id) ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
-                @endforeach
-                @else
-                <option disabled default>--select one--</option>
+            <select id="employee" class="form-control required select2" name="employee_id[]" multiple="multiple">
+                @if(Request::route()->getName() == 'editCompanyDocument')
+                    @if(count($employees) > 0)
+                    <option disabled default>--select one --</option>
+                    @foreach($employees as $employee)
+                    <option value="{{$employee->id}}" {{ in_array($employee->id, $employee_id) ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
+                    @endforeach
+                    @else
+                    <option disabled default>--select one--</option>
+                    @endif
                 @endif
             </select>
             <div class="info">
