@@ -47,7 +47,7 @@
                         <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
                         <td>{{$overtime->employee->department->name}}</td>
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
-                        <td>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
+                        <td>{{date('M-d-Y', strtotime($overtime->ot_date))}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</td>
                         <td>
                             @if($overtime->supervisor)
                             @if($overtime->role_id == ',1,')

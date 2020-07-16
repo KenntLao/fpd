@@ -40,6 +40,51 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+	<div class="col-12 col-md-6">
+		<div class="form-group">
+			<label class="mr-2" for="overtime_category_id">Category: </label>
+			<span class="badge badge-danger">Required</span>
+			@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
+			<select class="form-control required" name="overtime_category_id" required readonly>
+				@if(count($categories) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($categories as $category)
+				<option value="{{$category->id}}" {{ $overtime->overtime_category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
+			</select>
+			@else
+			<select class="form-control required" name="overtime_category_id" required>
+				@if(count($categories) > 0)
+				<option disabled default selected>--select one--</option>
+				@foreach($categories as $category)
+				<option value="{{$category->id}}" {{ $overtime->overtime_category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>--select one--</option>
+				@endif
+			</select>
+			@endif
+		</div>
+	</div>
+	<div class="col-12 col-md-6">
+		<div class="form-group">
+			<label class="mr-2" for="employee_remarks">Employee Remarks: </label>
+			<span class="badge badge-danger">Required</span>
+			<div class="input">
+				<p class="placeholder">Enter employee remarks</p>
+				@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
+				<textarea class="form-control required" name="employee_remarks" required readonly>{{ old('employee_remarks') ?? $overtime->employee_remarks }}</textarea>
+				@else
+				<textarea class="form-control required" name="employee_remarks" required>{{ old('employee_remarks') ?? $overtime->employee_remarks }}</textarea>
+				@endif
+			</div>
+		</div>
+	</div>
+</div>
 @if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
 <div class="row">
 	<div class="col-12 col-md-6">
@@ -119,53 +164,6 @@
 			</select>
 		</div>
 	</div>
-</div>
-@endif
-<div class="row">
-	<div class="col-12 col-md-6">
-		<div class="form-group">
-			<label class="mr-2" for="overtime_category_id">Category: </label>
-			<span class="badge badge-danger">Required</span>
-			@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
-			<select class="form-control required" name="overtime_category_id" required readonly>
-				@if(count($categories) > 0)
-				<option disabled default selected>--select one--</option>
-				@foreach($categories as $category)
-				<option value="{{$category->id}}" {{ $overtime->overtime_category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
-				@endforeach
-				@else
-				<option disabled default selected>--select one--</option>
-				@endif
-			</select>
-			@else
-			<select class="form-control required" name="overtime_category_id" required>
-				@if(count($categories) > 0)
-				<option disabled default selected>--select one--</option>
-				@foreach($categories as $category)
-				<option value="{{$category->id}}" {{ $overtime->overtime_category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
-				@endforeach
-				@else
-				<option disabled default selected>--select one--</option>
-				@endif
-			</select>
-			@endif
-		</div>
-	</div>
-	<div class="col-12 col-md-6">
-		<div class="form-group">
-			<label class="mr-2" for="employee_remarks">Employee Remarks: </label>
-			<span class="badge badge-danger">Required</span>
-			<div class="input">
-				<p class="placeholder">Enter employee remarks</p>
-				@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
-				<textarea class="form-control required" name="employee_remarks" required readonly>{{ old('employee_remarks') ?? $overtime->employee_remarks }}</textarea>
-				@else
-				<textarea class="form-control required" name="employee_remarks" required>{{ old('employee_remarks') ?? $overtime->employee_remarks }}</textarea>
-				@endif
-			</div>
-		</div>
-	</div>
-	@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="supervisor_remarks">Supervisor Remarks: </label>
@@ -176,5 +174,5 @@
 			</div>
 		</div>
 	</div>
-	@endif
 </div>
+@endif
