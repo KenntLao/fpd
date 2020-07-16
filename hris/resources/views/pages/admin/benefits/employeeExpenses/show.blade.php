@@ -93,7 +93,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>Expense Date: </label>
-                            <p>{{$employeeExpense->expense_date}}</p>
+                            <p>{{date('M d, Y', strtotime($employeeExpense->expense_date))}}</p>
                         </div>
                     </div>
                     <div class="col-6">

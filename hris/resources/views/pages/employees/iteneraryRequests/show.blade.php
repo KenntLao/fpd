@@ -93,13 +93,13 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>Travel Date: </label>
-                            <p>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->travel_date), 'M d, Y h:i A')}}</p>
+                            <p>{{date('M d, Y H:i A', strtotime($iteneraryRequest->travel_date))}}</p>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label>Return Date: </label>
-                            <p>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->return_date), 'M d, Y h:i A')}}</p>
+                            <p>{{date('M d, Y H:i A', strtotime($iteneraryRequest->return_date))}}</p>
                         </div>
                     </div>
                 </div>

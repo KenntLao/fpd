@@ -121,7 +121,7 @@
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
                             <label class="mr-2" for="ot_date">Overtime Request Date and Time: </label>
-                            <p>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</p>
+                            <p>{{date('M d, Y', strtotime($overtime->ot_date))}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</p>
                         </div>
                     </div>
                 </div>

@@ -55,7 +55,7 @@
 							<span class="td-error">ERROR</span>
 							@endif
 						</td>
-						<td>{{$employeeExpense->expense_date}}</td>
+						<td>{{date('M d, Y', strtotime($employeeExpense->expense_date))}}</td>
 						<td>
 							@if($employeeExpense->payment_method)
 							{{$employeeExpense->payment_method->name}}
