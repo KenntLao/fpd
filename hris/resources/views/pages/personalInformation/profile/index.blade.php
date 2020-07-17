@@ -1,10 +1,10 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
-@section('title', 'HRIS | Administration - Personal Information')
+@section('title', 'HRIS | Personal Information - Basic Information')
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1><i class="fas fa-fw fa-grip-horizontal "></i> Personal Information</h1>
+		<h1><i class="fas fa-fw fa-grip-horizontal"></i> Basic Information</h1>
 	</div>
 </div>
 @stop
@@ -25,12 +25,12 @@
 	<div class="card-header">
 		<h3 class="card-title">Basic Information</h3>
 		<div class="card-tools">
-			<a class="btn add-button btn-md" href="/hris/pages/employees/employee/{{$_SESSION['sys_id']}}/edit"><i class="fa fa-edit mr-1"></i> edit info</a>
+			<a class="btn add-button btn-md" href="/hris/pages/personalInformation/profile/{{$_SESSION['sys_id']}}/edit"><i class="fa fa-edit mr-1"></i> edit info</a>
 		</div>
 	</div>
 	<div class="card-body">
 		<div class="row no-gutters profile">
-			<div class="col-12 col-md-3 mb-2">
+			<div class="col-12 col-md-2 mb-2">
 				<div class="profile-image mr-4">
 					<img src="{{ URL::asset('assets/images/employees/employee_photos/') }}/{{$employee->employee_photo}}">
 				</div>
@@ -107,25 +107,8 @@
 						<p>{{$employee->home_address}}</p>
 					</div>
 					<div class="col-12 col-md-3">
-						<label>City</label>
-						<p>{{$employee->city}}</p>
-					</div>
-					<div class="col-12 col-md-3">
-						<label>Country</label>
-						<p>{{$employee->nationality}}</p>
-					</div>
-				</div>
-				<div class="row no-gutters">
-					<div class="col-12 col-md-3">
-						<label>Postal/Zip Code</label>
-						<p>{{$employee->postal_code}}</p>
-					</div>
-					<div class="col-12 col-md-3">
 						<label>Work Phone</label>
 						<p>{{$employee->work_phone}}</p>
-					</div>
-					<div class="col-12 col-md-3">
-						<label>Home Phone</label>
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Private Email</label>
@@ -152,8 +135,12 @@
 						<label>Supervisor</label>
 						<p>
 							@php
+							if($employee->supervisor) {
 								$supervisor = App\hris_employee::find($employee->supervisor);
 								echo $supervisor->firstname.' '.$supervisor->lastname;
+							} else {
+								echo 'ADD SUPERVISOR';
+							}
 							@endphp
 						</p>
 					</div>

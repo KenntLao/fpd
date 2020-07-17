@@ -74,7 +74,6 @@ class WorkShiftAssignmentController extends Controller
             $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
             $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
             $workshift_assignment->status = 0;
-            $workshift_assignment->update();
 
             //DO systemLog function FROM SystemLogController
             // GET CHANGES

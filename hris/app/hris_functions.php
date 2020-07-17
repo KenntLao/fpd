@@ -117,5 +117,9 @@ class hris_functions extends Model
     {
         return $this->belongsTo('App\hris_candidates');
     }
+    public function workshift()
+    {
+        return $this->belongsTo('App\hris_work_shift_management');
+    }
 
 }
