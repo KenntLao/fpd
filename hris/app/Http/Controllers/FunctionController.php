@@ -42,7 +42,11 @@ class FunctionController extends Controller
                         $data = str_replace('_id', '', $f);
                         if ( $data != 'employee' AND $data != 'supervisor' AND $data != 'department') {
                             if ( $model->$data != NULL ) {
-                                $old_id[] = $model->$data->name;
+                                if ( $data == 'workshift' ) {
+                                    $old_id[] = $model->$data->workshift_name;
+                                } else {
+                                    $old_id[] = $model->$data->name;
+                                }
                                 $i[] = $f;
                                 $this->old_id = array_combine($i,array_values($old_id));
                             } else {
@@ -108,7 +112,11 @@ class FunctionController extends Controller
                                 if ( $model->$data == NULL ) {
                                     $data_name = '';
                                 } else {
-                                    $data_name = $model->$data->name;
+                                    if ( $data == 'workshift' ) {
+                                        $data_name = $model->$data->workshift_name;
+                                    } else {
+                                        $data_name = $model->$data->name;
+                                    }
                                 }
                                 if ( $data_name != $this->old_id[$f] ) {
                                     $systemLog = new hris_system_logs();
@@ -176,7 +184,11 @@ class FunctionController extends Controller
                             if ( $data != 'employee' AND $data != 'supervisor' AND $data != 'department') {
 
                                 if ( $model->$data != '' ) {
-                                    $this->new_id = $model->$data->name;
+                                    if ( $data == 'workshift' ) {
+                                        $this->new_id = $model->$data->workshift_name;
+                                    } else {
+                                        $this->new_id = $model->$data->name;
+                                    }
                                 } else {
                                     $this->new_id = '';
                                 }

@@ -62,8 +62,16 @@
                             None
                             @endif
                         </td>
-                        <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->travel_date), 'M d, Y h:i A')}}</td>
-                        <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->return_date), 'M d, Y h:i A')}}</td>
+                        <td>
+                            @php
+                            echo date('M d, Y H:i A', strtotime($iteneraryRequest->travel_date));
+                            @endphp
+                        </td>
+                        <td>
+                            @php
+                            echo date('M d, Y H:i A', strtotime($iteneraryRequest->return_date));
+                            @endphp
+                        </td>
                         <td>{{$iteneraryRequest->travel_from}}</td>
                         <td>{{$iteneraryRequest->travel_to}}</td>
                         <td>{{$iteneraryRequest->purpose}}</td>
@@ -168,8 +176,16 @@
                                     None
                                     @endif
                                 </td>
-                                <td>{{date_format(date_create_from_format('m-d-Y h:i A', $s->travel_date), 'M d, Y h:i A')}}</td>
-                                <td>{{date_format(date_create_from_format('m-d-Y h:i A', $s->return_date), 'M d, Y h:i A')}}</td>
+                                <td>
+                                    @php
+                                    echo date('M d, Y H:i A', strtotime($s->travel_date));
+                                    @endphp
+                                </td>
+                                <td>
+                                    @php
+                                    echo date('M d, Y H:i A', strtotime($s->return_date));
+                                    @endphp
+                                </td>
                                 <td>{{$s->travel_from}}</td>
                                 <td>{{$s->travel_to}}</td>
                                 <td>{{$s->purpose}}</td>
@@ -260,8 +276,16 @@
                                     None
                                     @endif
                                 </td>
-                                <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->travel_date), 'M d, Y h:i A')}}</td>
-                                <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->return_date), 'M d, Y h:i A')}}</td>
+                                <td>
+                                    @php
+                                    echo date('M d, Y H:i A', strtotime($iteneraryRequest->travel_date));
+                                    @endphp
+                                </td>
+                                <td>
+                                    @php
+                                    echo date('M d, Y H:i A', strtotime($iteneraryRequest->return_date));
+                                    @endphp
+                                </td>
                                 <td>{{$iteneraryRequest->travel_from}}</td>
                                 <td>{{$iteneraryRequest->travel_to}}</td>
                                 <td>{{$iteneraryRequest->purpose}}</td>
@@ -355,8 +379,16 @@
                             None
                             @endif
                         </td>
-                        <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->travel_date), 'M d, Y h:i A')}}</td>
-                        <td>{{date_format(date_create_from_format('m-d-Y h:i A', $iteneraryRequest->return_date), 'M d, Y h:i A')}}</td>
+                        <td>
+                            @php
+                            echo date('M d, Y H:i A', strtotime($iteneraryRequest->travel_date));
+                            @endphp
+                        </td>
+                        <td>
+                            @php
+                            echo date('M d, Y H:i A', strtotime($iteneraryRequest->return_date));
+                            @endphp
+                        </td>
                         <td>{{$iteneraryRequest->travel_from}}</td>
                         <td>{{$iteneraryRequest->travel_to}}</td>
                         <td>{{$iteneraryRequest->purpose}}</td>

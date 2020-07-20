@@ -154,6 +154,17 @@ class CompanyDocumentController extends Controller
             return back()->withErrors(['Password does not match.']);
         }
     }
+
+    public function renderEmployee(hris_company_documents $document) {
+        $employees = hris_employee::where('department_id', request('department_id'))->get();
+        $output = '<option disabled default>--select one--</option>';
+        foreach ($employees as $employee) {
+            $output .= '<option value="' . $employee->id . '">' . $employee->firstname . ' '. $employee->lastname .'</option>';
+        }
+        echo $output;
+    }
+
+
     protected function storeValidatedData()
     {
         return request()->validate([

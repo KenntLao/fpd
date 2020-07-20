@@ -55,7 +55,7 @@
 							<span class="td-error">ERROR</span>
 							@endif
 						</td>
-						<td>{{$employeeExpense->expense_date}}</td>
+						<td>{{date('M d, Y', strtotime($employeeExpense->expense_date))}}</td>
 						<td>
 							@if($employeeExpense->payment_method)
 							{{$employeeExpense->payment_method->name}}
@@ -73,34 +73,37 @@
 						</td>
 						<td>{{$employeeExpense->amount}}</td>
 						<td>{{$employeeExpense->currency}}</td>
-						<td>{{$employeeExpense->status}}</td>
+						<td>
+                            @if($employeeExpense->status == '0')
+                            Pending
+                            @endif
+                            @if($employeeExpense->status == '1')
+                            Approved
+                            @endif
+                            @if($employeeExpense->status == '2')
+                            Denied
+                            @endif
+                        </td>
 						<td>
 							<div class="row no-gutters">
-								@if($employeeExpense->status == 'Approved' OR $employeeExpense->status == 'Denied')
+								@if($employeeExpense->status == '1' OR $employeeExpense->status == '2')
 								<div class="col-12">
-									<a class="btn btn-primary btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/show"><i class="fa fa-search"></i></a>
+									<a class="btn btn-info btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/show"><i class="fa fa-search"></i></a>
 								</div>
 								@else
-								<div class="col-3">
+								<div class="action-col">
+									<a class="btn btn-info btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/show"><i class="fa fa-search"></i></a>
+								</div>
+								<div class="action-col">
 									<a class="btn btn-success btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
-								<div class="col-3">
-									<form action="/hris/pages/admin/benefits/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
-										@csrf
-										@method('PATCH')
-										<input type="text" name="status" value="Approved" hidden>
-										<button class="btn btn-primary btn-sm" type="submit" title="Approve status."><i class="fa fa-check-square"></i></button>
-									</form>
+								<div class="action-col">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/updateStatus/1/{{$employeeExpense->id}}" title="Approve employee expense."><i class="fas fa-check-square"></i></a>
 								</div>
-								<div class="col-3">
-									<form action="/hris/pages/admin/benefits/employeeExpenses/updateStatus/{{$employeeExpense->id}}" method="post">
-										@csrf
-										@method('PATCH')
-										<input type="text" name="status" value="Denied" hidden>
-										<button class="btn btn-warning btn-sm" type="submit" title="Reject status."><i class="fa fa-window-close"></i></button>
-									</form>
+								<div class="action-col">
+                                    <a class="btn btn-warning btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/updateStatus/2/{{$employeeExpense->id}}" title="Deny employee expense."><i class="fas fa-times"></i></a>
 								</div>
-								<div class="col-3">
+								<div class="action-col">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeExpense->id}}" data-name="Employee Expense no. {{$employeeExpense->id}}"><i class="fa fa-trash"></i></button>
 								</div>

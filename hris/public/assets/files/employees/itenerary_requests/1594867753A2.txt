@@ -1,0 +1,73 @@
+company structure - x
+audit log - fix sidebar space
+
+job details setup
+ -job titles x
+ -pay grades - need duplicate entry filter| nums only filter - x
+ -employement status x - add to employee form
+Qualification setup
+ -skills x  -add to employee form
+ -education x -add to employee form
+ -languages -x
+Training Setup
+ -courses x
+ -training session -fix time format (audit log) -x
+ -employee training session x
+Property Setup
+ -clients x
+ -projects - add to employee module(employee form and data) x
+ -employee projects - add details to employee profile x
+Leave Settings
+ -leave groups x
+ -leave types x
+ -leave periods x
+ -work week x
+ -holidays x
+ -leave rules - css action button adjustment - x
+ -paid time off x
+ -employee leave group add bulk assignment
+ -employee leave list (approved leave)
+
+Benefits Administration - change/check modules titles
+ -Expenses categories x
+ -payment methods x
+ -employee expenses -show page -check relationship change show header to red and add denied/approved -green
+ -overtime administration x -add to overtime request
+Company Loans
+ -loan types x
+ -employee loans x -check if editable/deletable
+Company Assets
+ -asset types x
+ -assets x
+
+*remove departments module*
+
+Personal information
+ -basic information -change edit function
+ Qualification
+  -skills x
+  -education x
+  -certification -add to employee form/module
+  -languages x
+ Dependents -controller index select * -remove from employee form
+ Emergency Contact x - add to employee form/module -remove from employee form
+ 
+Employee Management
+ -itenerary request x -add notification -edit success mesage change show header to red and add denied/approved -green
+
+
+Time Management
+ -overtime x - change show header to red and add denied/approved -green
+Document Management
+ Company Documents x - add download function -ajax request for department
+ Document Type x
+ Employee Documents x
+
+Audit log redirection (permission)
+
+ 
+ 
+
+ 
+ 
+ 

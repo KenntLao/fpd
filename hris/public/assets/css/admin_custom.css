@@ -712,3 +712,28 @@ textarea.form-control {
 	border-radius: 4px;
 	margin: 0 5px;
 }
+
+.action-col {
+	width: 20%;
+	margin: 0;
+}
+@media only screen and (min-width: 500px) {
+	.action-col {
+		width: 100%;
+		margin: 3px;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.action-col {
+		width: 25%;
+		margin: 3px;
+	}
+}
+
+@media only screen and (min-width: 1280px) {
+	.action-col {
+		width: 20%;
+		margin: 0;
+	}
+}

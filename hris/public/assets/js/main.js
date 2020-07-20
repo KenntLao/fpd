@@ -4,7 +4,6 @@ $(document).ready(function() {
 	$('.select-role').select2({
 		placeholder: "Select Roles",
 	});
-
 	$('.workshift_time, .overtime_time').daterangepicker({
 		timePicker: true,
 		singleDatePicker: true,
@@ -39,16 +38,16 @@ $(document).ready(function() {
 	    }
 	});
 
-	$('.work_sched, .overtime_date, .ts_date').daterangepicker({
+	$('.overtime_date, .ts_date').daterangepicker({
 		autoUpdateInput: false,
 	    singleDatePicker: true,
 	    showDropdowns: true,
 		minYear: 2020,
 		locale: {
-		    format: 'M-DD-Y'
+		    format: 'Y-MM-DD'
 		}
 	}).on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('M-DD-Y'));
+        $(this).val(picker.startDate.format('Y-MM-DD'));
 		var parent = $(this).parents('.form-group').parent();
 		if ( parent ) {
 			parent.find('.badge').addClass('badge-success').removeClass('badge-danger');
@@ -66,10 +65,10 @@ $(document).ready(function() {
 	    singleDatePicker: true,
     	timePicker: true,
 	    locale: {
-	      	format: 'MM-DD-Y hh:mm A'
+	      	format: 'Y-MM-DD hh:mm A'
 	    }
 	}).on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('MM-DD-Y hh:mm A'));
+        $(this).val(picker.startDate.format('Y-MM-DD hh:mm A'));
 		var parent = $(this).parents('.form-group').parent();
 		if ( parent ) {
 			parent.find('.badge').addClass('badge-success').removeClass('badge-danger');

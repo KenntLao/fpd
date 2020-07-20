@@ -4,19 +4,6 @@ $permissions_arr = array(
 	// HRIS ADMINISTRATION MODULE =========================================================================================
 	array(
 		array(
-			'permission_code' => 'admin',
-			'permission_name' => array(
-				'Administration Module',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access administration module.',
-				''
-			)
-		),
-	),
-	array(
-		array(
 			'permission_code' => 'company-structure',
 			'permission_name' => array(
 				'Company Structure Management',
@@ -1745,78 +1732,6 @@ $permissions_arr = array(
 	),
 	array(
 		array(
-			'permission_code' => 'daily-time-records',
-			'permission_name' => array(
-				'Daily Time Records',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access own daily time record list.',
-				''
-			)
-		)
-	),
-	array(
-		array(
-			'permission_code' => 'attendance',
-			'permission_name' => array(
-				'Attendance',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to Time in / Time out.',
-				''
-			)
-		),
-	),
-	array(
-		array(
-			'permission_code' => 'overtime',
-			'permission_name' => array(
-				'Overtime Management',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access overtime list.',
-				''
-			)
-		),
-		array(
-			'permission_code' => 'overtime-add',
-			'permission_name' => array(
-				'Create Overtime',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access create overtime.',
-				''
-			)
-		),
-		array(
-			'permission_code' => 'overtime-edit',
-			'permission_name' => array(
-				'Update Overtime',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access update overtime.',
-				''
-			)
-		),
-		array(
-			'permission_code' => 'overtime-delete',
-			'permission_name' => array(
-				'Delete Overtime',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access delete overtime.',
-				''
-			)
-		),
-	),
-	array(
-		array(
 			'permission_code' => 'benefit',
 			'permission_name' => array(
 				'Benefit Management',
@@ -2370,6 +2285,78 @@ $permissions_arr = array(
 	),
 	// HRIS TIME MANAGEMENT ===========================================================================
 	// HRIS WORK SHIFT MANAGEMENT ===========================================================================
+	array(
+		array(
+			'permission_code' => 'daily-time-records',
+			'permission_name' => array(
+				'Daily Time Records',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access own daily time record list.',
+				''
+			)
+		)
+	),
+	array(
+		array(
+			'permission_code' => 'overtime',
+			'permission_name' => array(
+				'Overtime Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access overtime list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-add',
+			'permission_name' => array(
+				'Create Overtime',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create overtime.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-edit',
+			'permission_name' => array(
+				'Update Overtime',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update overtime.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'overtime-delete',
+			'permission_name' => array(
+				'Delete Overtime',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete overtime.',
+				''
+			)
+		),
+	),
+	array(
+		array(
+			'permission_code' => 'attendance',
+			'permission_name' => array(
+				'Attendance',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access attendance list.',
+				''
+			)
+		),
+	),
 	array(
 		array(
 			'permission_code' => 'workshift-management',

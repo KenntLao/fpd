@@ -9,12 +9,62 @@ use App\hris_employee;
 class PersonalInformationController extends Controller
 {
 
+    private $function;
+    private $module;
+
+    public function __construct() {
+        $this->function = new FunctionController;
+        $this->module = 'Personal Information - Basic Information';
+    }
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
             $id = $_SESSION['sys_id'];
             $employee = hris_employee::find($id);
             return view('pages.personalInformation.profile.index', compact('employee'));
+        }
+    }
+
+    public function edit(hris_employee $id)
+    {
+        return view('pages.personalInformation.profile.edit', compact('id'));
+    }
+
+    public function update(hris_employee $employee, Request $request)
+    {
+        $id = $employee->id;
+        if($this->validatedData()) {
+            $string = 'App\hris_employee';
+            if( $request->hasFile('employee_photo') ) {
+                $path =  public_path('assets/images/employees/employee_photos/');
+                if ($employee->employee_photo != '' && $employee->employee_photo != NULL) {
+                    $old_file = $path . $employee->employee_photo;
+                    unlink($old_file);
+                    $imageName = time() . 'EP.' . $request->employee_photo->extension();
+                    $employee->employee_photo = $imageName;
+                    $request->employee_photo->move($path, $imageName);
+                }
+            }
+            $employee->work_address = request('work_address');
+            $employee->home_address = request('home_address');
+            $employee->work_phone = request('work_phone');
+            $employee->private_email = request('private_email');
+            // GET CHANGES
+            $changes = $employee->getDirty();
+            // GET ORIGINAL DATA
+            $this->function->getOldData($this->module,$string,$changes,$id);
+            $employee->update();
+            // GET CHANGES
+            $changed = $employee->getChanges();
+            // USE UPDATESYSTEMLOG FUNCTION
+            $this->function->updateSystemLog($this->module,$changed,$string,$id);
+            if ( $employee->wasChanged() ) {
+                return redirect('/hris/pages/personalInformation/profile/index')->with('success', 'Profile information successfully updated!');
+            } else {
+                return redirect('/hris/pages/personalInformation/profile/index');
+            }
+        } else {
+            return back()->withErrors($this->validatedData());
         }
     }
 
@@ -31,6 +81,17 @@ class PersonalInformationController extends Controller
         } else {
             return back()->withErrors(['Password does not match!']);
         }
+    }
+
+    protected function validatedData()
+    {
+        return request()->validate([
+            'employee_photo' => 'nullable',
+            'work_address' => 'nullable',
+            'home_address' => 'nullable',
+            'work_phone' => 'nullable',
+            'private_email' => 'nullable',
+        ]);
     }
      
 }

@@ -333,10 +333,13 @@ Route::middleware([CheckUserID::class])->group(function(){
         Route::get('/hris/pages/admin/benefits/employeeExpenses/{employeeExpense}/edit', 'EmployeeExpenseController@edit');
         /* UPDATE EMPLOYEE EXPENSES */
         Route::patch('/hris/pages/admin/benefits/employeeExpenses/update/{employeeExpense}', 'EmployeeExpenseController@update');
+        Route::get('/hris/pages/admin/benefits/employeeExpenses/updateStatus/{status}/{employeeExpense}', 'EmployeeExpenseController@updateStatus');
         /* UPDATE EMPLOYEE EXPENSES STATUS*/
         Route::patch('/hris/pages/admin/benefits/employeeExpenses/updateStatus/{employeeExpense}', 'EmployeeExpenseController@updateStatus');
         /* DELETE EMPLOYEE EXPENSES */
         Route::delete('/hris/pages/admin/benefits/employeeExpenses/delete/{employeeExpense}', 'EmployeeExpenseController@destroy');
+        //show
+        Route::get('/hris/pages/admin/benefits/employeeExpenses/{employeeExpense}/show', 'EmployeeExpenseController@show');
 
         /* OVERTIME ADMINISTRATION */
 
@@ -422,22 +425,6 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     /* EMPLOYEE MANAGEMENT */
     //add
-    
-
-    Route::group(['middleware' => 'CheckPermission:employees'], function () {
-        // GET AJAX DATA FOR SUPERVISOR
-        Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
-
-        Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
-        Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
-        Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
-        //edit
-        Route::get('/hris/pages/employees/employee/{employee}/edit', 'EmployeeController@edit');
-        Route::patch('/hris/pages/employees/employee/update/{employee}', 'EmployeeController@update');
-        //show
-        Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
-        //delete
-        Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
 
         // ITENERARY REQUEST
         Route::get('/hris/pages/employees/iteneraryRequests/index', 'IteneraryRequestController@index');
@@ -454,6 +441,21 @@ Route::middleware([CheckUserID::class])->group(function(){
         //download
         Route::get('/hris/pages/employees/iteneraryRequests/download/{attachment}/{iteneraryRequest}', 'IteneraryRequestController@download');
 
+    Route::group(['middleware' => 'CheckPermission:employees'], function () {
+        // GET AJAX DATA FOR SUPERVISOR
+        Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
+
+        Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
+        Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
+        Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
+        //edit
+        Route::get('/hris/pages/employees/employee/{employee}/edit', 'EmployeeController@edit');
+        Route::patch('/hris/pages/employees/employee/update/{employee}', 'EmployeeController@update');
+        //show
+        Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
+        //delete
+        Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
+
 
         // DOCUMENT MANAGEMENT
         // COMPANY DOCUMENTS
@@ -461,10 +463,12 @@ Route::middleware([CheckUserID::class])->group(function(){
         Route::get('/hris/pages/employees/documents/companyDocuments/create', 'CompanyDocumentController@create');
         Route::post('/hris/pages/employees/documents/companyDocuments', 'CompanyDocumentController@store');
         //edit
-        Route::get('/hris/pages/employees/documents/companyDocuments/{document}/edit', 'CompanyDocumentController@edit');
+        Route::get('/hris/pages/employees/documents/companyDocuments/{document}/edit', 'CompanyDocumentController@edit')->name('editCompanyDocument');
         Route::patch('/hris/pages/employees/documents/companyDocuments/update/{document}', 'CompanyDocumentController@update');
         //delete
         Route::delete('/hris/pages/employees/documents/companyDocuments/delete/{document}', 'CompanyDocumentController@destroy');
+        // GET AJAX DATA FOR EMPLOYEE
+        Route::post('/hris/pages/employees/documents/companyDocuments/getEmployee', 'CompanyDocumentController@renderEmployee')->name('getEmployee.fetch');
         // DOCUMENT TYPES
         Route::get('/hris/pages/employees/documents/types/index', 'DocumentTypeController@index');
         Route::get('/hris/pages/employees/documents/types/create', 'DocumentTypeController@create');
@@ -624,6 +628,9 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     //PERSONAL INFORMATION
     Route::get('/hris/pages/personalInformation/profile/index', 'PersonalInformationController@index');
+    /* UPDATE */
+    Route::get('/hris/pages/personalInformation/profile/{id}/edit', 'PersonalInformationController@edit');
+    Route::patch('/hris/pages/personalInformation/profile/update/{employee}', 'PersonalInformationController@update');
     Route::get('/hris/pages/personalInformation/profile/changePass', 'PersonalInformationController@changePass');
 
     //EMPLOYEE SKILL PAGE
