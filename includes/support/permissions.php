@@ -2352,7 +2352,7 @@ $permissions_arr = array(
 				''
 			),
 			'permission_description' => array(
-				'Allow account to access attendance list.',
+				'Allow account to Time in / Time out.',
 				''
 			)
 		),
