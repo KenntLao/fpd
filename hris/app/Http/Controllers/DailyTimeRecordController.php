@@ -169,7 +169,7 @@ class DailyTimeRecordController extends Controller
                             <td>' . $day_attendance_time_in . '</td>
                             <td>' . $day_attendance_time_out . '</td>
                         </tr>';
-            }else {
+            } else {
                 $result .= '<tr>
                             <td>' . date('Y M d', strtotime($date_code)) . '</td>
                             <td>' . date('D', strtotime($date_code)) . '</td>
