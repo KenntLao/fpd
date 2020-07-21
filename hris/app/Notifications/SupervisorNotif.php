@@ -42,7 +42,7 @@ class SupervisorNotif extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'employee_id' => $this->employee->id,
+            'employee_id' => $this->employee->employee_number,
             'supervisor_id' => $this->employee->supervisor,
             'notif_message' => $this->employee->firstname. ' ' . $this->employee->lastname . ' Sent an overtime request!',
         ];

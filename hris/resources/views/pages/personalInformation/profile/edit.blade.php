@@ -24,7 +24,7 @@
 		<h3 class="card-title">edit basic information</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/personalInformation/profile/update/{{$_SESSION['sys_id']}}" enctype="multipart/form-data" style="padding-top: 0" id="form" >
+		<form class="form-horizontal" method="post" action="/hris/pages/personalInformation/profile/update/{{$id->id}}" enctype="multipart/form-data" style="padding-top: 0" id="form" >
 			@include('pages.personalInformation.profile.form')
 			@method('PATCH')
 		</form>

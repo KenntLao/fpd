@@ -31,7 +31,7 @@ class OvertimeController extends Controller
             $roles = roles::all();
             $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
             $supervisor_id = implode(' ', $supervisor_role_id[0]);
-            $find = hris_employee::find($id);
+            $find = hris_employee::where('employee_number', $id)->first();
             $role_ids = explode(',', $find->role_id);
 
             if ( in_array($supervisor_id, $role_ids) ) {

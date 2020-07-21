@@ -9,6 +9,9 @@ use App\users;
 use App\hris_job_titles;
 use App\roles;
 use App\hris_company_structures;
+use App\hris_employment_statuses;
+use App\hris_certifications;
+use Faker\Generator as Faker;
 
 
 
@@ -17,14 +20,12 @@ class EmployeeController extends Controller
     
 //
     public function index(hris_employee $employee){
-
         $role_id = trim(str_replace(',','',$_SESSION['sys_role_ids']));
-
         $sys_id = $_SESSION['sys_id'];
         if(isset($_SESSION['sys_dep_id'])){
             $sys_dep_id = $_SESSION['sys_dep_id'];
             if ($sys_dep_id && $sys_id) {
-                $employees = hris_employee::where('department_id', $sys_dep_id)->where('id', '!=', $sys_id)->where('supervisor', $sys_id)->paginate(10);
+                $employees = hris_employee::where('department_id', $sys_dep_id)->where('employee_number', '!=', $sys_id)->where('supervisor', $sys_id)->paginate(10);
             } else {
                 $employees = hris_employee::paginate(10);
             }
@@ -36,18 +37,28 @@ class EmployeeController extends Controller
 
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
     {
+        $certifications = hris_certifications::all();
+        $employment_statuses = hris_employment_statuses::all();
         $roles = roles::all();
         $job_titles = hris_job_titles::all();
         $departments = hris_company_structures::all();
         $role_ids = explode(',', $employee->role_id);
-        return view('pages.employees.employee.create', compact('employee','roles', 'departments','job_titles','role_ids'));
+        return view('pages.employees.employee.create', compact('employee','roles', 'departments','job_titles','role_ids', 'employment_statuses','certifications'));
     }
 
-    public function store(Request $request, hris_employee $employees) {
+    public function store(Request $request, hris_employee $employees, Faker $faker) {
         if($this->validatedData()){
             // check data if valid
+            $path = public_path('assets/images/employees/employee_photos/');
             if ($request->hasFile('employee_photo')) {
                 $imageName = time() . 'EP.' . $request->employee_photo->extension();
+                $request->employee_photo->move($path, $imageName);
+            } else { // if image is empty create faker
+                if ($request->gender == 'male') {
+                    $imageName = $faker->file($path . '/male/tmp', $path, false);
+                } else {
+                    $imageName = $faker->file($path . '/female/tmp', $path, false);
+                }
             }
             // CREATE USERNAME
             $employee_firstname = request('firstname');
@@ -104,7 +115,6 @@ class EmployeeController extends Controller
             $employees->work_permit = request('work_permit');
             $employees->visa_expire = request('visa_expire');
             $employees->save();
-            $request->employee_photo->move(public_path('assets/images/employees/employee_photos/'), $imageName);
             return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully added!');   
         }else { // if data fails
                 return back()->withErrors($this->validatedData());
@@ -112,29 +122,36 @@ class EmployeeController extends Controller
     }
 
     public function edit(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles){
+            $certifications = hris_certifications::all();
+            $employment_statuses = hris_employment_statuses::all();
             $job_titles = hris_job_titles::all();
             $roles = roles::all();
             $departments = hris_company_structures::all();
             $role_ids = explode(',',$employee->role_id);
             $supervisor = hris_employee::where('id',$employee->supervisor)->first();
-            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids','supervisor'));
+            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids','supervisor','employment_statuses', 'certifications'));
     }
 
-    public function update(Request $request, hris_employee $employee){
+    public function update(Request $request, hris_employee $employee, Faker $faker){
         if ($this->validatedData()) {
             // check data if valid
-
-            // image path
-            $imagePath = public_path('assets/images/employees/employee_photos/');
-
+            $path = public_path('assets/images/employees/employee_photos/');
             // REMOVE OLD FILE
             if ($employee->employee_photo != '' && $employee->employee_photo != NULL) {
-                $old_file = $imagePath . $employee->employee_photo;
+                $old_file = $path . $employee->employee_photo;
                 unlink($old_file);
             }
             if ($request->hasFile('employee_photo')) {
                 $imageName = time() . 'EP.' . $request->employee_photo->extension();
+                $request->employee_photo->move($path, $imageName);
+            } else { // if image is empty create faker
+                if ($request->gender == 'male') {
+                    $imageName = $faker->file($path . '/male/tmp', $path, false);
+                } else {
+                    $imageName = $faker->file($path . '/female/tmp', $path, false);
+                }
             }
+            
             // CREATE USERNAME
             $employee_firstname = request('firstname');
             if (request('middlename')) {
@@ -189,7 +206,6 @@ class EmployeeController extends Controller
             $employee->work_permit = request('work_permit');
             $employee->visa_expire = request('visa_expire');
             $employee->update();
-            $request->employee_photo->move($imagePath, $imageName);
             return redirect($_SESSION['return_page'])->with('success', 'Employee successfully updated!');
         } else { // if data fails
             return back()->withErrors($this->validatedData());
@@ -244,14 +260,14 @@ class EmployeeController extends Controller
         $supervisors = hris_employee::whereRaw('find_in_set(?,role_id)', [$this->getSupervisorRoleId()])->where('department_id',$department_id)->get();
         $output = '<option value="">-- select one --</option>';
         foreach ($supervisors as $supervisor) {
-            $output .= '<option value="' . $supervisor->id . '">' . $supervisor->firstname . ' '. $supervisor->lastname .'</option>';
+            $output .= '<option value="' . $supervisor->employee_number . '">' . $supervisor->firstname . ' '. $supervisor->lastname .'</option>';
         }
         echo $output;
     }
     protected function validatedData()
     {
         return request()->validate([
-            'employee_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'employee_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'employee_number' => 'required',
             'firstname' => 'required',
             'middlename' => 'nullable',

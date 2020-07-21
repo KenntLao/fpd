@@ -61,7 +61,7 @@ if(isset($_POST['submit-login'])) {
 			while($data = $sql->fetch(PDO::FETCH_ASSOC)) {
 				$employee_upass = $data['password'];
 				$id = $data['id'];
-				$_SESSION['sys_id'] = $data['id'];
+				$_SESSION['sys_id'] = $data['employee_number'];
 				$_SESSION['sys_firstname'] = $data['firstname'];
 				$_SESSION['sys_lastname'] = $data['lastname'];
 				$_SESSION['sys_fullname'] = $data['firstname'].' '.$data['lastname'];

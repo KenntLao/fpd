@@ -194,36 +194,6 @@ class DailyTimeRecordController extends Controller
         return $hours;
     } */
 
-    public function check_attendance_range($employee_time_in, $employee_time_out, $workshift_time_in, $workshift_time_out, $employee_attendance_date){
-        $result = [];
-        $employee_id = $this->getEmployeeID();
-        $employee_time_in = date('h:i:s', strtotime($employee_time_in));
-        $employee_time_out = date('h:i:s', strtotime($employee_time_out));
-        $workshift_time_in = date('h:i:s', $workshift_time_in);
-        $workshift_time_out = date('h:i:s', $workshift_time_out);
-        // check if workshift time in rolls overnight
-        if($workshift_time_in > $workshift_time_out) {
-            //check if attendance is in workshift
-
-            // if employee time in is later than workshift time in
-            if($employee_time_in >= $workshift_time_in && $employee_time_out <= $workshift_time_out){
-                $first_time_in = hris_attendances::where('employee_id', $employee_id)->whereDate('created_at', $employee_attendance_date)->whereTime('time_in','>=',$workshift_time_in)->oldest()->value('time_in');
-                $latest_time_out = hris_attendances::where('employee_id', $employee_id)->whereDate('created_at', $employee_attendance_date)->whereTime('time_out', '<=', $workshift_time_out)->latest()->value('time_out');
-                $collection = collect(['time_in' => $first_time_in, 'time_out' => $latest_time_out]);
-                $result = $collection->all();
-                return $result;
-            }
-        }
-        // check time frame is within the same day
-        else if($employee_time_in >= $workshift_time_in && $employee_time_out <= $workshift_time_out) {
-            $first_time_in = hris_attendances::where('employee_id', $employee_id)->whereDate('created_at', $employee_attendance_date)->whereTime('time_in', '>=', $workshift_time_in)->oldest()->value('time_in');
-            $latest_time_out = hris_attendances::where('employee_id', $employee_id)->whereDate('created_at', $employee_attendance_date)->whereTime('time_out', '<=', $workshift_time_out)->latest()->value('time_out');
-            $collection = collect(['time_in' => $first_time_in, 'time_out' => $latest_time_out]);
-            $result = $collection->all();
-            return $result;
-        }
-
-    }
 
     public function index(hris_daily_time_record $dtr){
         

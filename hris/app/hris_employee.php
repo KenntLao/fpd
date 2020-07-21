@@ -20,10 +20,13 @@ class hris_employee extends Model
     }
 
     public function job_title(){
-        return $this->belongsTo('App\hris_job_titles');
+        return $this->belongsTo('App\hris_job_titles','job_title_id','id');
     }
 
     public function roles(){
         return $this->belongsTo('App\roles','id');
+    }
+    public function employeeProject(){
+        return $this->belongsTo('App\hris_employee_projects', 'employee_number','employee_id');
     }
 }

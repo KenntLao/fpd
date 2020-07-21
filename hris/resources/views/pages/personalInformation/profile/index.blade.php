@@ -25,7 +25,7 @@
 	<div class="card-header">
 		<h3 class="card-title">Basic Information</h3>
 		<div class="card-tools">
-			<a class="btn add-button btn-md" href="/hris/pages/personalInformation/profile/{{$_SESSION['sys_id']}}/edit"><i class="fa fa-edit mr-1"></i> edit info</a>
+			<a class="btn add-button btn-md" href="/hris/pages/personalInformation/profile/{{$employee->id}}/edit"><i class="fa fa-edit mr-1"></i> edit info</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -136,10 +136,10 @@
 						<p>
 							@php
 							if($employee->supervisor) {
-								$supervisor = App\hris_employee::find($employee->supervisor);
-								echo $supervisor->firstname.' '.$supervisor->lastname;
+							$supervisor = App\hris_employee::find($employee->supervisor);
+							echo $supervisor->firstname.' '.$supervisor->lastname;
 							} else {
-								echo 'ADD SUPERVISOR';
+							echo 'ADD SUPERVISOR';
 							}
 							@endphp
 						</p>
@@ -161,7 +161,7 @@
 			<div class="modal-header">
 				<h5 class="modal-title" id="change-passl">Change Password</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">

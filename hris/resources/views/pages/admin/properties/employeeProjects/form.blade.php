@@ -8,7 +8,7 @@
 				@if (count($employees) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($employees as $employee)
-				<option value="{{$employee->id}}" {{ $employeeProject->employee_id == $employee->id  ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
+				<option value="{{$employee->employee_number}}" {{ $employeeProject->employee_id == $employee->employee_number  ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>

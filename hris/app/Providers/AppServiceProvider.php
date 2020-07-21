@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         view()->composer('adminlte::partials.navbar.navbar', function($view){
-            $emp = hris_employee::find($_SESSION['sys_id']);
+            $emp = hris_employee::where('employee_number',$_SESSION['sys_id'])->first();
             $view->with('emp', $emp);
         });
     }

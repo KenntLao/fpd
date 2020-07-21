@@ -23,9 +23,11 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Employee List</h3>
+        @if(in_array('employee-add',$_SESSION['sys_permissions']))
         <div class="card-tools">
             <a class="btn add-button btn-md" href="/hris/pages/employees/employee/create"><i class="fa fa-plus mr-1"></i> Create Employee</a>
         </div>
+        @endif
     </div>
     <div class="card-body">
         @if(count($employees) > 0)
@@ -38,9 +40,11 @@
                         <th>Name</th>
                         <th>Mobile Phone</th>
                         <th>Department</th>
-                        <th>Gender</th>
+                        <th>Project</th>
                         <th>Supervisor</th>
+                        @if(in_array('employee-add',$_SESSION['sys_permissions']) || in_array('employee-edit',$_SESSION['sys_permissions']) || in_array('employee-delete',$_SESSION['sys_permissions']))
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -55,16 +59,27 @@
                         <td><a class="clickable-info" href="/hris/pages/employees/employee/{{$employee->id}}">{{$employee->firstname}} {{$employee->middlename}} {{$employee->lastname}}</a></td>
                         <td>{{$employee->work_no}}</td>
                         <td>{{$employee->department->name}}</td>
-                        <td>{{$employee->gender}}</td>
+                        <td>
+                            @if($employee->employeeProject)
+                            @php
+                                $emp_project = App\hris_projects::where('id',$employee->employeeProject->id)->first();
+                                echo $emp_project->name;
+                            @endphp
+                            @endif
+                        </td>
                         <td>
                             @php
                             {{
-                                    $emp = App\hris_employee::find($employee->supervisor);  
-                                    echo $emp['firstname'] . ' ' . $emp['lastname'];
+
+                                    $emp = App\hris_employee::where('employee_number',$employee->supervisor)->first();  
+                                    if($emp !== NULL){
+                                        echo $emp->firstname . ' ' . $emp->lastname;
+                                    }
                             }}
                             @endphp
 
                         </td>
+                        @if(in_array('employee-add',$_SESSION['sys_permissions']))
                         <td class="td-action">
                             <div class="row no-gutters">
                                 @if($role_id == 1)
@@ -82,6 +97,7 @@
                                 @endif
                             </div>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

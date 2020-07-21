@@ -12,9 +12,8 @@
                     " />
                     <div class="photo-overlay"></div>
                 </div>
-                <input class="required" accept="image/*" type="file" id="employee_photo" name="employee_photo" onchange="loadFile(event)" required>
+                <input class="required" accept="image/*" type="file" id="employee_photo" name="employee_photo" onchange="loadFile(event)">
                 Photo (250px x 280px)
-                <span class="badge badge-danger">Required</span>
             </label>
 
         </div>
@@ -136,7 +135,7 @@
             <label class="mr-2" for="supervisor">Supervisor </label>
             <select id="supervisor" class="form-control select2" name="supervisor">
                 @if(isset($supervisor))
-                <option value="{{$supervisor->id}}">{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
+                <option value="{{$supervisor->employee_number}}">{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
                 @else
                 <option>--select one--</option>
                 @endif
@@ -212,15 +211,16 @@
                             <label class="mr-2" for="employment_status">Employment Status</label>
                             <span class="badge badge-danger">Required</span>
                             <select class="form-control required select2" name="employment_status" required>
-                                @if($employee->employment_status)
-                                <option default selected>{{$employee->employment_status}}</option>
+                                @if(!$employee->employment_status)
+                                    <option default disabled selected>-- select one --</option>
+                                    @foreach($employment_statuses as $employment_status)
+                                    <option value="{{$employment_status->name}}" {{$employee->employment_status == $employment_status->name ? 'selected' : ''}}>{{$employment_status->name}}</option>
+                                    @endforeach
                                 @else
-                                <option disabled default selected>--select one--</option>
+                                    @foreach($employment_statuses as $employment_status)
+                                    <option value="{{$employment_status->name}}" {{$employee->employment_status == $employment_status->name ? 'selected' : ''}}>{{$employment_status->name}}</option>
+                                    @endforeach
                                 @endif
-                                <option value="regular">Regular</option>
-                                <option value="co-terminus">Co-Terminus</option>
-                                <option value="probationary">Probationary</option>
-                                <option value="fixed-term">Fixed-Term</option>
                             </select>
                         </div>
                     </div>
@@ -332,14 +332,16 @@
                             <label class="mr-2" for="marital_status">Certificate Level </label>
                             <span class="badge badge-danger">Required</span>
                             <select class="form-control required select2" name="cert_level" required>
-                                @if($employee->cert_level)
-                                <option default selected>{{$employee->cert_level}}</option>
+                                @if(!$employee->cert_level)
+                                <option default disabled selected>-- select one --</option>
+                                @foreach($certifications as $cert)
+                                <option value="{{$cert->name}}" {{$employee->cert_level == $cert->name ? 'selected' : ''}}>{{$cert->name}}</option>
+                                @endforeach
                                 @else
-                                <option disabled default selected>--select one--</option>
+                                @foreach($certifications as $cert)
+                                <option value="{{$cert->name}}" {{$employee->cert_level == $cert->name ? 'selected' : ''}}>{{$cert->name}}</option>
+                                @endforeach
                                 @endif
-                                <option value="bachelor">bachelor</option>
-                                <option value="master">Master</option>
-                                <option value="doctoral">Doctoral</option>
                             </select>
                         </div>
                         <div class="form-group">

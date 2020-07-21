@@ -16,6 +16,7 @@
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
+        @if(isset($emp->notifications))
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
@@ -37,6 +38,8 @@
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
+        @else
+        @endif
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @if(isset($_SESSION['sys_id']))
