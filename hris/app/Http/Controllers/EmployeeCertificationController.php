@@ -23,13 +23,19 @@ class EmployeeCertificationController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
             $employeeCertifications = hris_employee_certifications::paginate(10);
             return view('pages.personalInformation.certifications.index', compact('employeeCertifications'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
         }
     }
 
     public function create(hris_employee_certifications $employeeCertification)
     {
-        $certifications = hris_certifications::all();
-        return view('pages.personalInformation.certifications.create', compact('employeeCertification', 'certifications'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $certifications = hris_certifications::all();
+            return view('pages.personalInformation.certifications.create', compact('employeeCertification', 'certifications'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function store(hris_employee_certifications $employeeCertification, Request $request)
@@ -57,8 +63,12 @@ class EmployeeCertificationController extends Controller
 
     public function edit(hris_employee_certifications $employeeCertification)
     {
-        $certifications = hris_certifications::all();
-        return view('pages.personalInformation.certifications.edit', compact('employeeCertification', 'certifications'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $certifications = hris_certifications::all();
+            return view('pages.personalInformation.certifications.edit', compact('employeeCertification', 'certifications'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function update(hris_employee_certifications $employeeCertification, Request $request)
@@ -92,14 +102,18 @@ class EmployeeCertificationController extends Controller
     public function destroy(hris_employee_certifications $employeeCertification)
     {
         $id = $_SESSION['sys_id'];
-        $employee = hris_employee::find($id);
-        if ( Hash::check(request('password'), $employee->password) ) {
-            $employeeCertification->delete();
-            $id = $employeeCertification->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee education successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            return back()->with(['You do not have access in this page.']);
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('password'), $employee->password) ) {
+                $employeeCertification->delete();
+                $id = $employeeCertification->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee education successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

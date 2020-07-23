@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">languages list</h3>
+		@if(in_array('language-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/qualifications/languages/create"><i class="fa fa-plus mr-1"></i> add language</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($languages) > 0)
@@ -36,7 +38,9 @@
 					<tr>
 						<th>name</th>
 						<th>description</th>
+						@if(in_array('language-edit', $_SESSION['sys_permissions']) OR in_array('language-delete', $_SESSION['sys_permissions']))
 						<th>actions</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -44,17 +48,23 @@
 					<tr>
 						<td>{{$language->name}}</td>
 						<td>{{$language->description}}</td>
+						@if(in_array('language-edit', $_SESSION['sys_permissions']) OR in_array('language-delete', $_SESSION['sys_permissions']))
 						<td class="td-action">
 							<div class="row no-gutters">
+								@if(in_array('language-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<a class="btn btn-success btn-sm" href="/hris/pages/admin/qualifications/languages/{{$language->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
+								@if(in_array('language-delete', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$language->id}}" data-name="{{$language->name}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>

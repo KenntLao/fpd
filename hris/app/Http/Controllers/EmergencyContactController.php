@@ -22,12 +22,18 @@ class EmergencyContactController extends Controller
         if( $_SESSION['sys_account_mode'] == 'employee' ) {
             $emergencies = hris_emergency_contacts::paginate(10);
             return view('pages.personalInformation.emergencyContacts.index', compact('emergencies'));
+        } else {
+            return back();
         }
     }
 
     public function create(hris_emergency_contacts $emergency)
     {
-        return view('pages.personalInformation.emergencyContacts.create', compact('emergency'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            return view('pages.personalInformation.emergencyContacts.create', compact('emergency'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function store(hris_emergency_contacts $emergency, Request $request)
@@ -56,7 +62,11 @@ class EmergencyContactController extends Controller
 
     public function edit(hris_emergency_contacts $emergency)
     {
-        return view('pages.personalInformation.emergencyContacts.edit', compact('emergency'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            return view('pages.personalInformation.emergencyContacts.edit', compact('emergency'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function update(hris_emergency_contacts $emergency, Request $request)
@@ -91,14 +101,18 @@ class EmergencyContactController extends Controller
     public function destroy(hris_emergency_contacts $emergency)
     {
         $id = $_SESSION['sys_id'];
-        $employee = hris_employee::find($id);
-        if ( Hash::check(request('password'), $employee->password) ) {
-            $emergency->delete();
-            $id = $emergency->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            return back()->with(['You do not have access in this page.']);
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('password'), $employee->password) ) {
+                $emergency->delete();
+                $id = $emergency->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

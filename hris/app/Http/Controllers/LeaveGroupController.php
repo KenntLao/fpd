@@ -80,14 +80,26 @@ class LeaveGroupController extends Controller
     public function destroy(hris_leave_groups $leaveGroup)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $leaveGroup->delete();
-            $id = $leaveGroup->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $leaveGroup->delete();
+                $id = $leaveGroup->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $leaveGroup->delete();
+                $id = $leaveGroup->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
     protected function validatedData()

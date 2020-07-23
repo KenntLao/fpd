@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">certifications list</h3>
+		@if(in_array('certification-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/qualifications/certifications/create"><i class="fa fa-plus mr-1"></i> add certification</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($certifications) > 0)
@@ -36,7 +38,9 @@
 					<tr>
 						<th>name</th>
 						<th>description</th>
+						@if(in_array('certification-edit', $_SESSION['sys_permissions']) OR in_array('certification-delete', $_SESSION['sys_permissions']))
 						<th>actions</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -44,17 +48,23 @@
 					<tr>
 						<td>{{$certification->name}}</td>
 						<td>{{$certification->description}}</td>
+						@if(in_array('certification-edit', $_SESSION['sys_permissions']) OR in_array('certification-delete', $_SESSION['sys_permissions']))
 						<td class="td-action">
 							<div class="row no-gutters">
+								@if(in_array('certification-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<a class="btn btn-success btn-sm" href="/hris/pages/admin/qualifications/certifications/{{$certification->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
+								@if(in_array('certification-delete', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$certification->id}}" data-name="{{$certification->name}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>

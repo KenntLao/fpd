@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">category list</h3>
+		@if(in_array('overtime-category-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/overtime/overtimeCategories/create"><i class="fa fa-plus mr-1"></i> add overtime category</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($overtimeCategories) > 0)
@@ -35,24 +37,32 @@
 				<thead>
 					<tr>
 						<th>name</th>
+						@if(in_array('overtime-category-edit', $_SESSION['sys_permissions']) OR in_array('overtime-category-delete', $_SESSION['sys_permissions']))
 						<th>actions</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($overtimeCategories as $overtimeCategory)
 					<tr>
 						<td>{{$overtimeCategory->name}}</td>
+						@if(in_array('overtime-category-edit', $_SESSION['sys_permissions']) OR in_array('overtime-category-delete', $_SESSION['sys_permissions']))
 						<td class="td-action">
 							<div class="row no-gutters">
+								@if(in_array('overtime-category-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<a class="btn btn-success btn-sm" href="/hris/pages/admin/overtime/overtimeCategories/{{$overtimeCategory->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
+								@if(in_array('overtime-category-delete', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$overtimeCategory->id}}" data-name="{{$overtimeCategory->name}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>

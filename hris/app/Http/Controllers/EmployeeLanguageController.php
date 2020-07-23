@@ -23,13 +23,19 @@ class EmployeeLanguageController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
             $employeeLanguages = hris_employee_languages::paginate(10);
             return view('pages.personalInformation.languages.index', compact('employeeLanguages'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
         }
     }
 
     public function create(hris_employee_languages $employeeLanguage)
     {
-        $languages = hris_languages::all();
-        return view('pages.personalInformation.languages.create', compact('employeeLanguage', 'languages'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $languages = hris_languages::all();
+            return view('pages.personalInformation.languages.create', compact('employeeLanguage', 'languages'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function store(hris_employee_languages $employeeLanguage, Request $request)
@@ -58,8 +64,12 @@ class EmployeeLanguageController extends Controller
 
     public function edit(hris_employee_languages $employeeLanguage)
     {
-        $languages = hris_languages::all();
-        return view('pages.personalInformation.languages.edit', compact('employeeLanguage', 'languages'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $languages = hris_languages::all();
+            return view('pages.personalInformation.languages.edit', compact('employeeLanguage', 'languages'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function update(hris_employee_languages $employeeLanguage, Request $request)
@@ -94,14 +104,18 @@ class EmployeeLanguageController extends Controller
     public function destroy(hris_employee_languages $employeeLanguage)
     {
         $id = $_SESSION['sys_id'];
-        $employee = hris_employee::find($id);
-        if ( Hash::check(request('password'), $employee->password) ) {
-            $employeeLanguage->delete();
-            $id = $employeeLanguage->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee skill successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            return back()->with(['You do not have access in this page.']);
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('password'), $employee->password) ) {
+                $employeeLanguage->delete();
+                $id = $employeeLanguage->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee skill successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

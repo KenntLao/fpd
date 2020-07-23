@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">job positions list</h3>
+		@if(in_array('job-position-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/recruitment/jobPositions/create"><i class="fa fa-plus mr-1"></i> add job position</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($jobPositions) > 0)
@@ -40,7 +42,9 @@
 						<th style="width: 30%">details</th>
 						<th>country</th>
 						<th>department</th>
+						@if(in_array('job-position-edit', $_SESSION['sys_permissions']) OR in_array('job-position-delete', $_SESSION['sys_permissions']))
 						<th>actions</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -58,17 +62,23 @@
 							{{$jobPosition->department->name}}
 							@endif
 						</td>
+						@if(in_array('job-position-edit', $_SESSION['sys_permissions']) OR in_array('job-position-delete', $_SESSION['sys_permissions']))
 						<td class="td-action">
 							<div class="row no-gutters">
+								@if(in_array('job-position-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/jobPositions/{{$jobPosition->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
+								@if(in_array('job-position-delete', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$jobPosition->id}}" data-name="{{$jobPosition->job_title->name}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>

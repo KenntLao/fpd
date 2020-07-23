@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">skills list</h3>
+		@if(in_array('skill-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/qualifications/skills/create"><i class="fa fa-plus"></i> add skill</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($skills) > 0)
@@ -36,7 +38,9 @@
 					<tr>
 						<th>name</th>
 						<th>description</th>
+						@if(in_array('skill-edit', $_SESSION['sys_permissions']) OR in_array('skill-delete', $_SESSION['sys_permissions']))
 						<th>actions</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -44,17 +48,23 @@
 					<tr>
 						<td>{{$skill->name}}</td>
 						<td>{{$skill->description}}</td>
+						@if(in_array('skill-edit', $_SESSION['sys_permissions']) OR in_array('skill-delete', $_SESSION['sys_permissions']))
 						<td class="td-action">
 							<div class="row no-gutters">
+								@if(in_array('skill-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<a class="btn btn-success btn-sm" href="/hris/pages/admin/qualifications/skills/{{$skill->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
+								@if(in_array('skill-delete', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$skill->id}}" data-name="{{$skill->name}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>

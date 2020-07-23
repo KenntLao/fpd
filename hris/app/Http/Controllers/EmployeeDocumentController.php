@@ -113,19 +113,36 @@ class EmployeeDocumentController extends Controller
     public function destroy(hris_employee_documents $document)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $document->delete();
-            $path = public_path('/assets/files/employees/documents/employee_documents/');
-            if ($document->attachment != '' && $document->attachment != NULL) {
-                $old = $path . $document->attachment;
-                unlink($old);
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $document->delete();
+                $path = public_path('/assets/files/employees/documents/employee_documents/');
+                if ($document->attachment != '' && $document->attachment != NULL) {
+                    $old = $path . $document->attachment;
+                    unlink($old);
+                }
+                $id = $document->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
             }
-            $id = $document->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully deleted!');
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $document->delete();
+                $path = public_path('/assets/files/employees/documents/employee_documents/');
+                if ($document->attachment != '' && $document->attachment != NULL) {
+                    $old = $path . $document->attachment;
+                    unlink($old);
+                }
+                $id = $document->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

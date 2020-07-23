@@ -147,24 +147,46 @@ class CandidateController extends Controller
     public function destroy(hris_candidates $candidate)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $candidate->delete();
-            $pathCandidate = public_path('assets/files/candidates/profile_image/');
-            $pathResume = public_path('assets/files/candidates/resume/');
-            if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
-                $old_file_1 = $pathCandidate . $candidate->profile_image;
-                unlink($old_file_1);
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $candidate->delete();
+                $pathCandidate = public_path('assets/files/candidates/profile_image/');
+                $pathResume = public_path('assets/files/candidates/resume/');
+                if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
+                    $old_file_1 = $pathCandidate . $candidate->profile_image;
+                    unlink($old_file_1);
+                }
+                if ($candidate->resume != '' && $candidate->resume != NULL) {
+                    $old_file_2 = $pathResume . $candidate->resume;
+                    unlink($old_file_2);
+                }
+                $id = $candidate->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
             }
-            if ($candidate->resume != '' && $candidate->resume != NULL) {
-                $old_file_2 = $pathResume . $candidate->resume;
-                unlink($old_file_2);
-            }
-            $id = $candidate->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $candidate->delete();
+                $pathCandidate = public_path('assets/files/candidates/profile_image/');
+                $pathResume = public_path('assets/files/candidates/resume/');
+                if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
+                    $old_file_1 = $pathCandidate . $candidate->profile_image;
+                    unlink($old_file_1);
+                }
+                if ($candidate->resume != '' && $candidate->resume != NULL) {
+                    $old_file_2 = $pathResume . $candidate->resume;
+                    unlink($old_file_2);
+                }
+                $id = $candidate->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

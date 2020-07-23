@@ -86,14 +86,26 @@ class EmployeeProjectController extends Controller
     public function destroy(hris_employee_projects $employeeProject)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $employeeProject->delete();
-            $id = $employeeProject->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $employeeProject->delete();
+                $id = $employeeProject->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $employeeProject->delete();
+                $id = $employeeProject->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

@@ -77,14 +77,26 @@ class JobFunctionController extends Controller
     public function destroy(hris_job_functions $jobFunction)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $jobFunction->delete();
-            $id = $jobFunction->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $jobFunction->delete();
+                $id = $jobFunction->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $jobFunction->delete();
+                $id = $jobFunction->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

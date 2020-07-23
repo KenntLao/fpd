@@ -84,14 +84,26 @@ class LeaveGroupEmployeeController extends Controller
     public function destroy(hris_leave_group_employees $leaveGroupEmployee)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $leaveGroupEmployee->delete();
-            $id = $leaveGroupEmployee->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $leaveGroupEmployee->delete();
+                $id = $leaveGroupEmployee->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $leaveGroupEmployee->delete();
+                $id = $leaveGroupEmployee->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

@@ -23,12 +23,18 @@ class DependentController extends Controller
         if ($_SESSION['sys_account_mode'] == 'employee') {
             $dependents = hris_employee_dependents::where('employee_id', $id)->paginate(10);
             return view('pages.personalInformation.dependents.index', compact('dependents'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
         }
     }
 
     public function create(hris_employee_dependents $dependent)
     {
-        return view('pages.personalInformation.dependents.create', compact('dependent'));
+        if ($_SESSION['sys_account_mode'] == 'employee') {
+            return view('pages.personalInformation.dependents.create', compact('dependent'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function store(hris_employee_dependents $dependent, Request $request)
@@ -56,7 +62,11 @@ class DependentController extends Controller
 
     public function edit(hris_employee_dependents $dependent)
     {
-        return view('pages.personalInformation.dependents.edit', compact('dependent'));
+        if ($_SESSION['sys_account_mode'] == 'employee') {
+            return view('pages.personalInformation.dependents.edit', compact('dependent'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function update(hris_employee_dependents $dependent, Request $request)
@@ -90,14 +100,18 @@ class DependentController extends Controller
     public function destroy(hris_employee_dependents $dependent)
     {
         $id = $_SESSION['sys_id'];
-        $employee = hris_employee::find($id);
-        if ( Hash::check(request('password'), $employee->password) ) {
-            $dependent->delete();
-            $id = $dependent->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            return back()->with(['You do not have access in this page.']);
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('password'), $employee->password) ) {
+                $dependent->delete();
+                $id = $dependent->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

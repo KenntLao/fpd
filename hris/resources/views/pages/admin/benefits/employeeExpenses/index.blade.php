@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">employee expenses list</h3>
+		@if(in_array('employee-expense-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/benefits/employeeExpenses/create"><i class="fa fa-plus mr-1"></i> add employee expenses</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($employeeExpenses) > 0)
@@ -42,7 +44,9 @@
 						<th>amount</th>
 						<th>currency</th>
 						<th>status</th>
+						@if(in_array('employee-expense-edit', $_SESSION['sys_permissions']) OR in_array('employee-expense-delete', $_SESSION['sys_permissions']))
 						<th>actions</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -84,6 +88,7 @@
                             Denied
                             @endif
                         </td>
+                        @if(in_array('employee-expense-edit', $_SESSION['sys_permissions']) OR in_array('employee-expense-delete', $_SESSION['sys_permissions']))
 						<td>
 							<div class="row no-gutters">
 								@if($employeeExpense->status == '1' OR $employeeExpense->status == '2')
@@ -94,22 +99,27 @@
 								<div class="action-col">
 									<a class="btn btn-info btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/show"><i class="fa fa-search"></i></a>
 								</div>
+								@if(in_array('employee-expense-edit', $_SESSION['sys_permissions']))
 								<div class="action-col">
 									<a class="btn btn-success btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/{{$employeeExpense->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
 								<div class="action-col">
                                     <a class="btn btn-primary btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/updateStatus/1/{{$employeeExpense->id}}" title="Approve employee expense."><i class="fas fa-check-square"></i></a>
 								</div>
 								<div class="action-col">
                                     <a class="btn btn-warning btn-sm" href="/hris/pages/admin/benefits/employeeExpenses/updateStatus/2/{{$employeeExpense->id}}" title="Deny employee expense."><i class="fas fa-times"></i></a>
 								</div>
+								@if(in_array('employee-expense-delete', $_SESSION['sys_permissions']))
 								<div class="action-col">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeExpense->id}}" data-name="Employee Expense no. {{$employeeExpense->id}}"><i class="fa fa-trash"></i></button>
 								</div>
 								@endif
+								@endif
 							</div>
 						</td>
+                        @endif
 					</tr>
 					@endforeach
 				</tbody>

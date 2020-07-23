@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">leave type list</h3>
+		@if(in_array('leave-type-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/leave/leaveTypes/create"><i class="fa fa-plus mr-1"></i> add leave type</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($leaveTypes) > 0)
@@ -39,7 +41,9 @@
 					<th>leave carried forward</th>
 					<th>leaves per year</th>
 					<th>leave group</th>
+					@if(in_array('leave-type-edit', $_SESSION['sys_permissions']) OR in_array('leave-type-edit', $_SESSION['sys_permissions']))
 					<th>actions</th>
+					@endif
 				</tr>
 			</thead>
 			<tbody>
@@ -57,17 +61,23 @@
 						None
 						@endif
 					</td>
+					@if(in_array('leave-type-edit', $_SESSION['sys_permissions']) OR in_array('leave-type-edit', $_SESSION['sys_permissions']))
 					<td class="td-action">
 						<div class="row no-gutters">
+							@if(in_array('leave-type-edit', $_SESSION['sys_permissions']))
 							<div class="col-6">
 								<a class="btn btn-success btn-sm" href="/hris/pages/admin/leave/leaveTypes/{{$leaveType->id}}/edit"><i class="fa fa-edit"></i></a>
 							</div>
+							@endif
+							@if(in_array('leave-type-delete', $_SESSION['sys_permissions']))
 							<div class="col-6">
 								<!-- Button trigger modal -->
 								<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$leaveType->id}}" data-name="{{$leaveType->name}}"><i class="fa fa-trash"></i></button>
 							</div>
+							@endif
 						</div>
 					</td>
+					@endif
 				</tr>
 				@endforeach
 			</tbody>

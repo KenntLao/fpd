@@ -131,9 +131,11 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Overtime Request List</h3>
+                @if(in_array('overtime-add', $_SESSION['sys_permissions']))
                 <div class="card-tools">
                     <a class="btn add-button btn-md" href="/hris/pages/time/overtime/create"><i class="fa fa-plus mr-1"></i> Request Overtime</a>
                 </div>
+                @endif
             </div>
             <div class="card-body">
                 @if(count($self) > 0)
@@ -200,13 +202,20 @@
                                             <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         @else
-                                        <div class="col-6">
+                                        <div class="col-4">
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                        </div>
+                                        @if(in_array('overtime-edit', $_SESSION['sys_permissions']))
+                                        <div class="col-4">
                                             <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
                                         </div>
-                                        <div class="col-6">
+                                        @endif
+                                        @if(in_array('overtime-delete', $_SESSION['sys_permissions']))
+                                        <div class="col-4">
                                             <!-- Button trigger modal -->
                                             <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$s->id}}" data-name="Overtime request - {{$s->created_at}} from {{$s->employee->firstname}} {{$s->employee->lastname}}"><i class="fa fa-trash"></i></button>
                                         </div>
+                                        @endif
                                         @endif
                                     </div>
                                 </td>
@@ -228,6 +237,9 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Overtime Request List</h3>
+                <div class="card-tools">
+                    <a class="btn add-button btn-md" href="/hris/pages/time/overtime/download"><i class="far fa-file-excel mr-1"></i> Download Excel File</a>
+                </div>
             </div>
             <div class="card-body">
                 @if(count($overtimes) > 0)
@@ -294,10 +306,13 @@
                                             <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         @else
-                                        <div class="col-md-6">
+                                        <div class="col-4">
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                        </div>
+                                        <div class="col-4">
                                             <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/edit" title="Approve request"><i class="fas fa-check-square"></i></a>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-4">
                                             <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/edit" title="Deny request"><i class="fas fa-times"></i></a>
                                         </div>
                                         @endif
@@ -322,9 +337,11 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Overtime Request List</h3>
+        @if(in_array('overtime-add', $_SESSION['sys_permissions']))
         <div class="card-tools">
             <a class="btn add-button btn-md" href="/hris/pages/time/overtime/create"><i class="fa fa-plus mr-1"></i> Request Overtime</a>
         </div>
+        @endif
     </div>
     <div class="card-body">
         @if(count($overtimes) > 0)
@@ -391,13 +408,20 @@
                                     <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
-                                <div class="col-6">
+                                <div class="col-4">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                </div>
+                                @if(in_array('overtime-edit', $_SESSION['sys_permissions']))
+                                <div class="col-4">
                                     <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
-                                <div class="col-6">
+                                @endif
+                                @if(in_array('overtime-delete', $_SESSION['sys_permissions']))
+                                <div class="col-4">
                                     <!-- Button trigger modal -->
                                     <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
                                 </div>
+                                @endif
                                 @endif
                             </div>
                         </td>
@@ -465,6 +489,7 @@ $('.modal-footer > button').attr('form', 'form-' + id);
 var name = $(this).attr('data-name');
 $('.data-name').text('Are you sure you want to delete ' + name + '?');
 });
+
 });
 </script>
 @stop

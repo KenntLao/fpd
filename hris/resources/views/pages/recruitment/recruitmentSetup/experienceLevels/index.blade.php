@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">experience levels list</h3>
+		@if(in_array('experience-level-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/recruitment/recruitmentSetup/experienceLevels/create"><i class="fa fa-plus"></i> add experience level</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($experienceLevels) > 0)
@@ -36,7 +38,9 @@
 					<tr>
 						<th>id</th>
 						<th>name</th>
+						@if(in_array('experience-level-edit', $_SESSION['sys_permissions']) OR in_array('experience-level-delete', $_SESSION['sys_permissions']))
 						<th>action</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -44,17 +48,23 @@
 					<tr>
 						<td>{{$experienceLevel->id}}</td>
 						<td>{{$experienceLevel->name}}</td>
+						@if(in_array('experience-level-edit', $_SESSION['sys_permissions']) OR in_array('experience-level-delete', $_SESSION['sys_permissions']))
 						<td class="td-action">
 							<div class="row no-gutters">
+								@if(in_array('experience-level-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/recruitmentSetup/experienceLevels/{{$experienceLevel->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
+								@if(in_array('experience-level-delete', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$experienceLevel->id}}" data-name="{{$experienceLevel->name}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>

@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">company structure list</h3>
+		@if(in_array('company-structure-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/company/create"><i class="fa fa-plus mr-1"></i> add company structure</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($companies) > 0)
@@ -40,29 +42,37 @@
 						<th>country</th>
 						<th>time zone</th>
 						<th>parent structure</th>
+						@if( in_array('company-structure-edit', $_SESSION['sys_permissions']) OR in_array('company-structure-delete', $_SESSION['sys_permissions']) )
 						<th>actions</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($companies as $company)
 					<tr>
-						<td>{{$company->name}}</td>
+						<td>{{$company->name}} ({{$company->code}})</td>
 						<td>{{$company->address}}</td>
 						<td>{{$company->type}}</td>
 						<td>{{$company->country}}</td>
 						<td>{{$company->timezone}}</td>
 						<td>{{$company->parent_structure}}</td>
+						@if( in_array('company-structure-edit', $_SESSION['sys_permissions']) OR in_array('company-structure-delete', $_SESSION['sys_permissions']) )
 						<td class="td-action">
 							<div class="row no-gutters">
+								@if(in_array('company-structure-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<a class="btn-success btn btn-sm" href="/hris/pages/admin/company/{{$company->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
+								@if(in_array('company-structure-delete', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$company->id}}" data-name="{{$company->name}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>

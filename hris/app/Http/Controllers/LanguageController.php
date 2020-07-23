@@ -83,14 +83,26 @@ class LanguageController extends Controller
     public function destroy(hris_languages $language)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $language->delete();
-            $id = $language->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $language->delete();
+                $id = $language->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $language->delete();
+                $id = $language->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

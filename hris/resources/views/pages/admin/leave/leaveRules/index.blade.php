@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">leave rules list</h3>
+		@if(in_array('leave-rule-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/leave/leaveRules/create"><i class="fa fa-plus mr-1"></i> add leave rule</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($leaveRules) > 0)
@@ -43,7 +45,9 @@
 					<th>employee</th>
 					<th>Experience (Days)</th>
 					<th>Leaves Per Year</th>
+					@if(in_array('leave-rule-edit', $_SESSION['sys_permissions']) OR in_array('leave-rule-delete', $_SESSION['sys_permissions']))
 					<th>Actions</th>
+					@endif
 				</tr>
 			</thead>
 			<tbody>
@@ -101,11 +105,17 @@
 					</td>
 					<td>{{$leaveRule->exp_days}}</td>
 					<td>{{$leaveRule->default_per_year}}</td>
+					@if(in_array('leave-rule-edit', $_SESSION['sys_permissions']) OR in_array('leave-rule-delete', $_SESSION['sys_permissions']))
 					<td>
+						@if(in_array('leave-rule-edit', $_SESSION['sys_permissions']))
 						<a class="btn btn-success btn-sm" href="/hris/pages/admin/leave/leaveRules/{{$leaveRule->id}}/edit" style="margin: 2px"><i class="fa fa-edit"></i></a>
+						@endif
+						@if(in_array('leave-rule-delete', $_SESSION['sys_permissions']))
 						<!-- Button trigger modal -->
 						<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$leaveRule->id}}" data-name="Leave Rule ID: {{$leaveRule->id}}" style="margin: 2px"><i class="fa fa-trash"></i></button>
+						@endif
 					</td>
+					@endif
 				</tr>
 				@endforeach
 			</tbody>

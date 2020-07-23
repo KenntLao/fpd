@@ -113,13 +113,13 @@ class IteneraryRequestController extends Controller
                 $users = users::find($iteneraryRequest->supervisor_id);
                 $user = $users->uname;
             } else {
-                $user = 'Pending';
+                $user = '---';
             }
         } else {
             if ( $iteneraryRequest->supervisor_id != NULL ) {
                 $user = $iteneraryRequest->supervisor->firstname.' '.$iteneraryRequest->supervisor->lastname;
             } else {
-                $user = 'Pending';
+                $user = '---';
             }
         }
         $currencies = hris_currencies::all();
@@ -235,10 +235,10 @@ class IteneraryRequestController extends Controller
                 $this->function->statusSystemLog($this->module,$string,$id);
                 if ( $status == '1' OR $status == '2' ) {
                     if ( $status == '1' ) {
-                    $msg = 'accepted';
+                    $msg = 'approved';
                     }
                     if ( $status == '2' ) {
-                    $msg = 'rejected';
+                    $msg = 'denied';
                     }
                     $overtime->status = $status;
                 } else {
@@ -254,10 +254,10 @@ class IteneraryRequestController extends Controller
                     $this->function->statusSystemLog($this->module,$string,$id);
                     if ( $status == '1' OR $status == '2' ) {
                         if ( $status == '1' ) {
-                            $msg = 'accepted';
+                            $msg = 'approved';
                         }
                         if ( $status == '2' ) {
-                            $msg = 'rejected';
+                            $msg = 'denied';
                         }
                         $iteneraryRequest->status = $status;
                     } else {
@@ -291,7 +291,7 @@ class IteneraryRequestController extends Controller
     public function destroy(hris_itenerary_requests $iteneraryRequest)
     {
         $id = $_SESSION['sys_id'];
-        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
                 $iteneraryRequest->delete();

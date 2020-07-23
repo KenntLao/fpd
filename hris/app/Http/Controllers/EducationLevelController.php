@@ -76,14 +76,26 @@ class EducationLevelController extends Controller
     public function destroy(hris_education_levels $educationLevel)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $educationLevel->delete();
-            $id = $educationLevel->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $educationLevel->delete();
+                $id = $educationLevel->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $educationLevel->delete();
+                $id = $educationLevel->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">asset type list</h3>
+		@if(in_array('company-asset-type-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/companyAssets/types/create"><i class="fa fa-plus mr-1"></i> add asset type</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($types) > 0)
@@ -35,7 +37,9 @@
 				<tr>
 					<th>name</th>
 					<th>description</th>
+					@if(in_array('company-asset-type-edit', $_SESSION['sys_permissions']) OR in_array('company-asset-type-delete', $_SESSION['sys_permissions']))
 					<th>actions</th>
+					@endif
 				</tr>
 			</thead>
 			<tbody>
@@ -43,17 +47,23 @@
 				<tr>
 					<td>{{$type->name}}</td>
 					<td>{{$type->description}}</td>
+					@if(in_array('company-asset-type-edit', $_SESSION['sys_permissions']) OR in_array('company-asset-type-delete', $_SESSION['sys_permissions']))
 					<td class="td-action">
 						<div class="row no-gutters">
+							@if(in_array('company-asset-type-edit', $_SESSION['sys_permissions']))
 							<div class="col-6">
 								<a class="btn btn-success btn-sm" href="/hris/pages/admin/companyAssets/types/{{$type->id}}/edit"><i class="fa fa-edit"></i></a>
 							</div>
+							@endif
+							@if(in_array('company-asset-type-delete', $_SESSION['sys_permissions']))
 							<div class="col-6">
 								<!-- Button trigger modal -->
 								<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$type->id}}" data-name="{{$type->name}}"><i class="fa fa-trash"></i></button>
 							</div>
+							@endif
 						</div>
 					</td>
+					@endif
 				</tr>
 				@endforeach
 			</tbody>

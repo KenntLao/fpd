@@ -23,13 +23,19 @@ class EmployeeSkillController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
             $employeeSkills = hris_employee_skills::paginate(10);
             return view('pages.personalInformation.skills.index', compact('employeeSkills'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
         }
     }
 
     public function create(hris_employee_skills $employeeSkill)
     {
-        $skills = hris_skills::all();
-        return view('pages.personalInformation.skills.create', compact('employeeSkill', 'skills'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $skills = hris_skills::all();
+            return view('pages.personalInformation.skills.create', compact('employeeSkill', 'skills'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function store(hris_employee_skills $employeeSkill, Request $request)
@@ -55,8 +61,12 @@ class EmployeeSkillController extends Controller
 
     public function edit(hris_employee_skills $employeeSkill)
     {
-        $skills = hris_skills::all();
-        return view('pages.personalInformation.skills.edit', compact('employeeSkill', 'skills'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $skills = hris_skills::all();
+            return view('pages.personalInformation.skills.edit', compact('employeeSkill', 'skills'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function update(hris_employee_skills $employeeSkill, Request $request)
@@ -88,14 +98,18 @@ class EmployeeSkillController extends Controller
     public function destroy(hris_employee_skills $employeeSkill)
     {
         $id = $_SESSION['sys_id'];
-        $employee = hris_employee::find($id);
-        if ( Hash::check(request('password'), $employee->password) ) {
-            $employeeSkill->delete();
-            $id = $employeeSkill->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            return back()->with(['You do not have access in this page.']);
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('password'), $employee->password) ) {
+                $employeeSkill->delete();
+                $id = $employeeSkill->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

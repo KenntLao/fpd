@@ -624,6 +624,10 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::delete('/hris/pages/time/overtime/delete/{overtime}', 'OvertimeController@destroy');
     /* SHOW */
     Route::get('/hris/pages/time/overtime/{overtime}/show', 'OvertimeController@show');
+
+    // EXPORT EXCEL FILE
+    Route::get('/hris/pages/time/overtime/table', 'OvertimeController@table');
+    Route::get('/hris/pages/time/overtime/download', 'ExportController@overtimeExport');
     
 
     //PERSONAL INFORMATION
