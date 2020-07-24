@@ -1228,29 +1228,27 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "3.1.19",
+            "version": "3.1.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "96527a9ebc2e79e9a5fa7eaef7e23c9e9bcc587c"
+                "reference": "39545fa96b84d5a90f702239659c49a5d7b1edea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/96527a9ebc2e79e9a5fa7eaef7e23c9e9bcc587c",
-                "reference": "96527a9ebc2e79e9a5fa7eaef7e23c9e9bcc587c",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/39545fa96b84d5a90f702239659c49a5d7b1edea",
+                "reference": "39545fa96b84d5a90f702239659c49a5d7b1edea",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0",
                 "php": "^7.0",
-                "phpoffice/phpspreadsheet": "^1.10"
+                "phpoffice/phpspreadsheet": "^1.14"
             },
             "require-dev": {
-                "mockery/mockery": "^1.1",
-                "orchestra/database": "^4.0",
-                "orchestra/testbench": "^4.0",
-                "phpunit/phpunit": "^8.0",
+                "orchestra/database": "^5.0",
+                "orchestra/testbench": "^5.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -1291,7 +1289,17 @@
                 "php",
                 "phpspreadsheet"
             ],
-            "time": "2020-02-28T15:47:45+00:00"
+            "funding": [
+                {
+                    "url": "https://laravel-excel.com/commercial-support",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/patrickbrouwers",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-07-17T20:39:28+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -6442,5 +6450,6 @@
     "platform": {
         "php": "^7.2.5"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

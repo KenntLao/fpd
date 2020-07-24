@@ -49,7 +49,16 @@
                 @endif
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/hris/logout">Log out</a>
+                @if($_SESSION['sys_account_mode'] == 'employee')
+                    @if(isset($_SESSION['sys_id']))
+                    <div class="dropdown-main-profile-photo">
+                        <img src="{{asset($_SESSION['sys_hris_photo'])}}">
+                    </div>
+                    <h5><a href="/hris/pages/personalInformation/profile/index">{{$_SESSION['sys_fullname']}}</a></h5>
+                    @endif
+                    <div class="dropdown-divider"></div>
+                @endif
+                <a class="dropdown-item" href="/hris/logout"><i class="fa fa-sign-out-alt mr-2" aria-hidden="true"></i> Log out</a>
             </div>
         </li>
         {{-- Custom right links --}}

@@ -36,7 +36,32 @@ html::-webkit-scrollbar {
 	width: 20px;
 	vertical-align: sub;
 }
+.dropdown-menu {
+	padding: 15px;
+	text-align: center;
+}
+.dropdown-menu h5 {
+	padding: 10px 0;
+	text-transform: uppercase;
+}
+.dropdown-menu h5 a {
+	color:rgba(0, 0, 0, .5);
+	font-size: 1rem;
+}
+.dropdown-menu h5 a:hover {
+    color: rgba(0, 0, 0, .9);
+}
+.dropdown-item {
+	text-transform: uppercase;
+}
+.dropdown-main-profile-photo {
 
+}
+.dropdown-main-profile-photo img {
+	width: 100px;
+	height: 100px;
+	border-radius: 9999px;
+}
 /* SIDEBAR */
 .sidebar {
 	padding-bottom: 6rem;
@@ -538,6 +563,7 @@ textarea.form-control {
 .table-image-container img {
 	width: 50px;
 	height: 50px;
+	border-radius: 999px;
 }
 .employee-info {
 	color: #FCBB6D;

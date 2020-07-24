@@ -20,7 +20,7 @@ class PersonalInformationController extends Controller
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
             $id = $_SESSION['sys_id'];
-            $employee = hris_employee::where('employee_number',$id)->first();
+            $employee = hris_employee::where('id',$id)->first();
             return view('pages.personalInformation.profile.index', compact('employee'));
         }
     }
