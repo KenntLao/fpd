@@ -94,7 +94,7 @@ class OvertimeExport implements FromView,ShouldAutoSize
             sum(LGLSPL_ND1_2_ND1) as LGLSPL_ND1_2_ND1_SUM, 
             sum(LGLSPL_ND1_2_ND2) as LGLSPL_ND1_2_ND2_SUM,
             employee_id'
-        )->where('status', '1')->where('supervisor_id', $_SESSION['sys_id'])->get()
+        )->where('status', '1')->where('supervisor_id', $_SESSION['sys_id'])->where('role_id', $_SESSION['sys_role_ids'])->get()
         ]);
     }
 }

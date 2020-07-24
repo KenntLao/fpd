@@ -83,10 +83,10 @@ class OvertimeController extends Controller
                 $overtime->save();
 
                 // OVERTIME REQUEST NOTIFICATION
-                /*$employee = hris_employee::where('id',$_SESSION['sys_id'])->first();
+                $employee = hris_employee::where('id',$_SESSION['sys_id'])->first();
                 $get_supervisor = hris_employee::where('id', $_SESSION['sys_id'])->get('supervisor');
-                $employee_supervisor = hris_employee::where('id',$get_supervisor)->first();
-                $employee_supervisor->notify(new SupervisorNotif($employee));*/
+                $employee_supervisor = hris_employee::where('id',$employee->supervisor)->first();
+                $employee_supervisor->notify(new SupervisorNotif($employee));
 
                 /* SYSTEM LOG */
                 $id = $overtime->id;
