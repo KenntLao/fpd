@@ -135,9 +135,11 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Itenerary Request List</h3>
+                @if(in_array('itenerary-request-add', $_SESSION['sys_permissions']))
                 <div class="card-tools">
                     <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
                 </div>
+                @endif
             </div>
             <div class="card-body">
                 @if(count($self) > 0)
@@ -153,7 +155,9 @@
                                 <th>to</th>
                                 <th>purpose</th>
                                 <th>status</th>
+                                @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']) OR in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
                                 <th>action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -200,6 +204,7 @@
                                     Denied
                                     @endif
                                 </td>
+                                @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']) OR in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
                                 <td>
                                     <div class="row no-gutters">
                                         @if($s->status == '1' OR $s->status == '2')
@@ -210,16 +215,21 @@
                                         <div class="col-4">
                                             <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
+                                        @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']))
                                         <div class="col-4">
                                             <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
                                         </div>
+                                        @endif
+                                        @if(in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
                                         <div class="col-4">
                                             <!-- Button trigger modal -->
                                             <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$s->id}}" data-name="Itenerary request - {{$s->created_at}} from {{$s->employee->firstname}} {{$s->employee->lastname}}"><i class="fa fa-trash"></i></button>
                                         </div>
                                         @endif
+                                        @endif
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -338,9 +348,11 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Itenerary Request List</h3>
+        @if(in_array('itenerary-request-add', $_SESSION['sys_permissions']))
         <div class="card-tools">
             <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
         </div>
+        @endif
     </div>
     <div class="card-body">
         @if(count($iteneraryRequests) > 0)
@@ -356,7 +368,9 @@
                         <th>to</th>
                         <th>purpose</th>
                         <th>status</th>
+                        @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']) OR in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
                         <th>action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -403,6 +417,7 @@
                             Denied
                             @endif
                         </td>
+                        @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']) OR in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
                         <td>
                             <div class="row no-gutters">
                                 @if($iteneraryRequest->status == '1' OR $iteneraryRequest->status == '2')
@@ -410,16 +425,24 @@
                                     <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
-                                <div class="col-6">
+                                <div class="col-4">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
+                                </div>
+                                @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']))
+                                <div class="col-4">
                                     <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
-                                <div class="col-6">
+                                @endif
+                                @if(in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
+                                <div class="col-4">
                                     <!-- Button trigger modal -->
                                     <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$iteneraryRequest->id}}" data-name="Itenerary request - {{$iteneraryRequest->created_at}} from {{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}"><i class="fa fa-trash"></i></button>
                                 </div>
                                 @endif
+                                @endif
                             </div>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

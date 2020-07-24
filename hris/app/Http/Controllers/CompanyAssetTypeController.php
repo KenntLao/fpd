@@ -99,19 +99,36 @@ class CompanyAssetTypeController extends Controller
     public function destroy(hris_company_asset_types $type)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $type->delete();
-            $path = public_path('assets/files/companyAssets/types/');
-            if ($type->attachment != '' && $type->attachment != NULL) {
-                $old_file = $path . $type->attachment;
-                unlink($old_file);
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $type->delete();
+                $path = public_path('assets/files/companyAssets/types/');
+                if ($type->attachment != '' && $type->attachment != NULL) {
+                    $old_file = $path . $type->attachment;
+                    unlink($old_file);
+                }
+                $id = $type->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/companyAssets/types/index')->with('success','Asset type successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
             }
-            $id = $type->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/admin/companyAssets/types/index')->with('success','Asset type successfully deleted!');
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $type->delete();
+                $path = public_path('assets/files/companyAssets/types/');
+                if ($type->attachment != '' && $type->attachment != NULL) {
+                    $old_file = $path . $type->attachment;
+                    unlink($old_file);
+                }
+                $id = $type->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/companyAssets/types/index')->with('success','Asset type successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

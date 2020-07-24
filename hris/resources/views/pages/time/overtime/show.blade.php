@@ -93,7 +93,13 @@
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
                             <label class="mr-2" for="type">Type: </label>
-                            <p>{{$overtime->type}}</p>
+                            <p>
+                                @if($overtime->overtime_type_id)
+                                {{$overtime->overtime_type->name}}
+                                @else
+                                ---
+                                @endif
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -130,9 +136,13 @@
                         <div class="form-group">
                             <label class="mr-2" for="status">Status: </label>
                             <p>
+                                @if($overtime->status == '0')
+                                Pending
+                                @endif
                                 @if($overtime->status == '1')
                                 Approved
-                                @else
+                                @endif
+                                @if($overtime->status == '2')
                                 Denied
                                 @endif
                             </p>

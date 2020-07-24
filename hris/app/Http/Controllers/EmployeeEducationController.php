@@ -24,13 +24,19 @@ class EmployeeEducationController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
             $employeeEducations = hris_employee_educations::paginate(10);
             return view('pages.personalInformation.educations.index', compact('employeeEducations'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
         }
     }
 
     public function create(hris_employee_educations $employeeEducation)
     {
-        $educations = hris_educations::all();
-        return view('pages.personalInformation.educations.create', compact('employeeEducation', 'educations'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $educations = hris_educations::all();
+            return view('pages.personalInformation.educations.create', compact('employeeEducation', 'educations'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function store(hris_employee_educations $employeeEducation, Request $request)
@@ -58,8 +64,12 @@ class EmployeeEducationController extends Controller
 
     public function edit(hris_employee_educations $employeeEducation)
     {
-        $educations = hris_educations::all();
-        return view('pages.personalInformation.educations.edit', compact('employeeEducation', 'educations'));
+        if ( $_SESSION['sys_account_mode'] == 'employee' ) {
+            $educations = hris_educations::all();
+            return view('pages.personalInformation.educations.edit', compact('employeeEducation', 'educations'));
+        } else {
+            return back()->with(['You do not have access in this page.']);
+        }
     }
 
     public function update(hris_employee_educations $employeeEducation, Request $request)
@@ -93,14 +103,18 @@ class EmployeeEducationController extends Controller
     public function destroy(hris_employee_educations $employeeEducation)
     {
         $id = $_SESSION['sys_id'];
-        $employee = hris_employee::find($id);
-        if ( Hash::check(request('password'), $employee->password) ) {
-            $employeeEducation->delete();
-            $id = $employeeEducation->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            return back()->with(['You do not have access in this page.']);
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('password'), $employee->password) ) {
+                $employeeEducation->delete();
+                $id = $employeeEducation->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

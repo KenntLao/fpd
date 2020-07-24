@@ -175,8 +175,14 @@
                         </div>
                     </div>
                 </div>
-                @if($iteneraryRequest->attachment_1 != NULL ?? $iteneraryRequest->attachment_2 != NULL ?? $iteneraryRequest->attachment_3 != NULL)
                 <div class="row">
+                    <div class="col-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="mr-2" for="ot_date">Approved by: </label>
+                            <p>{{$user}}</p>
+                        </div>
+                    </div>
+                @if($iteneraryRequest->attachment_1 != NULL ?? $iteneraryRequest->attachment_2 != NULL ?? $iteneraryRequest->attachment_3 != NULL)
                     <div class="col-6">
                         <div class="form-group">
                             <label>Attachments: </label>
@@ -191,9 +197,8 @@
                             @endif
                         </div>
                     </div>
-                </div>
-                @else
                 @endif
+                </div>
             </div>
         </div>
     </div>

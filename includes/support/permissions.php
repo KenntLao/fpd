@@ -924,52 +924,6 @@ $permissions_arr = array(
 	),
 	array(
 		array(
-			'permission_code' => 'skill',
-			'permission_name' => array(
-				'Skill Management',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access skill list.',
-				''
-			)
-		),
-		array(
-			'permission_code' => 'skill-add',
-			'permission_name' => array(
-				'Create Skill',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access create skill.',
-				''
-			)
-		),
-		array(
-			'permission_code' => 'skill-edit',
-			'permission_name' => array(
-				'Update Skill',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access update skill.',
-				''
-			)
-		),
-		array(
-			'permission_code' => 'skill-delete',
-			'permission_name' => array(
-				'Delete Skill',
-				''
-			),
-			'permission_description' => array(
-				'Allow account to access delete skill.',
-				''
-			)
-		),
-	),
-	array(
-		array(
 			'permission_code' => 'leave-group',
 			'permission_name' => array(
 				'Leave Group Management',

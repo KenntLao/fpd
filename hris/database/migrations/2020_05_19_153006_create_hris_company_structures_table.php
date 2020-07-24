@@ -16,6 +16,7 @@ class CreateHrisCompanyStructuresTable extends Migration
         Schema::create('hris_company_structures', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('code');
             $table->string('name');
             $table->string('details');
             $table->string('address')->nullable();

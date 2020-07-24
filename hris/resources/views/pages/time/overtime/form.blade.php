@@ -92,75 +92,10 @@
 			<label class="mr-2" for="type">Type: </label>
 			<span class="badge">Required</span>
 			<select class="form-control select2 required" name="type" required>
-				<option disabled selected default>--select one--</option>
-				<option value="REG">REG</option>
-				<option value="REB_>8">REB_>8</option>
-				<option value="REG_ND1">REG_ND1</option>
-				<option value="REG_ND2">REG_ND2</option>
-				<option value="RST">RST</option>
-				<option value="RST_>8">RST_>8</option>
-				<option value="RST_ND1">RST_ND1</option>
-				<option value="RST_ND2">RST_ND2</option>
-				<option value="LGL">LGL</option>
-				<option value="LGL_>8">LGL_>8</option>
-				<option value="LGL_ND1">LGL_ND1</option>
-				<option value="LGL_ND2">LGL_ND2</option>
-				<option value="LGLRST">LGLRST</option>
-				<option value="LGLRST_>8">LGLRST_>8</option>
-				<option value="LGLRST_ND1">LGLRST_ND1</option>
-				<option value="LGLRST_ND2">LGLRST_ND2</option>
-				<option value="SPL">SPL</option>
-				<option value="SPL_>8">SPL_>8</option>
-				<option value="SPL_ND1">SPL_ND1</option>
-				<option value="SPL_ND2">SPL_ND2</option>
-				<option value="SPLRST">SPLRST</option>
-				<option value="SPLRST_>8">SPLRST_>8</option>
-				<option value="SPLRST_ND1">SPLRST_ND1</option>
-				<option value="SPLRST_ND2">SPLRST_ND2</option>
-				<option value="SPRS_CLIEN">SPRS_CLIEN</option>
-				<option value="SPRS_CLIEN_>8">SPRS_CLIEN_>8</option>
-				<option value="SPRS_CLIEN_ND1">SPRS_CLIEN_ND1</option>
-				<option value="SPRS_CLIEN_ND2">SPRS_CLIEN_ND2</option>
-				<option value="LGRS_CLIEN">LGRS_CLIEN</option>
-				<option value="LGRS_CLIEN_>8">LGRS_CLIEN_>8</option>
-				<option value="LGRS_CLIEN_ND1">LGRS_CLIEN_ND1</option>
-				<option value="LGRS_CLIEN_ND2">LGRS_CLIEN_ND2</option>
-				<option value="SPL_CLIENT">SPL_CLIENT</option>
-				<option value="SPL_CLIENT_>8">SPL_CLIENT_>8</option>
-				<option value="SPL_CLIENT_ND1">SPL_CLIENT_ND1</option>
-				<option value="SPL_CLIENT_ND2">SPL_CLIENT_ND2</option>
-				<option value="RST_CLIENT">RST_CLIENT</option>
-				<option value="RST_CLIENT_>8">RST_CLIENT_>8</option>
-				<option value="RST_CLIENT_ND1">RST_CLIENT_ND1</option>
-				<option value="RST_CLIENT_ND2">RST_CLIENT_ND2</option>
-				<option value="REG_CLIENT">REG_CLIENT</option>
-				<option value="REG_CLIENT_>8">REG_CLIENT_>8</option>
-				<option value="REG_CLIENT_ND1">REG_CLIENT_ND1</option>
-				<option value="REG_CLIENT_ND2">REG_CLIENT_ND2</option>
-				<option value="REGND_CLIE">REGND_CLIE</option>
-				<option value="REGND_CLIE_>8">REGND_CLIE_>8</option>
-				<option value="REGND_CLIE_ND1">REGND_CLIE_ND1</option>
-				<option value="REGND_CLIE_ND2">REGND_CLIE_ND2</option>
-				<option value="LG_CLIENT">LG_CLIENT</option>
-				<option value="LG_CLIENT_>8">LG_CLIENT_>8</option>
-				<option value="LG_CLIENT_ND1">LG_CLIENT_ND1</option>
-				<option value="LG_CLIENT_ND2">LG_CLIENT_ND2</option>
-				<option value="LGLSPL">LGLSPL</option>
-				<option value="LGLSPL_>8">LGLSPL_>8</option>
-				<option value="LGLSPL_ND1">LGLSPL_ND1</option>
-				<option value="LGLSPL_ND2">LGLSPL_ND2</option>
-				<option value="LGLSPLRST">LGLSPLRST</option>
-				<option value="LGLSPLRST_>8">LGLSPLRST_>8</option>
-				<option value="LGLSPLRST_ND1">LGLSPLRST_ND1</option>
-				<option value="LGLSPLRST_ND2">LGLSPLRST_ND2</option>
-				<option value="LGLSPL_CLI">LGLSPL_CLI</option>
-				<option value="LGLSPL_CLI_>8">LGLSPL_CLI_>8</option>
-				<option value="LGLSPL_CLI_ND1">LGLSPL_CLI_ND1</option>
-				<option value="LGLSPL_CLI_ND2">LGLSPL_CLI_ND2</option>
-				<option value="LGLSPL_ND1">LGLSPL_ND1</option>
-				<option value="LGLSPL_ND1_>8">LGLSPL_ND1_>8</option>
-				<option value="LGLSPL_ND1_ND1">LGLSPL_ND1_ND1</option>
-				<option value="LGLSPL_ND1_ND2">LGLSPL_ND1_ND2</option>
+				<option disabled default selected>--select one--</option>
+				@foreach( $types as $type )
+				<option value="{{$type->id}}">{{$type->name}}</option>
+				@endforeach
 			</select>
 		</div>
 	</div>
@@ -170,7 +105,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter supervisor remarks</p>
-				<textarea class="form-control required" name="supervisor_remarks">{{ old('supervisor_remarks') ?? $overtime->supervisor_remarks }}</textarea>
+				<textarea class="form-control required" name="supervisor_remarks" required>{{ old('supervisor_remarks') ?? $overtime->supervisor_remarks }}</textarea>
 			</div>
 		</div>
 	</div>

@@ -117,20 +117,36 @@ class TrainingSessionController extends Controller
     public function destroy(hris_training_sessions $trainingSession)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $trainingSession->delete();
-            $path = public_path('assets/files/training_session/');
-            if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
-                $old_file = $path . $trainingSession->attachment;
-                unlink($old_file);
+        $path = public_path('assets/files/training_session/');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $trainingSession->delete();
+                if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
+                    $old_file = $path . $trainingSession->attachment;
+                    unlink($old_file);
+                }
+                $id = $trainingSession->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training session successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
             }
-            $id = $trainingSession->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training session successfully deleted!');
         } else {
-            return back()->withErrors(['Password does not match.']);
-        }
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $trainingSession->delete();
+                if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
+                    $old_file = $path . $trainingSession->attachment;
+                    unlink($old_file);
+                }
+                $id = $trainingSession->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training session successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
+        }   
 
     }
 

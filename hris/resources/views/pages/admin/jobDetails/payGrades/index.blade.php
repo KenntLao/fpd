@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">pay grades list</h3>
+		@if(in_array('pay-grade-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/jobDetails/payGrades/create"><i class="fa fa-plus"></i> add pay grade</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($payGrades) > 0)
@@ -37,7 +39,9 @@
 					<th>currency</th>
 					<th>min salary</th>
 					<th>max salary</th>
+					@if( in_array('pay-grade-edit', $_SESSION['sys_permissions']) OR in_array('pay-grade-delete', $_SESSION['sys_permissions']) )
 					<th>actions</th>
+					@endif
 				</tr>
 			</thead>
 			<tbody>
@@ -47,17 +51,23 @@
 					<td>{{$payGrade->currency}}</td>
 					<td>{{$payGrade->min_salary}}</td>
 					<td>{{$payGrade->max_salary}}</td>
+					@if( in_array('pay-grade-edit', $_SESSION['sys_permissions']) OR in_array('pay-grade-delete', $_SESSION['sys_permissions']) )
 					<td class="td-action">
 						<div class="row no-gutters">
+							@if(in_array('pay-grade-edit', $_SESSION['sys_permissions']))
 							<div class="col-6">
 								<a class="btn btn-success btn-sm" href="/hris/pages/admin/jobDetails/payGrades/{{$payGrade->id}}/edit"><i class="fa fa-edit"></i></a>
 							</div>
+							@endif
+							@if(in_array('pay-grade-delete', $_SESSION['sys_permissions']))
 							<div class="col-6">
 								<!-- Button trigger modal -->
 								<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$payGrade->id}}" data-name="{{$payGrade->name}}"><i class="fa fa-trash"></i></button>
 							</div>
+							@endif
 						</div>
 					</td>
+					@endif
 				</tr>
 				@endforeach
 			</tbody>

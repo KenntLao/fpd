@@ -78,14 +78,27 @@ class BenefitController extends Controller
     public function destroy(hris_benefits $benefit)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $benefit->delete();
-            $id = $benefit->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success','Benefit successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $benefit->delete();
+                $id = $benefit->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success','Benefit successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
+
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('password'), $employee->password) ) {
+                $benefit->delete();
+                $id = $benefit->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success','Benefit successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

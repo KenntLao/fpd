@@ -141,19 +141,35 @@ class JobPositionController extends Controller
     public function destroy(hris_job_positions $jobPosition)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->function->decryptStr(users::find($id)->upass);
-        if ( $upass == request('upass') ) {
-            $imagePath = public_path('assets/images/job_positions/');
-            $jobPosition->delete();
-            if ($jobPosition->image != '' && $jobPosition->image != NULL) {
-                $old_file = $imagePath . $jobPosition->image;
-                unlink($old_file);
+        $imagePath = public_path('assets/images/job_positions/');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $jobPosition->delete();
+                if ($jobPosition->image != '' && $jobPosition->image != NULL) {
+                    $old_file = $imagePath . $jobPosition->image;
+                    unlink($old_file);
+                }
+                $id = $jobPosition->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
             }
-            $id = $jobPosition->id;
-            $this->function->deleteSystemLog($this->module,$id);
-            return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $asset->delete();
+                if ($jobPosition->image != '' && $jobPosition->image != NULL) {
+                    $old_file = $imagePath . $jobPosition->image;
+                    unlink($old_file);
+                }
+                $id = $asset->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/companyAssets/assets/index')->with('success','Company asset successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

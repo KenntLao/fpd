@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">employee loans list</h3>
+		@if(in_array('employee-loan-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/loans/employeeLoans/create"><i class="fa fa-plus mr-1"></i> add employee loan</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($employeeLoans) > 0)
@@ -41,7 +43,9 @@
 						<th>currency</th>
 						<th>amount</th>
 						<th>status</th>
+						@if(in_array('employee-loan-edit', $_SESSION['sys_permissions']) OR in_array('employee-loan-delete', $_SESSION['sys_permissions']))
 						<th>actions</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -66,17 +70,23 @@
 						<td>{{$employeeLoan->currency}}</td>
 						<td>{{$employeeLoan->loan_amount}}</td>
 						<td>{{$employeeLoan->status}}</td>
+						@if(in_array('employee-loan-edit', $_SESSION['sys_permissions']) OR in_array('employee-loan-delete', $_SESSION['sys_permissions']))
 						<td class="td-action">
 							<div class="row no-gutters">
+								@if(in_array('employee-loan-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<a class="btn btn-success btn-sm" href="/hris/pages/admin/loans/employeeLoans/{{$employeeLoan->id}}/edit"><i class="fa fa-edit"></i></a>
 								</div>
+								@endif
+								@if(in_array('employee-loan-delete', $_SESSION['sys_permissions']))
 								<div class="col-6">
 									<!-- Button trigger modal -->
 									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeLoan->id}}" data-name="Employee Loan Id: {{$employeeLoan->id}}"><i class="fa fa-trash"></i></button>
 								</div>
+								@endif
 							</div>
 						</td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>
