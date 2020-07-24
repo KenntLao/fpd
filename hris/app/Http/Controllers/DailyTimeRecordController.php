@@ -197,8 +197,12 @@ class DailyTimeRecordController extends Controller
 
     public function index(hris_daily_time_record $dtr){
         
-        $employee = $this->getEmployee();
-        $default_month = date('Ym');
-        return view('pages.time.dailyTimeRecords.index', compact('default_month','dtr','employee'));
+        if($_SESSION['sys_account_mode'] == 'employee'){
+            $employee = $this->getEmployee();
+            $default_month = date('Ym');
+            return view('pages.time.dailyTimeRecords.index', compact('default_month', 'dtr', 'employee'));
+        }else {
+            return back()->withErrors("You don't have access on this page");
+        }
     }
 }

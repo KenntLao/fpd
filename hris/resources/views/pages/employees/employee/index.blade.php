@@ -71,7 +71,7 @@
                             @php
                             {{
 
-                                    $emp = App\hris_employee::where('employee_number',$employee->supervisor)->first();  
+                                    $emp = App\hris_employee::where('id',$employee->supervisor)->first();  
                                     if($emp !== NULL){
                                         echo $emp->firstname . ' ' . $emp->lastname;
                                     }

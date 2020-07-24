@@ -28,8 +28,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Dispatcher $events)
     {
         Schema::defaultStringLength(191);
+        
         view()->composer('adminlte::partials.navbar.navbar', function($view){
-            $emp = hris_employee::where('employee_number',$_SESSION['sys_id'])->first();
+            if($_SESSION['sys_account_mode'] == 'employee'){
+                $emp = hris_employee::find($_SESSION['sys_id']);
+            }else {
+                $emp = '';
+            }
             $view->with('emp', $emp);
         });
     }

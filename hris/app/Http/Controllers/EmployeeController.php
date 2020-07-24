@@ -22,10 +22,10 @@ class EmployeeController extends Controller
     public function index(hris_employee $employee){
         $role_id = trim(str_replace(',','',$_SESSION['sys_role_ids']));
         $sys_id = $_SESSION['sys_id'];
-        if(isset($_SESSION['sys_dep_id'])){
+        if(isset($_SESSION['sys_dep_id'])){ // if employee have department
             $sys_dep_id = $_SESSION['sys_dep_id'];
-            if ($sys_dep_id && $sys_id) {
-                $employees = hris_employee::where('department_id', $sys_dep_id)->where('employee_number', '!=', $sys_id)->where('supervisor', $sys_id)->paginate(10);
+            if ($sys_dep_id && $sys_id) { // get all subordinate
+                $employees = hris_employee::where('department_id', $sys_dep_id)->where('id', '!=', $sys_id)->where('supervisor', $sys_id)->paginate(10);
             } else {
                 $employees = hris_employee::paginate(10);
             }
@@ -260,7 +260,7 @@ class EmployeeController extends Controller
         $supervisors = hris_employee::whereRaw('find_in_set(?,role_id)', [$this->getSupervisorRoleId()])->where('department_id',$department_id)->get();
         $output = '<option value="">-- select one --</option>';
         foreach ($supervisors as $supervisor) {
-            $output .= '<option value="' . $supervisor->employee_number . '">' . $supervisor->firstname . ' '. $supervisor->lastname .'</option>';
+            $output .= '<option value="' . $supervisor->id . '">' . $supervisor->firstname . ' '. $supervisor->lastname .'</option>';
         }
         echo $output;
     }

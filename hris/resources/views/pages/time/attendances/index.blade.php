@@ -37,12 +37,41 @@
 			@if($attendance->status == 0)
 			<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>
 			@else
-			<form method="POST" action="/hris/pages/time/attendances/punchout/{{$attendance->id}}">
-				@method('PATCH')
-				@csrf
-				<input type="hidden" name="status" value="0">
-				<button class="btn add-button btn-md">Punch Out</button>
-			</form>
+			<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal2">Punch Out</button>
+			<div class="modal" id="snapModal2">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">Punch in</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body">
+							<form method="POST" action="/hris/pages/time/attendances/punchout/{{$attendance->id}}" enctype="multipart/form-data">
+								@method('PATCH')
+								@csrf
+								<div class="row">
+									<input type="hidden" name="status" value="0">
+									<div class="col-md-6">
+										<div id="my_camera"></div>
+										<input class="btn add-button btn-sm" type="button" value="Take Photo" onClick="take_snapshot()">
+										<input type="hidden" name="time_out_photo" class="image-tag" accept="image/*">
+									</div>
+									<div class="col-md-6">
+										<div id="results">Captured image will appear here!</div>
+									</div>
+									<div class="col-md-12 text-center">
+										<br />
+										<button class="btn btn-success">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 			@endif
 			@else
 			<button class="btn add-button btn-md" data-toggle="modal" data-target="#snapModal">Punch In</button>

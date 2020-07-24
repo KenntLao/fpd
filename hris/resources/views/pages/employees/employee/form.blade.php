@@ -137,7 +137,7 @@
                 @if(isset($supervisor))
                 <option value="{{$supervisor->employee_number}}">{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
                 @else
-                <option>--select one--</option>
+                <option default disabled selected>--select one--</option>
                 @endif
             </select>
         </div>

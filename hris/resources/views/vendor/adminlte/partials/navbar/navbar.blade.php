@@ -16,7 +16,7 @@
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
-        @if(isset($emp->notifications))
+        @if($emp !== '')
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
