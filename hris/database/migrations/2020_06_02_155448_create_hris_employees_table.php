@@ -36,10 +36,7 @@ class CreateHrisEmployeesTable extends Migration
             $table->string('cert_level');
             $table->string('field_study');
             $table->string('school');
-            $table->string('visa_no')->nullable();
             $table->string('work_permit')->nullable();
-            $table->date('visa_expire')->nullable();
-            $table->string('passport_no')->nullable();
             $table->string('pagibig')->nullable();
             $table->string('sss')->nullable();
             $table->string('phic')->nullable();

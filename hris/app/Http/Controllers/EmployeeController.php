@@ -105,15 +105,12 @@ class EmployeeController extends Controller
             $employees->cert_level = request('cert_level');
             $employees->field_study = request('field_study');
             $employees->school = request('school');
-            $employees->passport_no = request('passport_no');
             $employees->gender = request('gender');
             $employees->nationality = request('nationality');
             $employees->birthday = request('birthday');
             $employees->place_birth = request('place_birth');
             $employees->dependant = request('dependant');
-            $employees->visa_no = request('visa_no');
             $employees->work_permit = request('work_permit');
-            $employees->visa_expire = request('visa_expire');
             $employees->save();
             return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully added!');   
         }else { // if data fails
@@ -196,15 +193,12 @@ class EmployeeController extends Controller
             $employee->cert_level = request('cert_level');
             $employee->field_study = request('field_study');
             $employee->school = request('school');
-            $employee->passport_no = request('passport_no');
             $employee->gender = request('gender');
             $employee->nationality = request('nationality');
             $employee->birthday = request('birthday');
             $employee->place_birth = request('place_birth');
             $employee->dependant = request('dependant');
-            $employee->visa_no = request('visa_no');
             $employee->work_permit = request('work_permit');
-            $employee->visa_expire = request('visa_expire');
             $employee->update();
             return redirect($_SESSION['return_page'])->with('success', 'Employee successfully updated!');
         } else { // if data fails
@@ -295,15 +289,12 @@ class EmployeeController extends Controller
             'cert_level' => 'required',
             'field_study' => 'required',
             'school' => 'required',
-            'passport_no' => 'nullable',
             'gender' => 'required',
             'nationality' => 'required',
             'birthday' => 'required|date',
             'place_birth' => 'required',
             'dependant' => 'nullable',
-            'visa_no' => 'nullable',
             'work_permit' => 'nullable',
-            'visa_expire' => 'nullable',
         ]);
     }
 }

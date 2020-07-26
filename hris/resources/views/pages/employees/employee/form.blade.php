@@ -569,13 +569,6 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="mr-2" for="passport_no">Passport No. </label>
-                            <div class="input">
-                                <p class="placeholder">Passport No.</p>
-                                <input class="form-control required" type="text" name="passport_no" value="{{old('passport_no') ?? $employee->passport_no}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="mr-2" for="gender">Gender </label>
                             <span class="badge badge-danger">Required</span>
                             <select class="form-control required select2" name="gender" required>
@@ -617,24 +610,10 @@
                             <h3>Work Permit</h3>
                         </div>
                         <div class="form-group">
-                            <label class="mr-2" for="visa">Visa No.</label>
-                            <div class="input">
-                                <p class="placeholder">Visa No.</p>
-                                <input class="form-control required" type="number" name="visa_no" value="{{old('visa_no') ?? $employee->visa_no}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="mr-2" for="work_permit">Work Permit No.</label>
                             <div class="input">
                                 <p class="placeholder">Work Permit No.</p>
                                 <input class="form-control required" type="number" name="work_permit" value="{{old('work_permit') ?? $employee->work_permit}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="mr-2" for="visa_expire">Visa Expiry Date</label>
-                            <div class="input">
-                                <p class="placeholder">Visa Expire Date</p>
-                                <input class="form-control required" type="date" name="visa_expire" value="{{old('visa_expire') ?? $employee->visa_expire}}">
                             </div>
                         </div>
                     </div>
