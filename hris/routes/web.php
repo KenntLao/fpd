@@ -627,7 +627,7 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     // EXPORT EXCEL FILE
     Route::get('/hris/pages/time/overtime/table', 'OvertimeController@table');
-    Route::get('/hris/pages/time/overtime/download', 'ExportController@overtimeExport');
+    Route::post('/hris/pages/time/overtime/download', 'ExportController@overtimeExport');
     
 
     //PERSONAL INFORMATION

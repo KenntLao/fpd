@@ -238,7 +238,7 @@
             <div class="card-header">
                 <h3 class="card-title">Overtime Request List</h3>
                 <div class="card-tools">
-                    <a class="btn add-button btn-md" href="/hris/pages/time/overtime/download"><i class="far fa-file-excel mr-1"></i> Download Excel File</a>
+                    <button class="btn add-button btn-md" data-toggle="modal" data-target="#export-modal"><i class="far fa-file-excel mr-1"></i> Download Excel File</button>
                 </div>
             </div>
             <div class="card-body">
@@ -401,7 +401,7 @@
                             Denied
                             @endif
                         </td>
-                        <td class="td-action">
+                        <td class="td-action" style="width: auto;">
                             <div class="row no-gutters">
                                 @if($overtime->status == '1' OR $overtime->status == '2')
                                 <div class="col-12">
@@ -468,27 +468,65 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="export-modal" tabindex="-1" role="dialog" aria-labelledby="export-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="export-label">Download Excel File</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/download" id="form">
+            @csrf
+            <div class="form-group">
+                <label for="date_from">Date from: </label>
+                <span class="badge badge-danger">Required</span>
+                <div class="input">
+                    <input type="text" name="date_from" class="form-control overtime_date required" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="date_to">Date To: </label>
+                <span class="badge badge-danger">Required</span>
+                <div class="input">
+                    <input type="text" name="date_to" class="form-control overtime_date required" required>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button class="btn btn-success" type="submit" form="form"><i class="far fa-file-excel mr-1"></i> Download Excel File</button>
+      </div>
+    </div>
+  </div>
+</div>
 @stop
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
 <script>
 $(document).ready(function() {
-$('.delete-btn').on('click', function() {
-var get = $('.add-button').attr('href');
-var href = get.replace('create', 'delete');
-var target = $(this).attr('data-target');
-var modal_id = target.replace('#', '');
-var id = target.replace('#modal-', '');
-$('.modal').attr('id', modal_id);
-$('.modal').attr('aria-labelledby', modal_id);
-$('.form-horizontal').attr('action', href + '/' + id);
-$('.form-horizontal').attr('id', 'form-' + id);
-$('.modal-footer > button').attr('form', 'form-' + id);
-var name = $(this).attr('data-name');
-$('.data-name').text('Are you sure you want to delete ' + name + '?');
-});
+    $('.delete-btn').on('click', function() {
+        var get = $('.add-button').attr('href');
+        var href = get.replace('create', 'delete');
+        var target = $(this).attr('data-target');
+        var modal_id = target.replace('#', '');
+        var id = target.replace('#modal-', '');
+        $('.modal').attr('id', modal_id);
+        $('.modal').attr('aria-labelledby', modal_id);
+        $('.form-horizontal').attr('action', href + '/' + id);
+        $('.form-horizontal').attr('id', 'form-' + id);
+        $('.modal-footer > button').attr('form', 'form-' + id);
+        var name = $(this).attr('data-name');
+        $('.data-name').text('Are you sure you want to delete ' + name + '?');
+    });
+
 
 });
 </script>
