@@ -33,6 +33,10 @@
         @if(count($employees) > 0)
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped table-condensed">
+                <form method="post" action="/hris/pages/employees/employee/import">
+                    <input type="file" name="employeeData">
+                    <button type="submit">Upload</button>
+                </form>
                 <thead>
                     <tr>
                         <th>Image</th>
@@ -62,8 +66,8 @@
                         <td>
                             @if($employee->employeeProject)
                             @php
-                                $emp_project = App\hris_projects::where('id',$employee->employeeProject->id)->first();
-                                echo $emp_project->name;
+                            $emp_project = App\hris_projects::where('id',$employee->employeeProject->id)->first();
+                            echo $emp_project->name;
                             @endphp
                             @endif
                         </td>

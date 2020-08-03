@@ -11,6 +11,8 @@ use App\roles;
 use App\hris_company_structures;
 use App\hris_employment_statuses;
 use App\hris_certifications;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\EmployeeImport;
 use Faker\Generator as Faker;
 
 
@@ -258,6 +260,11 @@ class EmployeeController extends Controller
         }
         echo $output;
     }
+
+    public function import(){
+        Excel::import(new EmployeeImport, request()->file('employeeData'));
+    }
+
     protected function validatedData()
     {
         return request()->validate([

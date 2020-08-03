@@ -457,6 +457,8 @@ Route::middleware([CheckUserID::class])->group(function(){
         Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
 
 
+        Route::get('/hris/pages/employees/employee/import', 'EmployeeController@import');
+
         // DOCUMENT MANAGEMENT
         // COMPANY DOCUMENTS
         Route::get('/hris/pages/employees/documents/companyDocuments/index', 'CompanyDocumentController@index');
