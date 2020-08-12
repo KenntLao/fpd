@@ -121,5 +121,13 @@ class hris_functions extends Model
     {
         return $this->belongsTo('App\hris_work_shift_management');
     }
+    public function approved_by_id()
+    {
+        return $this->belongsTo('App\hris_employees');
+    }
+    public function sender_id()
+    {
+        return $this->belongsTo('App\hris_employees');
+    }
 
 }
