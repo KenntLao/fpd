@@ -61,6 +61,7 @@ $factory->define(App\hris_employee::class, function (Faker $faker) {
         'job_title_id' => $faker->numberBetween($min = 1, $max = 75),
         'department_id' => $faker->numberBetween($min = 1, $max = 26),
         'supervisor' => NULL,
+        'pay_grade' => $faker->numberBetween($min = 1, $max = 3),
         'role_id' => $role_id,
         'last_login' => '0',
         'status' => 'active'

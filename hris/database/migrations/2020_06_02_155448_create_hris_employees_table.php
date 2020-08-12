@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 class CreateHrisEmployeesTable extends Migration
 {
@@ -13,12 +14,14 @@ class CreateHrisEmployeesTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('hris_employees', function (Blueprint $table) {
+            $hashed = Hash::make(1234);
             $table->id();
             $table->bigInteger('employee_number');
-            $table->string('employee_photo');
+            $table->string('employee_photo')->nullable();
             $table->string('username');
-            $table->string('password');
+            $table->string('password')->default($hashed);
             $table->string('firstname');
             $table->string('middlename')->nullable();
             $table->string('lastname');
@@ -51,6 +54,7 @@ class CreateHrisEmployeesTable extends Migration
             $table->integer('job_title_id');
             $table->integer('department_id');
             $table->string('supervisor')->nullable();
+            $table->integer('pay_grade');
             $table->string('role_id', 500)->default(',');
             $table->bigInteger('last_login')->default(0);
             $table->string('status')->default('active')->nullable();

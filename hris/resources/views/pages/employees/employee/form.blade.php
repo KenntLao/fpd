@@ -119,14 +119,17 @@
             <label class="mr-2" for="department">Department </label>
             <span class="badge badge-danger">Required</span>
             <select id="department_dropdown" class="form-control required select2" name="department" required>
+
                 @if($employee->department)
-                <option value="{{$employee->department->id}}" default selected>{{$employee->department->name}}</option>
+                @foreach($departments as $department)
+                <option value="{{$department->id}}" {{$employee->department_id == $department->id ? 'selected' : ''}}>{{$department->name}}</option>
+                @endforeach
                 @else
                 <option disabled default selected>--select one--</option>
-                @endif
                 @foreach($departments as $department)
-                <option value="{{$department->id}}">{{$department->name}}</option>
+                <option value="{{$department->id}}" {{$employee->department_id == $department->id ? 'selected' : ''}}>{{$department->name}}</option>
                 @endforeach
+                @endif
             </select>
         </div>
     </div>
@@ -138,6 +141,24 @@
                 <option value="{{$supervisor->employee_number}}">{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
                 @else
                 <option default disabled selected>--select one--</option>
+                @endif
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="mr-2" for="supervisor">Pay Grade </label>
+            <select id="pay_grade" class="form-control select2" name="pay_grade">
+
+                @if(!$employee->pay_grade)
+                <option default disabled selected>-- select one --</option>
+                @foreach($pay_grades as $pay_grade)
+                <option value="{{$pay_grade->id}}" {{$employee->pay_grade == $pay_grade->id ? 'selected' : ''}}>{{$pay_grade->name}}</option>
+                @endforeach
+                @else
+                @foreach($pay_grades as $pay_grade)
+                <option value="{{$pay_grade->id}}" {{$employee->pay_grade == $pay_grade->id ? 'selected' : ''}}>{{$pay_grade->name}}</option>
+                @endforeach
                 @endif
             </select>
         </div>
@@ -212,14 +233,14 @@
                             <span class="badge badge-danger">Required</span>
                             <select class="form-control required select2" name="employment_status" required>
                                 @if(!$employee->employment_status)
-                                    <option default disabled selected>-- select one --</option>
-                                    @foreach($employment_statuses as $employment_status)
-                                    <option value="{{$employment_status->name}}" {{$employee->employment_status == $employment_status->name ? 'selected' : ''}}>{{$employment_status->name}}</option>
-                                    @endforeach
+                                <option default disabled selected>-- select one --</option>
+                                @foreach($employment_statuses as $employment_status)
+                                <option value="{{$employment_status->name}}" {{$employee->employment_status == $employment_status->name ? 'selected' : ''}}>{{$employment_status->name}}</option>
+                                @endforeach
                                 @else
-                                    @foreach($employment_statuses as $employment_status)
-                                    <option value="{{$employment_status->name}}" {{$employee->employment_status == $employment_status->name ? 'selected' : ''}}>{{$employment_status->name}}</option>
-                                    @endforeach
+                                @foreach($employment_statuses as $employment_status)
+                                <option value="{{$employment_status->name}}" {{$employee->employment_status == $employment_status->name ? 'selected' : ''}}>{{$employment_status->name}}</option>
+                                @endforeach
                                 @endif
                             </select>
                         </div>

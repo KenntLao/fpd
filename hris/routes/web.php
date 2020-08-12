@@ -441,6 +441,12 @@ Route::middleware([CheckUserID::class])->group(function(){
         //download
         Route::get('/hris/pages/employees/iteneraryRequests/download/{attachment}/{iteneraryRequest}', 'IteneraryRequestController@download');
 
+        // EXCEL IMPORT / EXPORT
+        Route::get('/hris/pages/employees/employee/table', 'EmployeeController@table');
+        Route::post('/hris/pages/employees/employee/import', 'EmployeeController@import');
+        Route::get('/hris/pages/employees/employee/download', 'EmployeeController@export');
+
+        
     Route::group(['middleware' => 'CheckPermission:employees'], function () {
         // GET AJAX DATA FOR SUPERVISOR
         Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
@@ -456,8 +462,7 @@ Route::middleware([CheckUserID::class])->group(function(){
         //delete
         Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
 
-
-        Route::get('/hris/pages/employees/employee/import', 'EmployeeController@import');
+       
 
         // DOCUMENT MANAGEMENT
         // COMPANY DOCUMENTS

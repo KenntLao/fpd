@@ -25,6 +25,11 @@
         <h3 class="card-title">Employee List</h3>
         @if(in_array('employee-add',$_SESSION['sys_permissions']))
         <div class="card-tools">
+            <form class="float-right ml-2" action="/hris/pages/employees/employee/import" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="employeeData" id="file" style="display:none;" onchange="this.form.submit()">
+                <button class="btn add-button btn-md" type="button" id="upload-exc" name="button" onclick="thisFileUpload();"><i class="far fa-file-excel mr-1"></i> Upload Excel</button>
+            </form>
             <a class="btn add-button btn-md" href="/hris/pages/employees/employee/create"><i class="fa fa-plus mr-1"></i> Create Employee</a>
         </div>
         @endif
@@ -33,10 +38,7 @@
         @if(count($employees) > 0)
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped table-condensed">
-                <form method="post" action="/hris/pages/employees/employee/import">
-                    <input type="file" name="employeeData">
-                    <button type="submit">Upload</button>
-                </form>
+                <!-- <a href="/hris/pages/employees/employee/download">dl</a> -->
                 <thead>
                     <tr>
                         <th>Image</th>
@@ -149,6 +151,10 @@
 @stop
 @section('js')
 <script>
+    function thisFileUpload() {
+        document.getElementById("file").click();
+    };
+
     $(document).ready(function() {
         $('.delete-btn').on('click', function() {
             var get = $('.add-button').attr('href');

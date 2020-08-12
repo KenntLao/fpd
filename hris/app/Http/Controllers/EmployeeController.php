@@ -13,6 +13,8 @@ use App\hris_employment_statuses;
 use App\hris_certifications;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\EmployeeImport;
+use App\Exports\EmployeeExport;
+use App\hris_pay_grades;
 use Faker\Generator as Faker;
 
 
@@ -36,7 +38,6 @@ class EmployeeController extends Controller
         }
         return view('pages.employees.employee.index', compact('employee','employees','role_id'));
     }
-
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
     {
         $certifications = hris_certifications::all();
@@ -44,8 +45,9 @@ class EmployeeController extends Controller
         $roles = roles::all();
         $job_titles = hris_job_titles::all();
         $departments = hris_company_structures::all();
+        $pay_grades = hris_pay_grades::all();
         $role_ids = explode(',', $employee->role_id);
-        return view('pages.employees.employee.create', compact('employee','roles', 'departments','job_titles','role_ids', 'employment_statuses','certifications'));
+        return view('pages.employees.employee.create', compact('employee','roles', 'departments','job_titles','role_ids', 'employment_statuses','certifications','pay_grades'));
     }
 
     public function store(Request $request, hris_employee $employees, Faker $faker) {
@@ -113,6 +115,7 @@ class EmployeeController extends Controller
             $employees->place_birth = request('place_birth');
             $employees->dependant = request('dependant');
             $employees->work_permit = request('work_permit');
+            $employees->pay_grade = request('pay_grade');
             $employees->save();
             return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully added!');   
         }else { // if data fails
@@ -128,7 +131,8 @@ class EmployeeController extends Controller
             $departments = hris_company_structures::all();
             $role_ids = explode(',',$employee->role_id);
             $supervisor = hris_employee::where('id',$employee->supervisor)->first();
-            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids','supervisor','employment_statuses', 'certifications'));
+            $pay_grades = hris_pay_grades::all();
+            return view('pages.employees.employee.edit', compact('employee', 'roles', 'departments','job_titles','role_ids','supervisor','employment_statuses', 'certifications','pay_grades'));
     }
 
     public function update(Request $request, hris_employee $employee, Faker $faker){
@@ -201,6 +205,7 @@ class EmployeeController extends Controller
             $employee->place_birth = request('place_birth');
             $employee->dependant = request('dependant');
             $employee->work_permit = request('work_permit');
+            $employee->pay_grade = request('pay_grade');
             $employee->update();
             return redirect($_SESSION['return_page'])->with('success', 'Employee successfully updated!');
         } else { // if data fails
@@ -261,10 +266,32 @@ class EmployeeController extends Controller
         echo $output;
     }
 
+    // EXCEL IMPORT EXPORT
     public function import(){
-        Excel::import(new EmployeeImport, request()->file('employeeData'));
+        if($this->validateImport()){
+            Excel::import(new EmployeeImport, request()->file('employeeData'));
+            return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee list successfully uploaded!');
+        } else {
+            return back()->withErrors($this->validateImport());
+        }
+    }
+    public function export()
+    {
+        return Excel::download(new EmployeeExport, 'employee_data.xlsx');
+    }
+    public function table(hris_employee $employee)
+    {
+        $employees = hris_employee::all();
+        $job_title = hris_job_titles::where('id', $employee->job_title_id)->first();
+        return view('pages.employees.employee.table', compact('employees','job_title'));
     }
 
+    protected function validateImport(){
+        return request()->validate([
+            'employeeData' => 'required|mimes:xlsx',
+        ]);
+    }
+    // FORM VALIDATION
     protected function validatedData()
     {
         return request()->validate([

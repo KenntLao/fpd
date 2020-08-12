@@ -26,7 +26,7 @@ class ExportController extends Controller
     	} else {
 	    	return back()->withErrors($this->validatedData());
     	}
-    }
+	}
     public function validatedData()
     {
     	return request()->validate([

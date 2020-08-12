@@ -162,22 +162,26 @@ class DailyTimeRecordController extends Controller
                 }
             }
             $result = '';
+
+            $attendance_date = date('Y M d', strtotime($date_code));
+            $attendance_day = date('D', strtotime($date_code));
+
             if($day_attendance_time_in == 'Rest Day' && $day_attendance_time_out == 'Rest Day' || $day_attendance_time_in == '-' && $day_attendance_time_out == '-'){
-                $result .= '<tr>
-                            <td>' . date('Y M d', strtotime($date_code)) . '</td>
-                            <td>' . date('D', strtotime($date_code)) . '</td>
-                            <td>' . $day_attendance_time_in . '</td>
-                            <td>' . $day_attendance_time_out . '</td>
-                        </tr>';
+                $attendance_time_in = $day_attendance_time_in;
+                $attendance_time_out = $day_attendance_time_out;
+
             } else {
-                $result .= '<tr>
+                $attendance_time_in = date('h:i:s', $day_attendance_time_in);
+                $attendance_time_out = date('h:i:s', $day_attendance_time_out);
+            }
+
+            $result .= '<tr>
                             <td>' . date('Y M d', strtotime($date_code)) . '</td>
                             <td>' . date('D', strtotime($date_code)) . '</td>
-                            <td>' . date('h:i:s', $day_attendance_time_in) . '</td>
-                            <td>' . date('h:i:s', $day_attendance_time_out) . '</td>
+                            <td>' . $attendance_time_in . '</td>
+                            <td>' . $attendance_time_out . '</td>
                         </tr>';
-            }
-            
+                        
             echo $result . '<br>';
         }
     }
