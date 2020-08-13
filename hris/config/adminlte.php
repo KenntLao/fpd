@@ -608,7 +608,7 @@ return [
                 ],
                 [
                     'text' => 'Monitor Attendance',
-                    'url'  => '/hris/pages/employee/monitor_attendance/',
+                    'url'  => '/hris/pages/employees/monitorAttendance/index',
                     'icon'    => 'fas fa-fw fa-clock'
                 ],
                 [
