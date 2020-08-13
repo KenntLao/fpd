@@ -71,9 +71,9 @@ class OvertimeController extends Controller
         } else {
             if ( $this->validatedData() ) {
                 $overtime->employee_id = $id;
-                $overtime->ot_date = request('ot_date');
-                $overtime->ot_time_in = request('ot_time_in');
-                $overtime->ot_time_out = request('ot_time_out');
+                $overtime->ot_date = date('Ymd', strtotime(request('ot_date')));
+                $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
+                $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
                 $overtime->overtime_category_id = request('overtime_category_id');
                 $overtime->employee_remarks = request('employee_remarks');
                 $overtime->supervisor_remarks = request('supervisor_remarks');
@@ -157,9 +157,9 @@ class OvertimeController extends Controller
         $id = $overtime->id;
         $string = 'App\hris_overtime';
         if ($this->validatedData()) {
-            $overtime->ot_date = request('ot_date');
-            $overtime->ot_time_in = request('ot_time_in');
-            $overtime->ot_time_out = request('ot_time_out');
+            $overtime->ot_date = date('Ymd', strtotime(request('ot_date')));
+            $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
+            $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
             $overtime->ot_difference = $ot_difference;
             $overtime->overtime_category_id = request('overtime_category_id');
             $overtime->employee_remarks = request('employee_remarks');

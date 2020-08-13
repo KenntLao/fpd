@@ -49,7 +49,7 @@
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                         <td>
                             @php
-                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.$overtime->ot_time_in.' - '.$overtime->ot_time_out;
+                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr_replace($overtime->ot_time_in, ':', 2, 0).' - '.substr_replace($overtime->ot_time_out, ':', 2, 0);;
                             @endphp
                         </td>
                         <td>
@@ -159,7 +159,7 @@
                                 <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
                                 <td>
                                     @php
-                                    echo date('M d, Y', strtotime($s->ot_date)).' '.$s->ot_time_in.' - '.$s->ot_time_out;
+                                    echo date('M d, Y', strtotime($s->ot_date)).' '.substr_replace($s->ot_time_in, ':', 2, 0).' - '.substr_replace($s->ot_time_out, ':', 2, 0);
                                     @endphp
                                 </td>
                                 <td>
@@ -263,7 +263,7 @@
                                 <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                                 <td>
                                     @php
-                                    echo date('M d, Y', strtotime($overtime->ot_date)).' '.$overtime->ot_time_in.' - '.$overtime->ot_time_out;
+                                    echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr_replace($overtime->ot_time_in, ':', 2, 0).' - '.substr_replace($overtime->ot_time_out, ':', 2, 0);
                                     @endphp
                                 </td>
                                 <td>
@@ -365,7 +365,7 @@
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                         <td>
                             @php
-                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.$overtime->ot_time_in.' - '.$overtime->ot_time_out;
+                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr_replace($overtime->ot_time_in, ':', 2, 0).' - '.substr_replace($overtime->ot_time_out, ':', 2, 0);
                             @endphp
                         </td>
                         <td>
@@ -446,7 +446,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Delete Confirmation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -470,39 +470,39 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="export-modal" tabindex="-1" role="dialog" aria-labelledby="export-label" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="export-label">Download Excel File</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/download" id="form">
-            @csrf
-            <div class="form-group">
-                <label for="date_from">Date from: </label>
-                <span class="badge badge-danger">Required</span>
-                <div class="input">
-                    <input type="text" name="date_from" class="form-control overtime_date required" required>
-                </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="export-label">Download Excel File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="date_to">Date To: </label>
-                <span class="badge badge-danger">Required</span>
-                <div class="input">
-                    <input type="text" name="date_to" class="form-control overtime_date required" required>
-                </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/download" id="form">
+                    @csrf
+                    <div class="form-group">
+                        <label for="date_from">Date from: </label>
+                        <span class="badge badge-danger">Required</span>
+                        <div class="input">
+                            <input type="text" name="date_from" class="form-control overtime_date required" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date_to">Date To: </label>
+                        <span class="badge badge-danger">Required</span>
+                        <div class="input">
+                            <input type="text" name="date_to" class="form-control overtime_date required" required>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button class="btn btn-success" type="submit" form="form"><i class="far fa-file-excel mr-1"></i> Download Excel File</button>
-      </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-success" type="submit" form="form"><i class="far fa-file-excel mr-1"></i> Download Excel File</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 @stop
 @section('css')
@@ -511,23 +511,23 @@
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
 <script>
-$(document).ready(function() {
-    $('.delete-btn').on('click', function() {
-        var get = $('.add-button').attr('href');
-        var href = get.replace('create', 'delete');
-        var target = $(this).attr('data-target');
-        var modal_id = target.replace('#', '');
-        var id = target.replace('#modal-', '');
-        $('.modal').attr('id', modal_id);
-        $('.modal').attr('aria-labelledby', modal_id);
-        $('.form-horizontal').attr('action', href + '/' + id);
-        $('.form-horizontal').attr('id', 'form-' + id);
-        $('.modal-footer > button').attr('form', 'form-' + id);
-        var name = $(this).attr('data-name');
-        $('.data-name').text('Are you sure you want to delete ' + name + '?');
+    $(document).ready(function() {
+        $('.delete-btn').on('click', function() {
+            var get = $('.add-button').attr('href');
+            var href = get.replace('create', 'delete');
+            var target = $(this).attr('data-target');
+            var modal_id = target.replace('#', '');
+            var id = target.replace('#modal-', '');
+            $('.modal').attr('id', modal_id);
+            $('.modal').attr('aria-labelledby', modal_id);
+            $('.form-horizontal').attr('action', href + '/' + id);
+            $('.form-horizontal').attr('id', 'form-' + id);
+            $('.modal-footer > button').attr('form', 'form-' + id);
+            var name = $(this).attr('data-name');
+            $('.data-name').text('Are you sure you want to delete ' + name + '?');
+        });
+
+
     });
-
-
-});
 </script>
 @stop
