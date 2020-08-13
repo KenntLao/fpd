@@ -103,5 +103,7 @@ class OvertimeExport implements FromView,ShouldAutoSize
             employee_id'
         )->where('status', '1')->where('supervisor_id', $_SESSION['sys_id'])->where('role_id', $_SESSION['sys_role_ids'])->whereBetween('ot_date', [$this->date_from, $this->date_to])->get()
         ]);
+        }
+        
     }
 }

@@ -34,4 +34,5 @@ class ExportController extends Controller
             'date_to' => 'required|date_format:Y-m-d|after:date from',
     	]);
     }
+    
 }

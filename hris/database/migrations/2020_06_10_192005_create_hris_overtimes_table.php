@@ -109,3 +109,4 @@ class CreateHrisOvertimesTable extends Migration
         Schema::dropIfExists('hris_overtimes');
     }
 }
+
