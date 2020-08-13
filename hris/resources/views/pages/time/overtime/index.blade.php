@@ -565,3 +565,4 @@ $('.data-name').text('Are you sure you want to delete ' + name + '?');
 });
 </script>
 @stop
+
