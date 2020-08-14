@@ -56,8 +56,7 @@ class DailyTimeRecordController extends Controller
 
         // OVERTIME FOR THIS MONTH
         
-        $employee_overtimes = hris_overtime::where('employee_id', $employee_id)->where('ot_date', '<=', $current_month_length)->where('status','0');
-        
+        $employee_overtimes = hris_overtime::where('employee_id', $employee_id)->where('ot_date', '<=', $current_month_length)->where('status',1)->get();
 
         // get ASSIGN WORKSHIFTS
         $employee_assigned_workshifts = $this->getEmployeeWorkShift();
@@ -173,22 +172,20 @@ class DailyTimeRecordController extends Controller
             // GET MATCHING OVERTIME
             $emp_ot_arr = array();
 
-            foreach($employee_overtimes as $i => $employee_overtime) {
-                if($employee_overtime->ot_date == $date_code) {
-                    array_push($emp_ot_arr, $employee_overtime[$i]);
-                }
+            foreach($employee_overtimes as $employee_overtime) {
+                    if($date_code == $employee_overtime->ot_date){
+                        array_push($emp_ot_arr, $employee_overtime);
+                    }
             }
-
             if($emp_ot_arr == []){
                 $emp_ot_time_in = '-';
                 $emp_ot_time_out = '-';
                 $emp_ot_remarks = '-';
             } else {
-                $emp_ot_time_in = $emp_ot_arr[0]['ot_time_in'];
-                $emp_ot_time_out = $emp_ot_arr[count($emp_ot_arr) - 1]['ot_time_out'];
-                $emp_ot_remarks = $emp_ot_arr[10]['supervisor_remarks'];
+                $emp_ot_time_in = substr_replace($emp_ot_arr[0]['ot_time_in'], ':', 2, 0);
+                $emp_ot_time_out = substr_replace($emp_ot_arr[0]['ot_time_out'], ':', 2, 0);
+                $emp_ot_remarks = $emp_ot_arr[0]['supervisor_remarks'];
             }
-            
 
             $result = '';
 
@@ -213,7 +210,7 @@ class DailyTimeRecordController extends Controller
                             <td>'. $emp_ot_time_out .'</td>
                             <td>'. $emp_ot_remarks .'</td>
                         </tr>';
-            echo $result . '<br>';
+           echo $result . '<br>';
         }
     }
     

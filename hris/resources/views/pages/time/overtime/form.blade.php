@@ -6,9 +6,9 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
-				<input class="form-control required" type="text" name="ot_date" value="{{ old('ot_date') ?? $overtime->ot_date }}" required readonly>
+				<input class="form-control required" type="text" name="ot_date" value="{{ old('ot_date') ?? date('Y-m-d', strtotime($overtime->ot_date)) }}" required readonly>
 				@else
-				<input class="form-control required overtime_date" type="text" name="ot_date" value="{{ old('ot_date') ?? $overtime->ot_date }}" required>
+				<input class="form-control required overtime_date" type="text" name="ot_date" value="{{ old('ot_date') ?? date('Y-m-d', strtotime($overtime->ot_date)) }}" required>
 				@endif
 			</div>
 		</div>
@@ -19,9 +19,9 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
-				<input class="form-control required" type="text" name="ot_time_in" value="{{ old('ot_time_in') ?? $overtime->ot_time_in }}" required readonly>
+				<input class="form-control required" type="text" name="ot_time_in" value="{{ old('ot_time_in') ?? substr_replace($overtime->ot_time_in, ':', 2, 0) }}" required readonly>
 				@else
-				<input class="form-control required overtime_time" type="text" name="ot_time_in" value="{{ old('ot_time_in') ?? $overtime->ot_time_in }}" required>
+				<input class="form-control required overtime_time" type="text" name="ot_time_in" value="{{ old('ot_time_in') ?? substr_replace($overtime->ot_time_in, ':', 2, 0) }}" required>
 				@endif
 			</div>
 		</div>
@@ -32,9 +32,9 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
-				<input class="form-control required" type="text" name="ot_time_out" value="{{ old('ot_time_out') ?? $overtime->ot_time_out }}" required readonly>
+				<input class="form-control required" type="text" name="ot_time_out" value="{{ old('ot_time_out') ?? substr_replace($overtime->ot_time_out, ':', 2, 0) }}" required readonly>
 				@else
-				<input class="form-control required overtime_time" type="text" name="ot_time_out" value="{{ old('ot_time_out') ?? $overtime->ot_time_out }}" required>
+				<input class="form-control required overtime_time" type="text" name="ot_time_out" value="{{ old('ot_time_out') ?? substr_replace($overtime->ot_time_out, ':', 2, 0) }}" required>
 				@endif
 			</div>
 		</div>

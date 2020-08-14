@@ -611,11 +611,11 @@ return [
                     'url'  => '/hris/pages/employees/monitorAttendance/index',
                     'icon'    => 'fas fa-fw fa-clock'
                 ],
-                [
+                /*[
                     'text' => 'Performance Review',
                     'url'  => '/hris/pages/employee/performance_review/',
                     'icon'    => 'fas fa-fw fa-chart-bar'
-                ],
+                ], */
                 [
                     'text' => 'Document Management',
                     'icon'    => 'fas fa-fw fa-file',

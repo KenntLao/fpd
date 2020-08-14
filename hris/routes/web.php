@@ -448,6 +448,7 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     // MONITOR ATTENDANCE
     Route::get('/hris/pages/employees/monitorAttendance/index', 'MonitorAttendanceController@index');
+    Route::get('/hris/pages/employees/monitorAttendance/', 'MonitorAttendanceController@search')->name('monitor_attendance.search');
     
     // GET AJAX DATA FOR SUPERVISOR
     Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
