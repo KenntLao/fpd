@@ -158,6 +158,12 @@
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
+                            <label class="mr-2" for="ot_time_in">Supervisor: </label>
+                            <p>{{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6">
+                        <div class="form-group">
                             <label class="mr-2" for="ot_time_in">Supervisor remarks: </label>
                             <p>{{$overtime->supervisor_remarks}}</p>
                         </div>
@@ -177,3 +183,6 @@
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop
+
+
+

@@ -35,15 +35,10 @@
                         @php
                         // Start date
                         $start_date = '2020-07-01';
-
                         // End date
                         $end_date = date('Y-m',strtotime('+2 months'));
-
-                        // current date
-                        $current_date = date("M Y");
-
                         echo '<select name="month" class="monthDropdown form-control">';
-                            while (strtotime($start_date) <= strtotime($end_date)) { echo $start_date; if(date("M Y", strtotime($start_date))==$current_date) { $selected="selected" ; } else { $selected="" ; } echo '<option value="' .date('Ym',strtotime($start_date)).'" '.$selected.'> '.date("M Y", strtotime($start_date)).'</option>';
+                            while (strtotime($start_date) <= strtotime($end_date)) { echo '<option value="' .date('Ym',strtotime($start_date)).'">'.date("M Y", strtotime($start_date)).'</option>';
 
                                 $start_date = date("Y-m-d", strtotime("+1 month", strtotime($start_date)));
                                 }
@@ -69,7 +64,7 @@
                                     <tr>
                                         <th></th>
                                         <th></th>
-                                        <th colspan="2" scope="colgroup">Attendance</th>
+                                        <th colspan="3" scope="colgroup">Attendance</th>
                                         <th colspan="3" scope="colgroup">Overtime</th>
                                         <th colspan="2" scope="colgroup">Leaves</th>
                                     </tr>
@@ -78,6 +73,7 @@
                                         <th>Day</th>
                                         <th>IN</th>
                                         <th>OUT</th>
+                                        <th>Hours</th>
                                         <th>IN</th>
                                         <th>OUT</th>
                                         <th>REMARKS</th>

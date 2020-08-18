@@ -17,7 +17,11 @@ class ExportController extends Controller
 	    	$date_to = date(request('date_to'));
 	    	$str_from = str_replace('-', '', request('date_from'));
 	    	$str_to = str_replace('-', '', request('date_to'));
-	    	$check = hris_overtime::all()->where('supervisor_id', $_SESSION['sys_id'])->where('role_id', $_SESSION['sys_role_ids']);
+            if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+                $check = hris_overtime::all();
+            } else {
+                $check = hris_overtime::all()->where('supervisor_id', $_SESSION['sys_id'])->where('role_id', $_SESSION['sys_role_ids']);
+            }
 	    	if ( $check->isEmpty() ) {
 	    		return back()->withErrors(['No data to download.']);
 	    	} else {
@@ -31,8 +35,12 @@ class ExportController extends Controller
     {
     	return request()->validate([
             'date_from' => 'required|date_format:Y-m-d',
-            'date_to' => 'required|date_format:Y-m-d|after:date from',
+            'date_to' => 'required|date_format:Y-m-d|after:date_from',
     	]);
     }
     
 }
+
+
+
+

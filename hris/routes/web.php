@@ -426,76 +426,75 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* EMPLOYEE MANAGEMENT */
     //add
 
-    // ITENERARY REQUEST
-    Route::get('/hris/pages/employees/iteneraryRequests/index', 'IteneraryRequestController@index');
-    Route::get('/hris/pages/employees/iteneraryRequests/create', 'IteneraryRequestController@create');
-    Route::post('/hris/pages/employees/iteneraryRequests', 'IteneraryRequestController@store');
-    //edit
-    Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/edit', 'IteneraryRequestController@edit');
-    Route::patch('/hris/pages/employees/iteneraryRequests/update/{iteneraryRequest}', 'IteneraryRequestController@update');
-    Route::get('/hris/pages/employees/iteneraryRequests/updateStatus/{status}/{iteneraryRequest}', 'IteneraryRequestController@updateStatus');
-    //delete
-    Route::delete('/hris/pages/employees/iteneraryRequests/delete/{iteneraryRequest}', 'IteneraryRequestController@destroy');
-    //show
-    Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/show', 'IteneraryRequestController@show');
-    //download
-    Route::get('/hris/pages/employees/iteneraryRequests/download/{attachment}/{iteneraryRequest}', 'IteneraryRequestController@download');
+        // ITENERARY REQUEST
+        Route::get('/hris/pages/employees/iteneraryRequests/index', 'IteneraryRequestController@index');
+        Route::get('/hris/pages/employees/iteneraryRequests/create', 'IteneraryRequestController@create');
+        Route::post('/hris/pages/employees/iteneraryRequests', 'IteneraryRequestController@store');
+        //edit
+        Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/edit', 'IteneraryRequestController@edit');
+        Route::patch('/hris/pages/employees/iteneraryRequests/update/{iteneraryRequest}', 'IteneraryRequestController@update');
+        Route::get('/hris/pages/employees/iteneraryRequests/updateStatus/{status}/{iteneraryRequest}', 'IteneraryRequestController@updateStatus');
+        //delete
+        Route::delete('/hris/pages/employees/iteneraryRequests/delete/{iteneraryRequest}', 'IteneraryRequestController@destroy');
+        //show
+        Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/show', 'IteneraryRequestController@show');
+        //download
+        Route::get('/hris/pages/employees/iteneraryRequests/download/{attachment}/{iteneraryRequest}', 'IteneraryRequestController@download');
 
-    // EXCEL IMPORT / EXPORT
-    Route::get('/hris/pages/employees/employee/table', 'EmployeeController@table');
-    Route::post('/hris/pages/employees/employee/import', 'EmployeeController@import');
-    Route::get('/hris/pages/employees/employee/download', 'EmployeeController@export');
+        // EXCEL IMPORT / EXPORT
+        Route::get('/hris/pages/employees/employee/table', 'EmployeeController@table');
+        Route::post('/hris/pages/employees/employee/import', 'EmployeeController@import');
+        Route::get('/hris/pages/employees/employee/download', 'EmployeeController@export');
 
-    // MONITOR ATTENDANCE
-    Route::get('/hris/pages/employees/monitorAttendance/index', 'MonitorAttendanceController@index');
-    Route::get('/hris/pages/employees/monitorAttendance/', 'MonitorAttendanceController@search')->name('monitor_attendance.search');
-    
-    // GET AJAX DATA FOR SUPERVISOR
-    Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
+        
+    Route::group(['middleware' => 'CheckPermission:employees'], function () {
+        // GET AJAX DATA FOR SUPERVISOR
+        Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
 
-    Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
-    Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
-    Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
-    //edit
-    Route::get('/hris/pages/employees/employee/{employee}/edit', 'EmployeeController@edit');
-    Route::patch('/hris/pages/employees/employee/update/{employee}', 'EmployeeController@update');
-    //show
-    Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
-    //delete
-    Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
+        Route::get('/hris/pages/employees/employee/index', 'EmployeeController@index');
+        Route::get('/hris/pages/employees/employee/create', 'EmployeeController@create');
+        Route::post('/hris/pages/employees/employee', 'EmployeeController@store');
+        //edit
+        Route::get('/hris/pages/employees/employee/{employee}/edit', 'EmployeeController@edit');
+        Route::patch('/hris/pages/employees/employee/update/{employee}', 'EmployeeController@update');
+        //show
+        Route::get('/hris/pages/employees/employee/{employee}', 'EmployeeController@show');
+        //delete
+        Route::delete('/hris/pages/employees/employee/delete/{employee}', 'EmployeeController@destroy');
 
-    
+       
 
-    // DOCUMENT MANAGEMENT
-    // COMPANY DOCUMENTS
-    Route::get('/hris/pages/employees/documents/companyDocuments/index', 'CompanyDocumentController@index');
-    Route::get('/hris/pages/employees/documents/companyDocuments/create', 'CompanyDocumentController@create');
-    Route::post('/hris/pages/employees/documents/companyDocuments', 'CompanyDocumentController@store');
-    //edit
-    Route::get('/hris/pages/employees/documents/companyDocuments/{document}/edit', 'CompanyDocumentController@edit')->name('editCompanyDocument');
-    Route::patch('/hris/pages/employees/documents/companyDocuments/update/{document}', 'CompanyDocumentController@update');
-    //delete
-    Route::delete('/hris/pages/employees/documents/companyDocuments/delete/{document}', 'CompanyDocumentController@destroy');
-    // GET AJAX DATA FOR EMPLOYEE
-    Route::post('/hris/pages/employees/documents/companyDocuments/getEmployee', 'CompanyDocumentController@renderEmployee')->name('getEmployee.fetch');
-    // DOCUMENT TYPES
-    Route::get('/hris/pages/employees/documents/types/index', 'DocumentTypeController@index');
-    Route::get('/hris/pages/employees/documents/types/create', 'DocumentTypeController@create');
-    Route::post('/hris/pages/employees/documents/types', 'DocumentTypeController@store');
-    //edit
-    Route::get('/hris/pages/employees/documents/types/{type}/edit', 'DocumentTypeController@edit');
-    Route::patch('/hris/pages/employees/documents/types/update/{type}', 'DocumentTypeController@update');
-    //delete
-    Route::delete('/hris/pages/employees/documents/types/delete/{type}', 'DocumentTypeController@destroy');
-    // EMPLOYEE DOCUMENTS
-    Route::get('/hris/pages/employees/documents/employeeDocuments/index', 'EmployeeDocumentController@index');
-    Route::get('/hris/pages/employees/documents/employeeDocuments/create', 'EmployeeDocumentController@create');
-    Route::post('/hris/pages/employees/documents/employeeDocuments', 'EmployeeDocumentController@store');
-    //edit
-    Route::get('/hris/pages/employees/documents/employeeDocuments/{document}/edit', 'EmployeeDocumentController@edit');
-    Route::patch('/hris/pages/employees/documents/employeeDocuments/update/{document}', 'EmployeeDocumentController@update');
-    //delete
-    Route::delete('/hris/pages/employees/documents/employeeDocuments/delete/{document}', 'EmployeeDocumentController@destroy');
+        // DOCUMENT MANAGEMENT
+        // COMPANY DOCUMENTS
+        Route::get('/hris/pages/employees/documents/companyDocuments/index', 'CompanyDocumentController@index');
+        Route::get('/hris/pages/employees/documents/companyDocuments/create', 'CompanyDocumentController@create');
+        Route::post('/hris/pages/employees/documents/companyDocuments', 'CompanyDocumentController@store');
+        //edit
+        Route::get('/hris/pages/employees/documents/companyDocuments/{document}/edit', 'CompanyDocumentController@edit')->name('editCompanyDocument');
+        Route::patch('/hris/pages/employees/documents/companyDocuments/update/{document}', 'CompanyDocumentController@update');
+        //delete
+        Route::delete('/hris/pages/employees/documents/companyDocuments/delete/{document}', 'CompanyDocumentController@destroy');
+        // GET AJAX DATA FOR EMPLOYEE
+        Route::post('/hris/pages/employees/documents/companyDocuments/getEmployee', 'CompanyDocumentController@renderEmployee')->name('getEmployee.fetch');
+        // DOCUMENT TYPES
+        Route::get('/hris/pages/employees/documents/types/index', 'DocumentTypeController@index');
+        Route::get('/hris/pages/employees/documents/types/create', 'DocumentTypeController@create');
+        Route::post('/hris/pages/employees/documents/types', 'DocumentTypeController@store');
+        //edit
+        Route::get('/hris/pages/employees/documents/types/{type}/edit', 'DocumentTypeController@edit');
+        Route::patch('/hris/pages/employees/documents/types/update/{type}', 'DocumentTypeController@update');
+        //delete
+        Route::delete('/hris/pages/employees/documents/types/delete/{type}', 'DocumentTypeController@destroy');
+        // EMPLOYEE DOCUMENTS
+        Route::get('/hris/pages/employees/documents/employeeDocuments/index', 'EmployeeDocumentController@index');
+        Route::get('/hris/pages/employees/documents/employeeDocuments/create', 'EmployeeDocumentController@create');
+        Route::post('/hris/pages/employees/documents/employeeDocuments', 'EmployeeDocumentController@store');
+        //edit
+        Route::get('/hris/pages/employees/documents/employeeDocuments/{document}/edit', 'EmployeeDocumentController@edit');
+        Route::patch('/hris/pages/employees/documents/employeeDocuments/update/{document}', 'EmployeeDocumentController@update');
+        //delete
+        Route::delete('/hris/pages/employees/documents/employeeDocuments/delete/{document}', 'EmployeeDocumentController@destroy');
+    });
 
     /* BENEFITS PAGE */
     Route::get('/hris/pages/recruitment/recruitmentSetup/benefits/index', 'BenefitController@index');
@@ -623,15 +622,18 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* ADD */
     Route::get('/hris/pages/time/overtime/create', 'OvertimeController@create');
     Route::post('/hris/pages/time/overtime', 'OvertimeController@store');
+    /* EDIT STATUS */
+    Route::get('/hris/pages/time/overtime/{status}/{overtime}/status', 'OvertimeController@status');
     /* UPDATE */
     Route::get('/hris/pages/time/overtime/{overtime}/edit', 'OvertimeController@edit');
     Route::patch('/hris/pages/time/overtime/update/{overtime}', 'OvertimeController@update');
-    Route::get('/hris/pages/time/overtime/{status}/{overtime}/edit', 'OvertimeController@editStatus')->name('editStatus');
     Route::patch('/hris/pages/time/overtime/update/{status}/{overtime}', 'OvertimeController@updateStatus');
     /* DELETE */
     Route::delete('/hris/pages/time/overtime/delete/{overtime}', 'OvertimeController@destroy');
     /* SHOW */
     Route::get('/hris/pages/time/overtime/{overtime}/show', 'OvertimeController@show');
+    /* AJAX */
+    Route::post('/hris/pages/time/overtime/getEmployeeOT', 'OvertimeController@renderEmployee')->name('getEmployeeOT.fetch');
 
     // EXPORT EXCEL FILE
     Route::get('/hris/pages/time/overtime/table', 'OvertimeController@table');
@@ -722,9 +724,9 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE */
     Route::delete('/hris/pages/leaveManagement/leaves/delete/{leave}', 'LeaveController@destroy');
 
-
-
     Route::get('/hris/', function () {
         return view('welcome');
     });
 });
+  
+
