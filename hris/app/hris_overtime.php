@@ -36,7 +36,7 @@ class hris_overtime extends Model
     {
         return $this->belongsTo('App\hris_overtime_types');
     }
-
-    
-
 }
+
+
+

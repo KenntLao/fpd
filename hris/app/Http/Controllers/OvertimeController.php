@@ -78,8 +78,8 @@ class OvertimeController extends Controller
                 $overtime->employee_id = request('employee_id');
                 $overtime->department_id = request('department_id');
                 $overtime->ot_date = request('ot_date');
-                $overtime->ot_time_in = request('ot_time_in');
-                $overtime->ot_time_out = request('ot_time_out');
+                $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
+                $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
                 $overtime->ot_difference = $ot_difference;
                 $overtime->overtime_category_id = request('overtime_category_id');
                 $overtime->supervisor_id = $overtime->employee->supervisor;
@@ -113,8 +113,8 @@ class OvertimeController extends Controller
                     $overtime->employee_id = $id;
                     $overtime->department_id = $overtime->employee->department->id;
                     $overtime->ot_date = request('ot_date');
-                    $overtime->ot_time_in = request('ot_time_in');
-                    $overtime->ot_time_out = request('ot_time_out');
+                    $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
+                    $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
                     $overtime->ot_difference = $ot_difference;
                     $overtime->overtime_category_id = request('overtime_category_id');
                     $overtime->supervisor_id = $overtime->employee->supervisor;
@@ -189,9 +189,9 @@ class OvertimeController extends Controller
         }
         $ot_difference = ($time2 - $time1)/3600;
         if ($this->validatedData()) {
-            $overtime->ot_date = request('ot_date');
-            $overtime->ot_time_in = request('ot_time_in');
-            $overtime->ot_time_out = request('ot_time_out');
+            $overtime->ot_date = date('Ymd', strtotime(request('ot_date')));
+            $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
+            $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
             $overtime->ot_difference = $ot_difference;
             $overtime->overtime_category_id = request('overtime_category_id');
             $overtime->employee_remarks = request('employee_remarks');
@@ -436,3 +436,6 @@ class OvertimeController extends Controller
     }
 
 }
+
+
+
