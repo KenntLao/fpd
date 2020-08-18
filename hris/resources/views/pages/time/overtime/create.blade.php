@@ -38,4 +38,49 @@
 @stop
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
+<script type="text/javascript">
+	$('#department_dropdown').on('change', function() {
+		if ( $(this).val() == '' ) {
+			var department_id = 0;
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('getEmployeeOT.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					department_id: department_id,
+				},
+				success: function(response) {
+					$('#employee').html(response);
+				}
+			});
+		}
+		if ($(this).val() != '') {
+			var department_id = $(this).val();
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('getEmployeeOT.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					department_id: department_id,
+				},
+				success: function(response) {
+					$('#employee').html(response);
+				}
+			});
+		}
+	});
+</script>
+
 @stop
