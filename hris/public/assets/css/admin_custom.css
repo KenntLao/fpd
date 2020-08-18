@@ -38,6 +38,9 @@ html::-webkit-scrollbar {
 	width: 20px;
 	vertical-align: sub;
 }
+.dropdown-menu-lg {
+	max-width: 500px;
+}
 .dropdown-menu {
 	padding: 15px;
 	text-align: center;

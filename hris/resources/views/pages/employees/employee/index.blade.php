@@ -64,7 +64,26 @@
                         <td><a class="clickable-info" href="/hris/pages/employees/employee/{{$employee->id}}">{{$employee->employee_number}}</a></td>
                         <td><a class="clickable-info" href="/hris/pages/employees/employee/{{$employee->id}}">{{$employee->firstname}} {{$employee->middlename}} {{$employee->lastname}}</a></td>
                         <td>{{$employee->work_no}}</td>
-                        <td>{{$employee->department->name}}</td>
+                        <td>
+                            @php
+                            if($employee->department){
+                            $employee_dept = $employee->department->name;
+                            }else {
+                            $employee_dept = 0;
+                            }
+
+
+                            if($employee_dept == 0)
+                            {
+                            $employee_dept = "N/A";
+                            }else {
+                            $employee_dept = $employee->department->name;
+                            }
+
+                            echo $employee_dept;
+
+                            @endphp
+                        </td>
                         <td>
                             @if($employee->employeeProject)
                             @php

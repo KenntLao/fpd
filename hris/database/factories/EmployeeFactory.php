@@ -16,8 +16,10 @@ $factory->define(App\hris_employee::class, function (Faker $faker) {
 	$ln = substr($lastname, 0, 1);
 	$employee_number = $faker->unique()->numerify('####');
 	$username = $fn.''.$ln.''.$employee_number;
-	$role_id = ''.$faker->randomElement([',4,', ',5,']);
-	$path = public_path('assets/images/employees/employee_photos');
+    $role_id = ''.$faker->randomElement([',4,', ',5,']);
+    
+    $path = public_path('assets/images/employees/employee_photos');
+    
 	if ( $g == 'm' ) {
 		$image = $faker->file($path.'/male/tmp', $path, false);
 	} else {

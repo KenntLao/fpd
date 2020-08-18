@@ -34,28 +34,52 @@ class WorkShiftAssignmentController extends Controller
     public function store(Request $request, hris_workshift_assignment $workshift_assignment)
     {
         $action = 'add';
-        if ($this->validatedData()) {
-            $workshift_assignment->employee_id = $request->employee_id;
-            $workshift_assignment->workshift_id = $request->workshift_id;
-            $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
-            $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
-            $workshift_assignment->status = 0;
-            $workshift_assignment->save();
+        if($_SESSION['sys_account_mode'] == 'employee'){
+            if ($this->validatedData()) {
+                $workshift_assignment->employee_id = $request->employee_id;
+                $workshift_assignment->workshift_id = $request->workshift_id;
+                $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
+                $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
+                $workshift_assignment->status = 0;
+                $workshift_assignment->save();
 
-            $id = $workshift_assignment->id;
-            $this->function->addSystemLog($this->module,$action,$id);
+                $id = $workshift_assignment->id;
+                $this->function->addSystemLog($this->module, $action, $id);
 
 
-            // WORKSHIFT NOTIFICATION
-            $employee_req = $request->employee_id;
-            $employee = hris_employee::find($_SESSION['sys_id']);
-            $employee_receiver = hris_employee::find($employee_req);
-            $employee_receiver->notify(new WorkShiftNotif($employee));
+                // WORKSHIFT NOTIFICATION
+                $employee_req = $request->employee_id;
+                $employee = hris_employee::find($_SESSION['sys_id']);
+                $employee_receiver = hris_employee::find($employee_req);
+                $employee_receiver->notify(new WorkShiftNotif($employee));
 
-            
-            return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
+
+                return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
+            } else {
+                return back()->withErrors($this->validatedData());
+            }
         } else {
-            return back()->withErrors($this->validatedData());
+            if ($this->validatedData()) {
+                $workshift_assignment->employee_id = $request->employee_id;
+                $workshift_assignment->workshift_id = $request->workshift_id;
+                $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
+                $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
+                $workshift_assignment->status = 0;
+                $workshift_assignment->save();
+
+                $id = $workshift_assignment->id;
+                $this->function->addSystemLog($this->module, $action, $id);
+
+                // WORKSHIFT NOTIFICATION
+                $employee_req = $request->employee_id;
+                $employee = users::find($_SESSION['sys_id']);
+                $employee_receiver = hris_employee::find($employee_req);
+                $employee_receiver->notify(new WorkShiftNotif($employee));
+
+                return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
+            } else {
+                return back()->withErrors($this->validatedData());
+            }
         }
     }
     public function edit(hris_workshift_assignment $workshift_assignment, hris_employee $employees, hris_work_shift_management $work_shift){

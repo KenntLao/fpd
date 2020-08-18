@@ -8,7 +8,7 @@ use App\hris_company_structures;
 use App\hris_pay_grades;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
-
+use Faker\Generator as Faker;
 
 class EmployeeImport implements ToModel, WithStartRow
 {
@@ -18,7 +18,6 @@ class EmployeeImport implements ToModel, WithStartRow
     }
     public function model(array $row)
     {
-
         $department_id = hris_company_structures::where('name', $row[32])->limit(1)->get('id');
         $department_id_int = trim(preg_replace('/[^0-9]/', '', $department_id));
 
@@ -36,9 +35,28 @@ class EmployeeImport implements ToModel, WithStartRow
         $pay_grade_id = hris_pay_grades::where('name', $row[34])->limit(1)->get('id');
         $pay_grade_id_int = trim(preg_replace('/[^0-9]/', '', $pay_grade_id));
 
+        $username = substr($row[2], 0, 1). substr($row[3], 0, 1). substr($row[4], 0, 1).$row[0];
+
+        if($department_id_int == ""){
+            $department_id_int = 0;
+        }
+
+        if($pay_grade_id_int == ""){
+            $pay_grade_id_int = 0;
+        }
+
+        $g = $row[7];
+        
+        if ($g == 'M') {
+            $image = 'pic1.png';
+        } else {
+            $image = 'pic2.png';
+        }
+
         return new hris_employee([
             'employee_number'     => $row[0],
-            'username'    => $row[1],
+            'employee_photo' => $image,
+            'username'    => $username,
             'firstname'    => $row[2],
             'middlename'    => $row[3],
             'lastname'    => $row[4],
