@@ -62,7 +62,7 @@ class OvertimeController extends Controller
         $departments = hris_company_structures::all();
         return view('pages.time.overtime.create', compact('overtime', 'id', 'employee', 'categories', 'types', 'departments'));
     }
-    public function store(hris_overtime $overtime,Request $request)
+    public function store(hris_overtime $overtime, Request $request)
     {
         $id = $_SESSION['sys_id'];
         $time1 = strtotime(request('ot_time_in'));
@@ -72,34 +72,39 @@ class OvertimeController extends Controller
         }
         $ot_difference = ($time2 - $time1)/3600;
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
-            if ( $this->validatedData() ) {
-                $overtime->acc_mode = $_SESSION['sys_account_mode'];
-                $overtime->sender_id = $id;
-                $overtime->employee_id = request('employee_id');
-                $overtime->department_id = request('department_id');
-                $overtime->ot_date = request('ot_date');
-                $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
-                $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
-                $overtime->ot_difference = $ot_difference;
-                $overtime->overtime_category_id = request('overtime_category_id');
-                $overtime->supervisor_id = $overtime->employee->supervisor;
-                $overtime->employee_remarks = request('employee_remarks');
-                $overtime->status = '0';
-                $overtime->save();
-
-                // OVERTIME REQUEST NOTIFICATION
-                $employee = hris_employee::where('id',request('employee_id'))->first();
-                $get_supervisor = hris_employee::where('id',request('employee_id'))->get('supervisor');
-                $employee_supervisor = hris_employee::where('id',$employee->supervisor)->first();
-                $employee_supervisor->notify(new SupervisorNotif($employee));
-
-                /* SYSTEM LOG */
-                $id = $overtime->id;
-                $this->function->addSystemLog($this->module,$id);
-                    
-                return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully added!');
+            $employee = hris_employee::find(request('employee_id'));
+            if ( $employee->supervisor == NULL ) {
+                return back()->withErrors(['Employee supervisor is required']);
             } else {
-                return back()->withErrors($this->validatedData());
+                if ( $this->validatedData() ) {
+                    $overtime->acc_mode = $_SESSION['sys_account_mode'];
+                    $overtime->sender_id = $id;
+                    $overtime->employee_id = request('employee_id');
+                    $overtime->department_id = request('department_id');
+                    $overtime->ot_date = request('ot_date');
+                    $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
+                    $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
+                    $overtime->ot_difference = $ot_difference;
+                    $overtime->overtime_category_id = request('overtime_category_id');
+                    $overtime->supervisor_id = $overtime->employee->supervisor;
+                    $overtime->employee_remarks = request('employee_remarks');
+                    $overtime->status = '0';
+                    $overtime->save();
+
+                    // OVERTIME REQUEST NOTIFICATION
+                    $employee = hris_employee::where('id',request('employee_id'))->first();
+                    $get_supervisor = hris_employee::where('id',request('employee_id'))->get('supervisor');
+                    $employee_supervisor = hris_employee::where('id',$employee->supervisor)->first();
+                    $employee_supervisor->notify(new SupervisorNotif($employee));
+
+                    /* SYSTEM LOG */
+                    $id = $overtime->id;
+                    $this->function->addSystemLog($this->module,$id);
+                        
+                    return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully added!');
+                } else {
+                    return back()->withErrors($this->validatedData());
+                }
             }
         } else {
             $employee = hris_employee::find($id);

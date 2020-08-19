@@ -54,7 +54,7 @@
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                         <td>
                             @php
-                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.$overtime->ot_time_in.' - '.$overtime->ot_time_out;
+                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
                             @endphp
                         </td>
                         <td>

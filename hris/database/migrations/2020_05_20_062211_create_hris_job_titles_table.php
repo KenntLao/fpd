@@ -18,8 +18,8 @@ class CreateHrisJobTitlesTable extends Migration
             $table->timestamps();
             $table->string('code');
             $table->string('name');
-            $table->string('description');
-            $table->string('specification');
+            $table->longText('description');
+            $table->longText('specification');
         });
     }
 

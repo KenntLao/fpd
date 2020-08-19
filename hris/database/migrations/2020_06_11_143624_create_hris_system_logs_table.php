@@ -19,7 +19,7 @@ class CreateHrisSystemLogsTable extends Migration
             $table->string('user');
             $table->string('module')->nullable();
             $table->string('action');
-            $table->string('action_id')->nullable();
+            $table->bigInteger('action_id')->nullable();
             $table->string('field')->nullable();
             $table->text('old_data')->nullable();
             $table->text('new_data')->nullable();

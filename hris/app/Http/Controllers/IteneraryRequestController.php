@@ -324,7 +324,7 @@ class IteneraryRequestController extends Controller
             'return_date' => 'required|date_format:Y-m-d h:i A|after:travel_date',
             'notes' => 'nullable',
             'currency_id' => 'required',
-            'total_funding_proposed' => 'required',
+            'total_funding_proposed' => 'required|integer',
             'attachment_1' => 'nullable',
             'attachment_2' => 'nullable',
             'attachment_3' => 'nullable',

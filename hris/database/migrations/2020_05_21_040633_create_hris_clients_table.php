@@ -17,8 +17,8 @@ class CreateHrisClientsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('details')->nullable();
-            $table->string('address')->nullable();
+            $table->longText('details')->nullable();
+            $table->longText('address')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('email')->nullable();
             $table->string('company_url')->nullable();

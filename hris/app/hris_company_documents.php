@@ -11,7 +11,7 @@ class hris_company_documents extends Model
 
     public function department()
     {
-    	return $this->belongsTo('App\hris_department');
+    	return $this->belongsTo('App\hris_company_structures');
     }
     public function employee()
     {

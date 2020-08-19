@@ -16,16 +16,16 @@ class CreateHrisEmployeeLoansTable extends Migration
         Schema::create('hris_employee_loans', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee_id');
-            $table->string('loan_type_id');
+            $table->bigInteger('employee_id');
+            $table->bigInteger('loan_type_id');
             $table->date('loan_start_date');
             $table->date('last_installment_date');
-            $table->string('loan_period');
+            $table->integer('loan_period');
             $table->string('currency');
-            $table->string('loan_amount');
-            $table->string('monthly_installment');
+            $table->integer('loan_amount');
+            $table->integer('monthly_installment');
             $table->string('status');
-            $table->string('details')->nullable();
+            $table->longText('details')->nullable();
         });
     }
 

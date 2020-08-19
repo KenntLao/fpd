@@ -16,15 +16,15 @@ class CreateHrisEmployeeExpensesTable extends Migration
         Schema::create('hris_employee_expenses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee_id');
+            $table->bigInteger('employee_id');
             $table->date('expense_date');
-            $table->string('payment_method_id');
+            $table->bigInteger('payment_method_id');
             $table->string('ref_number')->nullable();
             $table->string('payee');
-            $table->string('expense_category_id');
-            $table->string('notes');
+            $table->bigInteger('expense_category_id');
+            $table->longText('notes');
             $table->string('currency');
-            $table->string('amount');
+            $table->integer('amount');
             $table->string('receipt')->nullable();
             $table->string('attachment_1')->nullable();
             $table->string('attachment_2')->nullable();

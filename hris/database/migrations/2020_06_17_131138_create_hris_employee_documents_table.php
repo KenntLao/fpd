@@ -21,7 +21,7 @@ class CreateHrisEmployeeDocumentsTable extends Migration
             $table->date('date_added');
             $table->date('valid_until')->nullable();
             $table->string('status');
-            $table->string('details')->nullable();
+            $table->longText('details')->nullable();
             $table->string('attachment');
         });
     }

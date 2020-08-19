@@ -16,8 +16,8 @@ class CreateHrisEmployeeTrainingSessionsTable extends Migration
         Schema::create('hris_employee_training_sessions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee_id');
-            $table->string('training_session_id');
+            $table->bigInteger('employee_id');
+            $table->bigInteger('training_session_id');
             $table->string('status');
         });
     }

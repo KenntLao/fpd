@@ -16,7 +16,7 @@ class CreateHrisCandidatesTable extends Migration
         Schema::create('hris_candidates', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('job_position_id');
+            $table->bigInteger('job_position_id');
             $table->string('hiring_stage');
             $table->string('first_name');
             $table->string('last_name');
@@ -27,13 +27,13 @@ class CreateHrisCandidatesTable extends Migration
             $table->string('telephone');
             $table->string('email');
             $table->string('resume');
-            $table->string('resume_headline')->nullable();
-            $table->string('profile_summary')->nullable();
-            $table->string('total_years_exp')->nullable();
-            $table->string('work_history')->nullable();
-            $table->string('education')->nullable();
-            $table->string('skills')->nullable();
-            $table->string('referees')->nullable();
+            $table->longText('resume_headline')->nullable();
+            $table->longText('profile_summary')->nullable();
+            $table->longText('total_years_exp')->nullable();
+            $table->longText('work_history')->nullable();
+            $table->longText('education')->nullable();
+            $table->longText('skills')->nullable();
+            $table->longText('referees')->nullable();
             $table->string('prefered_industry');
             $table->string('expected_salary')->nullable();
         });

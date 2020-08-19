@@ -17,7 +17,7 @@ class CreateHrisCompanyLoanTypesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('details')->nullable();
+            $table->longText('details')->nullable();
         });
     }
 

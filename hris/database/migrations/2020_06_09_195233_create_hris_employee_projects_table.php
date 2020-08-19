@@ -16,9 +16,9 @@ class CreateHrisEmployeeProjectsTable extends Migration
         Schema::create('hris_employee_projects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee_id');
-            $table->string('project_id');
-            $table->string('details')->nullable();
+            $table->bigInteger('employee_id');
+            $table->bigInteger('project_id');
+            $table->longText('details')->nullable();
         });
     }
 

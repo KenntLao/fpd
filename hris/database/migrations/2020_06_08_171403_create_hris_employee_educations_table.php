@@ -16,8 +16,8 @@ class CreateHrisEmployeeEducationsTable extends Migration
         Schema::create('hris_employee_educations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee_id');
-            $table->string('education_id');
+            $table->bigInteger('employee_id');
+            $table->bigInteger('education_id');
             $table->string('institute');
             $table->date('start_date')->nullable();
             $table->date('completed')->nullable();

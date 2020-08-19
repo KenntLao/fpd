@@ -17,8 +17,8 @@ class CreateHrisTrainingSessionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('course_id');
-            $table->string('details')->nullable();
+            $table->bigInteger('course_id');
+            $table->longText('details')->nullable();
             $table->string('scheduled_time');
             $table->string('assignment_due_date')->nullable();
             $table->string('delivery_method');

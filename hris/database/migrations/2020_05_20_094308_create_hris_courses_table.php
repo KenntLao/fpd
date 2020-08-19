@@ -20,10 +20,10 @@ class CreateHrisCoursesTable extends Migration
             $table->string('name');
             $table->string('coordinator');
             $table->string('trainer')->nullable();
-            $table->string('trainer_details')->nullable();
+            $table->longText('trainer_details')->nullable();
             $table->string('payment_type');
             $table->string('currency');
-            $table->string('cost');
+            $table->integer('cost');
             $table->string('status');
         });
     }

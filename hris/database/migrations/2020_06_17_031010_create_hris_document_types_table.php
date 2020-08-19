@@ -21,7 +21,7 @@ class CreateHrisDocumentTypesTable extends Migration
             $table->string('expire_notification_month');
             $table->string('expire_notification_week');
             $table->string('expire_notification_day');
-            $table->string('details')->nullable();
+            $table->longText('details')->nullable();
         });
     }
 

@@ -17,11 +17,11 @@ class CreateHrisCompanyDocumentsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('details')->nullable();
+            $table->longText('details')->nullable();
             $table->string('status');
             $table->string('attachment');
-            $table->string('department_id')->nullable();
-            $table->string('employee_id')->nullable();
+            $table->bigInteger('department_id')->nullable();
+            $table->bigInteger('employee_id')->nullable();
         });
     }
 
