@@ -26,9 +26,10 @@ class EmployeeController extends Controller
     public function index(hris_employee $employee){
         $role_id = trim(str_replace(',','',$_SESSION['sys_role_ids']));
         $sys_id = $_SESSION['sys_id'];
+        $acc_mode = $_SESSION['sys_account_mode'];
         if(isset($_SESSION['sys_dep_id'])){ // if employee have department
             $sys_dep_id = $_SESSION['sys_dep_id'];
-            if ($sys_dep_id && $sys_id) { // get all subordinate
+            if ($sys_dep_id && $sys_id && $acc_mode == "employee") { // get all subordinate
                 $employees = hris_employee::where('department_id', $sys_dep_id)->where('id', '!=', $sys_id)->where('supervisor', $sys_id)->paginate(10);
             } else {
                 $employees = hris_employee::paginate(10);
