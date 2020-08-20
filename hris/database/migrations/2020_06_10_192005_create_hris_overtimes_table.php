@@ -16,11 +16,7 @@ class CreateHrisOvertimesTable extends Migration
         Schema::create('hris_overtimes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('acc_mode');
-            $table->bigInteger('sender_id');
-            $table->bigInteger('department_id');
             $table->bigInteger('employee_id');
-            $table->string('ot_difference');
             $table->string('ot_date');
             $table->string('ot_time_in');
             $table->string('ot_time_out');
@@ -31,7 +27,6 @@ class CreateHrisOvertimesTable extends Migration
             $table->bigInteger('supervisor_id')->nullable();
             $table->string('role_id')->nullable();
             $table->string('approved_date')->nullable();
-            $table->string('approved_by_id')->nullable();
             $table->string('status')->nullable();
             $table->string('REG')->nullable();
             $table->string('REG_8')->nullable();

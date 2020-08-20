@@ -1,29 +1,20 @@
 @csrf
 <div class="row">
-	<div class="col-12 col-md-6">
+	<div class="col-12 col-md-6 col-xl-4">
 		<div class="form-group">
 			<label class="mr-2" for="name">Name: </label>
 			<span class="badge badge-danger">Required</span>
 			<input class="form-control required" type="text" value="{{old('name') ?? $company->name}}" name="name" required>
 		</div>
 	</div>
-	<div class="col-12 col-md-6">
-		<div class="form-group">
-			<label class="mr-2" for="code">Code: </label>
-			<span class="badge badge-danger">Required</span>
-			<input class="form-control required" type="text" value="{{old('code') ?? $company->code}}" name="code" required>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-12 col-md-6">
+	<div class="col-12 col-md-6 col-xl-4">
 		<div class="form-group">
 			<label class="mr-2" for="details">Details: </label>
 			<span class="badge badge-danger">Required</span>
 			<textarea class="form-control required" name="details"required>{{old('details') ?? $company->details}}</textarea>
 		</div>
 	</div>
-	<div class="col-12 col-md-6">
+	<div class="col-12 col-md-6 col-xl-4">
 		<div class="form-group">
 			<label class="mr-2" for="name">Address: </label>
 			<textarea class="form-control required" name="address">{{old('address') ?? $company->address}}</textarea>

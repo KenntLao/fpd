@@ -8,6 +8,7 @@ use App\hris_work_shift_management;
 use App\hris_daily_time_record;
 use App\hris_attendances;
 use App\hris_employee;
+use App\hris_overtime;
 
 class DailyTimeRecordController extends Controller
 {
@@ -44,7 +45,7 @@ class DailyTimeRecordController extends Controller
 
         // days count in month
         $last_day = date('t', $current_month . '01');
-
+        $current_month_length = $current_month . $last_day;
 
         // get FROM and TO date range for getting TIME IN SESSIONS
         $lastday_lastmonth = strtotime('last day of previous month 12 am');
@@ -52,6 +53,10 @@ class DailyTimeRecordController extends Controller
 
         // TIME IN SESSIONS based on FROM and TO
         $employee_attendances = hris_attendances::where('employee_id', $employee_id)->where('time_in', '>=', $lastday_lastmonth)->where('time_out', '<=', $firstday_nextmonth)->get();
+
+        // OVERTIME FOR THIS MONTH
+        
+        $employee_overtimes = hris_overtime::where('employee_id', $employee_id)->where('ot_date', '<=', $current_month_length)->where('status',1)->get();
 
         // get ASSIGN WORKSHIFTS
         $employee_assigned_workshifts = $this->getEmployeeWorkShift();
@@ -103,6 +108,8 @@ class DailyTimeRecordController extends Controller
                 // convert time in/out to EPOCH
                 $day_time_in = strtotime($date_code.' '.$day_time_in);
                 $date_code = date('Ymd', strtotime($date_code . ' -1 days'));
+
+                // check if workshift is graveyard
                 if($day_time_in > $day_time_out) {
                     $date_code = date('Ymd',strtotime($date_code.' +1 days'));
                     $day_time_out = strtotime($date_code.' '.$day_time_out);
@@ -161,6 +168,25 @@ class DailyTimeRecordController extends Controller
                     $day_attendance_time_out = $day_sessions_arr[count($day_sessions_arr) - 1]['time_out'];
                 }
             }
+
+            // GET MATCHING OVERTIME
+            $emp_ot_arr = array();
+
+            foreach($employee_overtimes as $employee_overtime) {
+                    if($date_code == $employee_overtime->ot_date){
+                        array_push($emp_ot_arr, $employee_overtime);
+                    }
+            }
+            if($emp_ot_arr == []){
+                $emp_ot_time_in = '-';
+                $emp_ot_time_out = '-';
+                $emp_ot_remarks = '-';
+            } else {
+                $emp_ot_time_in = substr_replace($emp_ot_arr[0]['ot_time_in'], ':', 2, 0);
+                $emp_ot_time_out = substr_replace($emp_ot_arr[0]['ot_time_out'], ':', 2, 0);
+                $emp_ot_remarks = $emp_ot_arr[0]['supervisor_remarks'];
+            }
+
             $result = '';
 
             $attendance_date = date('Y M d', strtotime($date_code));
@@ -180,9 +206,11 @@ class DailyTimeRecordController extends Controller
                             <td>' . date('D', strtotime($date_code)) . '</td>
                             <td>' . $attendance_time_in . '</td>
                             <td>' . $attendance_time_out . '</td>
+                            <td>'. $emp_ot_time_in .'</td>
+                            <td>'. $emp_ot_time_out .'</td>
+                            <td>'. $emp_ot_remarks .'</td>
                         </tr>';
-                        
-            echo $result . '<br>';
+           echo $result . '<br>';
         }
     }
     
@@ -200,7 +228,6 @@ class DailyTimeRecordController extends Controller
 
 
     public function index(hris_daily_time_record $dtr){
-        
         if($_SESSION['sys_account_mode'] == 'employee'){
             $employee = $this->getEmployee();
             $default_month = date('Ym');

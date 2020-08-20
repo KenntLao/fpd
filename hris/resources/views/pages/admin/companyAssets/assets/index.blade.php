@@ -24,7 +24,7 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">asset list</h3>
-		@if(in_array('company-asset-add', $_SESSION['sys_permissions']))
+		@if(in_array('company-asset-add' $_SESSION['sys_permissions']))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/admin/companyAssets/assets/create"><i class="fa fa-plus mr-1"></i> add asset</a>
 		</div>
@@ -39,7 +39,7 @@
 					<th>type</th>
 					<th>employee</th>
 					<th>department</th>
-					@if(in_array('company-asset-edit', $_SESSION['sys_permissions']) OR in_array('company-asset-delete', $_SESSION['sys_permissions']))
+					@if(in_array('company-asset-edit' $_SESSION['sys_permissions']) OR in_array('company-asset-delete' $_SESSION['sys_permissions']))
 					<th>actions</th>
 					@endif
 				</tr>
@@ -63,15 +63,15 @@
 						@endif
 					</td>
 					<td>{{$asset->employee->department->name}}</td>
-					@if(in_array('company-asset-edit', $_SESSION['sys_permissions']) OR in_array('company-asset-delete', $_SESSION['sys_permissions']))
+					@if(in_array('company-asset-edit' $_SESSION['sys_permissions']) OR in_array('company-asset-delete' $_SESSION['sys_permissions']))
 					<td class="td-action">
 						<div class="row no-gutters">
-							@if(in_array('company-asset-edit', $_SESSION['sys_permissions']))
+							@if(in_array('company-asset-edit' $_SESSION['sys_permissions']))
 							<div class="col-6">
 								<a class="btn btn-success btn-sm" href="/hris/pages/admin/companyAssets/assets/{{$asset->id}}/edit"><i class="fa fa-edit"></i></a>
 							</div>
 							@endif
-							@if(in_array('company-asset-delete', $_SESSION['sys_permissions']))
+							@if(in_array('company-asset-delete' $_SESSION['sys_permissions']))
 							<div class="col-6">
 								<!-- Button trigger modal -->
 								<button class="btn btn-danger btn-sm delete-btn" asset="button" data-toggle="modal" data-target="#modal-{{$asset->id}}" data-name="{{$asset->code}}"><i class="fa fa-trash"></i></button>

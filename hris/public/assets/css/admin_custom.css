@@ -11,7 +11,9 @@ html::-webkit-scrollbar {
 	src: url("../fonts/OpenSans-Regular.ttf");
 	font-family: opensans;
 }
-
+.white {
+	color: #fff;
+}
 /* LOGO */
 .logo-img {
 	width: 100%;
@@ -608,6 +610,20 @@ textarea.form-control {
 .role-checked {
     background: #041E42;
     color: #ffffff;
+}
+/* MONITOR ATTENDANCE */
+.snap-modal {
+	text-align: center;
+}
+.snap-modal p {
+	padding: 10px 0;
+	background: #FFFF00;
+	color: #041E42;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+.time-in-snap, .time-out-snap {
+	width: 100%;
 }
 /* PROFILE */
 .profile {

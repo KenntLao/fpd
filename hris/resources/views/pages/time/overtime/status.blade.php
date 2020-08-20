@@ -65,7 +65,3 @@
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
 @stop
 
-/* APPROVE/DENY PAGE */
-
-
-
