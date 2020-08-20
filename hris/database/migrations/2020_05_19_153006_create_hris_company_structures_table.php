@@ -18,8 +18,8 @@ class CreateHrisCompanyStructuresTable extends Migration
             $table->timestamps();
             $table->string('code');
             $table->string('name');
-            $table->string('details');
-            $table->string('address')->nullable();
+            $table->longText('details');
+            $table->longText('address')->nullable();
             $table->string('type');
             $table->string('country')->nullable();
             $table->string('timezone');

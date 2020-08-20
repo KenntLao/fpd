@@ -16,9 +16,9 @@ class CreateHrisEmployeeSkillsTable extends Migration
         Schema::create('hris_employee_skills', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee_id');
-            $table->string('skill_id');
-            $table->string('details')->nullable();
+            $table->bigInteger('employee_id');
+            $table->bigInteger('skill_id');
+            $table->longText('details')->nullable();
         });
     }
 

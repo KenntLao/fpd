@@ -17,7 +17,7 @@ class CreateHrisCompanyAssetTypesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('attachment')->nullable();
         });
     }

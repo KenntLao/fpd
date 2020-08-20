@@ -49,7 +49,7 @@
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                         <td>
                             @php
-                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr_replace($overtime->ot_time_in, ':', 2, 0).' - '.substr_replace($overtime->ot_time_out, ':', 2, 0);;
+                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
                             @endphp
                         </td>
                         <td>

@@ -16,9 +16,9 @@ class CreateHrisIteneraryRequestsTable extends Migration
         Schema::create('hris_itenerary_requests', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->bigInteger('employee_id');
-            $table->bigInteger('supervisor_id')->nullable();
-            $table->string('role_id')->nullable();
+            $table->integer('employee_id');
+            $table->integer('supervisor_id')->nullable();
+            $table->integer('role_id')->nullable();
             $table->string('transportation');
             $table->string('purpose');
             $table->string('travel_from');
@@ -26,12 +26,12 @@ class CreateHrisIteneraryRequestsTable extends Migration
             $table->string('travel_date');
             $table->string('return_date');
             $table->string('notes')->nullable();
-            $table->bigInteger('currency_id');
+            $table->integer('currency_id');
             $table->string('total_funding_proposed');
             $table->string('attachment_1')->nullable();
             $table->string('attachment_2')->nullable();
             $table->string('attachment_3')->nullable();
-            $table->bigInteger('status')->nullable();
+            $table->integer('status')->nullable();
         });
     }
 

@@ -125,10 +125,10 @@ class EmployeeLoanController extends Controller
             'loan_type_id' => 'required',
             'loan_start_date' => 'required',
             'last_installment_date' => 'required',
-            'loan_period' => 'required',
+            'loan_period' => 'required|integer',
             'currency' => 'required',
-            'loan_amount' => 'required',
-            'monthly_installment' => 'required',
+            'loan_amount' => 'required|integer',
+            'monthly_installment' => 'required|integer',
             'status' => 'required',
             'details' => 'nullable'
         ]);

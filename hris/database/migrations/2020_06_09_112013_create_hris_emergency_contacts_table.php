@@ -16,7 +16,7 @@ class CreateHrisEmergencyContactsTable extends Migration
         Schema::create('hris_emergency_contacts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('employee_id');
+            $table->bigInteger('employee_id');
             $table->string('name');
             $table->string('relationship')->nullable();
             $table->string('home_phone')->nullable();

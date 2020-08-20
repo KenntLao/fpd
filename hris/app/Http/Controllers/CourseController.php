@@ -117,7 +117,7 @@ class CourseController extends Controller
             'trainer_details' => 'nullable',
             'payment_type' => 'required',
             'currency' => 'required',
-            'cost' => 'required',
+            'cost' => 'required|integer',
             'status' => 'required',
         ]);
     }

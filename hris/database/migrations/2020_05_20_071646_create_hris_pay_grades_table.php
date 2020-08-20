@@ -18,8 +18,8 @@ class CreateHrisPayGradesTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('currency');
-            $table->string('min_salary');
-            $table->string('max_salary');
+            $table->integer('min_salary');
+            $table->integer('max_salary');
         });
     }
 

@@ -1,5 +1,4 @@
 @csrf
-<<<<<<< HEAD
 @if( $_SESSION['sys_role_ids'] == ',1,' )
 <div class="row">
 	<div class="col-12 col-md-6">
@@ -32,8 +31,6 @@
         </div>
 	</div>
 </div>
-=======
->>>>>>> parent of 7bb99093... Merge branch 'anthony-update' into kennt-update
 <div class="row">
 	<div class="col-12 col-md-4">
 		<div class="form-group">
@@ -120,7 +117,36 @@
 		</div>
 	</div>
 </div>
-@if($id == $employee->supervisor OR $_SESSION['sys_role_ids'] == ',1,')
+@else
+<div class="row">
+	<div class="col-12 col-md-4">
+		<div class="form-group">
+			<label class="mr-2" for="ot_date">Overtime Date: </label>
+			<span class="badge badge-danger">Required</span>
+			<div class="input">
+				<input class="form-control required overtime_date" type="text" name="ot_date" value="{{ old('ot_date') ?? $overtime->ot_date }}" required>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-4">
+		<div class="form-group">
+			<label class="mr-2" for="ot_time_in">Overtime Time In: </label>
+			<span class="badge badge-danger">Required</span>
+			<div class="input">
+				<input class="form-control required overtime_time" type="text" name="ot_time_in" value="{{ old('ot_time_in') ?? $overtime->ot_time_in }}" required>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-4">
+		<div class="form-group">
+			<label class="mr-2" for="ot_time_out">Overtime Time Out: </label>
+			<span class="badge badge-danger">Required</span>
+			<div class="input">
+				<input class="form-control required overtime_time" type="text" name="ot_time_out" value="{{ old('ot_time_out') ?? $overtime->ot_time_out }}" required>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">

@@ -244,7 +244,7 @@ class EmployeeExpenseController extends Controller
             'expense_category_id' => 'required',
             'notes' => 'required',
             'currency' => 'required',
-            'amount' => 'required',
+            'amount' => 'required|integer',
             'receipt' => 'nullable',
             'attachment_1' => 'nullable',
             'attachment_2' => 'nullable',

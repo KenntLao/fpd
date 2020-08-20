@@ -11,7 +11,7 @@ class hris_employee_projects extends Model
 
 	public function employee() 
 	{
-		return $this->belongsTo('App\hris_employee','employee_id','employee_number');
+		return $this->belongsTo('App\hris_employee');
 	}
 
 	public function project()

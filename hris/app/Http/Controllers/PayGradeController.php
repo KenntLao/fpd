@@ -140,8 +140,8 @@ class PayGradeController extends Controller
         return request()->validate([
             'name' => 'required',
             'currency' => 'required',
-            'min_salary' => 'required',
-            'max_salary' => 'required'
+            'min_salary' => 'required|integer',
+            'max_salary' => 'required|integer'
         ]);
 
     }
