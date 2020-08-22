@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHrisLeaveTypesTable extends Migration
+class CreateHrisLeaveEntitlementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateHrisLeaveTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('hris_leave_types', function (Blueprint $table) {
+        Schema::create('hris_leave_entitlements', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
-            $table->string('leave_color');
         });
     }
 
@@ -28,6 +26,6 @@ class CreateHrisLeaveTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hris_leave_types');
+        Schema::dropIfExists('hris_leave_entitlements');
     }
 }

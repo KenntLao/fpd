@@ -39,10 +39,7 @@
 					<th>leave type</th>
 					<th>leave group</th>
 					<th>leave period</th>
-					<th>department</th>
-					<th>job title</th>
 					<th>employment status</th>
-					<th>employee</th>
 					<th>Experience (Days)</th>
 					<th>Leaves Per Year</th>
 					@if(in_array('leave-rule-edit', $_SESSION['sys_permissions']) OR in_array('leave-rule-delete', $_SESSION['sys_permissions']))
@@ -76,29 +73,8 @@
 						@endif
 					</td>
 					<td>
-						@if($leaveRule->employee)
-						{{$leaveRule->employee->department->name}}
-						@else
-						None
-						@endif
-					</td>
-					<td>
-						@if($leaveRule->job_title)
-						{{$leaveRule->job_title->name}}
-						@else
-						None
-						@endif
-					</td>
-					<td>
 						@if($leaveRule->employment_status)
 						{{$leaveRule->employment_status->name}}
-						@else
-						None
-						@endif
-					</td>
-					<td>
-						@if($leaveRule->employee)
-						{{$leaveRule->employee->firstname}} {{$leaveRule->employee->lastname}}
 						@else
 						None
 						@endif

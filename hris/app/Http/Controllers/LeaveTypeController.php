@@ -58,19 +58,6 @@ class LeaveTypeController extends Controller
         if($this->validatedData()) {
             $string = 'App\hris_leave_types';
             $leaveType->name = request('name');
-            $leaveType->leaves_per_period = request('leaves_per_period');
-            $leaveType->supervisor_leave_assign = request('supervisor_leave_assign');
-            $leaveType->employee_can_apply = request('employee_can_apply');
-            $leaveType->apply_beyond_current = request('apply_beyond_current');
-            $leaveType->leave_accrue = request('leave_accrue');
-            $leaveType->carried_forward = request('carried_forward');
-            $leaveType->carried_forward_percentage = request('carried_forward_percentage');
-            $leaveType->max_carried_forward_amount = request('max_carried_forward_amount');
-            $leaveType->carried_forward_leave_availability = request('carried_forward_leave_availability');
-            $leaveType->proportionate_on_joined_date = request('proportionate_on_joined_date');
-            $leaveType->employee_leave_period = request('employee_leave_period');
-            $leaveType->send_notification_emails = request('send_notification_emails');
-            $leaveType->leave_group_id = request('leave_group_id');
             $leaveType->leave_color = request('leave_color');
             // GET CHANGES
             $changes = $leaveType->getDirty();
@@ -122,19 +109,6 @@ class LeaveTypeController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'leaves_per_period' => 'required',
-            'supervisor_leave_assign' => 'required',
-            'employee_can_apply' => 'required',
-            'apply_beyond_current' => 'required',
-            'leave_accrue' => 'required',
-            'carried_forward' => 'required',
-            'carried_forward_percentage' => 'required',
-            'max_carried_forward_amount' => 'required',
-            'carried_forward_leave_availability' => 'required',
-            'proportionate_on_joined_date' => 'required',
-            'employee_leave_period' => 'required',
-            'send_notification_emails' => 'required',
-            'leave_group_id' => 'nullable',
             'leave_color' => 'required'
         ]);
     }

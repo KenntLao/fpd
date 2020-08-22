@@ -20,37 +20,148 @@
     <p><i class="fas fa-fw fa-exclamation-circle"></i>{{$errors->first()}}</p>
 </div>
 @endif
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Leave Request List</h3>
-    </div>
-    <div class="card-body">
-        @if(count($leaves) > 0)
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered table-striped table-condensed">
-                <thead>
-                    <tr>
-                        <th>date</th>
-                        <th>department</th>
-                        <th>employee</th>
-                        <th>request date and time</th>
-                        <th>approved by</th>
-                        <th>approved date</th>
-                        <th>status</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                   
-                </tbody>
-            </table>
+<div class="row no-gutters">
+    <ul class="nav nav-tabs" role="tablist" style="border-bottom: 0;">
+        <li class="nav-item tab-item">
+            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">My Leave list</a>
+        </li>
+        <li class="nav-item tab-item">
+            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Subordinate Leave Requests</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content" style="padding-top: 0;">
+    <div class="tab-pane active" id="tabs-1" role="tab-panel">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Leave Request List</h3>
+                <div class="card-tools">
+                    <a class="btn add-button btn-md" href="/hris/pages/leaveManagement/leaves/create"><i class="fa fa-plus mr-1"></i> Apply Leave</a>
+                </div>
+            </div>
+            <div class="card-body">
+                @if(count($self) > 0)
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>approved by</th>
+                                <th>approved date</th>
+                                <th>reason</th>
+                                <th>status</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($self as $s)
+                            <tr>
+                                <td>{{$s->created_at}}</td>
+                                <td>{{date("Y-m-d", strtotime($s->leave_start_date))}}</td>
+                                <td>{{date("Y-m-d", strtotime($s->leave_end_date))}}</td>
+                                <td>{{$s->approved_by_id}}</td>
+                                <td>{{$s->apporved_date}}</td>
+                                <td>{{$s->reason}}</td>
+                                <td>
+                                    @if($s->status == 0){{'Pending'}}
+                                    @elseif($s->status == 1) {{'Approved'}}
+                                    @elseif($s->status == 2) {{'Denied'}}
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="row no-gutters">
+                                        @if($s->status == 1 OR $s->status == 2)
+                                        <div class="col-12">
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                        </div>
+                                        @else
+                                        <div class="col-md-6">
+                                            <a class="btn btn-success btn-sm" href="/hris/pages/leaveManagement/leaves/edit" title="Edit"><i class="fas fa-edit"></i></a>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <h4>No data available.</h4>
+                @endif()
+            </div>
+            <div class="card-footer">
+                {{$self->links()}}
+            </div>
         </div>
-        @else
-        <h4>No data available.</h4>
-        @endif()
     </div>
-    <div class="card-footer">
-        {{$leaves->links()}}
+    <div class="tab-pane" id="tabs-2" role="tab-panel">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Subordinate Leave Request List</h3>
+            </div>
+            <div class="card-body">
+                @if(count($leaves) > 0)
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>approved by</th>
+                                <th>approved date</th>
+                                <th>reason</th>
+                                <th>status</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($leaves as $leave)
+                            <tr>
+                                <td>{{$leave->created_at}}</td>
+                                <td>{{date("Y-m-d", strtotime($leave->leave_start_date))}}</td>
+                                <td>{{date("Y-m-d", strtotime($leave->leave_end_date))}}</td>
+                                <td>{{$leave->approved_by_id}}</td>
+                                <td>{{$leave->apporved_date}}</td>
+                                <td>{{$leave->reason}}</td>
+                                <td>
+                                    @if($leave->status == 0){{'Pending'}}
+                                    @elseif($leave->status == 1) {{'Approved'}}
+                                    @elseif($leave->status == 2) {{'Denied'}}
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="row no-gutters">
+                                        @if($leave->status == 1 OR $leave->status == 2)
+                                        <div class="col-12">
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/show"><i class="fas fa-search"></i></a>
+                                        </div>
+                                        @else
+                                        <div class="col-md-6">
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/approve/{{$leave->id}}" title="Approve"><i class="fas fa-check-square"></i></a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a class="btn btn-danger btn-sm" href="/hris/pages/leaveManagement/leaves/deny/{{$leave->id}}" title="Deny"><i class="fas fa-times"></i></a>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <h4>No data available.</h4>
+                @endif()
+            </div>
+            <div class="card-footer">
+                {{$leaves->links()}}
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -59,7 +170,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Delete Confirmation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -87,21 +198,21 @@
 @stop
 @section('js')
 <script>
-$(document).ready(function() {
-$('.delete-btn').on('click', function() {
-var get = $('.add-button').attr('href');
-var href = get.replace('create', 'delete');
-var target = $(this).attr('data-target');
-var modal_id = target.replace('#', '');
-var id = target.replace('#modal-', '');
-$('.modal').attr('id', modal_id);
-$('.modal').attr('aria-labelledby', modal_id);
-$('.form-horizontal').attr('action', href + '/' + id);
-$('.form-horizontal').attr('id', 'form-' + id);
-$('.modal-footer > button').attr('form', 'form-' + id);
-var name = $(this).attr('data-name');
-$('.data-name').text('Are you sure you want to delete ' + name + '?');
-});
-});
+    $(document).ready(function() {
+        $('.delete-btn').on('click', function() {
+            var get = $('.add-button').attr('href');
+            var href = get.replace('create', 'delete');
+            var target = $(this).attr('data-target');
+            var modal_id = target.replace('#', '');
+            var id = target.replace('#modal-', '');
+            $('.modal').attr('id', modal_id);
+            $('.modal').attr('aria-labelledby', modal_id);
+            $('.form-horizontal').attr('action', href + '/' + id);
+            $('.form-horizontal').attr('id', 'form-' + id);
+            $('.modal-footer > button').attr('form', 'form-' + id);
+            var name = $(this).attr('data-name');
+            $('.data-name').text('Are you sure you want to delete ' + name + '?');
+        });
+    });
 </script>
 @stop

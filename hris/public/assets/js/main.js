@@ -1,9 +1,15 @@
 $(document).ready(function() {
 	
 	$('.select2').select2();
+	
 	$('.select-role').select2({
 		placeholder: "Select Roles",
 	});
+
+	$('.select-job-title').select2({
+	    placeholder: "Select Job Titles",
+	});
+
 	$('.workshift_time, .overtime_time').daterangepicker({
 		timePicker: true,
 		singleDatePicker: true,
@@ -38,7 +44,7 @@ $(document).ready(function() {
 	    }
 	});
 
-	$('.overtime_date, .ts_date').daterangepicker({
+	$('.leave_date, .overtime_date, .ts_date').daterangepicker({
 		autoUpdateInput: false,
 	    singleDatePicker: true,
 	    showDropdowns: true,

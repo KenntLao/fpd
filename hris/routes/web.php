@@ -722,7 +722,8 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE */
     Route::delete('/hris/pages/leaveManagement/leaves/delete/{leave}', 'LeaveController@destroy');
 
-
+    // LEAVE ENTITLEMENT
+    Route::get('/hris/pages/leaveManagement/leaveEntitlement/index', 'LeaveEntitlementController@index');
 
     Route::get('/hris/', function () {
         return view('welcome');

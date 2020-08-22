@@ -76,9 +76,7 @@ class LeaveRuleController extends Controller
             $string = 'App\hris_leave_rules';
             $leaveRule->leave_type_id = request('leave_type_id');
             $leaveRule->leave_group_id = request('leave_group_id');
-            $leaveRule->job_title_id = request('job_title_id');
             $leaveRule->employment_status_id = request('employment_status_id');
-            $leaveRule->employee_id = request('employee_id');
             $leaveRule->exp_days = request('exp_days');
             $leaveRule->leave_period_id = request('leave_period_id');
             $leaveRule->default_per_year = request('default_per_year');
@@ -86,10 +84,6 @@ class LeaveRuleController extends Controller
             $leaveRule->employee_can_apply = request('employee_can_apply');
             $leaveRule->apply_beyond_current = request('apply_beyond_current');
             $leaveRule->leave_accrue = request('leave_accrue');
-            $leaveRule->carried_forward = request('carried_forward');
-            $leaveRule->carried_forward_percentage = request('carried_forward_percentage');
-            $leaveRule->max_carried_forward_amount = request('max_carried_forward_amount');
-            $leaveRule->carried_forward_leave_availability = request('carried_forward_leave_availability');
             $leaveRule->proportionate_on_joined_date = request('proportionate_on_joined_date');
             $leaveRule->employee_leave_period = request('employee_leave_period');
             // GET CHANGES
@@ -142,9 +136,7 @@ class LeaveRuleController extends Controller
         return request()->validate([
             'leave_type_id' => 'required',
             'leave_group_id' => 'nullable',
-            'job_title_id' => 'nullable',
             'employment_status_id' => 'nullable',
-            'employee_id' => 'nullable',
             'exp_days' => 'required',
             'leave_period_id' => 'nullable',
             'default_per_year' => 'required',
@@ -152,10 +144,6 @@ class LeaveRuleController extends Controller
             'employee_can_apply' => 'required',
             'apply_beyond_current' => 'required',
             'leave_accrue' => 'required',
-            'carried_forward' => 'required',
-            'carried_forward_percentage' => 'required',
-            'max_carried_forward_amount' => 'required',
-            'carried_forward_leave_availability' => 'required',
             'proportionate_on_joined_date' => 'required',
             'employee_leave_period' => 'required',            
         ]);

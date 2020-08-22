@@ -37,10 +37,6 @@
 				<tr>
 					<th>id</th>
 					<th>leave name</th>
-					<th>leave accrue enabled</th>
-					<th>leave carried forward</th>
-					<th>leaves per year</th>
-					<th>leave group</th>
 					@if(in_array('leave-type-edit', $_SESSION['sys_permissions']) OR in_array('leave-type-edit', $_SESSION['sys_permissions']))
 					<th>actions</th>
 					@endif
@@ -51,16 +47,6 @@
 				<tr>
 					<td>{{$leaveType->id}}</td>
 					<td>{{$leaveType->name}}</td>
-					<td>{{$leaveType->leave_accrue}}</td>
-					<td>{{$leaveType->carried_forward}}</td>
-					<td>{{$leaveType->leaves_per_period}}</td>
-					<td>
-						@if($leaveType->leave_group)
-						{{$leaveType->leave_group->name}}
-						@else
-						None
-						@endif
-					</td>
 					@if(in_array('leave-type-edit', $_SESSION['sys_permissions']) OR in_array('leave-type-edit', $_SESSION['sys_permissions']))
 					<td class="td-action">
 						<div class="row no-gutters">

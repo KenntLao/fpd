@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\hris_job_titles;
 use Illuminate\Http\Request;
 use App\hris_leave_groups;
 use App\users;
@@ -18,18 +19,28 @@ class LeaveGroupController extends Controller
     public function index()
     {
         $leaveGroups = hris_leave_groups::paginate(10);
+        
         return view('pages.admin.leave.leaveGroups.index', compact('leaveGroups'));
     }
 
     public function create(hris_leave_groups $leaveGroup)
     {
-        return view('pages.admin.leave.leaveGroups.create', compact('leaveGroup'));
+        $job_titles = hris_job_titles::all();
+        $job_title_ids = explode(',',$leaveGroup->job_title_id);
+        return view('pages.admin.leave.leaveGroups.create', compact('leaveGroup', 'job_titles', 'job_title_ids'));
     }
 
     public function store(hris_leave_groups $leaveGroup, Request $request)
     {
         if ($this->validatedData()) {
-            $leaveGroup = hris_leave_groups::create($this->validatedData());
+
+            $job_title_ids = implode(',',request('job_title'));
+
+            $leaveGroup->name = request('name');
+            $leaveGroup->job_title_id = ','.$job_title_ids.',';
+            $leaveGroup->details = request('details');
+            $leaveGroup->save();
+
             $id = $leaveGroup->id;
             $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully added!');
@@ -47,7 +58,9 @@ class LeaveGroupController extends Controller
 
     public function edit(hris_leave_groups $leaveGroup)
     {
-        return view('pages.admin.leave.leaveGroups.edit', compact('leaveGroup'));
+        $job_titles = hris_job_titles::all();
+        $job_title_ids = explode(',', $leaveGroup->job_title_id);
+        return view('pages.admin.leave.leaveGroups.edit', compact('leaveGroup','job_titles', 'job_title_ids'));
     }
 
     public function update(hris_leave_groups $leaveGroup, Request $request)
@@ -55,7 +68,11 @@ class LeaveGroupController extends Controller
         $id = $leaveGroup->id;
         if ($this->validatedData()) {
             $string = 'App\hris_leave_groups';
+
+            $job_title_ids = implode(',', request('job_title'));
+
             $leaveGroup->name = request('name');
+            $leaveGroup->job_title_id = ',' . $job_title_ids . ',';
             $leaveGroup->details = request('details');
             // GET CHANGES
             $changes = $leaveGroup->getDirty();
@@ -106,6 +123,7 @@ class LeaveGroupController extends Controller
     {
         return request()->validate([
             'name' => 'required',
+            'job_title' => 'required',
             'details' => 'nullable'
         ]);
     }
