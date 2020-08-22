@@ -159,7 +159,7 @@
                                 <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
                                 <td>
                                     @php
-                                    echo date('M d, Y', strtotime($s->ot_date)).' '.substr_replace($s->ot_time_in, ':', 2, 0).' - '.substr_replace($s->ot_time_out, ':', 2, 0);
+                                    echo date('M d, Y', strtotime($s->ot_date)).' '.substr($s->ot_time_in, 0, 2) . ':' . substr($s->ot_time_in, 2).' - '.substr($s->ot_time_out, 0, 2) . ':' . substr($s->ot_time_out, 2);
                                     @endphp
                                 </td>
                                 <td>
@@ -263,7 +263,7 @@
                                 <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                                 <td>
                                     @php
-                                    echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr_replace($overtime->ot_time_in, ':', 2, 0).' - '.substr_replace($overtime->ot_time_out, ':', 2, 0);
+                                    echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
                                     @endphp
                                 </td>
                                 <td>
@@ -365,7 +365,7 @@
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                         <td>
                             @php
-                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr_replace($overtime->ot_time_in, ':', 2, 0).' - '.substr_replace($overtime->ot_time_out, ':', 2, 0);
+                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
                             @endphp
                         </td>
                         <td>
@@ -511,24 +511,21 @@
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
 <script>
-    $(document).ready(function() {
-        $('.delete-btn').on('click', function() {
-            var get = $('.add-button').attr('href');
-            var href = get.replace('create', 'delete');
-            var target = $(this).attr('data-target');
-            var modal_id = target.replace('#', '');
-            var id = target.replace('#modal-', '');
-            $('.modal').attr('id', modal_id);
-            $('.modal').attr('aria-labelledby', modal_id);
-            $('.form-horizontal').attr('action', href + '/' + id);
-            $('.form-horizontal').attr('id', 'form-' + id);
-            $('.modal-footer > button').attr('form', 'form-' + id);
-            var name = $(this).attr('data-name');
-            $('.data-name').text('Are you sure you want to delete ' + name + '?');
-        });
-
-
-    });
+$(document).ready(function() {
+$('.delete-btn').on('click', function() {
+var get = $('.add-button').attr('href');
+var href = get.replace('create', 'delete');
+var target = $(this).attr('data-target');
+var modal_id = target.replace('#', '');
+var id = target.replace('#modal-', '');
+$('.modal').attr('id', modal_id);
+$('.modal').attr('aria-labelledby', modal_id);
+$('.form-horizontal').attr('action', href + '/' + id);
+$('.form-horizontal').attr('id', 'form-' + id);
+$('.modal-footer > button').attr('form', 'form-' + id);
+var name = $(this).attr('data-name');
+$('.data-name').text('Are you sure you want to delete ' + name + '?');
+});
+});
 </script>
 @stop
-

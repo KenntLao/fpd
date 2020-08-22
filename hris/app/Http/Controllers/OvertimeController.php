@@ -107,6 +107,8 @@ class OvertimeController extends Controller
             }
         }
     }
+
+    
     public function show(hris_overtime $overtime)
     {   
         $id = $_SESSION['sys_id'];
@@ -114,8 +116,8 @@ class OvertimeController extends Controller
             $users = users::find($overtime->supervisor_id);
             $user = $users->uname;
         } else {
-            if ( $overtime->supervisor_id ) {
-                $user = $overtime->supervisor->firstname.' '.$overtime->supervisor->lastname;
+            if ( $overtime->approved_by ) {
+                $user = $overtime->approved_by->firstname.' '.$overtime->approved_by->lastname;
             } else {
                 $user = '---';
             }
