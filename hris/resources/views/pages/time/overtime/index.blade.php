@@ -181,7 +181,7 @@
                                 <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
                                 <td>
                                     @php
-                                    echo date('M d, Y', strtotime($s->ot_date)).' '.$s->ot_time_in.' - '.$s->ot_time_out;
+                                    echo date('M d, Y', strtotime($s->ot_date)).' '.substr($s->ot_time_in, 0, 2) . ':' . substr($s->ot_time_in, 2).' - '.substr($s->ot_time_out, 0, 2) . ':' . substr($s->ot_time_out, 2);
                                     @endphp
                                 </td>
                                 <td>
@@ -290,7 +290,7 @@
                                 <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                                 <td>
                                     @php
-                                    echo date('M d, Y', strtotime($overtime->ot_date)).' '.$overtime->ot_time_in.' - '.$overtime->ot_time_out;
+                                    echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
                                     @endphp
                                 </td>
                                 <td>
@@ -397,7 +397,7 @@
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                         <td>
                             @php
-                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.$overtime->ot_time_in.' - '.$overtime->ot_time_out;
+                            echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
                             @endphp
                         </td>
                         <td>
@@ -565,7 +565,3 @@ $('.data-name').text('Are you sure you want to delete ' + name + '?');
 });
 </script>
 @stop
-
-
-
-

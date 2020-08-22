@@ -127,7 +127,7 @@
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
                             <label class="mr-2" for="ot_date">Overtime Request Date and Time: </label>
-                            <p>{{date('M d, Y', strtotime($overtime->ot_date))}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</p>
+                            <p>{{date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2)}}</p>
                         </div>
                     </div>
                 </div>
