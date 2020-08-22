@@ -19,7 +19,7 @@
 			<label class="mr-2" for="start_date">Start Date: </label>
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
-				<input class="form-control required leave_date" type="text" name="start_date" value="{{ old('start_date')}}" required>
+				<input class="form-control required leave_date" type="text" name="start_date" value="@if($leaves->leave_start_date) {{date("Y-m-d", strtotime($leaves->leave_start_date))}} @else{{old('start_date')}}@endif" required>
 			</div>
 		</div>
 	</div>
@@ -28,7 +28,7 @@
 			<label class="mr-2" for="end_date">End Date: </label>
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
-				<input class="form-control required leave_date" type="text" name="end_date" value="{{ old('end_date')}}" required>
+				<input class="form-control required leave_date" type="text" name="end_date" value="@if($leaves->leave_end_date) {{date("Y-m-d", strtotime($leaves->leave_end_date))}} @else{{old('end_date')}}@endif" required>
 			</div>
 		</div>
 	</div>
@@ -40,7 +40,7 @@
 			<label class="mr-2" for="end_date">Reason</label>
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
-				<textarea class="form-control required" name="reason" required></textarea>
+				<textarea class="form-control required" name="reason" required>{{ old('reason') ?? $leaves->reason}}</textarea>
 			</div>
 		</div>
 	</div>

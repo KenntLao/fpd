@@ -16,6 +16,9 @@ class CreateHrisOvertimesTable extends Migration
         Schema::create('hris_overtimes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('acc_mode');
+            $table->bigInteger('sender_id');
+            $table->bigInteger('department_id');
             $table->bigInteger('employee_id');
             $table->integer('ot_difference');
             $table->string('ot_date');
@@ -111,4 +114,3 @@ class CreateHrisOvertimesTable extends Migration
         Schema::dropIfExists('hris_overtimes');
     }
 }
-

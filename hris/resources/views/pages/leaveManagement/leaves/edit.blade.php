@@ -1,9 +1,9 @@
 @extends('adminlte::page')
-@section('title', 'HRIS | Time Management - Overtime')
+@section('title', 'HRIS | Leave Management - Edit Leave Application')
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-columns"></i> Overtime</h1>
+        <h1><i class="fas fa-fw fa-columns"></i> Leaves</h1>
     </div>
 </div>
 @stop
@@ -20,21 +20,17 @@
 @endif
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">overtime request - {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</h3>
+        <h3 class="card-title">Edit Leave</h3>
     </div>
     <div class="card-body">
-        @if(\Request::route()->getName() == 'editStatus')
-        <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/update/1/{{$overtime->id}}" id="form">
-        @else
-        <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/update/{{$overtime->id}}" id="form">
-        @endif
+        <form class="form-horizontal" method="post" action="/hris/pages/leaveManagement/leaves/update/{{$leaves->id}}" id="form">
             @method('PATCH')
-            @include('pages.time.overtime.form')
+            @include('pages.leaveManagement.leaves.form')
         </form>
     </div>
     <div class="card-footer text-right">
-        <a class="btn btn-default mr-1" href="/hris/pages/time/overtime/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
-        <button class="btn btn-success" type="submit" form="form"  {{ $overtime->status == 'Approved' ? 'disabled' : '' ?? $overtime->status == 'Rejected' ? 'disabled' : '' }} ><i class="fa fa-upload mr-1"></i> save overtime request</button>
+        <a class="btn btn-default mr-1" href="/hris/pages/leaveManagement/leaves/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
+        <button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload mr-1"></i> Submit</button>
     </div>
 </div>
 @stop

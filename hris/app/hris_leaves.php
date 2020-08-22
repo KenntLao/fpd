@@ -10,6 +10,10 @@ class hris_leaves extends Model
 
     public function leave_types()
     {
-        return $this->belongsTo('App\hris_leave_types');
+        return $this->belongsTo('App\hris_leave_types','leave_type_id','id');
+    }
+    public function supervisor()
+    {
+        return $this->belongsTo('App\hris_employee', 'approved_by_id','id');
     }
 }

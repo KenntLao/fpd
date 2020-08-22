@@ -21,6 +21,7 @@
 </div>
 @endif
 <div class="row no-gutters">
+    @if(in_array($supervisor_id, $role_ids))
     <ul class="nav nav-tabs" role="tablist" style="border-bottom: 0;">
         <li class="nav-item tab-item">
             <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">My Leave list</a>
@@ -29,6 +30,7 @@
             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Subordinate Leave Requests</a>
         </li>
     </ul>
+    @endif
 </div>
 <div class="tab-content" style="padding-top: 0;">
     <div class="tab-pane active" id="tabs-1" role="tab-panel">
@@ -36,7 +38,9 @@
             <div class="card-header">
                 <h3 class="card-title">Leave Request List</h3>
                 <div class="card-tools">
+                    @if($_SESSION['sys_account_mode'] == 'employee')
                     <a class="btn add-button btn-md" href="/hris/pages/leaveManagement/leaves/create"><i class="fa fa-plus mr-1"></i> Apply Leave</a>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -46,6 +50,7 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
+                                <th>Leave Type</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>approved by</th>
@@ -59,6 +64,7 @@
                             @foreach($self as $s)
                             <tr>
                                 <td>{{$s->created_at}}</td>
+                                <td>{{$s->leave_types->name}}</td>
                                 <td>{{date("Y-m-d", strtotime($s->leave_start_date))}}</td>
                                 <td>{{date("Y-m-d", strtotime($s->leave_end_date))}}</td>
                                 <td>{{$s->approved_by_id}}</td>
@@ -77,8 +83,8 @@
                                             <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/{{$s->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         @else
-                                        <div class="col-md-6">
-                                            <a class="btn btn-success btn-sm" href="/hris/pages/leaveManagement/leaves/edit" title="Edit"><i class="fas fa-edit"></i></a>
+                                        <div class="col-md-12">
+                                            <a class="btn btn-success btn-sm" href="/hris/pages/leaveManagement/leaves/{{$s->id}}/edit" title="Edit"><i class="fas fa-edit"></i></a>
                                         </div>
                                         @endif
                                     </div>
@@ -109,6 +115,7 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
+                                <th>Leave Type</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>approved by</th>
@@ -122,31 +129,33 @@
                             @foreach($leaves as $leave)
                             <tr>
                                 <td>{{$leave->created_at}}</td>
+                                <td>{{$leave->leave_types->name}}</td>
                                 <td>{{date("Y-m-d", strtotime($leave->leave_start_date))}}</td>
                                 <td>{{date("Y-m-d", strtotime($leave->leave_end_date))}}</td>
-                                <td>{{$leave->approved_by_id}}</td>
-                                <td>{{$leave->apporved_date}}</td>
+                                <td>
+                                    @if($leave->supervisor)
+                                    {{$leave->supervisor->firstname .' ' . $leave->supervisor->lastname}}
+                                    @endif
+                                </td>
+                                <td>{{date("Y-m-d", strtotime($leave->approved_date))}}</td>
                                 <td>{{$leave->reason}}</td>
                                 <td>
-                                    @if($leave->status == 0){{'Pending'}}
-                                    @elseif($leave->status == 1) {{'Approved'}}
-                                    @elseif($leave->status == 2) {{'Denied'}}
+                                    @if($leave->status == 0) <span class="badge badge-primary p-2">{{'Pending'}}</span>
+                                    @elseif($leave->status == 1) <span class="badge badge-success p-2">{{'Approved'}}</span>
+                                    @elseif($leave->status == 2) <span class="badge badge-danger p-2">{{'Denied'}}</span>
                                     @endif
                                 </td>
                                 <td>
                                     <div class="row no-gutters">
-                                        @if($leave->status == 1 OR $leave->status == 2)
-                                        <div class="col-12">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/show"><i class="fas fa-search"></i></a>
-                                        </div>
-                                        @else
+                                        @if($leave->status == 0)
                                         <div class="col-md-6">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/approve/{{$leave->id}}" title="Approve"><i class="fas fa-check-square"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/approve" title="Approve"><i class="fas fa-check-square"></i></a>
                                         </div>
                                         <div class="col-md-6">
-                                            <a class="btn btn-danger btn-sm" href="/hris/pages/leaveManagement/leaves/deny/{{$leave->id}}" title="Deny"><i class="fas fa-times"></i></a>
+                                            <a class="btn btn-danger btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/deny" title="Deny"><i class="fas fa-times"></i></a>
                                         </div>
                                         @endif
+
                                     </div>
                                 </td>
                             </tr>

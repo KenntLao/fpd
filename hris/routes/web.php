@@ -730,8 +730,15 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::get('/hris/pages/leaveManagement/leaves/create', 'LeaveController@create');
     Route::post('/hris/pages/leaveManagement/leaves', 'LeaveController@store');
     /* UPDATE */
-    Route::get('/hris/pages/leaveManagement/leaves/{leave}/edit', 'LeaveController@edit');
-    Route::patch('/hris/pages/leaveManagement/leaves/update/{leave}', 'LeaveController@update');
+    Route::get('/hris/pages/leaveManagement/leaves/{leaves}/edit', 'LeaveController@edit');
+    Route::patch('/hris/pages/leaveManagement/leaves/update/{leaves}', 'LeaveController@update');
+
+    /* APPROVE */
+    Route::get('/hris/pages/leaveManagement/leaves/{leaves}/approve', 'LeaveController@approve');
+    Route::patch('/hris/pages/leaveManagement/leaves/{leaves}/approveSubmit', 'LeaveController@approve_submit');
+    /* DENY */
+    Route::get('/hris/pages/leaveManagement/leaves/{leaves}/deny', 'LeaveController@deny');
+    Route::patch('/hris/pages/leaveManagement/leaves/{leaves}/denySubmit', 'LeaveController@deny_submit');
     /* DELETE */
     Route::delete('/hris/pages/leaveManagement/leaves/delete/{leave}', 'LeaveController@destroy');
 
