@@ -619,26 +619,39 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::patch('/hris/pages/time/attendances/punchout/{attendance}', 'AttendanceController@punchout');
 
     /* OVERTIME REQUEST */
+
     Route::get('/hris/pages/time/overtime/index', 'OvertimeController@index');
+
     /* ADD */
     Route::get('/hris/pages/time/overtime/create', 'OvertimeController@create');
     Route::post('/hris/pages/time/overtime', 'OvertimeController@store');
+
+    /* EDIT STATUS */
+    Route::get('/hris/pages/time/overtime/{status}/{overtime}/status', 'OvertimeController@status');
+
     /* UPDATE */
     Route::get('/hris/pages/time/overtime/{overtime}/edit', 'OvertimeController@edit');
     Route::patch('/hris/pages/time/overtime/update/{overtime}', 'OvertimeController@update');
     Route::get('/hris/pages/time/overtime/{status}/{overtime}/edit', 'OvertimeController@editStatus')->name('editStatus');
     Route::patch('/hris/pages/time/overtime/update/{status}/{overtime}', 'OvertimeController@updateStatus');
+
     /* DELETE */
     Route::delete('/hris/pages/time/overtime/delete/{overtime}', 'OvertimeController@destroy');
+
     /* SHOW */
     Route::get('/hris/pages/time/overtime/{overtime}/show', 'OvertimeController@show');
 
+    /* AJAX */
+    Route::post('/hris/pages/time/overtime/getEmployeeOT', 'OvertimeController@renderEmployee')->name('getEmployeeOT.fetch');
+
     // EXPORT EXCEL FILE
+
     Route::get('/hris/pages/time/overtime/table', 'OvertimeController@table');
     Route::post('/hris/pages/time/overtime/download', 'ExportController@overtimeExport');
     
 
     //PERSONAL INFORMATION
+    
     Route::get('/hris/pages/personalInformation/profile/index', 'PersonalInformationController@index');
     /* UPDATE */
     Route::get('/hris/pages/personalInformation/profile/{id}/edit', 'PersonalInformationController@edit');
