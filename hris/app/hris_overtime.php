@@ -14,7 +14,15 @@ class hris_overtime extends Model
     }
     public function supervisor()
     {
-    	return $this->belongsTo('App\hris_employee');
+        return $this->belongsTo('App\hris_employee');
+    }
+    public function approved_by()
+    {
+        return $this->belongsTo('App\hris_employee');
+    }
+    public function sender()
+    {
+        return $this->belongsTo('App\hris_employee');
     }
     public function department()
     {
@@ -28,7 +36,7 @@ class hris_overtime extends Model
     {
         return $this->belongsTo('App\hris_overtime_types');
     }
-
-    
-
 }
+
+
+

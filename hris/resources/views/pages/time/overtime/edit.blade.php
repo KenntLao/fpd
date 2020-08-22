@@ -23,11 +23,7 @@
         <h3 class="card-title">overtime request - {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</h3>
     </div>
     <div class="card-body">
-        @if(\Request::route()->getName() == 'editStatus')
-        <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/update/{{$status}}/{{$overtime->id}}" id="form">
-        @else
         <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/update/{{$overtime->id}}" id="form">
-        @endif
             @method('PATCH')
             @include('pages.time.overtime.form')
         </form>

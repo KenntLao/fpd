@@ -24,6 +24,10 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Overtime Request List</h3>
+        <div class="card-tools">
+            <a class="btn add-button btn-md" href="/hris/pages/time/overtime/create"><i class="fa fa-plus mr-1"></i> Request Overtime</a>
+            <button class="btn add-button btn-md" data-toggle="modal" data-target="#export-modal"><i class="far fa-file-excel mr-1"></i> Download Excel File</button>
+        </div>
     </div>
     <div class="card-body">
         @if(count($overtimes) > 0)
@@ -36,6 +40,7 @@
                         <th>employee</th>
                         <th>request date and time</th>
                         <th>approved by</th>
+                        <th>supervisor</th>
                         <th>approved date</th>
                         <th>status</th>
                         <th>actions</th>
@@ -53,25 +58,29 @@
                             @endphp
                         </td>
                         <td>
-                            @if($overtime->supervisor)
+                            @if($overtime->approved_by_id)
                             @if($overtime->role_id == ',1,')
                             @php
                             {{
-                            $users = App\users::find($overtime->supervisor_id);
+                            $users = App\users::find($overtime->approved_by_id);
                             echo $users->uname;
                             }}
                             @endphp
                             @else
-                            {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                            {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
                             @endif
                             @else
-                            None
+                            ----
                             @endif
+                        </td>
+                        <td>
+                            {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
                         </td>
                         <td>
                             @if($overtime->approved_date)
                             {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
                             @else
+                            ----
                             @endif
                         </td>
                         <td>
@@ -86,17 +95,29 @@
                             @endif
                         </td>
                         <td>
-                            <div class="row no-gutters">
+                            <div class="row no-gutters" style="display: flex;">
                                 @if($overtime->status == '1' OR $overtime->status == '2')
                                 <div class="col-12">
                                     <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
-                                <div class="col-md-6">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/edit" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                <div style="padding: 4px;">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
                                 </div>
-                                <div class="col-md-6">
-                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/edit" title="Deny request"><i class="fas fa-times"></i></a>
+                                <div style="padding: 4px;">
+                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
+                                </div>
+                                @if($overtime->acc_mode == 'user' && $_SESSION['sys_id'] == $overtime->sender_id)
+                                <div style="padding: 4px">
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
+                                </div>
+                                <div style="padding: 4px">
+                                    <!-- Button trigger modal -->
+                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                                </div>
+                                @endif
+                                <div style="padding: 4px">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @endif
                             </div>
@@ -147,6 +168,7 @@
                                 <th>employee</th>
                                 <th>request date and time</th>
                                 <th>approved by</th>
+                                <th>supervisor</th>
                                 <th>approved date</th>
                                 <th>status</th>
                                 <th>actions</th>
@@ -163,25 +185,29 @@
                                     @endphp
                                 </td>
                                 <td>
-                                    @if($s->supervisor)
+                                    @if($s->approved_by_id)
                                     @if($s->role_id == ',1,')
                                     @php
                                     {{
-                                    $users = App\users::find($s->supervisor_id);
+                                    $users = App\users::find($s->approved_by_id);
                                     echo $users->uname;
                                     }}
                                     @endphp
                                     @else
-                                    {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
+                                    {{$s->approved_by->firstname}} {{$s->approved_by->lastname}}
                                     @endif
                                     @else
-                                    None
+                                    ----
                                     @endif
+                                </td>
+                                <td>
+                                    {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
                                 </td>
                                 <td>
                                     @if($s->approved_date)
                                     {{date("M d, Y - h:i:sa", strtotime($s->approved_date))}}
                                     @else
+                                    ----
                                     @endif
                                 </td>
                                 <td>
@@ -251,6 +277,7 @@
                                 <th>employee</th>
                                 <th>request date and time</th>
                                 <th>approved by</th>
+                                <th>supervisor</th>
                                 <th>approved date</th>
                                 <th>status</th>
                                 <th>actions</th>
@@ -267,25 +294,29 @@
                                     @endphp
                                 </td>
                                 <td>
-                                    @if($overtime->supervisor)
+                                    @if($overtime->approved_by_id)
                                     @if($overtime->role_id == ',1,')
                                     @php
                                     {{
-                                    $users = App\users::find($overtime->supervisor_id);
+                                    $users = App\users::find($overtime->approved_by_id);
                                     echo $users->uname;
                                     }}
                                     @endphp
                                     @else
-                                    {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                                    {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
                                     @endif
                                     @else
-                                    None
+                                    ----
                                     @endif
+                                </td>
+                                <td>
+                                    {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
                                 </td>
                                 <td>
                                     @if($overtime->approved_date)
                                     {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
                                     @else
+                                    ----
                                     @endif
                                 </td>
                                 <td>
@@ -310,10 +341,10 @@
                                             <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         <div class="col-4">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/edit" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
                                         </div>
                                         <div class="col-4">
-                                            <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/edit" title="Deny request"><i class="fas fa-times"></i></a>
+                                            <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
                                         </div>
                                         @endif
                                     </div>
@@ -353,6 +384,7 @@
                         <th>employee</th>
                         <th>request date and time</th>
                         <th>approved by</th>
+                        <th>supervisor</th>
                         <th>approved date</th>
                         <th>status</th>
                         <th>actions</th>
@@ -369,25 +401,29 @@
                             @endphp
                         </td>
                         <td>
-                            @if($overtime->supervisor)
+                            @if($overtime->approved_by_id)
                             @if($overtime->role_id == ',1,')
                             @php
                             {{
-                            $users = App\users::find($overtime->supervisor_id);
+                            $users = App\users::find($overtime->approved_by_id);
                             echo $users->uname;
                             }}
                             @endphp
                             @else
-                            {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                            {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
                             @endif
                             @else
-                            None
+                            ----
                             @endif
+                        </td>
+                        <td>
+                            {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
                         </td>
                         <td>
                             @if($overtime->approved_date)
                             {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
                             @else
+                            ----
                             @endif
                         </td>
                         <td>
@@ -446,7 +482,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Delete Confirmation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -475,7 +511,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="export-label">Download Excel File</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">

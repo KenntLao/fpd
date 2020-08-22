@@ -59,7 +59,8 @@ class OvertimeController extends Controller
         $employee = hris_employee::find($id);
         $categories = hris_overtime_categories::all();
         $types = hris_overtime_types::all();
-        return view('pages.time.overtime.create', compact('overtime', 'id', 'employee', 'categories', 'types'));
+        $departments = hris_company_structures::all();
+        return view('pages.time.overtime.create', compact('overtime', 'id', 'employee', 'categories', 'types', 'departments'));
     }
     public function store(hris_overtime $overtime, Request $request)
     {
@@ -105,6 +106,42 @@ class OvertimeController extends Controller
                     return back()->withErrors($this->validatedData());
                 }
             }
+        } else {
+            $employee = hris_employee::find($id);
+            $department = hris_company_structures::find($employee->department_id);
+            if ( $employee->supervisor == NULL ) {
+                return back()->withErrors(['Employee supervisor is required']);
+            } else {
+                if ( $this->validatedData() ) {
+                    $overtime->acc_mode = $_SESSION['sys_account_mode'];
+                    $overtime->sender_id = $id;
+                    $overtime->employee_id = $id;
+                    $overtime->department_id = $overtime->employee->department->id;
+                    $overtime->ot_date = request('ot_date');
+                    $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
+                    $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
+                    $overtime->ot_difference = $ot_difference;
+                    $overtime->overtime_category_id = request('overtime_category_id');
+                    $overtime->supervisor_id = $overtime->employee->supervisor;
+                    $overtime->employee_remarks = request('employee_remarks');
+                    $overtime->status = '0';
+                    $overtime->save();
+
+                    // OVERTIME REQUEST NOTIFICATION
+                    $employee = hris_employee::where('id',$_SESSION['sys_id'])->first();
+                    $get_supervisor = hris_employee::where('id',$_SESSION['sys_id'])->get('supervisor');
+                    $employee_supervisor = hris_employee::where('id',$employee->supervisor)->first();
+                    $employee_supervisor->notify(new SupervisorNotif($employee));
+
+                    /* SYSTEM LOG */
+                    $id = $overtime->id;
+                    $this->function->addSystemLog($this->module,$id);
+                        
+                    return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully added!');
+                } else {
+                    return back()->withErrors($this->validatedData());
+                }
+            }
         }
     }
 
@@ -113,7 +150,7 @@ class OvertimeController extends Controller
     {   
         $id = $_SESSION['sys_id'];
         if( $overtime->role_id == ',1,' ) {
-            $users = users::find($overtime->supervisor_id);
+            $users = users::find($overtime->approved_by_id);
             $user = $users->uname;
         } else {
             if ( $overtime->approved_by ) {
@@ -141,32 +178,23 @@ class OvertimeController extends Controller
         }
 
     }
-    public function editStatus($status, hris_overtime $overtime)
-    {
-        $id = $_SESSION['sys_id'];
-        $employee_id = $overtime->employee_id;
-        $types = hris_overtime_types::all();
-        $employee = hris_employee::find($overtime->employee_id);
-        $roles = roles::all();
-        $categories = hris_overtime_categories::all();
-        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
-        $supervisor_id = implode(' ', $supervisor_role_id[0]);
-        $employee_supervisor = hris_employee::all()->where('role_id', ','.$supervisor_id.',')->where('department_id', $employee->department_id);
-        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
-            return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor', 'status', 'categories', 'types'));
-        } else {
-            if ( $id == $employee_id ) {
-                return redirect()->back();
-            } else {
-                return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor', 'status', 'categories', 'types'));
-            }
-        }
 
+    public function status($status, hris_overtime $overtime) 
+    {
+        $types = hris_overtime_types::all();
+        return view('pages.time.overtime.status', compact('overtime', 'types', 'status'));
     }
+
     public function update(hris_overtime $overtime, Request $request)
     {
         $id = $overtime->id;
         $string = 'App\hris_overtime';
+        $time1 = strtotime(request('ot_time_in'));
+        $time2 = strtotime(request('ot_time_out'));
+        if($time2 < $time1) {
+            $time2 += 24 * 60 * 60;
+        }
+        $ot_difference = ($time2 - $time1)/3600;
         if ($this->validatedData()) {
             $overtime->ot_date = date('Ymd', strtotime(request('ot_date')));
             $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
@@ -195,8 +223,8 @@ class OvertimeController extends Controller
     public function updateStatus($status, hris_overtime $overtime, Request $request)
     {
         $id = $_SESSION['sys_id'];
-        $time1 = strtotime(request('ot_time_in'));
-        $time2 = strtotime(request('ot_time_out'));
+        $time1 = strtotime($overtime->ot_time_in);
+        $time2 = strtotime($overtime->ot_time_out);
         if($time2 < $time1) {
             $time2 += 24 * 60 * 60;
         }
@@ -231,7 +259,7 @@ class OvertimeController extends Controller
                     $field = $type->name;
                     $f = str_replace('>', '', $field);
                     $overtime->status = $status;
-                    $overtime->supervisor_id = $_SESSION['sys_id'];
+                    $overtime->approved_by_id = $_SESSION['sys_id'];
                     $overtime->role_id = $_SESSION['sys_role_ids'];
                     $overtime->approved_date = date('Y-m-d H:i:s');
                     $overtime->overtime_type_id = request('type');
@@ -262,7 +290,7 @@ class OvertimeController extends Controller
                         $field = $type->name;
                         $f = str_replace('>', '', $field);
                         $overtime->status = $status;
-                        $overtime->supervisor_id = $_SESSION['sys_id'];
+                        $overtime->approved_by_id = $_SESSION['sys_id'];
                         $overtime->role_id = $_SESSION['sys_role_ids'];
                         $overtime->approved_date = date('Y-m-d H:i:s');
                         $overtime->overtime_type_id = request('type');
@@ -278,6 +306,15 @@ class OvertimeController extends Controller
                 } 
             }
         }
+    }
+    public function renderEmployee(Request $request){
+        $department_id = $request->get('department_id');
+        $employees = hris_employee::where('department_id',$department_id)->get();
+        $output = '<option value="">-- select one --</option>';
+        foreach ($employees as $employee) {
+            $output .= '<option value="' . $employee->id . '">' . $employee->firstname . ' '. $employee->lastname .'</option>';
+        }
+        echo $output;
     }
 
 
@@ -403,17 +440,12 @@ class OvertimeController extends Controller
     protected function supervisorData()
     {
         return request()->validate([
-            'ot_date' => 'required',
-            'ot_time_in' => 'required|date_format:H:i',
-            'ot_time_out' => 'required|date_format:H:i|after:ot_time_in',
-            'employee_remarks' => 'required',
             'type' => 'required',
-            'supervisor_remarks' => 'required',
-            'supervisor_id' => 'nullable',
-            'role_id' => 'nullable',
-            'approved_date' => 'nullable',
-            'status' => 'nullable',
+            'supervisor_remarks' => 'required'
         ]);
     }
 
 }
+
+
+
