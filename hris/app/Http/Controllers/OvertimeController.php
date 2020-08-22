@@ -315,6 +315,9 @@ class OvertimeController extends Controller
         echo $output;
     }
 
+
+    
+
     public function table()
     {
         $types = hris_overtime_types::all();
