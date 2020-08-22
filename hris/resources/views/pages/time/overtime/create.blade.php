@@ -38,7 +38,8 @@
 @stop
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
-<script type="text/javascript">
+
+<script>
 	$('#department_dropdown').on('change', function() {
 		if ( $(this).val() == '' ) {
 			var department_id = 0;
