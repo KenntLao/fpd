@@ -1,9 +1,9 @@
 @extends('adminlte::page')
-@section('title', 'HRIS | iteneraryRequests - request')
+@section('title', 'HRIS | Itinerary - Itinerary Request')
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-users "></i> Itenerary Request</h1>
+        <h1><i class="fas fa-fw fa-users "></i> Itinerary Request</h1>
     </div>
 </div>
 @stop
@@ -20,13 +20,21 @@
     <p><i class="fas fa-fw fa-exclamation-circle"></i>{{$errors->first()}}</p>
 </div>
 @endif
-@if( $_SESSION['sys_role_ids'] == ',1,' )
+@php
+$hr_officer_role_id = App\roles::where('role_name', 'hr officer')->get('id')->toArray();
+$hr_officer_id = implode(' ', $hr_officer_role_id[0]);
+$roles = explode(',', $_SESSION['sys_role_ids']);
+@endphp
+@if( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) )
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Itenerary Request List</h3>
+        <h3 class="card-title">Itinerary Request List</h3>
+        <div class="card-tools">
+            <a class="btn add-button btn-md" href="/hris/pages/employees/itineraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
+        </div>
     </div>
     <div class="card-body">
-        @if(count($iteneraryRequests) > 0)
+        @if(count($itineraryRequests) > 0)
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped table-condensed">
                 <thead>
@@ -43,20 +51,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($iteneraryRequests as $iteneraryRequest)
+                    @foreach($itineraryRequests as $itineraryRequest)
                     <tr>
-                        <td>{{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</td>
+                        <td>{{$itineraryRequest->employee->firstname}} {{$itineraryRequest->employee->lastname}}</td>
                         <td>
-                            @if($iteneraryRequest->supervisor)
-                            @if($iteneraryRequest->role_id == ',1,')
+                            @if($itineraryRequest->supervisor)
+                            @if($itineraryRequest->role_id == ',1,')
                             @php
                             {{
-                            $users = App\users::find($iteneraryRequest->supervisor_id);
+                            $users = App\users::find($itineraryRequest->supervisor_id);
                             echo $users->uname;
                             }}
                             @endphp
                             @else
-                            {{$iteneraryRequest->supervisor->firstname}} {{$iteneraryRequest->supervisor->lastname}}
+                            {{$itineraryRequest->supervisor->firstname}} {{$itineraryRequest->supervisor->lastname}}
                             @endif
                             @else
                             None
@@ -64,43 +72,46 @@
                         </td>
                         <td>
                             @php
-                            echo date('M d, Y H:i A', strtotime($iteneraryRequest->travel_date));
+                            echo date('M d, Y H:i A', strtotime($itineraryRequest->travel_date));
                             @endphp
                         </td>
                         <td>
                             @php
-                            echo date('M d, Y H:i A', strtotime($iteneraryRequest->return_date));
+                            echo date('M d, Y H:i A', strtotime($itineraryRequest->return_date));
                             @endphp
                         </td>
-                        <td>{{$iteneraryRequest->travel_from}}</td>
-                        <td>{{$iteneraryRequest->travel_to}}</td>
-                        <td>{{$iteneraryRequest->purpose}}</td>
+                        <td>{{$itineraryRequest->travel_from}}</td>
+                        <td>{{$itineraryRequest->travel_to}}</td>
+                        <td>{{$itineraryRequest->purpose}}</td>
                         <td>
-                            @if($iteneraryRequest->status == '0')
+                            @if($itineraryRequest->status == '0')
                             Pending
                             @endif
-                            @if($iteneraryRequest->status == '1')
+                            @if($itineraryRequest->status == '1')
                             Approved
                             @endif
-                            @if($iteneraryRequest->status == '2')
+                            @if($itineraryRequest->status == '2')
                             Denied
                             @endif
                         </td>
                         <td>
                             <div class="row no-gutters">
-                                @if($iteneraryRequest->status == '1' OR $iteneraryRequest->status == '2')
+                                @if($itineraryRequest->status == '1' OR $itineraryRequest->status == '2')
                                 <div class="col-12">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/itineraryRequests/{{$itineraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
-                                <div class="col-4">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
+                                <div class="col-3">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/itineraryRequests/{{$itineraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
-                                <div class="col-4">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/updateStatus/1/{{$iteneraryRequest->id}}"><i class="fas fa-check-square"></i></a>
+                                <div class="col-3">
+                                    <a class="btn btn-warning btn-sm" href="/hris/pages/employees/itineraryRequests/{{$itineraryRequest->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
-                                <div class="col-4">
-                                    <a class="btn btn-danger btn-sm" href="/hris/pages/employees/iteneraryRequests/updateStatus/2/{{$iteneraryRequest->id}}"><i class="fas fa-times"></i></a>
+                                <div class="col-3">
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/employees/itineraryRequests/updateStatus/1/{{$itineraryRequest->id}}"><i class="fas fa-check-square"></i></a>
+                                </div>
+                                <div class="col-3">
+                                    <a class="btn btn-danger btn-sm" href="/hris/pages/employees/itineraryRequests/updateStatus/2/{{$itineraryRequest->id}}"><i class="fas fa-times"></i></a>
                                 </div>
                                 @endif
                             </div>
@@ -115,7 +126,7 @@
         @endif()
     </div>
     <div class="card-footer">
-        {{$iteneraryRequests->links()}}
+        {{$itineraryRequests->links()}}
     </div>
 </div>
 @else
@@ -137,7 +148,7 @@
                 <h3 class="card-title">Itenerary Request List</h3>
                 @if(in_array('itenerary-request-add', $_SESSION['sys_permissions']))
                 <div class="card-tools">
-                    <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
+                    <a class="btn add-button btn-md" href="/hris/pages/employees/itineraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
                 </div>
                 @endif
             </div>
@@ -209,15 +220,15 @@
                                     <div class="row no-gutters">
                                         @if($s->status == '1' OR $s->status == '2')
                                         <div class="col-12">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/itineraryRequests/{{$s->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         @else
                                         <div class="col-4">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/itineraryRequests/{{$s->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']))
                                         <div class="col-4">
-                                            <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-success btn-sm" href="/hris/pages/employees/itineraryRequests/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
                                         </div>
                                         @endif
                                         @if(in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
@@ -250,7 +261,7 @@
                 <h3 class="card-title">Itenerary Request List</h3>
             </div>
             <div class="card-body">
-                @if(count($iteneraryRequests) > 0)
+                @if(count($itineraryRequests) > 0)
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-striped table-condensed">
                         <thead>
@@ -267,20 +278,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($iteneraryRequests as $iteneraryRequest)
+                            @foreach($itineraryRequests as $itineraryRequest)
                             <tr>
-                                <td>{{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</td>
+                                <td>{{$itineraryRequest->employee->firstname}} {{$itineraryRequest->employee->lastname}}</td>
                                 <td>
-                                    @if($iteneraryRequest->supervisor)
-                                    @if($iteneraryRequest->role_id == ',1,')
+                                    @if($itineraryRequest->supervisor)
+                                    @if($itineraryRequest->role_id == ',1,')
                                     @php
                                     {{
-                                    $users = App\users::find($iteneraryRequest->supervisor_id);
+                                    $users = App\users::find($itineraryRequest->supervisor_id);
                                     echo $users->uname;
                                     }}
                                     @endphp
                                     @else
-                                    {{$iteneraryRequest->supervisor->firstname}} {{$iteneraryRequest->supervisor->lastname}}
+                                    {{$itineraryRequest->supervisor->firstname}} {{$itineraryRequest->supervisor->lastname}}
                                     @endif
                                     @else
                                     None
@@ -288,43 +299,43 @@
                                 </td>
                                 <td>
                                     @php
-                                    echo date('M d, Y H:i A', strtotime($iteneraryRequest->travel_date));
+                                    echo date('M d, Y H:i A', strtotime($itineraryRequest->travel_date));
                                     @endphp
                                 </td>
                                 <td>
                                     @php
-                                    echo date('M d, Y H:i A', strtotime($iteneraryRequest->return_date));
+                                    echo date('M d, Y H:i A', strtotime($itineraryRequest->return_date));
                                     @endphp
                                 </td>
-                                <td>{{$iteneraryRequest->travel_from}}</td>
-                                <td>{{$iteneraryRequest->travel_to}}</td>
-                                <td>{{$iteneraryRequest->purpose}}</td>
+                                <td>{{$itineraryRequest->travel_from}}</td>
+                                <td>{{$itineraryRequest->travel_to}}</td>
+                                <td>{{$itineraryRequest->purpose}}</td>
                                 <td>
-                                    @if($iteneraryRequest->status == '0')
+                                    @if($itineraryRequest->status == '0')
                                     Pending
                                     @endif
-                                    @if($iteneraryRequest->status == '1')
+                                    @if($itineraryRequest->status == '1')
                                     Approved
                                     @endif
-                                    @if($iteneraryRequest->status == '2')
+                                    @if($itineraryRequest->status == '2')
                                     Denied
                                     @endif
                                 </td>
                                 <td>
                                     <div class="row no-gutters">
-                                        @if($iteneraryRequest->status == '1' OR $iteneraryRequest->status == '2')
+                                        @if($itineraryRequest->status == '1' OR $itineraryRequest->status == '2')
                                         <div class="col-12">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/itineraryRequests/{{$itineraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         @else
                                         <div class="col-4">
-                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/employees/itineraryRequests/{{$itineraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                         </div>
                                         <div class="col-4">
-                                            <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/updateStatus/1/{{$iteneraryRequest->id}}"><i class="fas fa-check-square"></i></a>
+                                            <a class="btn btn-success btn-sm" href="/hris/pages/employees/itineraryRequests/updateStatus/1/{{$itineraryRequest->id}}"><i class="fas fa-check-square"></i></a>
                                         </div>
                                         <div class="col-4">
-                                            <a class="btn btn-danger btn-sm" href="/hris/pages/employees/iteneraryRequests/updateStatus/2/{{$iteneraryRequest->id}}"><i class="fas fa-times"></i></a>
+                                            <a class="btn btn-danger btn-sm" href="/hris/pages/employees/itineraryRequests/updateStatus/2/{{$itineraryRequest->id}}"><i class="fas fa-times"></i></a>
                                         </div>
                                         @endif
                                     </div>
@@ -339,7 +350,7 @@
                 @endif()
             </div>
             <div class="card-footer">
-                {{$iteneraryRequests->links()}}
+                {{$itineraryRequests->links()}}
             </div>
         </div>
     </div>
@@ -350,12 +361,12 @@
         <h3 class="card-title">Itenerary Request List</h3>
         @if(in_array('itenerary-request-add', $_SESSION['sys_permissions']))
         <div class="card-tools">
-            <a class="btn add-button btn-md" href="/hris/pages/employees/iteneraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
+            <a class="btn add-button btn-md" href="/hris/pages/employees/itineraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
         </div>
         @endif
     </div>
     <div class="card-body">
-        @if(count($iteneraryRequests) > 0)
+        @if(count($itineraryRequests) > 0)
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped table-condensed">
                 <thead>
@@ -374,20 +385,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($iteneraryRequests as $iteneraryRequest)
+                    @foreach($itineraryRequests as $itineraryRequest)
                     <tr>
-                        <td>{{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}</td>
+                        <td>{{$itineraryRequest->employee->firstname}} {{$itineraryRequest->employee->lastname}}</td>
                         <td>
-                            @if($iteneraryRequest->supervisor)
-                            @if($iteneraryRequest->role_id == ',1,')
+                            @if($itineraryRequest->supervisor)
+                            @if($itineraryRequest->role_id == ',1,')
                             @php
                             {{
-                            $users = App\users::find($iteneraryRequest->supervisor_id);
+                            $users = App\users::find($itineraryRequest->supervisor_id);
                             echo $users->uname;
                             }}
                             @endphp
                             @else
-                            {{$iteneraryRequest->supervisor->firstname}} {{$iteneraryRequest->supervisor->lastname}}
+                            {{$itineraryRequest->supervisor->firstname}} {{$itineraryRequest->supervisor->lastname}}
                             @endif
                             @else
                             None
@@ -395,48 +406,48 @@
                         </td>
                         <td>
                             @php
-                            echo date('M d, Y H:i A', strtotime($iteneraryRequest->travel_date));
+                            echo date('M d, Y H:i A', strtotime($itineraryRequest->travel_date));
                             @endphp
                         </td>
                         <td>
                             @php
-                            echo date('M d, Y H:i A', strtotime($iteneraryRequest->return_date));
+                            echo date('M d, Y H:i A', strtotime($itineraryRequest->return_date));
                             @endphp
                         </td>
-                        <td>{{$iteneraryRequest->travel_from}}</td>
-                        <td>{{$iteneraryRequest->travel_to}}</td>
-                        <td>{{$iteneraryRequest->purpose}}</td>
+                        <td>{{$itineraryRequest->travel_from}}</td>
+                        <td>{{$itineraryRequest->travel_to}}</td>
+                        <td>{{$itineraryRequest->purpose}}</td>
                         <td>
-                            @if($iteneraryRequest->status == '0')
+                            @if($itineraryRequest->status == '0')
                             Pending
                             @endif
-                            @if($iteneraryRequest->status == '1')
+                            @if($itineraryRequest->status == '1')
                             Approved
                             @endif
-                            @if($iteneraryRequest->status == '2')
+                            @if($itineraryRequest->status == '2')
                             Denied
                             @endif
                         </td>
                         @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']) OR in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
                         <td>
                             <div class="row no-gutters">
-                                @if($iteneraryRequest->status == '1' OR $iteneraryRequest->status == '2')
+                                @if($itineraryRequest->status == '1' OR $itineraryRequest->status == '2')
                                 <div class="col-12">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/itineraryRequests/{{$itineraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @else
                                 <div class="col-4">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/show"><i class="fas fa-search"></i></a>
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/employees/itineraryRequests/{{$itineraryRequest->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
                                 @if(in_array('itenerary-request-edit', $_SESSION['sys_permissions']))
                                 <div class="col-4">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/employees/iteneraryRequests/{{$iteneraryRequest->id}}/edit"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/employees/itineraryRequests/{{$itineraryRequest->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
                                 @endif
                                 @if(in_array('itenerary-request-delete', $_SESSION['sys_permissions']))
                                 <div class="col-4">
                                     <!-- Button trigger modal -->
-                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$iteneraryRequest->id}}" data-name="Itenerary request - {{$iteneraryRequest->created_at}} from {{$iteneraryRequest->employee->firstname}} {{$iteneraryRequest->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$itineraryRequest->id}}" data-name="Itenerary request - {{$itineraryRequest->created_at}} from {{$itineraryRequest->employee->firstname}} {{$itineraryRequest->employee->lastname}}"><i class="fa fa-trash"></i></button>
                                 </div>
                                 @endif
                                 @endif
@@ -453,7 +464,7 @@
         @endif()
     </div>
     <div class="card-footer">
-        {{$iteneraryRequests->links()}}
+        {{$itineraryRequests->links()}}
     </div>
 </div>
 @endif

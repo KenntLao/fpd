@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHrisIteneraryRequestsTable extends Migration
+class CreateHrisItineraryRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateHrisIteneraryRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hris_itenerary_requests', function (Blueprint $table) {
+        Schema::create('hris_itinerary_requests', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->integer('employee_id');
             $table->integer('supervisor_id')->nullable();
-            $table->integer('role_id')->nullable();
+            $table->string('role_id')->nullable();
             $table->string('transportation');
             $table->string('purpose');
             $table->string('travel_from');
@@ -42,6 +42,6 @@ class CreateHrisIteneraryRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hris_itenerary_requests');
+        Schema::dropIfExists('hris_itinerary_requests');
     }
 }

@@ -426,20 +426,20 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* EMPLOYEE MANAGEMENT */
     //add
 
-        // ITENERARY REQUEST
-        Route::get('/hris/pages/employees/iteneraryRequests/index', 'IteneraryRequestController@index');
-        Route::get('/hris/pages/employees/iteneraryRequests/create', 'IteneraryRequestController@create');
-        Route::post('/hris/pages/employees/iteneraryRequests', 'IteneraryRequestController@store');
+        // ITINERARY REQUEST
+        Route::get('/hris/pages/employees/itineraryRequests/index', 'ItineraryRequestController@index');
+        Route::get('/hris/pages/employees/itineraryRequests/create', 'ItineraryRequestController@create');
+        Route::post('/hris/pages/employees/itineraryRequests', 'ItineraryRequestController@store');
         //edit
-        Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/edit', 'IteneraryRequestController@edit');
-        Route::patch('/hris/pages/employees/iteneraryRequests/update/{iteneraryRequest}', 'IteneraryRequestController@update');
-        Route::get('/hris/pages/employees/iteneraryRequests/updateStatus/{status}/{iteneraryRequest}', 'IteneraryRequestController@updateStatus');
+        Route::get('/hris/pages/employees/itineraryRequests/{itineraryRequest}/edit', 'ItineraryRequestController@edit');
+        Route::patch('/hris/pages/employees/itineraryRequests/update/{itineraryRequest}', 'ItineraryRequestController@update');
+        Route::get('/hris/pages/employees/itineraryRequests/updateStatus/{status}/{itineraryRequest}', 'ItineraryRequestController@updateStatus');
         //delete
-        Route::delete('/hris/pages/employees/iteneraryRequests/delete/{iteneraryRequest}', 'IteneraryRequestController@destroy');
+        Route::delete('/hris/pages/employees/itineraryRequests/delete/{itineraryRequest}', 'ItineraryRequestController@destroy');
         //show
-        Route::get('/hris/pages/employees/iteneraryRequests/{iteneraryRequest}/show', 'IteneraryRequestController@show');
+        Route::get('/hris/pages/employees/itineraryRequests/{itineraryRequest}/show', 'ItineraryRequestController@show');
         //download
-        Route::get('/hris/pages/employees/iteneraryRequests/download/{attachment}/{iteneraryRequest}', 'IteneraryRequestController@download');
+        Route::get('/hris/pages/employees/itineraryRequests/download/{attachment}/{itineraryRequest}', 'ItineraryRequestController@download');
 
         // EXCEL IMPORT / EXPORT
         Route::get('/hris/pages/employees/employee/table', 'EmployeeController@table');

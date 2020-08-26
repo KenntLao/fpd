@@ -1,3 +1,23 @@
+@if($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) )
+<div class="row">
+	<div class="col-12 col-sm-6">
+		<div class="form-group">
+			<label class="mr-2" for="employee_id">Employee: </label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control required select2" name="employee_id">
+				@if(count($employees) > 0)
+				<option disabled default selected>-- None --</option>
+				@foreach($employees as $employee)
+				<option value="{{$employee->id}}" {{$itineraryRequest->employee_id == $employee->id ? 'selected' : ''}}>{{$employee->firstname}} {{$employee->lastname}}</option>
+				@endforeach
+				@else 
+				<option disabled default selected>-- None --</option>
+				@endif
+			</select>
+		</div>
+	</div>
+</div>
+@endif
 <div class="row">
 	<div class="col-12 col-sm-6 col-xl-3">
 		<div class="form-group">
@@ -5,7 +25,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter location</p>
-				<input class="form-control required" type="text" name="travel_from" value="{{old('travel_from') ?? $iteneraryRequest->travel_from}}" required>
+				<input class="form-control required" type="text" name="travel_from" value="{{old('travel_from') ?? $itineraryRequest->travel_from}}" required>
 			</div>
 		</div>
 	</div>
@@ -15,7 +35,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter location</p>
-				<input class="form-control required" type="text" name="travel_to" value="{{old('travel_from') ?? $iteneraryRequest->travel_to}}" required>
+				<input class="form-control required" type="text" name="travel_to" value="{{old('travel_from') ?? $itineraryRequest->travel_to}}" required>
 			</div>
 		</div>
 	</div>
@@ -23,14 +43,14 @@
 		<div class="form-group">
 			<label class="mr-2" for="travel_date">Travel Date: </label>
 			<span class="badge badge-danger">Required</span>
-			<input class="form-control required travel_date" type="text" name="travel_date" value="{{old('travel_from') ?? $iteneraryRequest->travel_date}}" required>
+			<input class="form-control required travel_date" type="text" name="travel_date" value="{{old('travel_from') ?? $itineraryRequest->travel_date}}" required>
 		</div>
 	</div>
 	<div class="col-12 col-sm-6 col-xl-3">
 		<div class="form-group">
 			<label class="mr-2" for="return_date">Return Date: </label>
 			<span class="badge badge-danger">Required</span>
-			<input class="form-control required travel_date" type="text" name="return_date" value="{{old('travel_from') ?? $iteneraryRequest->return_date}}" required>
+			<input class="form-control required travel_date" type="text" name="return_date" value="{{old('travel_from') ?? $itineraryRequest->return_date}}" required>
 		</div>
 	</div>
 </div>
@@ -41,12 +61,12 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="transportation" required>
 				<option disabled default selected>--select one--</option>
-				<option value="Plane" {{$iteneraryRequest->transportation == 'Plane' ? 'selected' : ''}}>Plane</option>
-				<option value="Rail" {{$iteneraryRequest->transportation == 'Rail' ? 'selected' : ''}}>Rail</option>
-				<option value="Taxi" {{$iteneraryRequest->transportation == 'Taxi' ? 'selected' : ''}}>Taxi</option>
-				<option value="Own Vehicle" {{$iteneraryRequest->transportation == 'Own Vehicle' ? 'selected' : ''}}>Own Vehicle</option>
-				<option value="Rented Vehicle" {{$iteneraryRequest->transportation == 'Rented Vehicle' ? 'selected' : ''}}>Rented Vehicle</option>
-				<option value="Other" {{$iteneraryRequest->transportation == 'Other' ? 'selected' : ''}}>Other</option>
+				<option value="Plane" {{$itineraryRequest->transportation == 'Plane' ? 'selected' : ''}}>Plane</option>
+				<option value="Rail" {{$itineraryRequest->transportation == 'Rail' ? 'selected' : ''}}>Rail</option>
+				<option value="Taxi" {{$itineraryRequest->transportation == 'Taxi' ? 'selected' : ''}}>Taxi</option>
+				<option value="Own Vehicle" {{$itineraryRequest->transportation == 'Own Vehicle' ? 'selected' : ''}}>Own Vehicle</option>
+				<option value="Rented Vehicle" {{$itineraryRequest->transportation == 'Rented Vehicle' ? 'selected' : ''}}>Rented Vehicle</option>
+				<option value="Other" {{$itineraryRequest->transportation == 'Other' ? 'selected' : ''}}>Other</option>
 			</select>
 		</div>
 	</div>
@@ -58,7 +78,7 @@
 				@if(count($currencies) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($currencies as $currency)
-				<option value="{{$currency->id}}" {{$currency->id == $iteneraryRequest->currency_id ? 'selected' : ''}}>{{$currency->name}} ({{$currency->code}})</option>
+				<option value="{{$currency->id}}" {{$currency->id == $itineraryRequest->currency_id ? 'selected' : ''}}>{{$currency->name}} ({{$currency->code}})</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>
@@ -72,7 +92,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter amount</p>
-				<input class="form-control required" type="text" name="total_funding_proposed" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required maxlength="13" value="{{old('total_funding_proposed') ?? $iteneraryRequest->total_funding_proposed}}">
+				<input class="form-control required" type="text" name="total_funding_proposed" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required maxlength="13" value="{{old('total_funding_proposed') ?? $itineraryRequest->total_funding_proposed}}">
 			</div>
 		</div>
 	</div>
@@ -83,7 +103,7 @@
 			<label for="notes">Notes: </label>
 			<div class="input">
 				<p class="placeholder">Enter notes</p>
-				<textarea class="form-control" name="notes">{{old('notes') ?? $iteneraryRequest->notes}}</textarea>
+				<textarea class="form-control" name="notes">{{old('notes') ?? $itineraryRequest->notes}}</textarea>
 			</div>
 		</div>
 	</div>
@@ -93,7 +113,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter purpose</p>
-				<textarea class="form-control required" name="purpose" required>{{old('purpose') ?? $iteneraryRequest->purpose}}</textarea>
+				<textarea class="form-control required" name="purpose" required>{{old('purpose') ?? $itineraryRequest->purpose}}</textarea>
 			</div>
 		</div>
 	</div>
