@@ -30,7 +30,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
     <div class="card-header">
         <h3 class="card-title">Itinerary Request List</h3>
         <div class="card-tools">
-            <a class="btn add-button btn-md" href="/hris/pages/employees/itineraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itenerary Request</a>
+            <a class="btn add-button btn-md" href="/hris/pages/employees/itineraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itinerary Request</a>
         </div>
     </div>
     <div class="card-body">
