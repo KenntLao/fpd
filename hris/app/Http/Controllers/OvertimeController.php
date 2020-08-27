@@ -26,9 +26,14 @@ class OvertimeController extends Controller
     public function index(hris_overtime $overtimes)
     {
         $id = $_SESSION['sys_id'];
-        if ($_SESSION['sys_role_ids'] == ',1,' ) {
+        $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
+        $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
+        $roles = explode(',', $_SESSION['sys_role_ids']);
+        $employees = hris_employee::all();
+        $types = hris_overtime_types::all();
+        if ($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) ) {
             $overtimes = hris_overtime::paginate(10);
-            return view('pages.time.overtime.index', compact('overtimes'));
+            return view('pages.time.overtime.index', compact('overtimes', 'employees', 'types', 'hr_officer_id', 'roles'));
         } else {
             $roles = roles::all();
             $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
@@ -45,7 +50,7 @@ class OvertimeController extends Controller
                 }
                 $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->paginate(10);
                 $self = hris_overtime::where('employee_id', $id)->paginate(10);
-                return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id', 'self'));
+                return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id', 'self', 'employees', 'types'));
             } else {
                 $overtimes = hris_overtime::where('employee_id', $id)->paginate(10);
                 return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
@@ -60,7 +65,10 @@ class OvertimeController extends Controller
         $categories = hris_overtime_categories::all();
         $types = hris_overtime_types::all();
         $departments = hris_company_structures::all();
-        return view('pages.time.overtime.create', compact('overtime', 'id', 'employee', 'categories', 'types', 'departments'));
+        $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
+        $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
+        $roles = explode(',', $_SESSION['sys_role_ids']);
+        return view('pages.time.overtime.create', compact('overtime', 'id', 'employee', 'categories', 'types', 'departments', 'roles', 'hr_officer_id'));
     }
     public function store(hris_overtime $overtime, Request $request)
     {
@@ -70,8 +78,11 @@ class OvertimeController extends Controller
         if($time2 < $time1) {
             $time2 += 24 * 60 * 60;
         }
+        $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
+        $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
+        $roles = explode(',', $_SESSION['sys_role_ids']);
         $ot_difference = ($time2 - $time1)/3600;
-        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+        if ( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) ) {
             $employee = hris_employee::find(request('employee_id'));
             if ( $employee->supervisor == NULL ) {
                 return back()->withErrors(['Employee supervisor is required']);
@@ -235,6 +246,9 @@ class OvertimeController extends Controller
         $roles = roles::all();
         $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
         $supervisor_id = implode(' ', $supervisor_role_id[0]);
+        $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
+        $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
+        $sys_roles = explode(',', $_SESSION['sys_role_ids']);
         $department_employee = hris_employee::all()->where('department_id', $employee->department_id);
         $es_id = array();
         foreach ($department_employee as $de) {
@@ -243,7 +257,7 @@ class OvertimeController extends Controller
                 $es_id[] = $de->id;
             }
         }
-        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+        if ( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_roles) ) {
             $id = $overtime->id;
             if ($this->supervisorData()) {
                 $model = $overtime;
