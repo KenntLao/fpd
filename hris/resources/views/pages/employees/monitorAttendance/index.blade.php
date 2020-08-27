@@ -51,8 +51,21 @@
                     @foreach($attendances as $attendance)
                     <tr>
                         <td>{{$attendance->firstname.' '.$attendance->lastname}}</td>
-                        <td>{{date("Y-m-d h:i:s", $attendance->time_in)}}</td>
-                        <td>{{date("Y-m-d h:i:s", $attendance->time_out)}}</td>
+                        <td>
+                            @if($attendance->time_in)
+                                {{date("Y-m-d h:i:s", $attendance->time_in)}}
+                            @else
+                                --
+                            @endif
+                            
+                        </td>
+                        <td>
+                            @if($attendance->time_out)
+                                {{date("Y-m-d h:i:s", $attendance->time_out)}}
+                            @else
+                                --
+                            @endif
+                        </td>
                         <td>
                             @if($attendance->status == 1)
                             <span class="badge badge-success p-1">Clocked in</span>

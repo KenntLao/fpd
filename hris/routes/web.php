@@ -745,6 +745,9 @@ Route::middleware([CheckUserID::class])->group(function(){
     // LEAVE ENTITLEMENT
     Route::get('/hris/pages/leaveManagement/leaveEntitlement/index', 'LeaveEntitlementController@index');
 
+    // LEAVE Calendar
+    Route::get('/hris/pages/leaveManagement/leaveCalendar/index', 'leaveCalendarController@index');
+
     Route::get('/hris/', function () {
         return view('welcome');
     });

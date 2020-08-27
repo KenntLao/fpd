@@ -35,9 +35,9 @@ class LeaveController extends Controller
             //$leave_type_name = hris_leaves::where('employee_id', $id)->leftJoin('hris_leave_types', 'hris_leaves.leave_type_id', '=', 'hris_leave_types.id')->get('name');
             return view('pages.leaveManagement.leaves.index', compact('leaves', 'role_ids', 'supervisor_id', 'self'));
         } else {
-            $leaves = hris_leaves::where('employee_id', $id)->paginate(10);
+            $self = hris_leaves::where('employee_id', $id)->paginate(10);
            // $leave_type_name = hris_leaves::where('employee_id', $id)->leftJoin('hris_leave_types', 'hris_leaves.leave_type_id', '=', 'hris_leave_types.id')->get('name');
-            return view('pages.leaveManagement.leaves.index', compact('leaves', 'role_ids', 'supervisor_id'));
+            return view('pages.leaveManagement.leaves.index', compact('self', 'role_ids', 'supervisor_id'));
         }
     }
 
@@ -60,7 +60,7 @@ class LeaveController extends Controller
             }
 
             if (!isset($leave_groups_rules)) {
-                return redirect('/hris/pages/leaveManagement/leaves/index')->with('error', 'Add Employee to leave group');
+                return redirect('/hris/pages/leaveManagement/leaves/index')->with('error', 'Please add Employee to a leave group');
             } else {
                 return view('pages.leaveManagement.leaves.create', compact('employee', 'leaves', 'leave_groups_rules'));
             }

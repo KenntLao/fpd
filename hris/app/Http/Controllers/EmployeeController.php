@@ -77,7 +77,11 @@ class EmployeeController extends Controller
             $username = substr($employee_firstname,0,1).substr($employee_middlename, 0, 1).substr($employee_lastname, 0, 1).$employee_number;
             $password = Hash::make(1234);
 
-            $role_ids = implode(',',request('role'));
+            if (request('role') == NULL) {
+                $role_ids = ',8,';
+            } else {
+                $role_ids = implode(',', request('role'));
+            }
 
             $employees->employee_photo = $imageName;
             $employees->employee_number = request('employee_number');
@@ -102,7 +106,6 @@ class EmployeeController extends Controller
             $employees->termination_date = request('termination_date');
             $employees->home_address = request('home_address');
             $employees->private_email = request('private_email');
-            $employees->bank_acc = request('bank_acc');
             $employees->home_distance = request('home_distance');
             $employees->marital_status = request('marital_status');
             $employees->emergency_contact = request('emergency_contact');
@@ -115,7 +118,6 @@ class EmployeeController extends Controller
             $employees->birthday = request('birthday');
             $employees->place_birth = request('place_birth');
             $employees->dependant = request('dependant');
-            $employees->work_permit = request('work_permit');
             $employees->pay_grade = request('pay_grade');
             $employees->save();
             return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully added!');   
@@ -141,10 +143,10 @@ class EmployeeController extends Controller
             // check data if valid
             $path = public_path('assets/images/employees/employee_photos/');
             // REMOVE OLD FILE
-            if ($employee->employee_photo != '' && $employee->employee_photo != NULL) {
+            /*if ($employee->employee_photo != '' && $employee->employee_photo != NULL) {
                 $old_file = $path . $employee->employee_photo;
                 unlink($old_file);
-            }
+            } */
             if ($request->hasFile('employee_photo')) {
                 $imageName = time() . 'EP.' . $request->employee_photo->extension();
                 $request->employee_photo->move($path, $imageName);
@@ -167,7 +169,11 @@ class EmployeeController extends Controller
             $employee_number = request('employee_number');
             $username = substr($employee_firstname, 0, 1) . substr($employee_middlename, 0, 1) . substr($employee_lastname, 0, 1) . $employee_number;
             $password = Hash::make(1234);
-            $role_ids = implode(',', request('role'));
+            if (request('role') == NULL) {
+                $role_ids = ',8,';
+            } else {
+                $role_ids = implode(',', request('role'));
+            }
 
             $employee->employee_photo = $imageName;
             $employee->employee_number = request('employee_number');
@@ -192,7 +198,6 @@ class EmployeeController extends Controller
             $employee->termination_date = request('termination_date');
             $employee->home_address = request('home_address');
             $employee->private_email = request('private_email');
-            $employee->bank_acc = request('bank_acc');
             $employee->home_distance = request('home_distance');
             $employee->marital_status = request('marital_status');
             $employee->emergency_contact = request('emergency_contact');
@@ -205,7 +210,6 @@ class EmployeeController extends Controller
             $employee->birthday = request('birthday');
             $employee->place_birth = request('place_birth');
             $employee->dependant = request('dependant');
-            $employee->work_permit = request('work_permit');
             $employee->pay_grade = request('pay_grade');
             $employee->update();
             return redirect($_SESSION['return_page'])->with('success', 'Employee successfully updated!');
@@ -297,39 +301,37 @@ class EmployeeController extends Controller
     {
         return request()->validate([
             'employee_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'employee_number' => 'required',
-            'firstname' => 'required',
+            'employee_number' => 'nullable',
+            'firstname' => 'nullable',
             'middlename' => 'nullable',
-            'lastname' => 'required',
-            'job_title' => 'required',
-            'work_no' => 'required',
+            'lastname' => 'nullable',
+            'job_title' => 'nullable',
+            'work_no' => 'nullable',
             'work_phone' => 'nullable',
             'work_email' => 'email',
-            'department' => 'required',
+            'department' => 'nullable',
             'supervisor' => 'nullable',
-            'work_address' => 'required',
+            'work_address' => 'nullable',
             'sss' => 'nullable',
             'pagibig' => 'nullable',
             'phic' => 'nullable',
-            'joined_date' => 'required|date',
-            'employment_status' => 'required',
+            'joined_date' => 'nullable|date',
+            'employment_status' => 'nullable',
             'termination_date' => 'nullable|date',
-            'home_address' => 'required',
-            'private_email' => 'required|email',
-            'bank_acc' => 'required',
+            'home_address' => 'nullable',
+            'private_email' => 'nullable|email',
             'home_distance' => 'nullable',
-            'marital_status' => 'required',
-            'emergency_contact' => 'required',
-            'emergency_no' => 'required',
-            'cert_level' => 'required',
-            'field_study' => 'required',
-            'school' => 'required',
-            'gender' => 'required',
-            'nationality' => 'required',
-            'birthday' => 'required|date',
-            'place_birth' => 'required',
+            'marital_status' => 'nullable',
+            'emergency_contact' => 'nullable',
+            'emergency_no' => 'nullable',
+            'cert_level' => 'nullable',
+            'field_study' => 'nullable',
+            'school' => 'nullable',
+            'gender' => 'nullable',
+            'nationality' => 'nullable',
+            'birthday' => 'nullable|date',
+            'place_birth' => 'nullable',
             'dependant' => 'nullable',
-            'work_permit' => 'nullable',
         ]);
     }
 }

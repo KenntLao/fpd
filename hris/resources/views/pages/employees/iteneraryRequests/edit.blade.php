@@ -4,7 +4,7 @@
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-users"></i> Itenerary Request</h1>
+        <h1><i class="fas fa-fw fa-users"></i> Itinerary Request</h1>
     </div>
 </div>
 @stop
@@ -21,7 +21,7 @@
 @endif
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Update Itenerary Request</h3>
+        <h3 class="card-title">Update Itinerary Request</h3>
     </div>
     <div class="card-body">
         <form class="form-horizontal" method="post" action="/hris/pages/employees/iteneraryRequests/update/{{$iteneraryRequest->id}}" enctype="multipart/form-data" id="form">

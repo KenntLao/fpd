@@ -1,10 +1,10 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
-@section('title', 'HRIS | Employee Management - Itenerary Request')
+@section('title', 'HRIS | Employee Management - Itinerary Request')
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
-		<h1><i class="fas fa-fw fa-users"></i> Itenerary Request</h1>
+		<h1><i class="fas fa-fw fa-users"></i> Itinerary Request</h1>
 	</div>
 </div>
 @stop
@@ -21,7 +21,7 @@
 @endif
 <div class="card">
 	<div class="card-header">
-		<h3 class="card-title">Create Itenerary Request</h3>
+		<h3 class="card-title">Create Itinerary Request</h3>
 	</div>
 	<div class="card-body">
 		<form class="form-horizontal" method="post" action="/hris/pages/employees/iteneraryRequests" enctype="multipart/form-data" id="form">

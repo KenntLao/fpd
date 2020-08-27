@@ -589,18 +589,18 @@ return [
                     'active' => ['/hris/pages/employees/employee/create', '/hris/pages/employees/employee/index', '/hris/pages/employees/employee/*/edit', 'regex:@^content/[0-9]+$@'],
                     'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
-                [
+               /* [
                     'text' => 'Employee History',
                     'url'  => '/hris/pages/employee/employee_history/',
                     'icon'    => 'fas fa-fw fa-history',
-                ],
-                [
+                ],*/
+                /*[
                     'text' => 'HR Form',
                     'url'  => '/hris/pages/employee/hr_form/',
                     'icon'    => 'fas fa-fw fa-folder'
-                ],
+                ], */
                 [
-                    'text' => 'Itenerary Request',
+                    'text' => 'Itinerary Request',
                     'url'  => '/hris/pages/employees/iteneraryRequests/index',
                     'icon'    => 'fas fa-fw fa-plane-departure',
                     'active' => ['/hris/pages/employees/iteneraryRequests/create', '/hris/pages/employees/iteneraryRequests/index', '/hris/pages/employees/iteneraryRequests/*/edit', 'regex:@^content/[0-9]+$@'],
@@ -711,7 +711,7 @@ return [
                 [
                     'text' => 'Leave Calendar',
                     'icon' => 'fas fa-fw fa-calendar-alt',
-                    'url' => '/hris/pages/leaves/calendar/index'
+                    'url' => '/hris/pages/leaveManagement/leaveCalendar/index'
                 ]
             ]
         ],
@@ -1077,6 +1077,27 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                ],
+            ],
+        ],
+        [
+            'name' => 'FullCalendar',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/locales-all.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css',
                 ],
             ],
         ],

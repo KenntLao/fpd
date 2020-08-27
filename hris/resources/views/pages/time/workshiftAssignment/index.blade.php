@@ -43,7 +43,7 @@
                 <tbody>
                     @foreach($workshift_assignment as $assignment)
                     <tr>
-                        <td>{{$assignment->employee->firstname}} {{$assignment->employee->lastname}}</td>
+                        <td>@if($assignment->employee){{$assignment->employee->firstname}} {{$assignment->employee->lastname}}@endif</td>
                         <td>{{!empty($assignment->workshift) ? $assignment->workshift->workshift_name:''}} </td>
                         <td>{{date('Y-m-d', strtotime($assignment->date_from))}}</td>
                         <td>{{date('Y-m-d', strtotime($assignment->date_to))}}</td>

@@ -15,8 +15,8 @@ $crypt_key = '4507';
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 // DATABASE CONNECTION
-$server = 'localhost'; $username = 'root'; $password = ''; $db = 'pms_db';
-// $server = 'localhost'; $username = 'fpd_nexus_user'; $password = 'g9z(-_fdR98F'; $db = 'fpd_nexus_db';
+//$server = 'localhost'; $username = 'pmsfpd_user'; $password = '6XA63negx@TBNRn'; $db = 'fpdpms_db';
+ $server = 'localhost'; $username = 'root'; $password = ''; $db = 'pms_db';
 $conn = 'mysql:host='.$server.';dbname='.$db.';charset=utf8';
 try {
 	$pdo = new PDO($conn, $username, $password);

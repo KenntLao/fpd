@@ -33,7 +33,7 @@ class WorkShiftAssignmentController extends Controller
     }
     public function store(Request $request, hris_workshift_assignment $workshift_assignment)
     {
-        $action = 'add';
+        $action = 1;
         if($_SESSION['sys_account_mode'] == 'employee'){
             if ($this->validatedData()) {
                 $workshift_assignment->employee_id = $request->employee_id;

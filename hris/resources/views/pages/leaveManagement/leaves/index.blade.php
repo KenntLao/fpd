@@ -20,6 +20,12 @@
     <p><i class="fas fa-fw fa-exclamation-circle"></i>{{$errors->first()}}</p>
 </div>
 @endif
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <p><i class="fas fa-fw fa-exclamation-circle"></i>{{$message}}</p>
+</div>
+@endif
 <div class="row no-gutters">
     @if(in_array($supervisor_id, $role_ids))
     <ul class="nav nav-tabs" role="tablist" style="border-bottom: 0;">
@@ -103,6 +109,7 @@
             </div>
         </div>
     </div>
+    @if(in_array($supervisor_id, $role_ids))
     <div class="tab-pane" id="tabs-2" role="tab-panel">
         <div class="card">
             <div class="card-header">
@@ -172,6 +179,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -1,9 +1,9 @@
 @extends('adminlte::page')
-@section('title', 'HRIS | iteneraryRequests - request')
+@section('title', 'HRIS | itineraryRequests - request')
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-users "></i> Itenerary Request</h1>
+        <h1><i class="fas fa-fw fa-users "></i> Itinerary Request</h1>
     </div>
 </div>
 @stop
@@ -23,7 +23,7 @@
 @if( $_SESSION['sys_role_ids'] == ',1,' )
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Itenerary Request List</h3>
+        <h3 class="card-title">Itinerary Request List</h3>
     </div>
     <div class="card-body">
         @if(count($iteneraryRequests) > 0)

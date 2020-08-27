@@ -55,6 +55,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     //'asset_url' => env('ASSET_URL', null) DEFAULT ASSET URL
+    //'asset_url' => 'http://fpdhris.enterprisetech.asia/hris/',
     'asset_url' => 'http://fpd/hris/public',
 
     /*

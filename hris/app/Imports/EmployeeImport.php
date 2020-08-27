@@ -74,11 +74,11 @@ class EmployeeImport implements ToModel, WithStartRow
             'cert_level'    => $row[16],
             'field_study'    => $row[17],
             'school'    => $row[18],
-            'work_permit'    => $row[19],
+
             'pagibig'    => $row[20],
             'sss'    => $row[21],
             'phic'    => $row[22],
-            'bank_acc'    => $row[23],
+
             'employment_status'    => $row[24],
             'work_no'    => $row[25],
             'work_phone'    => $row[26],

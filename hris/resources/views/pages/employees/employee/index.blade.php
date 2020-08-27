@@ -67,17 +67,9 @@
                         <td>
                             @php
                             if($employee->department){
-                            $employee_dept = $employee->department->name;
-                            }else {
-                            $employee_dept = 0;
-                            }
-
-
-                            if($employee_dept == 0)
-                            {
-                            $employee_dept = "N/A";
-                            }else {
-                            $employee_dept = $employee->department->name;
+                                $employee_dept = $employee->department->name;
+                            } else {
+                                $employee_dept = "N/A";
                             }
 
                             echo $employee_dept;

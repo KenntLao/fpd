@@ -23,7 +23,11 @@ class LeaveEntitlementController extends Controller
             $lg_id = $leaveGroup_id->leave_group_id;
             $leave_groups_rules = hris_leave_rules::where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
         }
-        return view('pages.leaveManagement.leaveEntitlements.index', compact('leave_group_employee', 'leave_groups_rules'));
+        if(isset($leave_groups_rules)){
+            return view('pages.leaveManagement.leaveEntitlements.index', compact('leave_group_employee', 'leave_groups_rules'));
+        }else {
+            return back()->withErrors('Please add Employee to a Leave Group');
+        }
     }
 
     public function entitlement()
