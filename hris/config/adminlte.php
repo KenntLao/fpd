@@ -589,7 +589,7 @@ return [
                     'active' => ['/hris/pages/employees/employee/create', '/hris/pages/employees/employee/index', '/hris/pages/employees/employee/*/edit', 'regex:@^content/[0-9]+$@'],
                     'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
-               /* [
+                /* [
                     'text' => 'Employee History',
                     'url'  => '/hris/pages/employee/employee_history/',
                     'icon'    => 'fas fa-fw fa-history',
@@ -601,9 +601,9 @@ return [
                 ], */
                 [
                     'text' => 'Itinerary Request',
-                    'url'  => '/hris/pages/employees/iteneraryRequests/index',
+                    'url'  => '/hris/pages/employees/itineraryRequests/index',
                     'icon'    => 'fas fa-fw fa-plane-departure',
-                    'active' => ['/hris/pages/employees/iteneraryRequests/create', '/hris/pages/employees/iteneraryRequests/index', '/hris/pages/employees/iteneraryRequests/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'active' => ['/hris/pages/employees/itineraryRequests/create', '/hris/pages/employees/itineraryRequests/index', '/hris/pages/employees/itineraryRequests/*/edit', 'regex:@^content/[0-9]+$@'],
                     'can' => 'itenerary-request'
                 ],
                 [
