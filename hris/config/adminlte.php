@@ -589,7 +589,7 @@ return [
                     'active' => ['/hris/pages/employees/employee/create', '/hris/pages/employees/employee/index', '/hris/pages/employees/employee/*/edit', 'regex:@^content/[0-9]+$@'],
                     'can' => ['employee-add', 'employee-edit', 'employee-delete']
                 ],
-               /* [
+                /* [
                     'text' => 'Employee History',
                     'url'  => '/hris/pages/employee/employee_history/',
                     'icon'    => 'fas fa-fw fa-history',
