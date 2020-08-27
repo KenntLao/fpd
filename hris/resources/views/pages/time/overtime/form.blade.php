@@ -1,5 +1,5 @@
 @csrf
-@if( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) )
+@if( $_SESSION['sys_role_ids'] == ',1,' )
 <div class="row">
 	<div class="col-12 col-md-6">
         <div class="form-group">

@@ -20,12 +20,7 @@
     <p><i class="fas fa-fw fa-exclamation-circle"></i>{{$errors->first()}}</p>
 </div>
 @endif
-@php
-$hr_officer_role_id = App\roles::where('role_name', 'hr officer')->get('id')->toArray();
-$hr_officer_id = implode(' ', $hr_officer_role_id[0]);
-$roles = explode(',', $_SESSION['sys_role_ids']);
-@endphp
-@if( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) )
+@if( $_SESSION['sys_role_ids'] == ',1,' )
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Overtime Request List</h3>
@@ -522,76 +517,6 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
             <div class="modal-body">
                 <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/download" id="form">
                     @csrf
-                    @php
-                    $roles = App\roles::all();
-                    $supervisor_role_id = App\roles::where('role_name', 'supervisor')->get('id')->toArray();
-                    $supervisor_id = implode(' ', $supervisor_role_id[0]);
-                    $hr_officer_role_id = App\roles::where('role_name', 'hr officer')->get('id')->toArray();
-                    $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
-                    $roles = explode(',', $_SESSION['sys_role_ids']);
-                    if ( $_SESSION['sys_role_ids'] == ',1,' ) {
-                        echo '<div class="form-group">
-                        <label for="employee_id">Employee: </label>
-                        <span class="badge badge-danger">Required</span>
-                        <select class="form-control select2 required" name="employee_id">';
-                        if ( count($employees) > 0 ) {
-                            echo '<option value="0">All</option>';
-                            foreach( $employees as $employee ) {
-                                echo '<option value="'. $employee->id .'">'. $employee->firstname. ' '. $employee->lastname .'</option>';
-                            }
-                        } else {
-                            echo '<option default disabled selected>--None--</option>';
-                        }
-                        echo '</select>
-                            </div>';
-                        echo 
-                        '
-                        <div class="form-group">
-                            <label for="type">Type: </label>
-                            <span class="badge badge-danger">Required</span>
-                            <select class="form-control select2 required" name="type">
-                                <option value="All">All</option>';
-                                foreach ( $types as $type ) {
-                                    echo '<option value="'. $type->name .'">'. $type->name .'</option>';
-                                }
-                        echo '</select>
-                        </div>
-                        ';
-                    } else {
-                        if (in_array($supervisor_id, $roles)) {
-                            $emp = App\hris_employee::find($_SESSION['sys_id']);
-                            $department_id = $emp->department_id;
-                            $employees = App\hris_employee::where('department_id', $department_id)->get();
-                            echo '<div class="form-group">
-                                <label for="employee_id">Employee: </label>
-                                <span class="badge badge-danger">Required</span>
-                                <select class="form-control select2 required" name="employee_id">';
-                            if ( count($employees) > 0 ) {
-                                echo '<option value="0">All</option>';
-                                foreach( $employees as $employee ) {
-                                    echo '<option value="'. $employee->id .'">'. $employee->firstname. ' '. $employee->lastname .'</option>';
-                                }
-                            } else {
-                                echo '<option default disabled selected>--None--</option>';
-                            }
-                            echo '</select>
-                                </div>';
-                            echo 
-                            '
-                            <div class="form-group">
-                                <label for="type">Type: </label>
-                                <span class="badge badge-danger">Required</span>
-                                <select class="form-control select2 required" name="type">
-                                    <option value="All">All</option>';
-                                    foreach ( $types as $type ) {
-                                        echo '<option value="'. $type->name .'">'. $type->name .'</option>';
-                                    }
-                            echo '</select>
-                            </div>
-                            ';
-                        }
-                    }
-                    @endphp
                     <div class="form-group">
                         <label for="date_from">Date from: </label>
                         <span class="badge badge-danger">Required</span>

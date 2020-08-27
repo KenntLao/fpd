@@ -24,14 +24,14 @@
 		<h3 class="card-title">Create Itinerary Request</h3>
 	</div>
 	<div class="card-body">
-		<form class="form-horizontal" method="post" action="/hris/pages/employees/itineraryRequests" enctype="multipart/form-data" id="form">
+		<form class="form-horizontal" method="post" action="/hris/pages/employees/iteneraryRequests" enctype="multipart/form-data" id="form">
 			@csrf
-			@include('pages.employees.itineraryRequests.form')
+			@include('pages.employees.iteneraryRequests.form')
 		</form>
 	</div>
 	<div class="card-footer text-right">
-		<a class="btn btn-default mr-1" href="/hris/pages/employees/itineraryRequests/index"><i class="fa fa-arrow-left"></i> back</a>
-		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload"></i> save itinerary request</button>
+		<a class="btn btn-default mr-1" href="/hris/pages/employees/iteneraryRequests/index"><i class="fa fa-arrow-left"></i> back</a>
+		<button class="btn btn-success" type="submit" form="form"><i class="fa fa-upload"></i> save itenerary request</button>
 	</div>
 </div>
 @stop

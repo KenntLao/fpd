@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class hris_itinerary_requests extends Model
+class hris_itenerary_requests extends Model
 {
     protected $guarded = [];
 

@@ -769,24 +769,6 @@ textarea.form-control {
  	display: block;
  	width: 100%;
  }
-
-/* EXPORT MODAL */
-#export-modal > .modal-dialog > .modal-content {
-	overflow-y: scroll;
-	max-height: 400px;
-}
-#export-modal > .modal-dialog > .modal-content > .modal-header {
-	border-top-right-radius: 0 !important;
-}
-
-#export-modal > .modal-dialog > .modal-content::-webkit-scrollbar-thumb {
-	background: #FFFF00;
-}
-#export-modal > .modal-dialog > .modal-content::-webkit-scrollbar {
-	background: #041E42;
-	width: 7px;
-}
-
 @media only screen and (min-width: 500px) {
 	.action-col {
 		width: 100%;
