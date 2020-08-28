@@ -179,9 +179,13 @@ class EmployeeTrainingSessionController extends Controller
 
     public function coordinated()
     {
-        $courses = hris_courses::where('coordinator_id', $_SESSION['sys_id'])->pluck('id')->toArray();
-        $employeeTrainingSessions = hris_training_sessions::whereIn('course_id', $courses)->paginate(10);
-        return view('pages.training.coordinated.index', compact('employeeTrainingSessions'));
+        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+            return back()->withErrors(['You do not have access in this page.']);
+        } else {
+            $courses = hris_courses::where('coordinator_id', $_SESSION['sys_id'])->pluck('id')->toArray();
+            $employeeTrainingSessions = hris_training_sessions::whereIn('course_id', $courses)->paginate(10);
+            return view('pages.training.coordinated.index', compact('employeeTrainingSessions'));
+        }
 
     }
 
