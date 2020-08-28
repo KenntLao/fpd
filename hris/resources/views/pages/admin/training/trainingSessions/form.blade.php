@@ -18,7 +18,7 @@
 				@if(count($courses) > 0)
 				<option disabled default selected>--select one--</option>
 				@foreach($courses as $course)
-				<option value="{{$course->id}}" {{ $course->id == $trainingSession->course_id  ? 'selected' : '' }}>{{$course->name}}</option>
+				<option value="{{$course->id}}" {{ $course->id == $trainingSession->course_id  ? 'selected' : '' }}>{{$course->name}} {{$course->code}}</option>
 				@endforeach
 				@else
 				<option disabled default selected>--select one--</option>

@@ -54,7 +54,7 @@
 						<td>{{$trainingSession->name}}</td>
 						<td>
 							@if($trainingSession->course)
-							{{$trainingSession->course->name}}
+							{{$trainingSession->course->name}} {{$trainingSession->course->code}}
 							@else
 							<span class="td-error">ERROR</span>
 							@endif

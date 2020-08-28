@@ -851,9 +851,9 @@ return [
                 [
                     'text' => 'My Training Sessions',
                     'icon' => 'fas fa-fw fa-briefcase',
-                    'url' => '#'
+                    'url' => '/hris/pages/training/myTraining/index'
                 ],
-                [
+                /*[
                     'text' => 'All Training Sessions',
                     'icon' => 'fas fa-fw fa-briefcase',
                     'url' => '#'
@@ -862,11 +862,11 @@ return [
                     'text' => 'Training Sessions of Direct Reports',
                     'icon' => 'fas fa-fw fa-briefcase',
                     'url' => '#'
-                ],
+                ],*/
                 [
                     'text' => 'Training Sessions Coordinated by Me',
                     'icon' => 'fas fa-fw fa-briefcase',
-                    'url' => '#'
+                    'url' => '/hris/pages/training/coordinated/index'
                 ],
             ]
         ],

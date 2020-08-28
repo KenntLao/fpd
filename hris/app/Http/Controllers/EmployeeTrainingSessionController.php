@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\hris_employee_training_sessions;
 use App\hris_training_sessions;
+use App\hris_courses;
 use App\users;
 use App\hris_employee;
 
@@ -33,19 +34,26 @@ class EmployeeTrainingSessionController extends Controller
     public function store(hris_employee_training_sessions $employeeTrainingSession, Request $request)
     {
         if($this->validatedData()) {
-            $employeeTrainingSession = hris_employee_training_sessions::create($this->validatedData());
-            $id = $employeeTrainingSession->id;
-            $this->function->addSystemLog($this->module,$id);
-            return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully added!');
+            $employeeTrainingSession->employee_id = request('employee_id');
+            $employeeTrainingSession->training_session_id = request('training_session_id');
+            $employeeTrainingSession->status = '0';
+            if ( $employeeTrainingSession->training_session->course->coordinator->id == $_SESSION['sys_id'] ) {
+                return back()->withErrors(['Cannot add training session to employee with same coordinator.']);
+            } else {
+                if ( $employeeTrainingSession->training_session->attendance_type == 'Sign Up' ) {
+                    $employeeTrainingSession->signup = '0';
+                } else {
+                   $employeeTrainingSession->signup = '1';
+                }
+                $employeeTrainingSession->save();
+                $id = $employeeTrainingSession->id;
+                $this->function->addSystemLog($this->module,$id);
+                return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully added!');
+            }
 
         } else {
             return back()->withErrors($this->validatedData());
         }
-    }
-
-    public function show($id)
-    {
-
     }
 
     public function edit(hris_employee_training_sessions $employeeTrainingSession)
@@ -62,7 +70,11 @@ class EmployeeTrainingSessionController extends Controller
             $string = 'App\hris_employee_training_sessions';
             $employeeTrainingSession->employee_id = request('employee_id');
             $employeeTrainingSession->training_session_id = request('training_session_id');
-            $employeeTrainingSession->status = request('status');
+            if ( $employeeTrainingSession->training_session->attendance_type == 'Sign Up' ) {
+                $employeeTrainingSession->signup = '0';
+            } else {
+                $employeeTrainingSession->signup = '1';
+            }
             // GET CHANGES
             $changes = $employeeTrainingSession->getDirty();
             // GET ORIGINAL DATA
@@ -109,12 +121,93 @@ class EmployeeTrainingSessionController extends Controller
         }
     }
 
+    public function myTraining() {
+        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+            return back()->withErrors(['You do not have access in this page.']);
+        } else {
+            $employeeTrainingSessions = hris_employee_training_sessions::where('employee_id', $_SESSION['sys_id'])->paginate(10);
+            return view('pages.training.myTraining.index', compact('employeeTrainingSessions'));
+        }
+    }
+
+    public function signUp(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        $employeeTrainingSession->signup = '1';
+        $employeeTrainingSession->update();
+        return redirect('/hris/pages/training/myTraining/index')->with('success', 'Signed up successfully!');
+    }
+
+    public function completedForm(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        return view('pages.training.myTraining.complete', compact('employeeTrainingSession'));
+    }
+
+    public function completed(hris_employee_training_sessions $employeeTrainingSession, Request $request)
+    {
+        if ( $this->complete() ) {
+            if($request->hasFile('proof')) {
+                $proof = time() . 'PROOF.' . $request->proof->getClientOriginalExtension();
+                $employeeTrainingSession->proof = $proof;
+                $request->proof->move(public_path('assets/files/training'), $proof);
+            }
+            $employeeTrainingSession->status = '1';
+            $employeeTrainingSession->update();
+            return redirect('/hris/pages/training/myTraining/index')->with('success', 'Training session completed!');
+
+        } else {
+            return back()->withErrors($this->complete());
+        }
+    }
+
+    public function completeDownload(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        $file = public_path('assets/files/training/'.$employeeTrainingSession->proof);
+        return response()->download($file);
+    }
+
+    public function notAttended(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        $employeeTrainingSession->status = '2';
+        $employeeTrainingSession->update();
+        return redirect('/hris/pages/training/myTraining/index')->with('success', 'Training session not attended!');
+    }
+
+    public function showTraining(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        return view('pages.training.myTraining.show', compact('employeeTrainingSession'));
+    }
+
+    public function coordinated()
+    {
+        $courses = hris_courses::where('coordinator_id', $_SESSION['sys_id'])->pluck('id')->toArray();
+        $employeeTrainingSessions = hris_training_sessions::whereIn('course_id', $courses)->paginate(10);
+        return view('pages.training.coordinated.index', compact('employeeTrainingSessions'));
+
+    }
+
+    public function showCoordinated(hris_training_sessions $employeeTrainingSession)
+    {
+        return view('pages.training.coordinated.show', compact('employeeTrainingSession'));
+    }
+
+    public function coordinatedDownload(hris_training_sessions $employeeTrainingSession)
+    {
+        $file = public_path('assets/files/training_session/'.$employeeTrainingSession->attachment);
+        return response()->download($file);
+    }
+
     protected function validatedData() 
     {
         return request()->validate([
             'employee_id' => 'required',
-            'training_session_id' => 'required',
-            'status' => 'required'
+            'training_session_id' => 'required'
+        ]);
+    }
+
+    protected function complete()
+    {
+        return request()->validate([
+            'proof' => 'required'
         ]);
     }
 
