@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\hris_courses;
 use App\users;
+use App\hris_employee;
 
 class CourseController extends Controller
 {
@@ -23,7 +24,8 @@ class CourseController extends Controller
 
     public function create(hris_courses $course)
     {
-        return view('pages.admin.training.courses.create', compact('course'));
+        $employees = hris_employee::all();
+        return view('pages.admin.training.courses.create', compact('course','employees'));
     }
 
     public function store(hris_courses $course, Request $request)
@@ -112,7 +114,7 @@ class CourseController extends Controller
         return request()->validate([
             'code' => 'required',
             'name' => 'required',
-            'coordinator' => 'required',
+            'coordinator_id' => 'required',
             'trainer' => 'nullable',
             'trainer_details' => 'nullable',
             'payment_type' => 'required',

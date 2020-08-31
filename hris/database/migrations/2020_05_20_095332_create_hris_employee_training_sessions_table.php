@@ -18,7 +18,10 @@ class CreateHrisEmployeeTrainingSessionsTable extends Migration
             $table->timestamps();
             $table->bigInteger('employee_id');
             $table->bigInteger('training_session_id');
-            $table->string('status');
+            $table->string('proof')->nullable();
+            $table->longText('feedback')->nullable();
+            $table->integer('status')->nullable();
+            $table->integer('signup')->nullable();
         });
     }
 

@@ -29,7 +29,7 @@
 	</div>
 	<div class="card-footer text-right">
 		<a class="btn btn-default mr-1" href="/hris/pages/admin/training/employeeTrainingSessions/index">Back</a>
-		<button class="btn btn-success" type="submit" form="form">save employee training</button>
+		<button class="btn btn-success" type="submit" form="form">save employee training session</button>
 	</div>
 </div>
 @stop

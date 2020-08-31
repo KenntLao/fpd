@@ -803,6 +803,32 @@ Route::middleware([CheckUserID::class])->group(function(){
     // LEAVE Calendar
     Route::get('/hris/pages/leaveManagement/leaveCalendar/index', 'leaveCalendarController@index');
 
+    // TRAINING MANAGEMENT
+
+    // MY TRAINING SESSIONS
+    Route::get('/hris/pages/training/myTraining/index', 'EmployeeTrainingSessionController@myTraining');
+    // SIGN UP
+    Route::get('/hris/pages/training/myTraining/{employeeTrainingSession}/signup', 'EmployeeTrainingSessionController@signup');
+
+    // NOT ATTENDED
+    Route::get('/hris/pages/training/myTraining/{employeeTrainingSession}/notAttended', 'EmployeeTrainingSessionController@notAttended');
+
+    // COMPLETED
+    Route::get('/hris/pages/training/myTraining/{employeeTrainingSession}/complete', 'EmployeeTrainingSessionController@completedForm');
+    Route::patch('/hris/pages/training/myTraining/{employeeTrainingSession}/completed', 'EmployeeTrainingSessionController@completed');
+    Route::get('/hris/pages/training/myTraining/download/{employeeTrainingSession}', 'EmployeeTrainingSessionController@completeDownload');
+
+    // SHOW
+     Route::get('/hris/pages/training/myTraining/{employeeTrainingSession}/show', 'EmployeeTrainingSessionController@showTraining');
+
+    // COORDINATED
+    Route::get('/hris/pages/training/coordinated/index', 'EmployeeTrainingSessionController@coordinated');
+    Route::get('/hris/pages/training/coordinated/{employeeTrainingSession}/show', 'EmployeeTrainingSessionController@showCoordinated');
+    Route::get('/hris/pages/training/coordinated/download/{employeeTrainingSession}', 'EmployeeTrainingSessionController@coordinatedDownload');
+
+
+
+
     Route::get('/hris/', function () {
         return view('welcome');
     });

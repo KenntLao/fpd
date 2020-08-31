@@ -110,7 +110,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter amount</p>
-				<input class="form-control required" type="text" name="amount" value="{{old('amount') ?? $employeeExpense->amount}}" required>
+				<input class="form-control required" type="text" name="amount" value="{{old('amount') ?? $employeeExpense->amount}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required maxlength="6">
 			</div>
 		</div>
 	</div>

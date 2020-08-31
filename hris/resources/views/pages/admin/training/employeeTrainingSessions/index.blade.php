@@ -26,7 +26,7 @@
 		<h3 class="card-title">employee training sessions list</h3>
 		@if(in_array('employee-training-session-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
-			<a class="btn add-button btn-md" href="/hris/pages/admin/training/employeeTrainingSessions/create"><i class="fa fa-plus mr-1"></i> add employee training</a>
+			<a class="btn add-button btn-md" href="/hris/pages/admin/training/employeeTrainingSessions/create"><i class="fa fa-plus mr-1"></i> add employee training session</a>
 		</div>
 		@endif
 	</div>
@@ -61,7 +61,17 @@
 							<span class="td-error">ERROR</span>
 							@endif
 						</td>
-						<td>{{$employeeTrainingSession->status}}</td>
+						<td>
+							@if($employeeTrainingSession->status == 0)
+							Scheduled
+							@endif
+							@if($employeeTrainingSession->status == 1)
+							Attended
+							@endif
+							@if($employeeTrainingSession->status == 2)
+							Not Attended
+							@endif
+						</td>
 						@if(in_array('employee-training-session-edit', $_SESSION['sys_permissions']) OR in_array('employee-training-session-delete', $_SESSION['sys_permissions']))
 						<td class="td-action">
 							<div class="row no-gutters">

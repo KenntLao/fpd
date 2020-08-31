@@ -18,7 +18,7 @@ class CreateHrisCoursesTable extends Migration
             $table->timestamps();
             $table->string('code');
             $table->string('name');
-            $table->string('coordinator');
+            $table->string('coordinator_id');
             $table->string('trainer')->nullable();
             $table->longText('trainer_details')->nullable();
             $table->string('payment_type');

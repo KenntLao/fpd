@@ -22,10 +22,17 @@
 	</div>
 	<div class="col-12 col-md-6 col-xl-3">
 		<div class="form-group">
-			<label class="mr-2" for="coordinator">Coordinator: </label>
+			<label class="mr-2" for="coordinator_id">Coordinator: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="coordinator" required>
-				<option value="SocialConz Digital" {{ $course->coordinator == 'SocialConz Digital'  ? 'selected' : '' }}>SocialConz Digital</option>
+			<select class="form-control required select2" name="coordinator_id" required>
+                @if(count($employees) > 0)
+				<option disabled default selected>-- select one --</option>
+				@foreach($employees as $employee)
+				<option value="{{$employee->id}}" {{ $course->coordinator_id == $employee->id  ? 'selected' : '' }}>{{$employee->firstname}} {{$employee->lastname}}</option>
+				@endforeach
+				@else
+				<option disabled default selected>-- select one --</option>
+                @endif
 			</select>
 		</div>
 	</div>
@@ -76,7 +83,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter cost</p>
-				<input class="form-control required" type="text" name="cost" value="{{old('cost') ?? $course->cost}}" required>
+				<input class="form-control required" type="text" name="cost" value="{{old('cost') ?? $course->cost}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required maxlength="6">
 			</div>
 		</div>
 	</div>

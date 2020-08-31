@@ -33,7 +33,7 @@ class TrainingSessionController extends Controller
     {
         if($this->validatedData()) {
             if($request->hasFile('attachment')) {
-                $file = time() . 'A.' . $request->attachment->extension();
+                $file = time() . 'A.' . $request->attachment->getClientOriginalExtension();
                 $path = public_path('assets/files/training_session');
                 $trainingSession->attachment = $file;
                 $request->attachment->move($path, $file);
@@ -77,11 +77,11 @@ class TrainingSessionController extends Controller
                 if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
                     $old_file = $path . $trainingSession->attachment;
                     unlink($old_file);
-                    $file = time() . 'A.' . $request->attachment->extension();
+                    $file = time() . 'A.' . $request->attachment->getClientOriginalExtension();
                     $trainingSession->attachment = $file;
                     $request->attachment->move($path, $file);
                 } else {
-                    $file = time() . 'A.' . $request->attachment->extension();
+                    $file = time() . 'A.' . $request->attachment->getClientOriginalExtension();
                     $trainingSession->attachment = $file;
                     $request->attachment->move($path, $file);
                 }
