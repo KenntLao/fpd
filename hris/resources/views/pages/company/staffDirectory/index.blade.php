@@ -31,7 +31,7 @@
         @if(count($employees) > 0)
         <div class="row">
             @foreach($employees as $employee)
-            <div class="col-12 col-md-4 staff-box">
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3 staff-box">
                 <div class="staff-card">
                     <div class="staff-header">
                         <div class="row no-gutters">

@@ -13,7 +13,7 @@ class StaffDirectoryController extends Controller
 
     public function index()
     {
-        $employees = hris_employee::orderBy('lastname', 'ASC')->paginate(9);
+        $employees = hris_employee::orderBy('lastname', 'ASC')->paginate(12);
         $departments = hris_company_structures::all();
         $jobTitles = hris_job_titles::all();
         return view('pages.company.staffDirectory.index', compact('employees', 'departments', 'jobTitles'));

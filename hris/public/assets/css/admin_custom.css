@@ -805,7 +805,7 @@ textarea.form-control {
 	transform: translateY(-50%);
 }
 .staff-body {
-	padding: 15px;
+	padding: 10px;
 }
 .staff-info h4 {
 	color: #FFFF00;
@@ -820,7 +820,7 @@ textarea.form-control {
 	margin: 0;
 }
 .staff-img {
-	padding: 15px;
+	padding: 10px;
 }
 .staff-img > img {
 	display: block;
