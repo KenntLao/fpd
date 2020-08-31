@@ -43,7 +43,13 @@
                             <div class="col-9">
                                 <div class="staff-info">
                                     <h4>{{$employee->firstname}} {{$employee->lastname}}</h4>
-                                    <p>{{$employee->job_title->name}}</p>
+                                    <p>
+                                        @if($employee->job_title_id)
+                                        {{$employee->job_title->name}}
+                                        @else
+                                        ----
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -61,11 +67,21 @@
                         </div>
                         <div class="body-row">
                             <label>Phone</label>
-                            <p>{{$employee->work_phone}}</p>
+                            <p>
+                                @if($employee->work_phone)
+                                {{$employee->work_phone}}
+                                @else
+                                ----
+                                @endif</p>
                         </div>
                         <div class="body-row">
                             <label>Email</label>
-                            <p>{{$employee->private_email}}</p>
+                            <p>
+                                @if($employee->private_email)
+                                {{$employee->private_email}}
+                                @else
+                                ----
+                                @endif</p></p>
                         </div>
                     </div>
                 </div>
