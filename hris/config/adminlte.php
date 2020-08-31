@@ -894,7 +894,7 @@ return [
                 ],
             ]
         ],
-        [
+       /* [
             'header' => 'TRAVEL MANAGEMENT',
         ],
         [
@@ -917,7 +917,7 @@ return [
                     'url' => '#'
                 ],
             ]
-        ],
+        ], */
         [
             'header' => 'FINANCE MANAGEMENT',
         ],

@@ -15,29 +15,34 @@ class LeaveController extends Controller
 {
     public function index()
     {
-        $id = $_SESSION['sys_id'];
-        $roles = roles::all();
-        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
-        $supervisor_id = implode(' ', $supervisor_role_id[0]);
-        $find = hris_employee::find($id);
-        $role_ids = explode(',', $find->role_id);
+        if($_SESSION['sys_account_mode'] == "employee"){
+            $id = $_SESSION['sys_id'];
+            $roles = roles::all();
+            $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+            $supervisor_id = implode(' ', $supervisor_role_id[0]);
+            $find = hris_employee::find($id);
+            $role_ids = explode(',', $find->role_id);
 
-        if (in_array($supervisor_id, $role_ids)) {
-            $department = $find->department_id;
-            $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id);
-            $employee_id = array();
-            foreach ($employee as $e) {
-                $employee_id[] = $e->id;
+            if (in_array($supervisor_id, $role_ids)) {
+                $department = $find->department_id;
+                $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id);
+                $employee_id = array();
+                foreach ($employee as $e) {
+                    $employee_id[] = $e->id;
+                }
+                $leaves = hris_leaves::whereIn('employee_id', $employee_id)->paginate(10);
+
+                $self = hris_leaves::where('employee_id', $id)->paginate(10);
+                //$leave_type_name = hris_leaves::where('employee_id', $id)->leftJoin('hris_leave_types', 'hris_leaves.leave_type_id', '=', 'hris_leave_types.id')->get('name');
+                return view('pages.leaveManagement.leaves.index', compact('leaves', 'role_ids', 'supervisor_id', 'self'));
+            } else {
+                $self = hris_leaves::where('employee_id', $id)->paginate(10);
+                // $leave_type_name = hris_leaves::where('employee_id', $id)->leftJoin('hris_leave_types', 'hris_leaves.leave_type_id', '=', 'hris_leave_types.id')->get('name');
+                return view('pages.leaveManagement.leaves.index', compact('self', 'role_ids', 'supervisor_id'));
             }
-            $leaves = hris_leaves::whereIn('employee_id', $employee_id)->paginate(10);
-            
-            $self = hris_leaves::where('employee_id', $id)->paginate(10);
-            //$leave_type_name = hris_leaves::where('employee_id', $id)->leftJoin('hris_leave_types', 'hris_leaves.leave_type_id', '=', 'hris_leave_types.id')->get('name');
-            return view('pages.leaveManagement.leaves.index', compact('leaves', 'role_ids', 'supervisor_id', 'self'));
         } else {
-            $self = hris_leaves::where('employee_id', $id)->paginate(10);
-           // $leave_type_name = hris_leaves::where('employee_id', $id)->leftJoin('hris_leave_types', 'hris_leaves.leave_type_id', '=', 'hris_leave_types.id')->get('name');
-            return view('pages.leaveManagement.leaves.index', compact('self', 'role_ids', 'supervisor_id'));
+            $all_leaves = hris_leaves::paginate(10);
+            return view('pages.leaveManagement.leaves.index', compact('all_leaves'));
         }
     }
 

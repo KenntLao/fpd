@@ -26,6 +26,7 @@
     <p><i class="fas fa-fw fa-exclamation-circle"></i>{{$message}}</p>
 </div>
 @endif
+@if($_SESSION['sys_account_mode'] == "employee")
 <div class="row no-gutters">
     @if(in_array($supervisor_id, $role_ids))
     <ul class="nav nav-tabs" role="tablist" style="border-bottom: 0;">
@@ -181,6 +182,76 @@
     </div>
     @endif
 </div>
+@else
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Leave Request List</h3>
+        <div class="card-tools">
+            @if($_SESSION['sys_account_mode'] == 'employee')
+            <a class="btn add-button btn-md" href="/hris/pages/leaveManagement/leaves/create"><i class="fa fa-plus mr-1"></i> Apply Leave</a>
+            @endif
+        </div>
+    </div>
+    <div class="card-body">
+        @if(count($all_leaves) > 0)
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Leave Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>approved by</th>
+                        <th>approved date</th>
+                        <th>reason</th>
+                        <th>status</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($all_leaves as $leave)
+                    <tr>
+                        <td>{{$leave->created_at}}</td>
+                        <td>{{$leave->leave_types->name}}</td>
+                        <td>{{date("Y-m-d", strtotime($leave->leave_start_date))}}</td>
+                        <td>{{date("Y-m-d", strtotime($leave->leave_end_date))}}</td>
+                        <td>{{$leave->approved_by_id}}</td>
+                        <td>{{$leave->apporved_date}}</td>
+                        <td>{{$leave->reason}}</td>
+                        <td>
+                            @if($leave->status == 0){{'Pending'}}
+                            @elseif($leave->status == 1) {{'Approved'}}
+                            @elseif($leave->status == 2) {{'Denied'}}
+                            @endif
+                        </td>
+                        <td>
+                            <div class="row no-gutters">
+                                @if($leave->status == 1 OR $leave->status == 2)
+                                <div class="col-12">
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/show"><i class="fas fa-search"></i></a>
+                                </div>
+                                @else
+                                <div class="col-md-12">
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/edit" title="Edit"><i class="fas fa-edit"></i></a>
+                                </div>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @else
+        <h4>No data available.</h4>
+        @endif()
+    </div>
+    <div class="card-footer">
+        {{$all_leaves->links()}}
+    </div>
+</div>
+@endif
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -209,6 +280,7 @@
         </div>
     </div>
 </div>
+
 @stop
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
