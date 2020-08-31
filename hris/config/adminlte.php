@@ -795,14 +795,14 @@ return [
             'icon' => 'fas fa-fw fa-file-export',
             'url' => '#'
         ],
-        [
+        /*[
             'header' => 'INSIGHTS',
         ],
         [
             'text' => 'Time and Management',
             'icon' => 'fas fa-fw fa-user-clock',
             'url' => '#'
-        ],
+        ],*/
         [
             'header' => 'DOCUMENT MANAGEMENT',
         ],
@@ -839,7 +839,7 @@ return [
         [
             'text' => 'Staff Directory',
             'icon' => 'fas fa-fw fa-user',
-            'url' => '#'
+            'url' => '/hris/pages/company/staffDirectory/index'
         ],
         [
             'header' => 'TRAINING MANAGEMENT',

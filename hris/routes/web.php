@@ -826,6 +826,11 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::get('/hris/pages/training/coordinated/{employeeTrainingSession}/show', 'EmployeeTrainingSessionController@showCoordinated');
     Route::get('/hris/pages/training/coordinated/download/{employeeTrainingSession}', 'EmployeeTrainingSessionController@coordinatedDownload');
 
+    // STAFF DIRECTORY
+    Route::get('/hris/pages/company/staffDirectory/index', 'StaffDirectoryController@index');
+
+    // FILTER
+    Route::post('/hris/pages/company/staffDirectory/filter', 'StaffDirectoryController@filterData');
 
 
 

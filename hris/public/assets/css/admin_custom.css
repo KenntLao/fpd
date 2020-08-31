@@ -787,6 +787,58 @@ textarea.form-control {
 	width: 7px;
 }
 
+/* STAFF DIRECTORY */
+.staff-box {
+	padding: 10px !important;
+}
+.staff-card {
+	background: #fff;
+	border: 1px solid #041E42;
+}
+.staff-header {
+	background: #041E42;
+}
+.staff-info {
+	position: absolute;
+	top: 50%;
+	left: 20px;
+	transform: translateY(-50%);
+}
+.staff-body {
+	padding: 15px;
+}
+.staff-info h4 {
+	color: #FFFF00;
+	font-family: opensans;
+	font-size: 14px;
+	margin-bottom: 3px;
+}
+.staff-info p {
+	color: #fff;
+	font-family: opensans;
+	font-size: 12px;
+	margin: 0;
+}
+.staff-img {
+	padding: 15px;
+}
+.staff-img > img {
+	display: block;
+	width: 100%;
+	border: 1px solid #041E42;
+	border-radius: 50%;
+}
+.body-row {
+	margin-bottom: 5px;
+}
+.body-row > label {
+	font-size: 13px !important;
+}
+.body-row > p {
+	font-size: 12px;
+	margin-bottom: 0;
+}
+
 
 @media only screen and (min-width: 500px) {
 	.action-col {
