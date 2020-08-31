@@ -40,7 +40,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label>Department:</label>
-                            <p>{{$employeeTrainingSession->course->coordinator->department->name}}</p>
+                            <p>
+                                @if($employeeTrainingSession->course->coordinator->department_id)
+                                {{$employeeTrainingSession->course->coordinator->department->name}}
+                                @else
+                                ----
+                                @endif
+                            </p>
                         </div>
                     </div>
                     <div class="col-4">

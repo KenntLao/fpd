@@ -37,7 +37,7 @@ class EmployeeTrainingSessionController extends Controller
             $employeeTrainingSession->employee_id = request('employee_id');
             $employeeTrainingSession->training_session_id = request('training_session_id');
             $employeeTrainingSession->status = '0';
-            if ( $employeeTrainingSession->training_session->course->coordinator->id == $_SESSION['sys_id'] ) {
+            if ( $employeeTrainingSession->training_session->course->coordinator->id == request('employee_id') ) {
                 return back()->withErrors(['Cannot add training session to employee with same coordinator.']);
             } else {
                 if ( $employeeTrainingSession->training_session->attendance_type == 'Sign Up' ) {
