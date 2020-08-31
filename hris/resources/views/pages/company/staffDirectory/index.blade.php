@@ -37,7 +37,23 @@
                         <div class="row no-gutters">
                             <div class="col-3">
                                 <div class="staff-img">
+                                    @if($employee->employee_photo)
+                                    @if(file_exists('assets/images/employees/employee_photos/'.$employee->employee_photo))
                                     <img src="{{asset('assets/images/employees/employee_photos/')}}/{{$employee->employee_photo}}">
+                                    @else
+                                    @if($employee->gender == 'M')
+                                    <img src="{{asset('assets/images/employees/employee_photos/male/tmp/pic1.png')}}">
+                                    @else
+                                    <img src="{{asset('assets/images/employees/employee_photos/female/tmp/pic2.png')}}">
+                                    @endif
+                                    @endif
+                                    @else
+                                    @if($employee->gender == 'M')
+                                    <img src="{{asset('assets/images/employees/employee_photos/male/tmp/pic1.png')}}">
+                                    @else
+                                    <img src="{{asset('assets/images/employees/employee_photos/female/tmp/pic2.png')}}">
+                                    @endif
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-9">
