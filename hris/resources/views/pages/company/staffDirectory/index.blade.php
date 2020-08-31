@@ -51,7 +51,13 @@
                     <div class="staff-body">
                         <div class="body-row">
                             <label>Department</label>
-                            <p>{{$employee->department->name}}</p>
+                            <p>
+                                @if($employee->department_id)
+                                {{$employee->department->name}}
+                                @else
+                                ----
+                                @endif
+                            </p>
                         </div>
                         <div class="body-row">
                             <label>Phone</label>
