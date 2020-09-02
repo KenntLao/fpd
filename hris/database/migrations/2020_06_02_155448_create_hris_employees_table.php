@@ -39,11 +39,10 @@ class CreateHrisEmployeesTable extends Migration
             $table->string('cert_level')->nullable();
             $table->string('field_study')->nullable();
             $table->string('school')->nullable();
-            $table->string('work_permit')->nullable();
+            $table->string('tin')->nullable();
             $table->string('pagibig')->nullable();
             $table->string('sss')->nullable();
             $table->string('phic')->nullable();
-            $table->bigInteger('bank_acc')->nullable();
             $table->string('employment_status')->nullable();
             $table->string('work_no')->nullable();
             $table->string('work_phone')->nullable();

@@ -18,12 +18,13 @@ class EmployeeImport implements ToModel, WithStartRow
     }
     public function model(array $row)
     {
-        $department_id = hris_company_structures::where('name', $row[32])->limit(1)->get('id');
+        $department_id = hris_company_structures::where('name', trim($row[32]))->limit(1)->get('id');
         $department_id_int = trim(preg_replace('/[^0-9]/', '', $department_id));
+
+        echo $department_id_int;
 
         $job_title_id = hris_job_titles::where('name', $row[31])->limit(1)->get('id');
         $job_title_id_int = trim(preg_replace('/[^0-9]/', '', $job_title_id));
-
 
         if($job_title_id == '[]'){
             $job_title_id_int = 0;
@@ -74,18 +75,17 @@ class EmployeeImport implements ToModel, WithStartRow
             'cert_level'    => $row[16],
             'field_study'    => $row[17],
             'school'    => $row[18],
-
+            'tin'    => $row[19],
             'pagibig'    => $row[20],
             'sss'    => $row[21],
             'phic'    => $row[22],
-
             'employment_status'    => $row[24],
             'work_no'    => $row[25],
             'work_phone'    => $row[26],
             'work_email'    => $row[27],
             'private_email'    => $row[28],
             'joined_date'    => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[29]),
-            'termination_date'    => $row[30],
+            'termination_date'    => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[30]),
             'job_title_id'    => $job_title_id_int,
             'department_id'    => $department_id_int,
             'supervisor'    => $supervisor_id_int,

@@ -98,6 +98,7 @@ class EmployeeController extends Controller
             $employees->job_title_id = request('job_title');
             $employees->supervisor = request('supervisor');
             $employees->work_address = request('work_address');
+            $employees->tin = request('tin');
             $employees->sss = request('sss');
             $employees->pagibig = request('pagibig');
             $employees->phic = request('phic');
@@ -190,6 +191,7 @@ class EmployeeController extends Controller
             $employee->job_title_id = request('job_title');
             $employee->supervisor = request('supervisor');
             $employee->work_address = request('work_address');
+            $employee->tin = request('tin');
             $employee->sss = request('sss');
             $employee->pagibig = request('pagibig');
             $employee->phic = request('phic');
@@ -312,6 +314,7 @@ class EmployeeController extends Controller
             'department' => 'nullable',
             'supervisor' => 'nullable',
             'work_address' => 'nullable',
+            'tin' => 'nullable',
             'sss' => 'nullable',
             'pagibig' => 'nullable',
             'phic' => 'nullable',
