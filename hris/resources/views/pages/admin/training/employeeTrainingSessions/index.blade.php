@@ -71,22 +71,28 @@
 							@if($employeeTrainingSession->status == 2)
 							Not Attended
 							@endif
+							@if($employeeTrainingSession->status == 3)
+							Pending
+							@endif
 						</td>
 						@if(in_array('employee-training-session-edit', $_SESSION['sys_permissions']) OR in_array('employee-training-session-delete', $_SESSION['sys_permissions']))
-						<td class="td-action">
-							<div class="row no-gutters">
-								@if(in_array('employee-training-session-edit', $_SESSION['sys_permissions']))
-								<div class="col-6">
-									<a class="btn btn-success btn-sm" href="/hris/pages/admin/training/employeeTrainingSessions/{{$employeeTrainingSession->id}}/edit"><i class="fa fa-edit"></i></a>
-								</div>
-								@endif
-								@if(in_array('employee-training-session-delete', $_SESSION['sys_permissions']))
-								<div class="col-6">
-									<!-- Button trigger modal -->
-									<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeTrainingSession->id}}" data-name="Employee Training Session ID: {{$employeeTrainingSession->id}}"><i class="fa fa-trash"></i></button>
-								</div>
-								@endif
-							</div>
+						<td>
+							<a class="btn btn-primary btn-sm" href="/hris/pages/admin/training/employeeTrainingSessions/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
+							@if($employeeTrainingSession->status == 3)
+							<a class="btn btn-success btn-sm" href="/hris/pages/admin/training/employeeTrainingSessions/{{$employeeTrainingSession->id}}/approve" title="Approve"><i class="fa fa-check-square"></i></a>
+							<a class="btn btn-danger btn-sm" href="/hris/pages/admin/training/employeeTrainingSessions/{{$employeeTrainingSession->id}}/deny" title="Deny"><i class="fa fa-times"></i></a>
+							@endif
+							@if(in_array('employee-training-session-edit', $_SESSION['sys_permissions']))
+							@if($employeeTrainingSession->status == 0)
+							<a class="btn btn-success btn-sm" href="/hris/pages/admin/training/employeeTrainingSessions/{{$employeeTrainingSession->id}}/edit"><i class="fa fa-edit"></i></a>
+							@endif
+							@endif
+							@if(in_array('employee-training-session-delete', $_SESSION['sys_permissions']))
+							@if($employeeTrainingSession->status == 0)
+							<!-- Button trigger modal -->
+							<button class="btn btn-danger btn-sm delete-btn" type="button" data-toggle="modal" data-target="#modal-{{$employeeTrainingSession->id}}" data-name="Employee Training Session ID: {{$employeeTrainingSession->id}}"><i class="fa fa-trash"></i></button>
+							@endif
+							@endif
 						</td>
 						@endif
 					</tr>

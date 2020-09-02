@@ -50,6 +50,9 @@
 							@if($employeeTrainingSession->status == 2)
 							Not Attended
 							@endif
+							@if($employeeTrainingSession->status == 3)
+							Pending
+							@endif
 						</td>
 						<td>
 							@if($employeeTrainingSession->training_session->attendance_type == 'Sign Up')
@@ -57,21 +60,31 @@
 							<a class="btn btn-warning btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/signup" title="Sign Up"><i class="fa fa-sign-in-alt"></i></a>
 							<a class="btn btn-primary btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
 							@else
-							@if($employeeTrainingSession->status == 1 OR $employeeTrainingSession->status == 2)
-							<a class="btn btn-primary btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
-							@else
+							@if($employeeTrainingSession->status == 0)
 							<a class="btn btn-primary btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
 							<a class="btn btn-success btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/complete" title="Completed"><i class="fa fa-check-square"></i></a>
 							<a class="btn btn-danger btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/notAttended" title="Not Attended"><i class="fa fa-times"></i></a>
 							@endif
-							@endif
-							@else
 							@if($employeeTrainingSession->status == 1 OR $employeeTrainingSession->status == 2)
 							<a class="btn btn-primary btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
+							@endif
+							@if($employeeTrainingSession->status == 3)
+							<a class="btn btn-primary btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
+							<a class="btn btn-warning btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/edit" title="View"><i class="fa fa-edit"></i></a>
+							@endif
+							@endif
 							@else
+							@if($employeeTrainingSession->status == 0)
 							<a class="btn btn-primary btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
 							<a class="btn btn-success btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/complete" title="Completed"><i class="fa fa-check-square"></i></a>
 							<a class="btn btn-danger btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/notAttended" title="Not Attended"><i class="fa fa-times"></i></a>
+							@endif
+							@if($employeeTrainingSession->status == 1 OR $employeeTrainingSession->status == 2)
+							<a class="btn btn-primary btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
+							@endif
+							@if($employeeTrainingSession->status == 3)
+							<a class="btn btn-primary btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/show" title="View"><i class="fa fa-search"></i></a>
+							<a class="btn btn-warning btn-sm" href="/hris/pages/training/myTraining/{{$employeeTrainingSession->id}}/edit" title="View"><i class="fa fa-edit"></i></a>
 							@endif
 							@endif
 						</td>

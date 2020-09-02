@@ -1,9 +1,9 @@
 @extends('adminlte::page')
-@section('title', 'HRIS | Training Management - My Training Session')
+@section('title', 'HRIS | Training Setup - Employee Training Session')
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-columns"></i> Training Management</h1>
+        <h1><i class="fas fa-fw fa-columns"></i> Employee Training Session</h1>
     </div>
 </div>
 @stop
@@ -19,14 +19,26 @@
 </div>
 @endif
 <div class="card">
+    @if ($employeeTrainingSession->status == 0)
     <div class="card-header">
-        <h3 class="card-title">Training Session</h3>
+        <h3 class="card-title">Training Session - Scheduled</h3>
     </div>
+    @endif
+    @if ($employeeTrainingSession->status == 1)
+    <div class="card-header" style="background: #28a745">
+        <h3 class="card-title">Training Session - Attended</h3>
+    </div>
+    @endif
+    @if ($employeeTrainingSession->status == 2)
+    <div class="card-header" style="background: #dc3545">
+        <h3 class="card-title">Training Session - Not Attended</h3>
+    </div>
+    @endif
     <div class="card-body">
         <div class="row mb-4">
             <div class="col-3 col-sm-2">
                 <div class="profile-image">
-                    <img src="{{ URL::asset('assets/images/employees/employee_photos') }}/{{$employee->employee_photo}}">
+                    <img src="{{ URL::asset('assets/images/employees/employee_photos/') }}/{{$employeeTrainingSession->employee->employee_photo}}">
                 </div>
             </div>
             <div class="col-9 col-sm-10">
@@ -34,15 +46,15 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label>Employee number:</label>
-                            <p>{{$employee->employee_number}}</p>
+                            <p>{{$employeeTrainingSession->employee->employee_number}}</p>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label>Department:</label>
                             <p>
-                                @if($employee->department_id)
-                                {{$employee->department->name}}
+                                @if($employeeTrainingSession->employee->department_id)
+                                {{$employeeTrainingSession->employee->department->name}}
                                 @else
                                 ----
                                 @endif
@@ -52,12 +64,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label>Work phone:</label>
-                            <p>
-                                @if($employee->work_phone)
-                                {{$employee->work_phone}}
-                                @else
-                                ----
-                                @endif</p>
+                            <p>{{$employeeTrainingSession->employee->work_phone}}</p>
                         </div>
                     </div>
                 </div>
@@ -65,13 +72,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label>Employee name:</label>
-                            <p>{{$employee->firstname}} {{$employee->lastname}}</p>
+                            <p>{{$employeeTrainingSession->employee->firstname}} {{$employeeTrainingSession->employee->lastname}}</p>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <label>Private email address:</label>
-                            <p>{{$employee->private_email}}</p>
+                            <label>Private mail address:</label>
+                            <p>{{$employeeTrainingSession->employee->private_email}}</p>
                         </div>
                     </div>
                 </div>
@@ -85,16 +92,26 @@
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label>Training Session</label>
-                            <p>{{$employeeTrainingSession->name}}</p>
+                            <label class="mr-2" for="training_session_id">Training Session: </label>
+                            <p>
+                                @if($employeeTrainingSession->training_session_id)
+                                {{$employeeTrainingSession->training_session->name}}
+                                @else
+                                ERROR
+                                @endif
+                            </p>
                         </div>
                     </div>
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label>Course</label>
+                            <label class="mr-2" for="course">Course: </label>
                             <p>
-                                @if($employeeTrainingSession->course)
-                                {{$employeeTrainingSession->course->name}} {{$employeeTrainingSession->course->code}}
+                                @if($employeeTrainingSession->training_session_id)
+                                @if($employeeTrainingSession->training_session->course)
+                                {{$employeeTrainingSession->training_session->course->name}} {{$employeeTrainingSession->training_session->course->code}}
+                                @else
+                                ERROR
+                                @endif
                                 @else
                                 ERROR
                                 @endif
@@ -105,50 +122,29 @@
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label>Scheduled Time</label>
+                            <label class="mr-2" for="training_session_id">Scheduled Time: </label>
                             <p>
-                                @if($employeeTrainingSession->scheduled_time)
-                                {{$employeeTrainingSession->scheduled_time}}
+                                
+                                @if($employeeTrainingSession->training_session_id)
+                                {{$employeeTrainingSession->training_session->scheduled_time}}
                                 @else
-                                ----
+                                ERROR
                                 @endif
                             </p>
                         </div>
                     </div>
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label>Assignment Due Date</label>
+                            <label class="mr-2" for="training_session_id">Coordinator: </label>
                             <p>
-                                @if($employeeTrainingSession->assignment_due_date)
-                                {{$employeeTrainingSession->assignment_due_date}}
+                                @if($employeeTrainingSession->training_session_id)
+                                @if($employeeTrainingSession->training_session->course)
+                                {{$employeeTrainingSession->training_session->course->coordinator->firstname}} {{$employeeTrainingSession->training_session->course->coordinator->lastname}}
                                 @else
-                                ----
+                                ERROR
                                 @endif
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label>Delivery Method</label>
-                            <p>
-                                @if($employeeTrainingSession->delivery_method)
-                                {{$employeeTrainingSession->delivery_method}}
                                 @else
-                                ----
-                                @endif
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label>Delivery Location</label>
-                            <p>
-                                @if($employeeTrainingSession->delivery_location)
-                                {{$employeeTrainingSession->delivery_location}}
-                                @else
-                                ----
+                                ERROR
                                 @endif
                             </p>
                         </div>
@@ -157,34 +153,10 @@
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
-                            <label>Attendance Type</label>
-                            <p>
-                                @if($employeeTrainingSession->attendance_type)
-                                {{$employeeTrainingSession->attendance_type}}
-                                @else
-                                ----
-                                @endif
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label>Attachment</label>
-                            <p>
-                            @if($employeeTrainingSession->attachment)
-                            <a class="download-link" href="/hris/pages/training/coordinated/download/{{$employeeTrainingSession->id}}" title="Download attachment"><i class="fas fa-cloud-download-alt mr-2"></i>{{$employeeTrainingSession->attachment}}</a>
-                            @else
-                            ----
+                            <label class="mr-2" for="training_session_id">Proof of Completion: </label>
+                            @if($employeeTrainingSession->proof)
+                            <p><a class="download-link" href="/hris/pages/training/myTraining/download/{{$employeeTrainingSession->id}}" title="Download attachment"><i class="fas fa-cloud-download-alt mr-2"></i>{{$employeeTrainingSession->proof}}</a></p>
                             @endif
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label>Training Certificate Required</label>
-                            <p>{{$employeeTrainingSession->attendance_type}}</p>
                         </div>
                     </div>
                 </div>

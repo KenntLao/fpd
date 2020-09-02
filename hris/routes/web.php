@@ -149,6 +149,11 @@ Route::middleware([CheckUserID::class])->group(function(){
         Route::patch('/hris/pages/admin/training/employeeTrainingSessions/update/{employeeTrainingSession}', 'EmployeeTrainingSessionController@update');
         /* DELETE EMPLOYEE TRAINING SESSIONS */
         Route::delete('/hris/pages/admin/training/employeeTrainingSessions/delete/{employeeTrainingSession}', 'EmployeeTrainingSessionController@destroy');
+        /* SHOW */
+        Route::get('/hris/pages/admin/training/employeeTrainingSessions/{employeeTrainingSession}/show', 'EmployeeTrainingSessionController@show');
+        /* APPROVE AND DENY */
+        Route::get('/hris/pages/admin/training/employeeTrainingSessions/{employeeTrainingSession}/approve', 'EmployeeTrainingSessionController@approve');
+        Route::get('/hris/pages/admin/training/employeeTrainingSessions/{employeeTrainingSession}/deny', 'EmployeeTrainingSessionController@deny');
 
         /* TRAINING SESSIONS PAGE */
         Route::get('/hris/pages/admin/training/trainingSessions/index', 'TrainingSessionController@index');
@@ -817,6 +822,8 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::get('/hris/pages/training/myTraining/{employeeTrainingSession}/complete', 'EmployeeTrainingSessionController@completedForm');
     Route::patch('/hris/pages/training/myTraining/{employeeTrainingSession}/completed', 'EmployeeTrainingSessionController@completed');
     Route::get('/hris/pages/training/myTraining/download/{employeeTrainingSession}', 'EmployeeTrainingSessionController@completeDownload');
+    Route::get('/hris/pages/training/myTraining/{employeeTrainingSession}/edit', 'EmployeeTrainingSessionController@editComplete');
+    Route::patch('/hris/pages/training/myTraining/{employeeTrainingSession}/update', 'EmployeeTrainingSessionController@updateComplete');
 
     // SHOW
      Route::get('/hris/pages/training/myTraining/{employeeTrainingSession}/show', 'EmployeeTrainingSessionController@showTraining');

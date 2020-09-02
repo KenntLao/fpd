@@ -31,6 +31,11 @@ class EmployeeTrainingSessionController extends Controller
         return view('pages.admin.training.employeeTrainingSessions.create', compact('employeeTrainingSession', 'trainingSessions', 'employees'));
     }
 
+    public function show(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        return view('pages.admin.training.employeeTrainingSessions.show', compact('employeeTrainingSession'));
+    }
+
     public function store(hris_employee_training_sessions $employeeTrainingSession, Request $request)
     {
         if($this->validatedData()) {
@@ -142,6 +147,37 @@ class EmployeeTrainingSessionController extends Controller
         return view('pages.training.myTraining.complete', compact('employeeTrainingSession'));
     }
 
+    public function editComplete(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        return view('pages.training.myTraining.edit', compact('employeeTrainingSession'));
+    }
+
+    public function updateComplete(hris_employee_training_sessions $employeeTrainingSession,  Request $request)
+    {
+        if ( $this->complete() ) {
+            if ($request->hasFile('proof')) {
+                $path = public_path('assets/files/training/');
+                if ($employeeTrainingSession->proof != '' && $employeeTrainingSession->proof != NULL) {
+                    $old_file = $path . $employeeTrainingSession->proof;
+                    unlink($old_file);
+                    $proof = time() . 'PROOF.' . $request->proof->getClientOriginalExtension();
+                    $employeeTrainingSession->proof = $proof;
+                    $request->proof->move($path, $proof);
+                } else {
+                    $proof = time() . 'PROOF.' . $request->proof->getClientOriginalExtension();
+                    $employeeTrainingSession->proof = $proof;
+                    $request->proof->move($path, $proof);
+                }
+            }
+            $employeeTrainingSession->feedback = request('feedback');
+            $employeeTrainingSession->update();
+            return redirect('/hris/pages/training/myTraining/index')->with('success', 'Training session updated!');
+
+        } else {
+            return back()->withErrors($this->complete());
+        }
+    }
+
     public function completed(hris_employee_training_sessions $employeeTrainingSession, Request $request)
     {
         if ( $this->complete() ) {
@@ -150,7 +186,8 @@ class EmployeeTrainingSessionController extends Controller
                 $employeeTrainingSession->proof = $proof;
                 $request->proof->move(public_path('assets/files/training'), $proof);
             }
-            $employeeTrainingSession->status = '1';
+            $employeeTrainingSession->status = '3';
+            $employeeTrainingSession->feedback = request('feedback');
             $employeeTrainingSession->update();
             return redirect('/hris/pages/training/myTraining/index')->with('success', 'Training session completed!');
 
@@ -191,13 +228,32 @@ class EmployeeTrainingSessionController extends Controller
 
     public function showCoordinated(hris_training_sessions $employeeTrainingSession)
     {
-        return view('pages.training.coordinated.show', compact('employeeTrainingSession'));
+        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+            return back()->withErrors(['You do not have access in this page.']);
+        } else {
+            $id = $_SESSION['sys_id'];
+            $employee = hris_employee::find($id);
+            return view('pages.training.coordinated.show', compact('employeeTrainingSession', 'employee'));
+        }
     }
 
     public function coordinatedDownload(hris_training_sessions $employeeTrainingSession)
     {
         $file = public_path('assets/files/training_session/'.$employeeTrainingSession->attachment);
         return response()->download($file);
+    }
+
+    public function approve(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        $employeeTrainingSession->status = '1';
+        $employeeTrainingSession->update();
+        return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session approved!');
+    }
+    public function deny(hris_employee_training_sessions $employeeTrainingSession)
+    {
+        $employeeTrainingSession->status = '2';
+        $employeeTrainingSession->update();
+        return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session denied!');
     }
 
     protected function validatedData() 
