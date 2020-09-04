@@ -629,7 +629,11 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     @endif
                                 </td>
                                 <td>
+                                    @if($s->supervisor)
                                     {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
+                                    @else
+                                    ERROR
+                                    @endif
                                 </td>
                                 <td>
                                     @if($s->approved_date)
@@ -845,7 +849,11 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @endif
                         </td>
                         <td>
+                            @if($overtime->supervisor)
                             {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                            @else
+                            ERROR
+                            @endif
                         </td>
                         <td>
                             @if($overtime->approved_date)
