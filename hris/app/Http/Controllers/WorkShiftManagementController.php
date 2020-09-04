@@ -27,7 +27,7 @@ class WorkShiftManagementController extends Controller
         return view('pages.time.workshiftManagement.create', compact('work_shift'));
     }
     public function store(Request $request, hris_work_shift_management $work_shift){
-        $action = 'add';
+        $action = 1;
         if($this->validatedData()){
 
             if(request('monday_shift') == NULL) {

@@ -148,19 +148,10 @@
     <div class="col-md-4">
         <div class="form-group">
             <label class="mr-2" for="supervisor">Pay Grade </label>
-            <select id="pay_grade" class="form-control select2" name="pay_grade">
-
-                @if(!$employee->pay_grade)
-                <option default disabled selected>-- select one --</option>
-                @foreach($pay_grades as $pay_grade)
-                <option value="{{$pay_grade->id}}" {{$employee->pay_grade == $pay_grade->id ? 'selected' : ''}}>{{$pay_grade->name}}</option>
-                @endforeach
-                @else
-                @foreach($pay_grades as $pay_grade)
-                <option value="{{$pay_grade->id}}" {{$employee->pay_grade == $pay_grade->id ? 'selected' : ''}}>{{$pay_grade->name}}</option>
-                @endforeach
-                @endif
-            </select>
+            <div class="input">
+                <p class="placeholder">Pay Grade</p>
+                <input class="form-control " type="text" name="pay_grade" value="{{old('pay_grade') ?? $employee->pay_grade}}">
+            </div>
         </div>
     </div>
 </div>

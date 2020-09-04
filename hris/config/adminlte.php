@@ -455,27 +455,27 @@ return [
                         ]
                     ]
                 ],
-                [
-                    'text' => 'Company Loans',
-                    'icon' => 'fas fa-fw fa-money-check',
-                    'can' => ['loan-type','employee-loan'],
-                    'submenu' => [
-                        [
-                            'text' => 'Loan Types',
-                            'icon' => 'fas fa-fw fa-money-check',
-                            'url' => '/hris/pages/admin/loans/loanTypes/index',
-                            'active' => ['/hris/pages/admin/loans/loanTypes/create', '/hris/pages/admin/loans/loanTypes/index', '/hris/pages/admin/loans/loanTypes/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'loan-type',
-                        ],
-                        [
-                            'text' => 'Employee Loans',
-                            'icon' => 'fas fa-fw fa-money-check',
-                            'url' => '/hris/pages/admin/loans/employeeLoans/index',
-                            'active' => ['/hris/pages/admin/loans/employeeLoans/create', '/hris/pages/admin/loans/employeeLoans/index', '/hris/pages/admin/loans/employeeLoans/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'employee-loan',
-                        ],
-                    ]
-                ],
+               // [
+                 //   'text' => 'Company Loans',
+                  //  'icon' => 'fas fa-fw fa-money-check',
+                   // 'can' => ['loan-type','employee-loan'],
+                  //  'submenu' => [
+                 //       [
+                  //          'text' => 'Loan Types',
+                   //         'icon' => 'fas fa-fw fa-money-check',
+                    //        'url' => '/hris/pages/admin/loans/loanTypes/index',
+                    //        'active' => ['/hris/pages/admin/loans/loanTypes/create', '/hris/pages/admin/loans/loanTypes/index', '/hris/pages/admin/loans/loanTypes/*/edit', 'regex:@^content/[0-9]+$@'],
+                   //         'can' => 'loan-type',
+                    //    ],
+                    //    [
+                   //         'text' => 'Employee Loans',
+                     //       'icon' => 'fas fa-fw fa-money-check',
+                    //        'url' => '/hris/pages/admin/loans/employeeLoans/index',
+                     //       'active' => ['/hris/pages/admin/loans/employeeLoans/create', '/hris/pages/admin/loans/employeeLoans/index', '/hris/pages/admin/loans/employeeLoans/*/edit', 'regex:@^content/[0-9]+$@'],
+                      //      'can' => 'employee-loan',
+                     //   ],
+                  //  ]
+             //   ],
                 [
                     'text' => 'Company Assets',
                     'icon' => 'fas fa-fw fa-archive',

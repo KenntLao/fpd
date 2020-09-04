@@ -27,21 +27,27 @@ class AttendanceController extends Controller
         $employee_id = $_SESSION['sys_id'];
         if($this->validatedData()){
             // check data if valid
-            $img = request('time_in_photo');
-            $folderPath = public_path('assets/images/employees/employee_time_in/');
-            $image_parts = explode(";base64,", $img);
-            $image_base64 = base64_decode($image_parts[1]);
-            $file_name = uniqid() . '.png';
             
-            $attendance->employee_id = $employee_id;
-            $attendance->time_in_photo = $file_name;
-            $attendance->time_in = time();
-            $attendance->status = 1;
+            $img = request('time_in_photo');
+            if($img != NULL){
+                $folderPath = public_path('assets/images/employees/employee_time_in/');
+                $image_parts = explode(";base64,", $img);
+                $image_base64 = base64_decode($image_parts[1]);
+                $file_name = uniqid() . '.png';
 
-            $attendance->save();
+                $attendance->employee_id = $employee_id;
+                $attendance->time_in_photo = $file_name;
+                $attendance->time_in = time();
+                $attendance->status = 1;
 
-            file_put_contents($folderPath . $file_name, $image_base64);
-            return redirect('/hris/pages/time/attendances/index')->with('success', 'Punch in successful!');
+                $attendance->save();
+
+                file_put_contents($folderPath . $file_name, $image_base64);
+                return redirect('/hris/pages/time/attendances/index')->with('success', 'Punch in successful!');
+            } else {
+                return back()->with('error', 'Please take a snapshot!');
+            }
+            
         } else {
             return back()->withErrors($this->validatedData());
         }
@@ -51,18 +57,23 @@ class AttendanceController extends Controller
         if ($this->validatedData()) {
             // check data if valid
             $img = request('time_out_photo');
-            $folderPath = public_path('assets/images/employees/employee_time_out/');
-            $image_parts = explode(";base64,", $img);
-            $image_base64 = base64_decode($image_parts[1]);
-            $file_name = uniqid() . '.png';
+            if ($img != NULL) {
+                $folderPath = public_path('assets/images/employees/employee_time_out/');
+                $image_parts = explode(";base64,", $img);
+                $image_base64 = base64_decode($image_parts[1]);
+                $file_name = uniqid() . '.png';
 
-            $attendance->time_out_photo = $file_name;
-            $attendance->time_out = time();
-            $attendance->status = $request->status;
-            $attendance->update();
+                $attendance->time_out_photo = $file_name;
+                $attendance->time_out = time();
+                $attendance->status = $request->status;
+                $attendance->update();
 
-            file_put_contents($folderPath . $file_name, $image_base64);
-            return redirect('/hris/pages/time/attendances/index')->with('success', 'Punch in successful!');
+                file_put_contents($folderPath . $file_name, $image_base64);
+                return redirect('/hris/pages/time/attendances/index')->with('success', 'Punch in successful!');
+            } else {
+                return back()->with('error', 'Please take a snapshot!');
+            }
+            
         } else {
             return back()->withErrors($this->validatedData());
         }
