@@ -26,6 +26,440 @@ $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
 $roles = explode(',', $_SESSION['sys_role_ids']);
 @endphp
 @if( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) )
+@if( in_array($hr_officer_id, $roles) && in_array($supervisor_id, $roles) )
+<div class="row no-gutters">
+    <ul class="nav nav-tabs" role="tablist" style="border-bottom: 0;">
+        <li class="nav-item tab-item">
+            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">My Overtime Requests</a>
+        </li>
+        <li class="nav-item tab-item">
+            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Employee Overtime Requests</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content" style="padding-top: 0;">
+    <div class="tab-pane active" id="tabs-1" role="tab-panel">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Overtime Request List</h3>
+                @if(in_array('overtime-add', $_SESSION['sys_permissions']))
+                <div class="card-tools">
+                    <a class="btn add-button btn-md" href="/hris/pages/time/overtime/create"><i class="fa fa-plus mr-1"></i> Request Overtime</a>
+                </div>
+                @endif
+            </div>
+            <div class="card-body">
+                @if(count($self) > 0)
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>date</th>
+                                <th>employee</th>
+                                <th>request date and time</th>
+                                <th>approved by</th>
+                                <th>supervisor</th>
+                                <th>approved date</th>
+                                <th>status</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($self as $s)
+                            <tr>
+                                <td>{{date("M d, Y - h:i:sa", strtotime($s->created_at))}}</td>
+                                <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
+                                <td>
+                                    @php
+                                    echo date('M d, Y', strtotime($s->ot_date)).' '.substr($s->ot_time_in, 0, 2) . ':' . substr($s->ot_time_in, 2).' - '.substr($s->ot_time_out, 0, 2) . ':' . substr($s->ot_time_out, 2);
+                                    @endphp
+                                </td>
+                                <td>
+                                    @if($s->approved_by_id)
+                                    @if($s->role_id == ',1,')
+                                    @php
+                                    {{
+                                    $users = App\users::find($s->approved_by_id);
+                                    echo $users->uname;
+                                    }}
+                                    @endphp
+                                    @else
+                                    {{$s->approved_by->firstname}} {{$s->approved_by->lastname}}
+                                    @endif
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
+                                <td>
+                                    {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
+                                </td>
+                                <td>
+                                    @if($s->approved_date)
+                                    {{date("M d, Y - h:i:sa", strtotime($s->approved_date))}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($s->status == '0')
+                                    Pending
+                                    @endif
+                                    @if($s->status == '1')
+                                    Approved
+                                    @endif
+                                    @if($s->status == '2')
+                                    Denied
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($s->status == '1' OR $s->status == '2')
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                    @else
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                    @if(in_array('overtime-edit', $_SESSION['sys_permissions']))
+                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
+                                    @endif
+                                    @if(in_array('overtime-delete', $_SESSION['sys_permissions']))
+                                    <!-- Button trigger modal -->
+                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$s->id}}" data-name="Overtime request - {{$s->created_at}} from {{$s->employee->firstname}} {{$s->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                                    @endif
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <h4>No data available.</h4>
+                @endif()
+            </div>
+            <div class="card-footer">
+                {{$self->links()}}
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="tabs-2" role="tab-panel">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Overtime Request List</h3>
+                <div class="card-tools">
+                    <button class="btn add-button btn-md" data-toggle="modal" data-target="#export-modal"><i class="far fa-file-excel mr-1"></i> Download Excel File</button>
+                </div>
+            </div>
+            <div class="card-body">
+                @if(count($overtimes) > 0)
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>date</th>
+                                <th>employee</th>
+                                <th>request date and time</th>
+                                <th>approved by</th>
+                                <th>supervisor</th>
+                                <th>approved date</th>
+                                <th>status</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($overtimes as $overtime)
+                            <tr>
+                                <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
+                                <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
+                                <td>
+                                    @php
+                                    echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
+                                    @endphp
+                                </td>
+                                <td>
+                                    @if($overtime->approved_by_id)
+                                    @if($overtime->role_id == ',1,')
+                                    @php
+                                    {{
+                                    $users = App\users::find($overtime->approved_by_id);
+                                    echo $users->uname;
+                                    }}
+                                    @endphp
+                                    @else
+                                    {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
+                                    @endif
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($overtime->supervisor)
+                                    {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                                    @else
+                                    Error
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($overtime->approved_date)
+                                    {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($overtime->status == '0')
+                                    Pending
+                                    @endif
+                                    @if($overtime->status == '1')
+                                    Approved
+                                    @endif
+                                    @if($overtime->status == '2')
+                                    Denied
+                                    @endif
+                                </td>
+                                <td>
+                                @if($overtime->status == '1' OR $overtime->status == '2')
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                @else
+                                @if( $overtime->employee_id != $_SESSION['sys_id'] )
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                <a style="margin: 3px" class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
+                                @endif
+                                @if($overtime->acc_mode == 'user' && $_SESSION['sys_id'] == $overtime->sender_id OR $overtime->employee_id == $_SESSION['sys_id'] OR $overtime->sender_id == $_SESSION['sys_id'])
+                                <a style="margin: 3px" class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
+                                <!-- Button trigger modal -->
+                                <button style="margin: 3px" class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                                @endif
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <h4>No data available.</h4>
+                @endif()
+            </div>
+            <div class="card-footer">
+                {{$overtimes->links()}}
+            </div>
+        </div>
+    </div>
+</div>
+@elseif(in_array($hr_officer_id,$roles))
+<div class="row no-gutters">
+    <ul class="nav nav-tabs" role="tablist" style="border-bottom: 0;">
+        <li class="nav-item tab-item">
+            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">My Overtime Requests</a>
+        </li>
+        <li class="nav-item tab-item">
+            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Employee Overtime Requests</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content" style="padding-top: 0;">
+    <div class="tab-pane active" id="tabs-1" role="tab-panel">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Overtime Request List</h3>
+                @if(in_array('overtime-add', $_SESSION['sys_permissions']))
+                <div class="card-tools">
+                    <a class="btn add-button btn-md" href="/hris/pages/time/overtime/create"><i class="fa fa-plus mr-1"></i> Request Overtime</a>
+                </div>
+                @endif
+            </div>
+            <div class="card-body">
+                @if(count($self) > 0)
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>date</th>
+                                <th>employee</th>
+                                <th>request date and time</th>
+                                <th>approved by</th>
+                                <th>supervisor</th>
+                                <th>approved date</th>
+                                <th>status</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($self as $s)
+                            <tr>
+                                <td>{{date("M d, Y - h:i:sa", strtotime($s->created_at))}}</td>
+                                <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
+                                <td>
+                                    @php
+                                    echo date('M d, Y', strtotime($s->ot_date)).' '.substr($s->ot_time_in, 0, 2) . ':' . substr($s->ot_time_in, 2).' - '.substr($s->ot_time_out, 0, 2) . ':' . substr($s->ot_time_out, 2);
+                                    @endphp
+                                </td>
+                                <td>
+                                    @if($s->approved_by_id)
+                                    @if($s->role_id == ',1,')
+                                    @php
+                                    {{
+                                    $users = App\users::find($s->approved_by_id);
+                                    echo $users->uname;
+                                    }}
+                                    @endphp
+                                    @else
+                                    {{$s->approved_by->firstname}} {{$s->approved_by->lastname}}
+                                    @endif
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
+                                <td>
+                                    {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
+                                </td>
+                                <td>
+                                    @if($s->approved_date)
+                                    {{date("M d, Y - h:i:sa", strtotime($s->approved_date))}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($s->status == '0')
+                                    Pending
+                                    @endif
+                                    @if($s->status == '1')
+                                    Approved
+                                    @endif
+                                    @if($s->status == '2')
+                                    Denied
+                                    @endif
+                                </td>
+                                <td>
+                                @if($s->status == '1' OR $s->status == '2')
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                @else
+                                @if( $s->employee_id != $_SESSION['sys_id'] )
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$s->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                <a style="margin: 3px" class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$s->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
+                                @endif
+                                @if($s->acc_mode == 'user' && $_SESSION['sys_id'] == $s->sender_id OR $s->employee_id == $_SESSION['sys_id'] OR $s->sender_id == $_SESSION['sys_id'])
+                                <a style="margin: 3px" class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/edit"><i class="fas fa-edit"></i></a>
+                                <!-- Button trigger modal -->
+                                <button style="margin: 3px" class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$s->id}}" data-name="Overtime request - {{$s->created_at}} from {{$s->employee->firstname}} {{$s->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                                @endif
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$s->id}}/show"><i class="fas fa-search"></i></a>
+                                @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <h4>No data available.</h4>
+                @endif()
+            </div>
+            <div class="card-footer">
+                {{$self->links()}}
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="tabs-2" role="tab-panel">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Overtime Request List</h3>
+                <div class="card-tools">
+                    <button class="btn add-button btn-md" data-toggle="modal" data-target="#export-modal"><i class="far fa-file-excel mr-1"></i> Download Excel File</button>
+                </div>
+            </div>
+            <div class="card-body">
+                @if(count($overtimes) > 0)
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>date</th>
+                                <th>employee</th>
+                                <th>request date and time</th>
+                                <th>approved by</th>
+                                <th>supervisor</th>
+                                <th>approved date</th>
+                                <th>status</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($overtimes as $overtime)
+                            <tr>
+                                <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
+                                <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
+                                <td>
+                                    @php
+                                    echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
+                                    @endphp
+                                </td>
+                                <td>
+                                    @if($overtime->approved_by_id)
+                                    @if($overtime->role_id == ',1,')
+                                    @php
+                                    {{
+                                    $users = App\users::find($overtime->approved_by_id);
+                                    echo $users->uname;
+                                    }}
+                                    @endphp
+                                    @else
+                                    {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
+                                    @endif
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($overtime->supervisor)
+                                    {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                                    @else
+                                    ERROR
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($overtime->approved_date)
+                                    {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($overtime->status == '0')
+                                    Pending
+                                    @endif
+                                    @if($overtime->status == '1')
+                                    Approved
+                                    @endif
+                                    @if($overtime->status == '2')
+                                    Denied
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($overtime->status == '1' OR $overtime->status == '2')
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                    @else
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <h4>No data available.</h4>
+                @endif()
+            </div>
+            <div class="card-footer">
+                {{$overtimes->links()}}
+            </div>
+        </div>
+    </div>
+</div>
+@else
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Overtime Request List</h3>
@@ -100,34 +534,20 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @endif
                         </td>
                         <td>
-                            <div class="row no-gutters" style="display: flex;">
-                                @if($overtime->status == '1' OR $overtime->status == '2')
-                                <div class="col-12">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
-                                </div>
-                                @else
-                                @if( $overtime->employee_id != $_SESSION['sys_id'] )
-                                <div style="padding: 4px;">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
-                                </div>
-                                <div style="padding: 4px;">
-                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
-                                </div>
-                                @endif
-                                @if($overtime->acc_mode == 'user' && $_SESSION['sys_id'] == $overtime->sender_id OR $overtime->employee_id == $_SESSION['sys_id'])
-                                <div style="padding: 4px">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
-                                </div>
-                                <div style="padding: 4px">
-                                    <!-- Button trigger modal -->
-                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
-                                </div>
-                                @endif
-                                <div style="padding: 4px">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
-                                </div>
-                                @endif
-                            </div>
+                            @if($overtime->status == '1' OR $overtime->status == '2')
+                            <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                            @else
+                            @if( $overtime->employee_id != $_SESSION['sys_id'] )
+                            <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
+                            <a style="margin: 3px" class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
+                            @endif
+                            @if($overtime->acc_mode == 'user' && $_SESSION['sys_id'] == $overtime->sender_id OR $overtime->employee_id == $_SESSION['sys_id'] OR $overtime->sender_id == $_SESSION['sys_id'])
+                            <a style="margin: 3px" class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
+                            <!-- Button trigger modal -->
+                            <button style="margin: 3px" class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                            @endif
+                            <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
@@ -142,6 +562,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
         {{$overtimes->links()}}
     </div>
 </div>
+@endif
 @else
 @if(in_array($supervisor_id, $role_ids))
 <div class="row no-gutters">
@@ -445,28 +866,18 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @endif
                         </td>
                         <td class="td-action" style="width: auto;">
-                            <div class="row no-gutters">
-                                @if($overtime->status == '1' OR $overtime->status == '2')
-                                <div class="col-12">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
-                                </div>
-                                @else
-                                <div class="col-4">
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
-                                </div>
-                                @if(in_array('overtime-edit', $_SESSION['sys_permissions']))
-                                <div class="col-4">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
-                                </div>
-                                @endif
-                                @if(in_array('overtime-delete', $_SESSION['sys_permissions']))
-                                <div class="col-4">
-                                    <!-- Button trigger modal -->
-                                    <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
-                                </div>
-                                @endif
-                                @endif
-                            </div>
+                            @if($overtime->status == '1' OR $overtime->status == '2')
+                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                            @else
+                            <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                            @if(in_array('overtime-edit', $_SESSION['sys_permissions']))
+                            <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
+                            @endif
+                            @if(in_array('overtime-delete', $_SESSION['sys_permissions']))
+                            <!-- Button trigger modal -->
+                            <button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                            @endif
+                            @endif
                         </td>
                     </tr>
                     @endforeach
@@ -532,66 +943,66 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                     $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
                     $roles = explode(',', $_SESSION['sys_role_ids']);
                     if ( $_SESSION['sys_role_ids'] == ',1,' ) {
-                        echo '<div class="form-group">
+                    echo '<div class="form-group">
                         <label for="employee_id">Employee: </label>
                         <span class="badge badge-danger">Required</span>
                         <select class="form-control select2 required" name="employee_id">';
-                        if ( count($employees) > 0 ) {
+                            if ( count($employees) > 0 ) {
                             echo '<option value="0">All</option>';
                             foreach( $employees as $employee ) {
-                                echo '<option value="'. $employee->id .'">'. $employee->firstname. ' '. $employee->lastname .'</option>';
+                            echo '<option value="'. $employee->id .'">'. $employee->firstname. ' '. $employee->lastname .'</option>';
                             }
-                        } else {
-                            echo '<option default disabled selected>--None--</option>';
-                        }
-                        echo '</select>
-                            </div>';
-                        echo 
-                        '
-                        <div class="form-group">
-                            <label for="type">Type: </label>
-                            <span class="badge badge-danger">Required</span>
-                            <select class="form-control select2 required" name="type">
-                                <option value="All">All</option>';
-                                foreach ( $types as $type ) {
-                                    echo '<option value="'. $type->name .'">'. $type->name .'</option>';
-                                }
-                        echo '</select>
-                        </div>
-                        ';
-                    } else {
-                        if (in_array($supervisor_id, $roles)) {
-                            $emp = App\hris_employee::find($_SESSION['sys_id']);
-                            $department_id = $emp->department_id;
-                            $employees = App\hris_employee::where('department_id', $department_id)->get();
-                            echo '<div class="form-group">
-                                <label for="employee_id">Employee: </label>
-                                <span class="badge badge-danger">Required</span>
-                                <select class="form-control select2 required" name="employee_id">';
-                            if ( count($employees) > 0 ) {
-                                echo '<option value="0">All</option>';
-                                foreach( $employees as $employee ) {
-                                    echo '<option value="'. $employee->id .'">'. $employee->firstname. ' '. $employee->lastname .'</option>';
-                                }
                             } else {
-                                echo '<option default disabled selected>--None--</option>';
+                            echo '<option default disabled selected>--None--</option>';
                             }
-                            echo '</select>
-                                </div>';
-                            echo 
-                            '
-                            <div class="form-group">
-                                <label for="type">Type: </label>
-                                <span class="badge badge-danger">Required</span>
-                                <select class="form-control select2 required" name="type">
-                                    <option value="All">All</option>';
-                                    foreach ( $types as $type ) {
-                                        echo '<option value="'. $type->name .'">'. $type->name .'</option>';
-                                    }
-                            echo '</select>
-                            </div>
-                            ';
-                        }
+                        echo '</select>
+                    </div>';
+                    echo
+                    '
+                    <div class="form-group">
+                        <label for="type">Type: </label>
+                        <span class="badge badge-danger">Required</span>
+                        <select class="form-control select2 required" name="type">
+                            <option value="All">All</option>';
+                            foreach ( $types as $type ) {
+                            echo '<option value="'. $type->name .'">'. $type->name .'</option>';
+                            }
+                        echo '</select>
+                    </div>
+                    ';
+                    } else {
+                    if (in_array($supervisor_id, $roles)) {
+                    $emp = App\hris_employee::find($_SESSION['sys_id']);
+                    $department_id = $emp->department_id;
+                    $employees = App\hris_employee::where('department_id', $department_id)->get();
+                    echo '<div class="form-group">
+                        <label for="employee_id">Employee: </label>
+                        <span class="badge badge-danger">Required</span>
+                        <select class="form-control select2 required" name="employee_id">';
+                            if ( count($employees) > 0 ) {
+                            echo '<option value="0">All</option>';
+                            foreach( $employees as $employee ) {
+                            echo '<option value="'. $employee->id .'">'. $employee->firstname. ' '. $employee->lastname .'</option>';
+                            }
+                            } else {
+                            echo '<option default disabled selected>--None--</option>';
+                            }
+                        echo '</select>
+                    </div>';
+                    echo
+                    '
+                    <div class="form-group">
+                        <label for="type">Type: </label>
+                        <span class="badge badge-danger">Required</span>
+                        <select class="form-control select2 required" name="type">
+                            <option value="All">All</option>';
+                            foreach ( $types as $type ) {
+                            echo '<option value="'. $type->name .'">'. $type->name .'</option>';
+                            }
+                        echo '</select>
+                    </div>
+                    ';
+                    }
                     }
                     @endphp
                     <div class="form-group">
