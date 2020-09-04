@@ -28,16 +28,17 @@ class OvertimeController extends Controller
         $id = $_SESSION['sys_id'];
         $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
         $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
+        $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
+        $supervisor_id = implode(' ', $supervisor_role_id[0]);
         $roles = explode(',', $_SESSION['sys_role_ids']);
         $employees = hris_employee::all();
         $types = hris_overtime_types::all();
         if ($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) ) {
             $overtimes = hris_overtime::paginate(10);
-            return view('pages.time.overtime.index', compact('overtimes', 'employees', 'types', 'hr_officer_id', 'roles'));
+            $self = hris_overtime::where('employee_id', $id)->paginate(10);
+            return view('pages.time.overtime.index', compact('overtimes', 'employees', 'types', 'hr_officer_id', 'roles', 'supervisor_id', 'self'));
         } else {
             $roles = roles::all();
-            $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
-            $supervisor_id = implode(' ', $supervisor_role_id[0]);
             $find = hris_employee::find($id);
             $role_ids = explode(',', $find->role_id);
 
