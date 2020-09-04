@@ -112,7 +112,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                 <div style="padding: 4px;">
                                     <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
                                 </div>
-                                @if($overtime->acc_mode == 'user' && $_SESSION['sys_id'] == $overtime->sender_id)
+                                @if($overtime->acc_mode == 'user' && $_SESSION['sys_id'] == $overtime->sender_id OR $overtime->employee_id == $_SESSION['sys_id'])
                                 <div style="padding: 4px">
                                     <a class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
                                 </div>
