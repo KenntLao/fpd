@@ -179,14 +179,16 @@ class OvertimeController extends Controller
         $categories = hris_overtime_categories::all();
         $employee_id = $overtime->employee_id;
         $employee = hris_employee::find($id);
-        $roles = roles::all();
+        $roles = explode(',', $_SESSION['sys_role_ids']);
         $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
         $supervisor_id = implode(' ', $supervisor_role_id[0]);
+        $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
+        $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
         $employee_supervisor = hris_employee::all()->where('role_id', ','.$supervisor_id.',')->where('department_id', $employee->department_id);
         if ( $id == $employee->supervisor ) {
             return redirect()->back();
         } else {
-            return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor','categories'));
+            return view('pages.time.overtime.edit', compact('overtime', 'id', 'employee', 'employee_supervisor','categories','hr_officer_id', 'roles'));
         }
 
     }
