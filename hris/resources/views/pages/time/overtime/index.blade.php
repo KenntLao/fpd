@@ -436,13 +436,20 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     @endif
                                 </td>
                                 <td>
-                                    @if($overtime->status == '1' OR $overtime->status == '2')
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
-                                    @else
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
-                                    <a class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
-                                    <a class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
-                                    @endif
+                                @if($overtime->status == '1' OR $overtime->status == '2')
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                @else
+                                @if( $overtime->employee_id != $_SESSION['sys_id'] )
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/1/{{$overtime->id}}/status" title="Approve request"><i class="fas fa-check-square"></i></a>
+                                <a style="margin: 3px" class="btn btn-warning btn-sm" href="/hris/pages/time/overtime/2/{{$overtime->id}}/status" title="Deny request"><i class="fas fa-times"></i></a>
+                                @endif
+                                @if($overtime->acc_mode == 'user' && $_SESSION['sys_id'] == $overtime->sender_id OR $overtime->employee_id == $_SESSION['sys_id'] OR $overtime->sender_id == $_SESSION['sys_id'])
+                                <a style="margin: 3px" class="btn btn-success btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/edit"><i class="fas fa-edit"></i></a>
+                                <!-- Button trigger modal -->
+                                <button style="margin: 3px" class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$overtime->id}}" data-name="Overtime request - {{$overtime->created_at}} from {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}"><i class="fa fa-trash"></i></button>
+                                @endif
+                                <a style="margin: 3px" class="btn btn-primary btn-sm" href="/hris/pages/time/overtime/{{$overtime->id}}/show"><i class="fas fa-search"></i></a>
+                                @endif
                                 </td>
                             </tr>
                             @endforeach
