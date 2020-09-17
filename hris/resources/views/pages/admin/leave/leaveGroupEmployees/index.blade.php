@@ -32,7 +32,7 @@
 	</div>
 	<div class="card-body">
 		@if(count($leaveGroupEmployees) > 0)
-		<table class="table table-hover table-bordered table-striped table-condensed">
+		<table class="table table-hover table-bordered table-striped table-condensed table-data">
 			<thead>
 				<tr>
 					<th>id</th>
@@ -49,7 +49,7 @@
 					<td>{{$leaveGroupEmployee->id}}</td>
 					<td>
 						@if($leaveGroupEmployee->employee)
-						{{$leaveGroupEmployee->employee->firstname}} {{$leaveGroupEmployee->employee->lastname}}
+						{{'['.$leaveGroupEmployee->employee->employee_number.'] '}}{{$leaveGroupEmployee->employee->firstname}} {{$leaveGroupEmployee->employee->lastname}}
 						@else
 						<span class="td-error">ERROR</span>
 						@endif
@@ -96,7 +96,7 @@
 			<div class="modal-header">
 				<h5 class="modal-title">Delete Confirmation</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -124,8 +124,8 @@
 @stop
 @section('js')
 <script>
-	$(document).ready(function(){
-		$('.delete-btn').on('click', function(){
+	$(document).ready(function() {
+		$('.delete-btn').on('click', function() {
 			var get = $('.add-button').attr('href');
 			var href = get.replace('create', 'delete');
 			var target = $(this).attr('data-target');
@@ -133,11 +133,20 @@
 			var id = target.replace('#modal-', '');
 			$('.modal').attr('id', modal_id);
 			$('.modal').attr('aria-labelledby', modal_id);
-			$('.form-horizontal').attr('action', href+'/'+id);
-			$('.form-horizontal').attr('id', 'form-'+id);
-			$('.modal-footer > button').attr('form', 'form-'+id);
+			$('.form-horizontal').attr('action', href + '/' + id);
+			$('.form-horizontal').attr('id', 'form-' + id);
+			$('.modal-footer > button').attr('form', 'form-' + id);
 			var name = $(this).attr('data-name');
-			$('.data-name').text('Are you sure you want to delete '+name+'?');
+			$('.data-name').text('Are you sure you want to delete ' + name + '?');
+		});
+
+		$(function() {
+			$('.table-data').DataTable({
+				"paging": false,
+				"lengthChange": false,
+				"searching": true,
+				"ordering": true,
+			});
 		});
 	});
 </script>

@@ -34,7 +34,13 @@ class LeaveGroupEmployeeController extends Controller
     public function store(hris_leave_group_employees $leaveGroupEmployee, Request $request)
     {
         if ($this->validatedData()) {
-            $leaveGroupEmployee = hris_leave_group_employees::create($this->validatedData());
+            $data = [];
+            $employee_ids = $request->employee_id;
+            foreach($employee_ids as $employee_id){
+                $insert_data = ['employee_id'=>$employee_id, 'leave_group_id'=>$request->leave_group_id];
+                array_push($data,$insert_data);
+            }
+            $leaveGroupEmployees = hris_leave_group_employees::insert($data);
             $id = $leaveGroupEmployee->id;
             $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully added!');
@@ -60,13 +66,19 @@ class LeaveGroupEmployeeController extends Controller
         $id = $leaveGroupEmployee->id;
         if ($this->validatedData()) {
             $string = 'App\hris_leave_group_employees';
-            $leaveGroupEmployee->employee_id = request('employee_id');
-            $leaveGroupEmployee->leave_group_id = request('leave_group_id');
+            $data = [];
+            $employee_ids = $request->employee_id;
+            foreach ($employee_ids as $employee_id) {
+                $leaveGroupEmployee->employee_id =  $employee_id;
+                $leaveGroupEmployee->leave_group_id = request('leave_group_id');
+                $leaveGroupEmployee->update();
+            }
+
             // GET CHANGES
             $changes = $leaveGroupEmployee->getDirty();
             // GET ORIGINAL DATA
             $this->function->getOldData($this->module,$string,$changes,$id);
-            $leaveGroupEmployee->update();
+            
             // GET CHANGES
             $changed = $leaveGroupEmployee->getChanges();
             // USE UPDATESYSTEMLOG FUNCTION
