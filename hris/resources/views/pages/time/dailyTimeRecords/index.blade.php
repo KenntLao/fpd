@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <h3 class="card-title">Total Hours: </h3>
+                        <h3 class="card-title">Total Hours: <span id="total_hours"></span></h3>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,10 @@
             url: "{{route('getDtr.fetch')}}",
             method: "GET",
             success: function(response) {
-                $('#dtr-table').html(response);
+                var response_arr = response.split(';;;');
+                $('#dtr-table').html(response_arr[0]);
+                $('#total_hours').html(response_arr[1]);
+                console.log(response_arr);
             }
         });
 

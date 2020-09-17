@@ -1732,6 +1732,19 @@ $permissions_arr = array(
 	),
 	array(
 		array(
+			'permission_code' => 'benefit-admin',
+			'permission_name' => array(
+				'Benefit Administration',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access benefit administration.',
+				''
+			)
+		),
+	),
+	array(
+		array(
 			'permission_code' => 'education-level',
 			'permission_name' => array(
 				'Education Level Management',

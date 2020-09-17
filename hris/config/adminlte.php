@@ -416,7 +416,7 @@ return [
                 [
                     'text' => 'Benefits Administration',
                     'icon' => 'fas fa-fw fa-bars',
-                    'can' => ['expense-category','payment-method','employee-expense'],
+                    'can' => ['benefit-admin','expense-category','payment-method','employee-expense'],
                     'submenu' => [
                         [
                             'text' => 'Expenses Categories',
@@ -600,7 +600,7 @@ return [
                     'icon'    => 'fas fa-fw fa-folder'
                 ], */
                 [
-                    'text' => 'Itinerary Request',
+                    'text' => 'Official Business Request',
                     'url'  => '/hris/pages/employees/itineraryRequests/index',
                     'icon'    => 'fas fa-fw fa-plane-departure',
                     'active' => ['/hris/pages/employees/itineraryRequests/create', '/hris/pages/employees/itineraryRequests/index', '/hris/pages/employees/itineraryRequests/*/edit', 'regex:@^content/[0-9]+$@'],

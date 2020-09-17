@@ -3,7 +3,7 @@
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-users "></i> Itinerary Request</h1>
+        <h1><i class="fas fa-fw fa-users "></i> Official Business Request</h1>
     </div>
 </div>
 @stop
@@ -28,9 +28,9 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
 @if( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) )
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Itinerary Request List</h3>
+        <h3 class="card-title">Official Business Requests</h3>
         <div class="card-tools">
-            <a class="btn add-button btn-md" href="/hris/pages/employees/itineraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Itinerary Request</a>
+            <a class="btn add-button btn-md" href="/hris/pages/employees/itineraryRequests/create"><i class="fa fa-plus mr-1"></i> Create Official Business Request</a>
         </div>
     </div>
     <div class="card-body">
@@ -475,7 +475,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
             <div class="modal-header">
                 <h5 class="modal-title">Delete Confirmation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -503,21 +503,21 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
 @stop
 @section('js')
 <script>
-$(document).ready(function() {
-$('.delete-btn').on('click', function() {
-var get = $('.add-button').attr('href');
-var href = get.replace('create', 'delete');
-var target = $(this).attr('data-target');
-var modal_id = target.replace('#', '');
-var id = target.replace('#modal-', '');
-$('.modal').attr('id', modal_id);
-$('.modal').attr('aria-labelledby', modal_id);
-$('.form-horizontal').attr('action', href + '/' + id);
-$('.form-horizontal').attr('id', 'form-' + id);
-$('.modal-footer > button').attr('form', 'form-' + id);
-var name = $(this).attr('data-name');
-$('.data-name').text('Are you sure you want to delete ' + name + '?');
-});
-});
+    $(document).ready(function() {
+        $('.delete-btn').on('click', function() {
+            var get = $('.add-button').attr('href');
+            var href = get.replace('create', 'delete');
+            var target = $(this).attr('data-target');
+            var modal_id = target.replace('#', '');
+            var id = target.replace('#modal-', '');
+            $('.modal').attr('id', modal_id);
+            $('.modal').attr('aria-labelledby', modal_id);
+            $('.form-horizontal').attr('action', href + '/' + id);
+            $('.form-horizontal').attr('id', 'form-' + id);
+            $('.modal-footer > button').attr('form', 'form-' + id);
+            var name = $(this).attr('data-name');
+            $('.data-name').text('Are you sure you want to delete ' + name + '?');
+        });
+    });
 </script>
 @stop

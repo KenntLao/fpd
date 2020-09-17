@@ -8,6 +8,7 @@ use App\hris_work_shift_management;
 use App\hris_daily_time_record;
 use App\hris_attendances;
 use App\hris_employee;
+use App\hris_leaves;
 use App\hris_overtime;
 
 class DailyTimeRecordController extends Controller
@@ -61,6 +62,8 @@ class DailyTimeRecordController extends Controller
         // get ASSIGN WORKSHIFTS
         $employee_assigned_workshifts = $this->getEmployeeWorkShift();
 
+        $total_hours = 0;
+        $result = '';
         // LOOP DAYS IN MONTH
         for ($day = 1; $day <= $last_day; $day++) {
 
@@ -187,7 +190,9 @@ class DailyTimeRecordController extends Controller
                 $emp_ot_remarks = $emp_ot_arr[0]['supervisor_remarks'];
             }
 
-            $result = '';
+
+
+            
 
             $attendance_date = date('Y M d', strtotime($date_code));
             $attendance_day = date('D', strtotime($date_code));
@@ -200,6 +205,18 @@ class DailyTimeRecordController extends Controller
                 $attendance_time_in = date('h:i:s', $day_attendance_time_in);
                 $attendance_time_out = date('h:i:s', $day_attendance_time_out);
             }
+            
+            $att_time_in = strtotime($attendance_time_in);
+            $att_time_out = strtotime($attendance_time_out);
+
+            $att_hours = abs($att_time_in - $att_time_out) / 3600;
+            
+            $ot_time_in = strtotime($emp_ot_time_in);
+            $ot_time_out = strtotime($emp_ot_time_out);
+
+            $ot_hours = abs($ot_time_in - $ot_time_out) / 3600;
+
+            $total_hours += $att_hours + $ot_hours;
 
             $result .= '<tr>
                             <td>' . date('Y M d', strtotime($date_code)) . '</td>
@@ -209,9 +226,15 @@ class DailyTimeRecordController extends Controller
                             <td>'. $emp_ot_time_in .'</td>
                             <td>'. $emp_ot_time_out .'</td>
                             <td>'. $emp_ot_remarks .'</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>';
-           echo $result . '<br>';
+
         }
+
+        $result .= ';;;'.$total_hours;
+        echo $result;
+        
     }
     
     /*public function getRenderedHours(){
