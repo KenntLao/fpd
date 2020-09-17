@@ -104,16 +104,47 @@ class WorkShiftAssignmentController extends Controller
                 $e = hris_employee::find($employee_id);
                 if ( $e->supervisor != NULL ) {
                     if ($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_role_ids) OR in_array($supervisor_id, $sys_role_ids)) {
-
-                        $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>1];
-                        array_push($data,$insert_data);
+                        if ( $_SESSION['sys_id'] == $e->id ) {
+                            $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>0];
+                            array_push($data,$insert_data);
+                            if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+                                // WORKSHIFT NOTIFICATION
+                                $sender = users::find($_SESSION['sys_id']);
+                                $employee_receiver = hris_employee::find($e->id);
+                                $employee_receiver->notify(new WorkShiftNotif($sender));
+                            } else {
+                                // WORKSHIFT NOTIFICATION
+                                $sender = hris_employee::find($_SESSION['sys_id']);
+                                $employee_receiver = hris_employee::find($e->id);
+                                $employee_receiver->notify(new WorkShiftNotif($sender));
+                            }
+                        } else {
+                            $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>1];
+                            array_push($data,$insert_data);
+                            if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+                                // WORKSHIFT NOTIFICATION
+                                $sender = users::find($_SESSION['sys_id']);
+                                $employee_receiver = hris_employee::find($e->id);
+                                $employee_receiver->notify(new WorkShiftNotif($sender));
+                            } else {
+                                // WORKSHIFT NOTIFICATION
+                                $sender = hris_employee::find($_SESSION['sys_id']);
+                                $employee_receiver = hris_employee::find($e->id);
+                                $employee_receiver->notify(new WorkShiftNotif($sender));
+                            }
+                        }
 
                     } else {
 
                         $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>0];
                         array_push($data,$insert_data);
+                        // WORKSHIFT NOTIFICATION
+                        $sender = hris_employee::find($_SESSION['sys_id']);
+                        $employee_receiver = hris_employee::find($e->supervisor);
+                        $employee_receiver->notify(new WorkShiftNotif($sender));
 
                     }
+
                 }
             }
             if ( $data != NULL ) {
@@ -253,14 +284,26 @@ class WorkShiftAssignmentController extends Controller
     public function destroy(hris_workshift_assignment $workshift_assignment)
     {
         $id = $_SESSION['sys_id'];
-        $employee = hris_employee::find($id);
-        if (Hash::check(request('upass'), $employee->password)) {
-            $workshift_assignment->delete();
-            $id = $workshift_assignment->id;
-            $this->function->deleteSystemLog($this->module, $id);
-            return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');
+        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $workshift_assignment->delete();
+                $id = $workshift_assignment->id;
+                $this->function->deleteSystemLog($this->module, $id);
+                return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         } else {
-            return back()->withErrors(['Password does not match.']);
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('upass'), $employee->password) ) {
+                $workshift_assignment->delete();
+                $id = $workshift_assignment->id;
+                $this->function->deleteSystemLog($this->module, $id);
+                return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
     
