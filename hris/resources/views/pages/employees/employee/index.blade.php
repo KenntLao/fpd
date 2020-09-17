@@ -80,7 +80,7 @@
                             @if($employee->employeeProject)
                             @php
                             $emp_project = App\hris_projects::where('id',$employee->employeeProject->id)->first();
-                            echo $emp_project->name;
+                            echo $emp_project['name'];
                             @endphp
                             @endif
                         </td>
