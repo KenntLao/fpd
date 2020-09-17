@@ -666,7 +666,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::get('/hris/pages/time/workshiftAssignment/create', 'WorkShiftAssignmentController@create');
     Route::post('/hris/pages/time/workshiftAssignment', 'WorkShiftAssignmentController@store');
     /* UPDATE */
-    Route::get('/hris/pages/time/workshiftAssignment/{workshift_assignment}/edit', 'WorkShiftAssignmentController@edit');
+    Route::get('/hris/pages/time/workshiftAssignment/{workshift_assignment}/edit', 'WorkShiftAssignmentController@edit')->name('editWs');
     Route::patch('/hris/pages/time/workshiftAssignment/update/{workshift_assignment}', 'WorkShiftAssignmentController@update');
     /* DELETE */
     Route::delete('/hris/pages/time/workshiftAssignment/delete/{workshift_assignment}', 'WorkShiftAssignmentController@destroy');
