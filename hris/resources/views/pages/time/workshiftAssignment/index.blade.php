@@ -20,7 +20,7 @@
     <p><i class="fas fa-fw fa-exclamation-circle"></i>{{$errors->first()}}</p>
 </div>
 @endif
-@if($_SESSION['sys_role_ids'] == ',1,')
+@if($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_role_ids))
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Work Shift Assignments</h3>
