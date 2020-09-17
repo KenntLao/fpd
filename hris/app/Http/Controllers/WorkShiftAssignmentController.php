@@ -97,6 +97,7 @@ class WorkShiftAssignmentController extends Controller
         // IF SUPERADMIN
         if ( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_role_ids) ) {
             $employee = hris_employee::find($request->employee_id);
+            // IF EMPLOYEE HAS SUPERVISOR
             if ( $employee->supervisor != NULL ) {
                 if ($this->validatedData()) {
                     $workshift_assignment->employee_id = $request->employee_id;
@@ -121,6 +122,7 @@ class WorkShiftAssignmentController extends Controller
                     return back()->withErrors($this->validatedData());
                 }
             } else {
+                // IF EMPLOYEE HAS NO SUPERVISOR
                 return back()->withErrrors(['Employee supervisor is required.']);
             }
         } else {
