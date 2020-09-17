@@ -123,7 +123,7 @@ class WorkShiftAssignmentController extends Controller
                 }
             } else {
                 // IF EMPLOYEE HAS NO SUPERVISOR
-                return back()->withErrrors(['Employee supervisor is required.']);
+                return back()->withErrors(['Employee supervisor is required.']);
             }
         } else {
             // IF NOT SUPERADMIN
@@ -149,7 +149,7 @@ class WorkShiftAssignmentController extends Controller
                             $employee_receiver->notify(new WorkShiftNotif($sender));
                             return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
                         } else {
-                            return back()->withErrrors(['Employee supervisor is required.']);
+                            return back()->withErrors(['Employee supervisor is required.']);
                         }
                     } else {
                         // IF REQUEST IS FOR SUBORDINATES
@@ -167,26 +167,30 @@ class WorkShiftAssignmentController extends Controller
                         return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
                     }
                 } else {
-                    return back()->withError($this->validatedData());
+                    return back()->withErrors($this->validatedData());
                 }
             } else {
                 // IF NOT SUPERVISOR
                 // EMPLOYEE REQUEST
-                if ($this->validatedData()) {
-                    $workshift_assignment->employee_id = $request->employee_id;
-                    $workshift_assignment->workshift_id = $request->workshift_id;
-                    $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
-                    $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
-                    $workshift_assignment->status = 0;
-                    $workshift_assignment->save();
+                if ( $employee->supervisor != NULL ) {
+                    if ($this->validatedData()) {
+                        $workshift_assignment->employee_id = $request->employee_id;
+                        $workshift_assignment->workshift_id = $request->workshift_id;
+                        $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
+                        $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
+                        $workshift_assignment->status = 0;
+                        $workshift_assignment->save();
 
-                    // WORKSHIFT NOTIFICATION
-                    $sender = hris_employee::find($_SESSION['sys_id']);
-                    $employee_receiver = hris_employee::find($employee->supervisor);
-                    $employee_receiver->notify(new WorkShiftNotif($sender));
-                    return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
+                        // WORKSHIFT NOTIFICATION
+                        $sender = hris_employee::find($_SESSION['sys_id']);
+                        $employee_receiver = hris_employee::find($employee->supervisor);
+                        $employee_receiver->notify(new WorkShiftNotif($sender));
+                        return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
+                    } else {
+                        return back()->withError($this->validatedData());
+                    }
                 } else {
-                    return back()->withError($this->validatedData());
+                    return back()->withErrors(['Employee supervisor is required.']);
                 }
             }
         }
@@ -229,6 +233,8 @@ class WorkShiftAssignmentController extends Controller
     }
     public function status(hris_workshift_assignment $workshift_assignment, $status) 
     {
+        $superadmin_role_id = roles::where('role_name', 'super admin')->get('id')->toArray();
+        $superadmin_id = implode(' ', $superadmin_role_id[0]);
         // SUPERVISOR ROLE ID
         $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
         $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
@@ -236,13 +242,11 @@ class WorkShiftAssignmentController extends Controller
         $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
         $supervisor_id = implode(' ', $supervisor_role_id[0]);
         // SUPERADMIN HR OFFICER AND SUPERVISOR ROLE ID ARRAY
-        $access_roles = array('1',$hr_officer_id,$supervisor_id);
+        $access_roles = array($superadmin_id,$hr_officer_id,$supervisor_id);
         $sys_role_ids = explode(',', $_SESSION['sys_role_ids']);
 
         if ( array_intersect($sys_role_ids, $access_roles) ) {
-            if ( $workshift_assignment->employee_id == $_SESSION['sys_id'] ) {
-                return back()->withErrors(['You do not have access in this page.']);
-            } else {
+            if ( $_SESSION['sys_role_ids'] == ',1,' ) {
                 $workshift_assignment->status = $status;
                 $workshift_assignment->update();
                 if ( $status == 1 ) {
@@ -251,6 +255,19 @@ class WorkShiftAssignmentController extends Controller
                     $msg = 'Work shift denied.';
                 }
                 return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', $msg);
+            } else {
+                if ( $workshift_assignment->employee_id == $_SESSION['sys_id'] ) {
+                    return back()->withErrors(['You do not have access in this page.']);
+                } else {
+                    $workshift_assignment->status = $status;
+                    $workshift_assignment->update();
+                    if ( $status == 1 ) {
+                        $msg = 'Work shift approved.';
+                    } else {
+                        $msg = 'Work shift denied.';
+                    }
+                    return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', $msg);
+                }
             }
         } else {
             return back()->withErrors(['You do not have access in this page.']);
