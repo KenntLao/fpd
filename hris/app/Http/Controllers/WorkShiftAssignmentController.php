@@ -107,17 +107,31 @@ class WorkShiftAssignmentController extends Controller
                         if ( $_SESSION['sys_id'] == $e->id ) {
                             $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>0];
                             array_push($data,$insert_data);
-                            // WORKSHIFT NOTIFICATION
-                            $sender = hris_employee::find($_SESSION['sys_id']);
-                            $employee_receiver = hris_employee::find($e->supervisor);
-                            $employee_receiver->notify(new WorkShiftNotif($sender));
+                            if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+                                // WORKSHIFT NOTIFICATION
+                                $sender = users::find($_SESSION['sys_id']);
+                                $employee_receiver = hris_employee::find($e->id);
+                                $employee_receiver->notify(new WorkShiftNotif($sender));
+                            } else {
+                                // WORKSHIFT NOTIFICATION
+                                $sender = hris_employee::find($_SESSION['sys_id']);
+                                $employee_receiver = hris_employee::find($e->id);
+                                $employee_receiver->notify(new WorkShiftNotif($sender));
+                            }
                         } else {
                             $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>1];
                             array_push($data,$insert_data);
-                            // WORKSHIFT NOTIFICATION
-                            $sender = hris_employee::find($_SESSION['sys_id']);
-                            $employee_receiver = hris_employee::find($e->id);
-                            $employee_receiver->notify(new WorkShiftNotif($sender));
+                            if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+                                // WORKSHIFT NOTIFICATION
+                                $sender = users::find($_SESSION['sys_id']);
+                                $employee_receiver = hris_employee::find($e->id);
+                                $employee_receiver->notify(new WorkShiftNotif($sender));
+                            } else {
+                                // WORKSHIFT NOTIFICATION
+                                $sender = hris_employee::find($_SESSION['sys_id']);
+                                $employee_receiver = hris_employee::find($e->id);
+                                $employee_receiver->notify(new WorkShiftNotif($sender));
+                            }
                         }
 
                     } else {
