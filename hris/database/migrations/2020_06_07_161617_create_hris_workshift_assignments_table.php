@@ -19,7 +19,7 @@ class CreateHrisWorkshiftAssignmentsTable extends Migration
             $table->bigInteger('workshift_id');
             $table->string('date_from');
             $table->string('date_to');
-            $table->integer('status')->default('0');
+            $table->integer('status')->default('0')->nullable();
             $table->timestamps();
         });
     }

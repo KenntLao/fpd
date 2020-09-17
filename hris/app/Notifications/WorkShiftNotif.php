@@ -43,7 +43,7 @@ class WorkShiftNotif extends Notification
     {
         return [
             'employee_id' => $this->employee->id,
-            'notif_message' => $this->employee->firstname . ' ' . $this->employee->lastname . ' Assigned you to a new Work shift!',
+            'notif_message' => $this->employee->firstname . ' ' . $this->employee->lastname . ' Assigned a new Work shift!',
         ];
     }
 
