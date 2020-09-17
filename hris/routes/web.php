@@ -670,6 +670,8 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::patch('/hris/pages/time/workshiftAssignment/update/{workshift_assignment}', 'WorkShiftAssignmentController@update');
     /* DELETE */
     Route::delete('/hris/pages/time/workshiftAssignment/delete/{workshift_assignment}', 'WorkShiftAssignmentController@destroy');
+    /* APPROVE OR DENY */
+    Route::get('/hris/pages/time/workshiftAssignment/{workshift_assignment}/{status}/status', 'WorkShiftAssignmentController@status');
 
     /* ATTENDANCES PAGE */
     Route::get('/hris/pages/time/attendances/index', 'AttendanceController@index');
