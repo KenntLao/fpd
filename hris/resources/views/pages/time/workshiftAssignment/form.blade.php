@@ -4,15 +4,14 @@
 		<div class="form-group">
 			<label class="mr-2" for="employee_name">Select Employee</label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="employee_id" required>
-				@if(isset($workshift_assignment->employee->id))
-				<option selected value="{{$workshift_assignment->employee->id}}">{{$workshift_assignment->employee->firstname}} {{$workshift_assignment->employee->lastname}}</option>
-				@else
-				<option selected default disabled>-- select one --</option>
-				@endif
-				@foreach($employees as $emp_data)
-				<option value="{{$emp_data->id}}">{{$emp_data->firstname}} {{$emp_data->lastname}}</option>
+			<select class="form-control required select2 select-employee" name="employee_id[]" multiple="multiple" required>
+				@if(count($employees) > 0)
+				@foreach($employees as $employee)
+				<option value="{{$employee->id}}" {{ $workshift_assignment->employee_id == $employee->id  ? 'selected' : '' }}>{{'['.$employee->employee_number.'] '}}{{$employee->firstname}} {{$employee->lastname}}</option>
 				@endforeach
+				@else
+				<option selected default disabled>-- None --</option>
+				@endif
 			</select>
 		</div>
 	</div>
@@ -21,16 +20,14 @@
 			<label class="mr-2" for="employee_name">Select Work Shift</label>
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required select2" name="workshift_id" required>
-				@if(isset($workshift_assignment->workshift->id))
-				<option selected value="{{$workshift_assignment->workshift->id}}">{{$workshift_assignment->workshift->workshift_name}}</option>
+				@if(count($work_shift) > 0)
+				<option selected default disabled>-- None --</option>
+				@foreach($work_shift as $shift)
+				<option value="{{$shift->id}}" {{ $workshift_assignment->workshift_id == $shift->id  ? 'selected' : '' }}>{{$shift->workshift_name}}</option>
+				@endforeach
 				@else
-				<option selected default disabled>-- select one --</option>
+				<option selected default disabled>-- None --</option>
 				@endif
-				@forelse($work_shift as $shift)
-				<option value="{{$shift->id}}">{{$shift->workshift_name}}</option>
-				@empty
-				<p>No available Work Shift</p>
-				@endforelse
 			</select>
 		</div>
 	</div>
