@@ -37,7 +37,7 @@
     <div class="card-body">
         @if(count($employees) > 0)
         <div class="table-responsive">
-            <table class="table table-hover table-bordered table-striped table-condensed">
+            <table class="table table-hover table-bordered table-striped table-condensed table-data">
                 <!-- <a href="/hris/pages/employees/employee/download">dl</a> -->
                 <thead>
                     <tr>
@@ -67,9 +67,9 @@
                         <td>
                             @php
                             if($employee->department){
-                                $employee_dept = $employee->department->name;
+                            $employee_dept = $employee->department->name;
                             } else {
-                                $employee_dept = "N/A";
+                            $employee_dept = "N/A";
                             }
 
                             echo $employee_dept;
@@ -165,6 +165,14 @@
     function thisFileUpload() {
         document.getElementById("file").click();
     };
+    $(function() {
+        $('.table-data').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+        });
+    });
 
     $(document).ready(function() {
         $('.delete-btn').on('click', function() {
