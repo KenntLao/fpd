@@ -4,7 +4,11 @@
 		<div class="form-group">
 			<label class="mr-2" for="employee_name">Select Employee</label>
 			<span class="badge badge-danger">Required</span>
+			@if(\Route::current()->getName() == 'editWs')
+			<select class="form-control required select2 select-employee" name="employee_id" required>
+			@else
 			<select class="form-control required select2 select-employee" name="employee_id[]" multiple="multiple" required>
+			@endif
 				@if(count($employees) > 0)
 				@foreach($employees as $employee)
 				<option value="{{$employee->id}}" {{ $workshift_assignment->employee_id == $employee->id  ? 'selected' : '' }}>{{'['.$employee->employee_number.'] '}}{{$employee->firstname}} {{$employee->lastname}}</option>

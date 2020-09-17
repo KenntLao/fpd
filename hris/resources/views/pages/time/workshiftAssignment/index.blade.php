@@ -20,7 +20,7 @@
     <p><i class="fas fa-fw fa-exclamation-circle"></i>{{$errors->first()}}</p>
 </div>
 @endif
-@if($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_role_ids))
+@if($_SESSION['sys_role_ids'] == ',1,')
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Work Shift Assignments</h3>
@@ -87,7 +87,7 @@
     </div>
 </div>
 @else
-@if(in_array($supervisor_id, $sys_role_ids))
+@if(in_array($supervisor_id, $sys_role_ids) OR in_array($hr_officer_id, $sys_role_ids))
 <div class="row no-gutters">
     <ul class="nav nav-tabs" role="tablist" style="border-bottom: 0;">
         <li class="nav-item tab-item">

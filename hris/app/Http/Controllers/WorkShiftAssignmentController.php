@@ -30,16 +30,23 @@ class WorkShiftAssignmentController extends Controller
         $sys_role_ids = explode(',', $_SESSION['sys_role_ids']);
         // CHECK IF SUPERADMIN OR NOT
         // IF SUPERADMIN
-        if ( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_role_ids) ) {
+        if ( $_SESSION['sys_role_ids'] == ',1,' ) {
             $workshift_assignment = hris_workshift_assignment::paginate(10);
             return view('pages.time.workshiftAssignment.index', compact('workshift_assignment', 'hr_officer_id', 'sys_role_ids'));
         } else {
             // CHECK IF SUPERVISOR OR NOT
-            // IF SUPERVISOR
-            if ( in_array($supervisor_id, $sys_role_ids) ) {
-                $subordinate = hris_employee::where('supervisor', $_SESSION['sys_id'])->get('id');
-                foreach ($subordinate as $s) {
-                    $subordinate_id[] = $s->id;
+            // IF SUPERVISOR AND HR OFFICER
+            if ( in_array($supervisor_id, $sys_role_ids) OR in_array($hr_officer_id, $sys_role_ids) ) {
+                if (in_array($hr_officer_id, $sys_role_ids)) {
+                    $subordinate = hris_employee::all();
+                    foreach ($subordinate as $s) {
+                        $subordinate_id[] = $s->id;
+                    }
+                } else {
+                    $subordinate = hris_employee::where('supervisor', $_SESSION['sys_id'])->get('id');
+                    foreach ($subordinate as $s) {
+                        $subordinate_id[] = $s->id;
+                    }
                 }
                 $self = hris_workshift_assignment::where('employee_id', $_SESSION['sys_id'])->paginate(10);
                 $workshift_assignment = hris_workshift_assignment::whereIn('employee_id', $subordinate_id)->paginate(10);
@@ -60,21 +67,28 @@ class WorkShiftAssignmentController extends Controller
         $sys_role_ids = explode(',', $_SESSION['sys_role_ids']);
         // CHECK IF SUPERADMIN OR NOT
         // IF SUPERADMIN
-        if ( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_role_ids) ) {
+        if ( $_SESSION['sys_role_ids'] == ',1,') {
             $employees = hris_employee::where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
             $work_shift = hris_work_shift_management::all();
             return view('pages.time.workshiftAssignment.create', compact('workshift_assignment', 'employees', 'work_shift'));
         } else {
             // IF NOT SUPERADMIN CHECK IF SUPERVISOR OR NOT
             // IF SUPERVISOR
-            if ( in_array($supervisor_id, $sys_role_ids) ) {
+            if ( in_array($supervisor_id, $sys_role_ids) OR in_array($hr_officer_id, $sys_role_ids) ) {
                 $sys_id = hris_employee::find($_SESSION['sys_id']);
                 if ( $sys_id->supervisor != NULL ) {
                     $employees_id[] = $_SESSION['sys_id'];
                 }
-                $subordinates = hris_employee::where('supervisor', $_SESSION['sys_id'])->get();
-                foreach ($subordinates as $s) {
-                    $employees_id[] = $s->id;
+                if ( in_array($hr_officer_id, $sys_role_ids) ) {
+                    $subordinates = hris_employee::where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
+                    foreach ($subordinates as $s) {
+                        $employees_id[] = $s->id;
+                    }
+                } else {
+                    $subordinates = hris_employee::where('supervisor', $_SESSION['sys_id'])->get();
+                    foreach ($subordinates as $s) {
+                        $employees_id[] = $s->id;
+                    }
                 }
                 $employees = hris_employee::whereIn('id', $employees_id)->get();
                 $work_shift = hris_work_shift_management::all();
@@ -168,21 +182,28 @@ class WorkShiftAssignmentController extends Controller
             $sys_role_ids = explode(',', $_SESSION['sys_role_ids']);
             // CHECK IF SUPERADMIN OR NOT
             // IF SUPERADMIN
-            if ( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_role_ids) ) {
+            if ( $_SESSION['sys_role_ids'] == ',1,') {
                 $employees = hris_employee::where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
                 $work_shift = hris_work_shift_management::all();
-                //return view('pages.time.workshiftAssignment.edit', compact('workshift_assignment', 'employees', 'work_shift'));
+                return view('pages.time.workshiftAssignment.edit', compact('workshift_assignment', 'employees', 'work_shift'));
             } else {
                 // IF NOT SUPERADMIN CHECK IF SUPERVISOR OR NOT
                 // IF SUPERVISOR
-                if ( in_array($supervisor_id, $sys_role_ids) ) {
+                if ( in_array($supervisor_id, $sys_role_ids) OR in_array($hr_officer_id, $sys_role_ids) ) {
                     $sys_id = hris_employee::find($_SESSION['sys_id']);
                     if ( $sys_id->supervisor != NULL ) {
                         $employees_id[] = $_SESSION['sys_id'];
                     }
-                    $subordinates = hris_employee::where('supervisor', $_SESSION['sys_id'])->get();
-                    foreach ($subordinates as $s) {
-                        $employees_id[] = $s->id;
+                    if ( in_array($hr_officer_id, $sys_role_ids) ) {
+                        $subordinates = hris_employee::where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
+                        foreach ($subordinates as $s) {
+                            $employees_id[] = $s->id;
+                        }
+                    } else {
+                        $subordinates = hris_employee::where('supervisor', $_SESSION['sys_id'])->get();
+                        foreach ($subordinates as $s) {
+                            $employees_id[] = $s->id;
+                        }
                     }
                     $employees = hris_employee::whereIn('id', $employees_id)->get();
                     $work_shift = hris_work_shift_management::all();
