@@ -36,7 +36,7 @@
         </div> -->
         <div class="table-responsive">
 
-            <table class="table table-hover table-bordered table-striped table-condensed">
+            <table class="table table-hover table-bordered table-striped table-condensed table-data">
                 <thead>
                     <tr>
                         <th>employee</th>
@@ -53,17 +53,17 @@
                         <td>{{$attendance->firstname.' '.$attendance->lastname}}</td>
                         <td>
                             @if($attendance->time_in)
-                                {{date("Y-m-d h:i:s", $attendance->time_in)}}
+                            {{date("Y-m-d h:i:s", $attendance->time_in)}}
                             @else
-                                --
+                            --
                             @endif
-                            
+
                         </td>
                         <td>
                             @if($attendance->time_out)
-                                {{date("Y-m-d h:i:s", $attendance->time_out)}}
+                            {{date("Y-m-d h:i:s", $attendance->time_out)}}
                             @else
-                                --
+                            --
                             @endif
                         </td>
                         <td>
@@ -121,6 +121,14 @@
 @stop
 @section('js')
 <script>
+    $(function() {
+        $('.table-data').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+        });
+    });
     $('.show-snap').on("click", function() {
         var emp_name = $(this).attr("data-name");
         var time_in_snap = $(this).attr("data-time-in-snap");
