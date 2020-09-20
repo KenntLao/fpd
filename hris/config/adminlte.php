@@ -918,7 +918,7 @@ return [
                 ],
             ]
         ], */
-        [
+        /*[
             'header' => 'FINANCE MANAGEMENT',
         ],
         [
@@ -957,7 +957,7 @@ return [
                     'url' => '#'
                 ],
             ]
-        ],
+        ], */
         [
             'header' => 'USER REPORTS',
         ],
