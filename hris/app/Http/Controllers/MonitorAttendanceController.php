@@ -20,5 +20,9 @@ class MonitorAttendanceController extends Controller
         }
         
     }
+    public function show(hris_employee $employee){
+        $emp_attendances = hris_attendances::where('employee_id',$employee->id)->leftJoin('hris_employees', 'hris_attendances.employee_id', '=', 'hris_employees.id')->orderBy('hris_attendances.created_at', 'desc')->paginate(10);
+        return view('pages.employees.monitorAttendance.show', compact('emp_attendances'));
+    }
     
 }

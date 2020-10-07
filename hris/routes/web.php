@@ -439,6 +439,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     // MONITOR ATTENDANCE
     Route::get('/hris/pages/employees/monitorAttendance/index', 'MonitorAttendanceController@index');
     Route::get('/hris/pages/employees/monitorAttendance/', 'MonitorAttendanceController@search')->name('monitor_attendance.search');
+    Route::get('/hris/pages/employees/monitorAttendance/show/{employee}', 'MonitorAttendanceController@show');
     
     // GET AJAX DATA FOR SUPERVISOR
     Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
@@ -834,6 +835,14 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::get('/hris/pages/training/coordinated/index', 'EmployeeTrainingSessionController@coordinated');
     Route::get('/hris/pages/training/coordinated/{employeeTrainingSession}/show', 'EmployeeTrainingSessionController@showCoordinated');
     Route::get('/hris/pages/training/coordinated/download/{employeeTrainingSession}', 'EmployeeTrainingSessionController@coordinatedDownload');
+
+
+    /* DOCUMENTS */
+    Route::get('/hris/pages/documents/hrDocuments/index', 'HrDocumentController@index');
+    Route::get('/hris/pages/documents/hrDocuments/create', 'HrDocumentController@create');
+    Route::post('/hris/pages/documents/hrDocuments/', 'HrDocumentController@store');
+    Route::get('/hris/pages/documents/hrDocuments/download/{document}', 'HrDocumentController@download');
+    Route::delete('/hris/pages/documents/hrDocuments/delete/{document}', 'HrDocumentController@destroy');
 
     // STAFF DIRECTORY
     Route::get('/hris/pages/company/staffDirectory/index', 'StaffDirectoryController@index');

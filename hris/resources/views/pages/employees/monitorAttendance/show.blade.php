@@ -25,7 +25,7 @@
         <h3 class="card-title">Monitor Attendance</h3>
     </div>
     <div class="card-body">
-        @if(count($attendances) > 0)
+        @if(count($emp_attendances) > 0)
         <!--<div class="row">
             <div class="col-md-8"></div>
             <div class="col-md-4">
@@ -39,18 +39,17 @@
             <table class="table table-hover table-bordered table-striped table-condensed table-data">
                 <thead>
                     <tr>
-                        <th>employee</th>
+                        <th>Full Name</th>
                         <th>Time In</th>
                         <th>Time Out</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
 
                 </thead>
                 <tbody>
-                    @foreach($attendances as $attendance)
+                    @foreach($emp_attendances as $attendance)
                     <tr>
-                        <td><a href="/hris/pages/employees/monitorAttendance/show/{{$attendance->id}}">{{$attendance->firstname.' '.$attendance->lastname}}</a></td>
+                        <td>{{$attendance->firstname.' '.$attendance->lastname}}</td>
                         <td>
                             @if($attendance->time_in)
                             {{date("Y-m-d h:i:s", $attendance->time_in)}}
@@ -64,13 +63,6 @@
                             {{date("Y-m-d h:i:s", $attendance->time_out)}}
                             @else
                             --
-                            @endif
-                        </td>
-                        <td>
-                            @if($attendance->status == 1)
-                            <span class="badge badge-success p-1">Clocked in</span>
-                            @else
-                            <span class="badge badge-secondary p-1">Clocked out</span>
                             @endif
                         </td>
                         <td><a class="show-snap btn btn-warning btn-xs" data-name="{{$attendance->firstname.' '.$attendance->lastname}}" data-time-in-snap="{{$attendance->time_in_photo}}" data-time-out-snap="{{$attendance->time_out_photo}}" data-toggle="modal" data-target="#snapshotModal-{{$attendance->id}}" title="Show Snapshots"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
@@ -111,7 +103,7 @@
         @endif()
     </div>
     <div class="card-footer">
-        {{$attendances->links()}}
+        {{$emp_attendances->links()}}
     </div>
 </div>
 

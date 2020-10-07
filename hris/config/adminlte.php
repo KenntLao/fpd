@@ -829,7 +829,7 @@ return [
                 [
                     'text' => 'HR Forms',
                     'icon' => 'fas fa-fw fa-file-word',
-                    'url' => '#'
+                    'url' => '/hris/pages/documents/hrDocuments/index'
                 ],
             ]
         ],
