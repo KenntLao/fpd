@@ -44,32 +44,62 @@
         <h5>personal information</h5>
     </div>
     <div class="col-12 section-info">
-        <div class="row no-gutters">
+        <div class="row">
             <div class="col-12 col-md-3">
                 <label>PAGIBIG</label>
-                <p>{{$id->sss}}</p>
+                <p>{{$id->pagibig}}</p>
             </div>
             <div class="col-12 col-md-3">
-                <label>Date of Birth</label>
-                <p>{{date("M d, Y", strtotime($id->birthday))}}</p>
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <div class="input">
+                        <p class="placeholder">Enter date of birth</p>
+                        <input class="form-control" type="date" name="birthday" value="{{ old('birthday') ?? $id->birthday }}">
+                    </div>
+                </div>
             </div>
             <div class="col-12 col-md-3">
-                <label>Gender</label>
-                <p>{{$id->gender}}</p>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="input">
+                        <select class="form-control  select2" name="gender">
+                            <option disabled default selected {{ $id->gender == NULL ? 'selected' : '' }}>--select one--</option>
+                            <option value="Male" {{ $id->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                            <option value="Female"{{ $id->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="col-12 col-md-3">
-                <label>Nationality</label>
-                <p>{{$id->nationality}}</p>
+                <div class="form-group">
+                    <label>Nationality</label>
+                    <div class="input">
+                        <p class="placeholder">Enter nationality</p>
+                        <input class="form-control" type="text" name="nationality" value="{{ old('nationality') ?? $id->nationality }}">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row no-gutters">
+        <div class="row">
             <div class="col-12 col-md-3">
-                <label>Marital Status</label>
-                <p>{{$id->marital_status}}</p>
+                <div class="form-group">
+                    <label>Marital Status</label>
+                    <div class="input">
+                        <select class="form-control  select2" name="marital_status">
+                            <option disabled default selected {{ $id->marital_status == NULL ? 'selected' : '' }}>--select one--</option>
+                            <option value="Single" {{ $id->marital_status == 'Single' ? 'selected' : '' }}>Single</option>
+                            <option value="Married" {{ $id->marital_status == 'Married' ? 'selected' : '' }}>Married</option>
+                            <option value="Widower" {{ $id->marital_status == 'Widower' ? 'selected' : '' }}>Widower</option>
+                            <option value="Divorced" {{ $id->marital_status == 'Divorced' ? 'selected' : '' }}>Divorced</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="col-12 col-md-3">
-                <label>Joined Date</label>
-                <p>{{date("M d, Y", strtotime($id->joined_date))}}</p>
+                <div class="form-group">
+                    <label>Joined date</label>
+                    <p>{{date("M d, Y", strtotime($id->joined_date))}}</p>
+                </div>
             </div>
         </div>
     </div>

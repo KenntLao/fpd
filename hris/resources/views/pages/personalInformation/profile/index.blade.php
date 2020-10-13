@@ -65,7 +65,7 @@
 				<div class="row no-gutters">
 					<div class="col-12 col-md-3">
 						<label>PAGIBIG</label>
-						<p>{{$employee->sss}}</p>
+						<p>{{$employee->pagibig}}</p>
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Date of Birth</label>
