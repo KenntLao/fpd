@@ -45,6 +45,10 @@ class PersonalInformationController extends Controller
                     $request->employee_photo->move($path, $imageName);
                 }
             }
+            $employee->birthday = request('birthday');
+            $employee->gender = request('gender');
+            $employee->nationality = request('nationality');
+            $employee->marital_status = request('marital_status');
             $employee->work_address = request('work_address');
             $employee->home_address = request('home_address');
             $employee->work_phone = request('work_phone');
