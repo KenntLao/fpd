@@ -210,12 +210,12 @@ return [
     'menu' => [
         [
             'header' => 'ADMINISTRATION',
-            'can' => ['company-structure', 'job-title', 'pay-grade', 'employment-status', 'skill', 'education', 'certification','language', 'course', 'training-session', 'employee-training-session', 'client', 'project', 'employee-project', 'leave-type', 'leave-period', 'work-week', 'holiday', 'leave-rule', 'paid-time-off', 'leave-group','leave-group-employee', 'employee-leave-list', 'expense-category','payment-method','employee-expense', 'overtime-category', 'loan-type','employee-loan', 'company-asset-type','company-asset', 'audit-log']
+            'can' => ['admin-module']
         ],
         [
             'text' => 'Admin',
             'icon' => 'fas fa-fw fa-cubes',
-            'can' => ['company-structure', 'job-title', 'pay-grade', 'employment-status', 'skill', 'education', 'certification','language', 'course', 'training-session', 'employee-training-session', 'client', 'project', 'employee-project', 'leave-type', 'leave-period', 'work-week', 'holiday', 'leave-rule', 'paid-time-off', 'leave-group','leave-group-employee', 'employee-leave-list', 'expense-category','payment-method','employee-expense', 'overtime-category', 'loan-type','employee-loan', 'company-asset-type','company-asset', 'audit-log'],
+            'can' => ['admin-module'],
             'submenu' => [
                 [   
                     'text' => 'Company Structure',
@@ -715,13 +715,14 @@ return [
                 ]
             ]
         ],
-        [
+       [
             'header' => 'RECRUITMENT MANAGEMENT',
+            'can' => ['recruitment-module']
         ],
-        [
+       [
             'text'    => 'Recruitment',
             'icon' => 'fas fa-fw fa-th',
-            'can' => ['benefit','education-level','employment-type','experience-level','job-function','candidate','job-position'],
+            'can' => ['recruitment-module'],
             'submenu' => [
                 [
                     'text'    => 'Recruitment Setup',
@@ -766,6 +767,7 @@ return [
                         ],
                     ],
                 ],
+                
                 [
                     'text' => 'Job Positions',
                     'url'  => '/hris/pages/recruitment/jobPositions/index',
@@ -780,9 +782,10 @@ return [
                     'active' => ['/hris/pages/recruitment/candidates/create', '/hris/pages/recruitment/candidates/index', '/hris/pages/recruitment/candidates/*/edit', 'regex:@^content/[0-9]+$@'],
                     'can' => 'candidate'
                 ],
+            
             ],
         ],
-        [
+     /*   [
             'header' => 'ADMIN REPORTS',
         ],
         [
@@ -794,7 +797,7 @@ return [
             'text' => 'Report Files',
             'icon' => 'fas fa-fw fa-file-export',
             'url' => '#'
-        ],
+        ], */
         /*[
             'header' => 'INSIGHTS',
         ],
@@ -803,7 +806,7 @@ return [
             'icon' => 'fas fa-fw fa-user-clock',
             'url' => '#'
         ],*/
-        [
+        /*[
             'header' => 'DOCUMENT MANAGEMENT',
         ],
         [
@@ -841,9 +844,10 @@ return [
             'icon' => 'fas fa-fw fa-user',
             'url' => '/hris/pages/company/staffDirectory/index'
         ],
-        [
+        */
+      /*  [
             'header' => 'TRAINING MANAGEMENT',
-        ],
+        ], 
         [
             'text' => 'Training',
             'icon' => 'fas fa-fw fa-briefcase',
@@ -853,7 +857,7 @@ return [
                     'icon' => 'fas fa-fw fa-briefcase',
                     'url' => '/hris/pages/training/myTraining/index'
                 ],
-                /*[
+                [
                     'text' => 'All Training Sessions',
                     'icon' => 'fas fa-fw fa-briefcase',
                     'url' => '#'
@@ -862,15 +866,15 @@ return [
                     'text' => 'Training Sessions of Direct Reports',
                     'icon' => 'fas fa-fw fa-briefcase',
                     'url' => '#'
-                ],*/
+                ],
                 [
                     'text' => 'Training Sessions Coordinated by Me',
                     'icon' => 'fas fa-fw fa-briefcase',
                     'url' => '/hris/pages/training/coordinated/index'
                 ],
             ]
-        ],
-        [
+        ], */
+        /*[
             'header' => 'PERFORMANCE',
         ],
         [
@@ -893,7 +897,7 @@ return [
                     'url' => '#'
                 ],
             ]
-        ],
+        ],*/
        /* [
             'header' => 'TRAVEL MANAGEMENT',
         ],
@@ -958,7 +962,7 @@ return [
                 ],
             ]
         ], */
-        [
+        /*[
             'header' => 'USER REPORTS',
         ],
         [
@@ -970,7 +974,7 @@ return [
             'text' => 'Reports Files',
             'icon' => 'fas fa-fw fa-file-export',
             'url' => '#'
-        ],
+        ], */
     ],
 
 

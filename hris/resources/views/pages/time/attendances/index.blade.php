@@ -34,10 +34,10 @@
 	</ul>
 </div>
 @endif
+<span class="text-danger">Please allow camera access on browser.</span>
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">Attendance</h3>
-
 		<div class="card-tools">
 			@if($attendance !== NULL)
 			@if($attendance->status == 0)

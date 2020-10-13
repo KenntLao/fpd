@@ -10,7 +10,7 @@
                     @else
                     {{asset('/assets/images/employees/image-preview.png')}}
                     @endif
-                    "  style="border: 1px solid #041E42" />
+                    " style="border: 1px solid #041E42" />
                     <div class="photo-overlay"></div>
                 </div>
                 <input accept="image/*" type="file" id="employee_photo" name="employee_photo" onchange="loadFile(event)">
@@ -146,10 +146,12 @@
                     @endphp
                 </p>
             </div>
-            <div class="col-12 col-md-3">
+            <!--<div class="col-12 col-md-3">
                 <label>Department</label>
-                <p>{{$id->department->name}}</p>
-            </div>
+                @if($id->department)
+                    <p>{{$id->department->name}}</p>
+                @endif
+            </div> -->
         </div>
     </div>
 </div>

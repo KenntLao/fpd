@@ -111,7 +111,9 @@
                 <div class="form-group">
                     <label class="mr-2" for="department">Department </label>
                     <div class="employee-info">
+                        @if($employee->department)
                         <span>{{$employee->department->name}}</span>
+                        @endif
                     </div>
                 </div>
             </div>

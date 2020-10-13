@@ -146,7 +146,9 @@
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Department</label>
+						@if($employee->department)
 						<p>{{$employee->department->name}}</p>
+						@endif
 					</div>
 				</div>
 			</div>

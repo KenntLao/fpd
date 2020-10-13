@@ -124,9 +124,6 @@
         <h4>No data available.</h4>
         @endif()
     </div>
-    <div class="card-footer">
-        {{$employees->links()}}
-    </div>
     <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -165,14 +162,14 @@
     function thisFileUpload() {
         document.getElementById("file").click();
     };
-    $(function() {
-        $('.table-data').DataTable({
-            "paging": false,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-        });
+
+    $('.table-data').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
     });
+
 
     $(document).ready(function() {
         $('.delete-btn').on('click', function() {

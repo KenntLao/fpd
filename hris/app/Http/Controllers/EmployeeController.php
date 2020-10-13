@@ -30,12 +30,12 @@ class EmployeeController extends Controller
         if(isset($_SESSION['sys_dep_id'])){ // if employee have department
             $sys_dep_id = $_SESSION['sys_dep_id'];
             if ($sys_dep_id && $sys_id && $acc_mode == "employee") { // get all subordinate
-                $employees = hris_employee::where('department_id', $sys_dep_id)->where('id', '!=', $sys_id)->where('supervisor', $sys_id)->paginate(10);
+                $employees = hris_employee::where('department_id', $sys_dep_id)->where('id', '!=', $sys_id)->where('supervisor', $sys_id)->get();
             } else {
-                $employees = hris_employee::paginate(10);
+                $employees = hris_employee::get();
             }
         }else {
-            $employees = hris_employee::paginate(10);
+            $employees = hris_employee::get();
         }
         return view('pages.employees.employee.index', compact('employee','employees','role_id'));
     }

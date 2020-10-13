@@ -50,7 +50,7 @@
                 <tbody>
                     @foreach($attendances as $attendance)
                     <tr>
-                        <td><a href="/hris/pages/employees/monitorAttendance/show/{{$attendance->id}}">{{$attendance->firstname.' '.$attendance->lastname}}</a></td>
+                        <td><a href="/hris/pages/employees/monitorAttendance/show/{{$attendance->employee_id}}">{{$attendance->firstname.' '.$attendance->lastname}}</a></td>
                         <td>
                             @if($attendance->time_in)
                             {{date("Y-m-d h:i:s", $attendance->time_in)}}

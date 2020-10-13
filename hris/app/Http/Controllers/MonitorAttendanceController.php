@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\hris_attendances;
 use App\hris_employee;
+use App\roles;
 use Illuminate\Http\Request;
 
 class MonitorAttendanceController extends Controller
@@ -11,9 +12,21 @@ class MonitorAttendanceController extends Controller
     public function index()
     {
         if ($_SESSION['sys_account_mode'] == 'employee') {
+            $sup_ids = roles::where('role_name','supervisor')->get('id')->toArray();
+            $sup_id = implode(' ',$sup_ids[0]);
             $sys_id = $_SESSION['sys_id'];
-            $attendances = hris_employee::where('supervisor', $sys_id)->leftJoin('hris_attendances', 'hris_employees.id' ,'=', 'hris_attendances.employee_id')->first()->paginate(15);
-            return view('pages.employees.monitorAttendance.index', compact('attendances'));
+            $current_user_level = hris_employee::where('id',$sys_id)->get('role_id')->toArray();
+            $user_level = implode(' ',$current_user_level[0]);
+            $user_level_arr = explode(',', $user_level);
+
+            if(in_array($sup_id, $user_level_arr)) {
+                $attendances = hris_employee::where('supervisor', $sys_id)->leftJoin('hris_attendances', 'hris_employees.id', '=', 'hris_attendances.employee_id')->first();
+                dd($attendances);
+                return view('pages.employees.monitorAttendance.index', compact('attendances'));
+            } else {
+                return back()->withErrors('Only Supervisor are allowed to access this page.');
+            }
+            
         } else {
             $attendances = hris_employee::leftJoin('hris_attendances', 'hris_employees.id', '=', 'hris_attendances.employee_id')->first()->paginate(15);
             return view('pages.employees.monitorAttendance.index', compact('attendances'));

@@ -4,6 +4,17 @@ $permissions_arr = array(
 	// HRIS ADMINISTRATION MODULE =========================================================================================
 	array(
 		array(
+			'permission_code' => 'admin-module',
+			'permission_name' => array(
+				'Admin Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access Admin Module list.',
+				''
+			)
+		),
+		array(
 			'permission_code' => 'company-structure',
 			'permission_name' => array(
 				'Company Structure Management',
@@ -1882,6 +1893,17 @@ $permissions_arr = array(
 		),
 	),
 	array(
+		array(
+			'permission_code' => 'recruitment-module',
+			'permission_name' => array(
+				'Recruitment Function Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access Recruitment Module.',
+				''
+			)
+		),
 		array(
 			'permission_code' => 'job-function',
 			'permission_name' => array(
