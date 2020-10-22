@@ -976,7 +976,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                     if (in_array($supervisor_id, $roles)) {
                     $emp = App\hris_employee::find($_SESSION['sys_id']);
                     $department_id = $emp->department_id;
-                    $employees = App\hris_employee::where('department_id', $department_id)->get();
+                    $employees = App\hris_employee::where('supervisor', $emp->id)->get();
                     echo '<div class="form-group">
                         <label for="employee_id">Employee: </label>
                         <span class="badge badge-danger">Required</span>
@@ -991,19 +991,6 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             }
                         echo '</select>
                     </div>';
-                    echo
-                    '
-                    <div class="form-group">
-                        <label for="type">Type: </label>
-                        <span class="badge badge-danger">Required</span>
-                        <select class="form-control select2 required" name="type">
-                            <option value="All">All</option>';
-                            foreach ( $types as $type ) {
-                            echo '<option value="'. $type->name .'">'. $type->name .'</option>';
-                            }
-                        echo '</select>
-                    </div>
-                    ';
                     }
                     }
                     @endphp

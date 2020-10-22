@@ -118,7 +118,11 @@ class OvertimeController extends Controller
                                         $overtime->acc_mode = $_SESSION['sys_account_mode'];
                                         $overtime->sender_id = $id;
                                         $overtime->employee_id = $id;
-                                        $overtime->department_id = $overtime->employee->department->id;
+                                        if ( !$overtime->employee->department ) {
+                                            $overtime->department_id = 0;
+                                        } else {
+                                            $overtime->department_id = $overtime->employee->department->id;
+                                        }
                                         $overtime->ot_date = request('ot_date');
                                         $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
                                         $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
@@ -189,7 +193,11 @@ class OvertimeController extends Controller
                                         $overtime->acc_mode = $_SESSION['sys_account_mode'];
                                         $overtime->sender_id = $id;
                                         $overtime->employee_id = $id;
-                                        $overtime->department_id = $overtime->employee->department->id;
+                                        if ( !$overtime->employee->department ) {
+                                            $overtime->department_id = 0;
+                                        } else {
+                                            $overtime->department_id = $overtime->employee->department->id;
+                                        }
                                         $overtime->ot_date = request('ot_date');
                                         $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
                                         $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));
@@ -211,7 +219,8 @@ class OvertimeController extends Controller
                                         $this->function->addSystemLog($this->module,$id);
                                                         
                                         return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully added!');
-                                    } else if ($ot_time_in > $wm->$time_in && $ot_time_in > $wm->$time_out) {
+                                    } else if (
+                                        $ot_time_in > $wm->$time_in && $ot_time_in > $wm->$time_out) {
                                         $overtime->acc_mode = $_SESSION['sys_account_mode'];
                                         $overtime->sender_id = $id;
                                         $overtime->employee_id = $id;

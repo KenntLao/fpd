@@ -29,16 +29,15 @@ class ExportController extends Controller
                 $employee = hris_employee::find($employee_id);
                 $emp_name = $employee->firstname.'_'.$employee->lastname;
             }
-            $type = request('type');
             if ( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) ) {
                 $check = hris_overtime::all();
             } else {
-                $check = hris_overtime::all()->where('supervisor_id', $_SESSION['sys_id'])->where('role_id', $_SESSION['sys_role_ids']);
+                $check = hris_overtime::all()->where('supervisor_id', $_SESSION['sys_id']);
             }
             if ( $check->isEmpty() ) {
                 return back()->withErrors(['No data to download.']);
             } else {
-                return Excel::download(new OvertimeExport($date_from,$date_to,$employee_id,$type), 'FPD-OT-FROM-'. $str_from .'-TO-'. $str_to .'-TYPE-'. $type .'-'. $emp_name .'.xlsx');
+                return Excel::download(new OvertimeExport($date_from,$date_to,$employee_id), 'FPD-OT-FROM-'. $str_from .'-TO-'. $str_to .'-'. $emp_name .'.xlsx');
             }
     	} else {
 	    	return back()->withErrors($this->validatedData());

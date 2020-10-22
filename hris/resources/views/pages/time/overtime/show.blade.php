@@ -52,7 +52,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label>Department:</label>
-                            <p>{{$overtime->employee->department->name}}</p>
+                            <p>
+                                @if($overtime->employee->department)
+                                {{$overtime->employee->department->name}}
+                                @else
+                                ----
+                                @endif
+                            </p>
                         </div>
                     </div>
                     <div class="col-4">
