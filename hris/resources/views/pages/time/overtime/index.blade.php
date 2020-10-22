@@ -972,19 +972,6 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             }
                         echo '</select>
                     </div>';
-                    echo
-                    '
-                    <div class="form-group">
-                        <label for="type">Type: </label>
-                        <span class="badge badge-danger">Required</span>
-                        <select class="form-control select2 required" name="type">
-                            <option value="All">All</option>';
-                            foreach ( $types as $type ) {
-                            echo '<option value="'. $type->name .'">'. $type->name .'</option>';
-                            }
-                        echo '</select>
-                    </div>
-                    ';
                     } else {
                     if (in_array($supervisor_id, $roles)) {
                     $emp = App\hris_employee::find($_SESSION['sys_id']);

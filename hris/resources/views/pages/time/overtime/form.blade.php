@@ -63,7 +63,7 @@
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="overtime_category_id">Category: </label>
+			<label class="mr-2" for="overtime_category_id">Reason: </label>
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control required" name="overtime_category_id" required>
 				@if(count($categories) > 0)
