@@ -7,6 +7,7 @@ use App\hris_candidates;
 use App\hris_job_positions;
 use App\hris_countries;
 use App\users;
+use App\table_careers_application;
 
 class CandidateController extends Controller
 {
@@ -20,7 +21,7 @@ class CandidateController extends Controller
     }
     public function index()
     {
-        $candidates = hris_candidates::paginate(10);
+        $candidates = table_careers_application::paginate(10);
         return view('pages.recruitment.candidates.index', compact('candidates'));
     }
 
