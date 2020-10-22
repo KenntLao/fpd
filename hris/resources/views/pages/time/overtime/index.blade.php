@@ -496,7 +496,13 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                     @foreach($overtimes as $overtime)
                     <tr>
                         <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                        <td>{{$overtime->employee->department->name}}</td>
+                        <td>
+                            @if($overtime->employee->department)
+                            {{$overtime->employee->department->name}}
+                            @else
+                            ----
+                            @endif
+                        </td>
                         <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
                         <td>
                             @php
@@ -975,7 +981,6 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                     } else {
                     if (in_array($supervisor_id, $roles)) {
                     $emp = App\hris_employee::find($_SESSION['sys_id']);
-                    $department_id = $emp->department_id;
                     $employees = App\hris_employee::where('supervisor', $emp->id)->get();
                     echo '<div class="form-group">
                         <label for="employee_id">Employee: </label>
