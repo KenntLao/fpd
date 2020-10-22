@@ -46,7 +46,7 @@ class OvertimeController extends Controller
 
             if ( in_array($supervisor_id, $role_ids) ) {
                 $department = $find->department_id;
-                $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id);
+                $employee = hris_employee::all()->where('supervisor', $id);
                 $employee_id = array();
                 foreach ($employee as $e) {
                     $employee_id[] = $e->id;
@@ -160,8 +160,8 @@ class OvertimeController extends Controller
                 }
             }
         } else {
+
             $employee = hris_employee::find($id);
-            $department = hris_company_structures::find($employee->department_id);
             if ( $employee->supervisor == NULL ) {
                 return back()->withErrors(['Employee supervisor is required']);
             } else {
@@ -181,7 +181,7 @@ class OvertimeController extends Controller
                         $latest_wa_id = max($wa_id);
                         $latest_wa = hris_workshift_assignment::find($latest_wa_id);
                         $workshift_id = $latest_wa->workshift_id;
-                        if ( $date >= $latest_wa->date_from && $date <= $latest_wa->date_to ) {
+                        if ( $date >= $latest_wa->date_from OR $date <= $latest_wa->date_to ) {
                             $wm = hris_work_shift_management::find($workshift_id);
                             $week = array('monday','tuesday','wednesday','thursday','friday','saturday','sunday');
                             foreach ($week as $day)
@@ -219,8 +219,7 @@ class OvertimeController extends Controller
                                         $this->function->addSystemLog($this->module,$id);
                                                         
                                         return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully added!');
-                                    } else if (
-                                        $ot_time_in > $wm->$time_in && $ot_time_in > $wm->$time_out) {
+                                    } else if ($ot_time_in > $wm->$time_in && $ot_time_in > $wm->$time_out) {
                                         $overtime->acc_mode = $_SESSION['sys_account_mode'];
                                         $overtime->sender_id = $id;
                                         $overtime->employee_id = $id;
@@ -428,7 +427,7 @@ class OvertimeController extends Controller
                         $category = hris_overtime_categories::find($overtime->overtime_category_id);
                         if ($category->name == 'RELIEVER' or $category->name == 'reliever') {
                             // REGULAR
-                            if ( $type->id = 1) {
+                            if ( $type->id == 1) {
                                 $model = $overtime;
                                 $this->function->statusSystemLog($this->module,$string,$id);
                                 // NIGHT DIFF
@@ -437,9 +436,10 @@ class OvertimeController extends Controller
                                         // IF NIGHT DIFF IS EQUAL OR LESS THAN 8HRS
                                         if ( $ot_difference <= 8 ) {
                                             // IF OT TIME IN IS GREATER THAN 10PM AND LESS THAN 4AM 
-                                            $reg = null;
+                                            $ot_diff = (strtotime($nightdiff) - $time1)/3600;
+                                            $reg = $ot_diff;
                                             $reg_8 = null;
-                                            $nd = $ot_difference;
+                                            $nd = $ot_difference - $ot_diff;
                                         }
                                         if ( $ot_difference > 8 ) {
                                             if ( $overtime->ot_time_in < $nightdiff ) {
@@ -473,7 +473,7 @@ class OvertimeController extends Controller
                                 $overtime->REG_ND1 = $nd;
                             }
                             // REST DAY
-                            if ( $type->id = 2) {
+                            if ( $type->id == 2) {
                                 $model = $overtime;
                                 $this->function->statusSystemLog($this->module,$string,$id);
                                 // NIGHT DIFF
@@ -518,7 +518,7 @@ class OvertimeController extends Controller
                                 $overtime->RST_ND1 = $nd;
                             }
                             // LEGAL HOLIDAY
-                            if ( $type->id = 3) {
+                            if ( $type->id == 3) {
                                 $model = $overtime;
                                 $this->function->statusSystemLog($this->module,$string,$id);
                                 // NIGHT DIFF
@@ -563,7 +563,7 @@ class OvertimeController extends Controller
                                 $overtime->LGL_ND1 = $nd;
                             }
                             // SPECIAL HOLIDAY
-                            if ( $type->id = 4) {
+                            if ( $type->id == 4) {
                                 $model = $overtime;
                                 $this->function->statusSystemLog($this->module,$string,$id);
                                 // NIGHT DIFF
@@ -608,7 +608,7 @@ class OvertimeController extends Controller
                                 $overtime->SPL_ND1 = $nd;
                             }
                             // LEGAL HOLIDAY ON REST DAY
-                            if ( $type->id = 5) {
+                            if ( $type->id == 5) {
                                 $model = $overtime;
                                 $this->function->statusSystemLog($this->module,$string,$id);
                                 // NIGHT DIFF
@@ -653,7 +653,7 @@ class OvertimeController extends Controller
                                 $overtime->LGLRST_ND1 = $nd;
                             }
                             // SPECIAL HOLIDAY ON REST DAY
-                            if ( $type->id = 6) {
+                            if ( $type->id == 6) {
                                 $model = $overtime;
                                 $this->function->statusSystemLog($this->module,$string,$id);
                                 // NIGHT DIFF
@@ -730,7 +730,7 @@ class OvertimeController extends Controller
                             $category = hris_overtime_categories::find($overtime->overtime_category_id);
                             if ($category->name == 'RELIEVER' or $category->name == 'reliever') {
                                 // REGULAR
-                                if ( $type->id = 1) {
+                                if ( $type->id == 1) {
                                     $model = $overtime;
                                     $this->function->statusSystemLog($this->module,$string,$id);
                                     // NIGHT DIFF
@@ -775,7 +775,7 @@ class OvertimeController extends Controller
                                     $overtime->REG_ND1 = $nd;
                                 }
                                 // REST DAY
-                                if ( $type->id = 2) {
+                                if ( $type->id == 2) {
                                     $model = $overtime;
                                     $this->function->statusSystemLog($this->module,$string,$id);
                                     // NIGHT DIFF
@@ -820,7 +820,7 @@ class OvertimeController extends Controller
                                     $overtime->RST_ND1 = $nd;
                                 }
                                 // LEGAL HOLIDAY
-                                if ( $type->id = 3) {
+                                if ( $type->id == 3) {
                                     $model = $overtime;
                                     $this->function->statusSystemLog($this->module,$string,$id);
                                     // NIGHT DIFF
@@ -865,7 +865,7 @@ class OvertimeController extends Controller
                                     $overtime->LGL_ND1 = $nd;
                                 }
                                 // SPECIAL HOLIDAY
-                                if ( $type->id = 4) {
+                                if ( $type->id == 4) {
                                     $model = $overtime;
                                     $this->function->statusSystemLog($this->module,$string,$id);
                                     // NIGHT DIFF
@@ -910,7 +910,7 @@ class OvertimeController extends Controller
                                     $overtime->SPL_ND1 = $nd;
                                 }
                                 // LEGAL HOLIDAY ON REST DAY
-                                if ( $type->id = 5) {
+                                if ( $type->id == 5) {
                                     $model = $overtime;
                                     $this->function->statusSystemLog($this->module,$string,$id);
                                     // NIGHT DIFF
@@ -955,7 +955,7 @@ class OvertimeController extends Controller
                                     $overtime->LGLRST_ND1 = $nd;
                                 }
                                 // SPECIAL HOLIDAY ON REST DAY
-                                if ( $type->id = 6) {
+                                if ( $type->id == 6) {
                                     $model = $overtime;
                                     $this->function->statusSystemLog($this->module,$string,$id);
                                     // NIGHT DIFF

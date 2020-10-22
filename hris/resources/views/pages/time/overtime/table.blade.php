@@ -83,7 +83,13 @@
             <td>{{ $overtime->employee->employee_number }}</td>
             <td>{{ $overtime->employee->lastname }}</td>
             <td>{{ $overtime->employee->firstname }}</td>
-            <td>{{ $overtime->employee->department->code }}</td>
+            <td>
+                  @if($overtime->employee->department)
+                  {{ $overtime->employee->department->code }}
+                  @else
+                  ----
+                  @endif
+            </td>
             <td>{{ $overtime->REG_SUM }}</td>
             <td>{{ $overtime->REG_8_SUM }}</td>
             <td>{{ $overtime->REG_ND1_SUM }}</td>
