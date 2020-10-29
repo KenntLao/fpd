@@ -22,6 +22,12 @@ $_SESSION['return_page'] = URL::previous();
     </ul>
 </div>
 @endif
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <p><i class="fas fa-fw fa-ban"></i>{{ $message }}</p>
+</div>
+@endif
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Update Employee</h3>
