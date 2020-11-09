@@ -84,14 +84,22 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     }}
                                     @endphp
                                     @else
+                                    @if($s->approved_by)
                                     {{$s->approved_by->firstname}} {{$s->approved_by->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                     @endif
                                     @else
                                     ----
                                     @endif
                                 </td>
                                 <td>
+                                    @if($s->supervisor)
                                     {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                 </td>
                                 <td>
                                     @if($s->approved_date)
@@ -167,7 +175,13 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @foreach($overtimes as $overtime)
                             <tr>
                                 <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                                <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
+                                <td>
+                                    @if($overtime->employee)
+                                    {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
                                 <td>
                                     @php
                                     echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
@@ -183,7 +197,11 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     }}
                                     @endphp
                                     @else
+                                    @if($overtime->approved_by)
                                     {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                     @endif
                                     @else
                                     ----
@@ -193,7 +211,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     @if($overtime->supervisor)
                                     {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
                                     @else
-                                    Error
+                                    ----
                                     @endif
                                 </td>
                                 <td>
@@ -303,14 +321,22 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     }}
                                     @endphp
                                     @else
+                                    @if($s->approved_by)
                                     {{$s->approved_by->firstname}} {{$s->approved_by->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                     @endif
                                     @else
                                     ----
                                     @endif
                                 </td>
                                 <td>
+                                    @if($s->supervisor)
                                     {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                 </td>
                                 <td>
                                     @if($s->approved_date)
@@ -388,7 +414,13 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @foreach($overtimes as $overtime)
                             <tr>
                                 <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                                <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
+                                <td>
+                                    @if($overtime->employee)
+                                    {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
                                 <td>
                                     @php
                                     echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
@@ -404,7 +436,11 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     }}
                                     @endphp
                                     @else
+                                    @if($overtime->approved_by)
                                     {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                     @endif
                                     @else
                                     ----
@@ -414,7 +450,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     @if($overtime->supervisor)
                                     {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
                                     @else
-                                    ERROR
+                                    ----
                                     @endif
                                 </td>
                                 <td>
@@ -503,7 +539,13 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             ----
                             @endif
                         </td>
-                        <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
+                        <td>
+                            @if($overtime->employee)
+                            {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}
+                            @else
+                            ----
+                            @endif
+                        </td>
                         <td>
                             @php
                             echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
@@ -519,14 +561,22 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             }}
                             @endphp
                             @else
+                            @if($overtime->approved_by)
                             {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
+                            @else
+                            ----
+                            @endif
                             @endif
                             @else
                             ----
                             @endif
                         </td>
                         <td>
+                            @if($overtime->supervisor)
                             {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                            @else
+                            ----
+                            @endif
                         </td>
                         <td>
                             @if($overtime->approved_date)
@@ -619,7 +669,13 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @foreach($self as $s)
                             <tr>
                                 <td>{{date("M d, Y - h:i:sa", strtotime($s->created_at))}}</td>
-                                <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
+                                <td>
+                                    @if($s->employee)
+                                    {{$s->employee->firstname}} {{$s->employee->lastname}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
                                 <td>
                                     @php
                                     echo date('M d, Y', strtotime($s->ot_date)).' '.substr($s->ot_time_in, 0, 2) . ':' . substr($s->ot_time_in, 2).' - '.substr($s->ot_time_out, 0, 2) . ':' . substr($s->ot_time_out, 2);
@@ -635,7 +691,11 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     }}
                                     @endphp
                                     @else
+                                    @if($s->approved_by)
                                     {{$s->approved_by->firstname}} {{$s->approved_by->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                     @endif
                                     @else
                                     ----
@@ -645,7 +705,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     @if($s->supervisor)
                                     {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
                                     @else
-                                    ERROR
+                                    ----
                                     @endif
                                 </td>
                                 <td>
@@ -732,7 +792,13 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @foreach($overtimes as $overtime)
                             <tr>
                                 <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                                <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
+                                <td>
+                                    @if($overtime->employee)
+                                    {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
                                 <td>
                                     @php
                                     echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
@@ -748,14 +814,22 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                                     }}
                                     @endphp
                                     @else
+                                    @if($overtime->approved_by)
                                     {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                     @endif
                                     @else
                                     ----
                                     @endif
                                 </td>
                                 <td>
+                                    @if($overtime->supervisor)
                                     {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
+                                    @else
+                                    ----
+                                    @endif
                                 </td>
                                 <td>
                                     @if($overtime->approved_date)
@@ -839,7 +913,13 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                     @foreach($overtimes as $overtime)
                     <tr>
                         <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
-                        <td>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</td>
+                        <td>
+                            @if($overtime->employee)
+                            {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}
+                            @else
+                            ----
+                            @endif
+                        </td>
                         <td>
                             @php
                             echo date('M d, Y', strtotime($overtime->ot_date)).' '.substr($overtime->ot_time_in, 0, 2) . ':' . substr($overtime->ot_time_in, 2).' - '.substr($overtime->ot_time_out, 0, 2) . ':' . substr($overtime->ot_time_out, 2);
@@ -855,7 +935,11 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             }}
                             @endphp
                             @else
+                            @if($overtime->approved_by)
                             {{$overtime->approved_by->firstname}} {{$overtime->approved_by->lastname}}
+                            @else
+                            ----
+                            @endif
                             @endif
                             @else
                             ----
@@ -865,7 +949,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @if($overtime->supervisor)
                             {{$overtime->supervisor->firstname}} {{$overtime->supervisor->lastname}}
                             @else
-                            ERROR
+                            ----
                             @endif
                         </td>
                         <td>
