@@ -168,6 +168,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                         <thead>
                             <tr>
                                 <th>date</th>
+                                <th>department</th>
                                 <th>employee</th>
                                 <th>request date and time</th>
                                 <th>approved by</th>
@@ -181,6 +182,17 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @foreach($overtimes as $overtime)
                             <tr>
                                 <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
+                                <td>
+                                    @if($overtime->employee)
+                                    @if($overtime->employee->department)
+                                    {{$overtime->employee->department->name}}
+                                    @else
+                                    ----
+                                    @endif
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
                                 <td>
                                     @if($overtime->employee)
                                     {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}
@@ -407,6 +419,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                         <thead>
                             <tr>
                                 <th>date</th>
+                                <th>department</th>
                                 <th>employee</th>
                                 <th>request date and time</th>
                                 <th>approved by</th>
@@ -420,6 +433,17 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @foreach($overtimes as $overtime)
                             <tr>
                                 <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
+                                <td>
+                                    @if($overtime->employee)
+                                    @if($overtime->employee->department)
+                                    {{$overtime->employee->department->name}}
+                                    @else
+                                    ----
+                                    @endif
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
                                 <td>
                                     @if($overtime->employee)
                                     {{$overtime->employee->firstname}} {{$overtime->employee->lastname}}

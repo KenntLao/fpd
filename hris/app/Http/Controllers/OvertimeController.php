@@ -36,8 +36,8 @@ class OvertimeController extends Controller
         $employees = hris_employee::all();
         $types = hris_overtime_types::all();
         if ($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) ) {
-            $overtimes = hris_overtime::paginate(10);
-            $self = hris_overtime::where('employee_id', $id)->paginate(10);
+            $overtimes = hris_overtime::latest()->paginate(10);
+            $self = hris_overtime::where('employee_id', $id)->latest()->paginate(10);
             return view('pages.time.overtime.index', compact('overtimes', 'employees', 'types', 'hr_officer_id', 'roles', 'supervisor_id', 'self'));
         } else {
             $roles = roles::all();
@@ -51,11 +51,11 @@ class OvertimeController extends Controller
                 foreach ($employee as $e) {
                     $employee_id[] = $e->id;
                 }
-                $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->paginate(10);
-                $self = hris_overtime::where('employee_id', $id)->paginate(10);
+                $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->latest()->paginate(10);
+                $self = hris_overtime::where('employee_id', $id)->latest()->paginate(10);
                 return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id', 'self', 'employees', 'types'));
             } else {
-                $overtimes = hris_overtime::where('employee_id', $id)->paginate(10);
+                $overtimes = hris_overtime::where('employee_id', $id)->latest()->paginate(10);
                 return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
             }
 
