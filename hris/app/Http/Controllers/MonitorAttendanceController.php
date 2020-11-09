@@ -20,8 +20,17 @@ class MonitorAttendanceController extends Controller
             $user_level_arr = explode(',', $user_level);
 
             if(in_array($sup_id, $user_level_arr)) {
-                $attendances = hris_employee::where('supervisor', $sys_id)->leftJoin('hris_attendances', 'hris_employees.id', '=', 'hris_attendances.employee_id')->first();
-                dd($attendances);
+                $attendances = collect();
+                $subordinates = hris_employee::where('supervisor', $sys_id)->get();
+
+                foreach($subordinates as $subordinate) {
+                    $emp_attendances = hris_employee::leftJoin('hris_attendances', 'hris_attendances.employee_id','=','hris_employees.id')->where('hris_employees.id',$subordinate->id)->first();
+                    if($emp_attendances != NULL) {
+                        $attendances->push($emp_attendances);
+                    } else {
+                        $attendances = collect();
+                    }
+                }
                 return view('pages.employees.monitorAttendance.index', compact('attendances'));
             } else {
                 return back()->withErrors('Only Supervisor are allowed to access this page.');

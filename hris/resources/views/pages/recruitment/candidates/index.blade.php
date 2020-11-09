@@ -26,7 +26,7 @@
 		<h3 class="card-title">candidates list</h3>
 		@if(in_array('candidate-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
-			<a class="btn add-button btn-md" href="/hris/pages/recruitment/candidates/create"><i class="fa fa-plus mr-1"></i> add candidate</a>
+			<!--<a class="btn add-button btn-md" href="/hris/pages/recruitment/candidates/create"><i class="fa fa-plus mr-1"></i> add candidate</a>-->
 		</div>
 		@endif
 	</div>
@@ -41,7 +41,7 @@
 						<th>first name</th>
 						<th>last name</th>
 						<th>email</th>
-						<th>country</th>
+						<th>contact</th>
 						@if(in_array('candidate-edit', $_SESSION['sys_permissions']) OR in_array('candidate-delete', $_SESSION['sys_permissions']))
 						<th>actions</th>
 						@endif
@@ -50,14 +50,16 @@
 				<tbody>
 					@foreach($candidates as $candidate)
 					<tr>
-						<td>{{$candidate->id}}</td>
-						<td>{{$candidate->job_position->job_title->name}}</td>
-						<td>{{$candidate->first_name}}</td>
-						<td>{{$candidate->last_name}}</td>
-						<td>{{$candidate->email}}</td>
-						<td>{{$candidate->country}}</td>
+						<td>{{$candidate->careers_app_id}}</td>
+						<td>{{$candidate->careers_app_position}}</td>
+						<td>{{$candidate->careers_app_fname}}</td>
+						<td>{{$candidate->careers_app_lname}}</td>
+						<td>{{$candidate->careers_app_email}}</td>
+						<td>{{$candidate->careers_app_number}}</td>
+						
 						@if(in_array('candidate-edit', $_SESSION['sys_permissions']) OR in_array('candidate-delete', $_SESSION['sys_permissions']))
-						<td class="td-action">
+
+							<td class="td-action">
 							<div class="row no-gutters">
 								@if(in_array('candidate-edit', $_SESSION['sys_permissions']))
 								<div class="col-6">
@@ -73,6 +75,7 @@
 							</div>
 						</td>
 						@endif
+
 					</tr>
 					@endforeach
 				</tbody>
@@ -92,7 +95,7 @@
 			<div class="modal-header">
 				<h5 class="modal-title">Delete Confirmation</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -120,8 +123,8 @@
 @stop
 @section('js')
 <script>
-	$(document).ready(function(){
-		$('.delete-btn').on('click', function(){
+	$(document).ready(function() {
+		$('.delete-btn').on('click', function() {
 			var get = $('.add-button').attr('href');
 			var href = get.replace('create', 'delete');
 			var target = $(this).attr('data-target');
@@ -129,11 +132,11 @@
 			var id = target.replace('#modal-', '');
 			$('.modal').attr('id', modal_id);
 			$('.modal').attr('aria-labelledby', modal_id);
-			$('.form-horizontal').attr('action', href+'/'+id);
-			$('.form-horizontal').attr('id', 'form-'+id);
-			$('.modal-footer > button').attr('form', 'form-'+id);
+			$('.form-horizontal').attr('action', href + '/' + id);
+			$('.form-horizontal').attr('id', 'form-' + id);
+			$('.modal-footer > button').attr('form', 'form-' + id);
 			var name = $(this).attr('data-name');
-			$('.data-name').text('Are you sure you want to delete '+name+'?');
+			$('.data-name').text('Are you sure you want to delete ' + name + '?');
 		});
 	});
 </script>

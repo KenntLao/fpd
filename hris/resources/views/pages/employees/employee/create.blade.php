@@ -9,6 +9,12 @@
 </div>
 @stop
 @section('content')
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<p><i class="fas fa-fw fa-ban"></i>{{ $message }}</p>
+</div>
+@endif
 @if (count($errors))
 <div class="alert alert-danger">
 	<strong>Whoops!</strong> There were some problems with your input.

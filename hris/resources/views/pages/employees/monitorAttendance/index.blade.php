@@ -25,7 +25,7 @@
         <h3 class="card-title">Monitor Attendance</h3>
     </div>
     <div class="card-body">
-        @if(count($attendances) > 0)
+        @if(!empty($attendances))
         <!--<div class="row">
             <div class="col-md-8"></div>
             <div class="col-md-4">
@@ -50,7 +50,13 @@
                 <tbody>
                     @foreach($attendances as $attendance)
                     <tr>
-                        <td><a href="/hris/pages/employees/monitorAttendance/show/{{$attendance->employee_id}}">{{$attendance->firstname.' '.$attendance->lastname}}</a></td>
+                        <td>
+                            @if($attendance->id)
+                            <a href="/hris/pages/employees/monitorAttendance/show/{{$attendance->employee_id}}">{{$attendance->firstname.' '.$attendance->lastname}}</a>
+                            @else
+                            {{$attendance->firstname.' '.$attendance->lastname}}
+                            @endif
+                        </td>
                         <td>
                             @if($attendance->time_in)
                             {{date("Y-m-d h:i:s", $attendance->time_in)}}
@@ -108,10 +114,7 @@
         </div>
         @else
         <h4>No data available.</h4>
-        @endif()
-    </div>
-    <div class="card-footer">
-        {{$attendances->links()}}
+        @endif
     </div>
 </div>
 
