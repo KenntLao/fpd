@@ -18,7 +18,6 @@ class MonitorAttendanceController extends Controller
             $current_user_level = hris_employee::where('id',$sys_id)->get('role_id')->toArray();
             $user_level = implode(' ',$current_user_level[0]);
             $user_level_arr = explode(',', $user_level);
-
             if(in_array($sup_id, $user_level_arr)) {
                 $attendances = collect();
                 $subordinates = hris_employee::where('supervisor', $sys_id)->get();
