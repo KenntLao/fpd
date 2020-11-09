@@ -117,7 +117,7 @@ class OvertimeController extends Controller
                                     if ( $ot_time_in < $wm->$time_in && $ot_time_in < $wm->$time_out OR $ot_time_in > $wm->$time_in && $ot_time_in > $wm->$time_out) {
                                         $overtime->acc_mode = $_SESSION['sys_account_mode'];
                                         $overtime->sender_id = $id;
-                                        $overtime->employee_id = $id;
+                                        $overtime->employee_id = request('employee_id');
                                         if ( !$overtime->employee->department ) {
                                             $overtime->department_id = 0;
                                         } else {
@@ -134,8 +134,8 @@ class OvertimeController extends Controller
                                         $overtime->save();
 
                                         // OVERTIME REQUEST NOTIFICATION
-                                        $employee = hris_employee::where('id',$_SESSION['sys_id'])->first();
-                                        $get_supervisor = hris_employee::where('id',$_SESSION['sys_id'])->get('supervisor');
+                                        $employee = hris_employee::where('id',request('employee_id'))->first();
+                                        $get_supervisor = hris_employee::where('id',$employee->id)->get('supervisor');
                                         $employee_supervisor = hris_employee::where('id',$employee->supervisor)->first();
                                         $employee_supervisor->notify(new SupervisorNotif($employee));
 

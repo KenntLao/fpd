@@ -68,7 +68,13 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                             @foreach($self as $s)
                             <tr>
                                 <td>{{date("M d, Y - h:i:sa", strtotime($s->created_at))}}</td>
-                                <td>{{$s->employee->firstname}} {{$s->employee->lastname}}</td>
+                                <td>
+                                    @if($s->employee)
+                                    {{$s->employee->firstname}} {{$s->employee->lastname}}
+                                    @else
+                                    ----
+                                    @endif
+                                </td>
                                 <td>
                                     @php
                                     echo date('M d, Y', strtotime($s->ot_date)).' '.substr($s->ot_time_in, 0, 2) . ':' . substr($s->ot_time_in, 2).' - '.substr($s->ot_time_out, 0, 2) . ':' . substr($s->ot_time_out, 2);
@@ -533,8 +539,12 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                     <tr>
                         <td>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</td>
                         <td>
+                            @if($overtime->employee)
                             @if($overtime->employee->department)
                             {{$overtime->employee->department->name}}
+                            @else
+                            ----
+                            @endif
                             @else
                             ----
                             @endif
