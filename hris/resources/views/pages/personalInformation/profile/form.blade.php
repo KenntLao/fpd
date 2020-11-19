@@ -157,7 +157,13 @@
         <div class="row no-gutters">
             <div class="col-12 col-md-3">
                 <label>Job Title</label>
-                <p>{{$id->job_title->name}}</p>
+                <p>
+                    @if($id->job_title)
+                    {{$id->job_title->name}}
+                    @else
+                    ----
+                    @endif
+                </p>
             </div>
             <div class="col-12 col-md-3">
                 <label>Employment Status</label>
@@ -176,12 +182,14 @@
                     @endphp
                 </p>
             </div>
-            <!--<div class="col-12 col-md-3">
+            <div class="col-12 col-md-3">
                 <label>Department</label>
                 @if($id->department)
                     <p>{{$id->department->name}}</p>
+                @else
+                    <p>----</p>
                 @endif
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
