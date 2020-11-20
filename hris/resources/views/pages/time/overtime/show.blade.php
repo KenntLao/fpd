@@ -127,7 +127,13 @@
                     <div class="col-6 col-sm-6">
                         <div class="form-group">
                             <label class="mr-2" for="ot_date">Approved Date and Time: </label>
-                            <p>{{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}</p>
+                            <p>
+                                @if($overtime->approved_date)
+                                {{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}
+                                @else
+                                ----
+                                @endif
+                            </p>
                         </div>
                     </div>
                     <div class="col-6 col-sm-6">
