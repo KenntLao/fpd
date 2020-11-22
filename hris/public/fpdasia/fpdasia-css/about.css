@@ -1,0 +1,251 @@
+
+.dropdown:hover .dropdown-menu{
+    display: block;}
+  }
+
+  .line-height{
+    border-top:1.2px solid #b3b3b3;
+    margin: auto;
+  }
+  .qlty-p{
+    color: #021f3f;
+    font-size: 30px;
+    line-height: 1.2;
+    font-family:serif; 
+  }
+
+   @media only screen and (max-width: 767px){
+  .center{
+    margin-left: 180px;
+
+  }
+  .te{
+    text-align: center;
+  }
+ }
+
+ @media only screen and (max-width: 420px){
+  .center{
+    margin-left: 120px;
+
+} }
+
+  @media only screen and (max-width: 320px){
+  .center{
+    margin-left: 100px;
+
+  } }
+
+.corp{
+  cursor:pointer;
+  width: 110%
+}
+.line-corps{
+  position: absolute;
+  margin-left:120px;
+   margin-top: -130px;
+  width: 120%;
+  z-index: -2;
+
+}
+
+.viss{
+  width: 92.5%;
+  cursor:pointer;
+  z-index: 99;
+}
+.line-vision{
+  position: absolute;
+   margin-left:120px;
+   margin-top: -230px;
+  width: 120%;
+  z-index: -2;
+}
+
+.miss{
+  width: 77.7%;
+  cursor:pointer;
+  margin-left:155px;
+}
+.line-mission{
+  position: absolute;
+  margin-left:38px;
+  margin-top: -185px;
+  width: 60%;
+  z-index: -2;
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+}
+
+
+.trio2{
+  margin-top: -80px;
+}
+@media only screen and (max-width: 1200px){
+.trio2{
+  margin-top: -70px;
+}
+}
+
+ @media only screen and (max-width: 991px){
+.trio,.trio2{
+  display: none;
+  margin-top: -80px;
+}
+.gif-about{
+  width: 90%;
+}
+ .ml{
+  margin: auto;
+  display: inline;
+
+}
+ }
+
+
+  .size-img{
+    width: 105%;
+  }
+
+  @media only screen and (max-width: 767px){
+    .size-img{
+    width: 36%;
+  }
+}
+   @media only screen and (max-width: 500px){
+    .size-img{
+    width: 20%;
+  }
+
+  }
+.rfp{
+  font-size:13px; 
+  margin-left: -30px;
+}
+.cmt-5{
+  margin-top: 48px;
+}
+.cpt-5{
+  padding-top: 48px;
+}
+
+.size{
+  width: 70%;
+  display: none;
+}
+.ml{
+  display: none;
+}
+.mr{
+  display: none;
+}
+
+
+@media only screen and (max-width: 991px){
+  .ml{
+  margin: auto;
+  display: inline;
+
+}
+.mr{
+  margin: auto;
+  display: inline;
+
+
+}
+.size{
+  width: 30%;
+  display: inline;
+  margin: auto;
+}
+.trio, .trio2{
+  display: none;
+}
+}
+.ourmission{
+  display: none;
+}
+.pbs-5{
+    padding-bottom: 48px;
+    margin: 0;
+  }
+  .pts-5{
+    padding-top: 48px;
+    margin: 0;
+  }
+@media only screen and (max-width: 768px){
+  .pts-5, .pbs-5{
+    padding: 0;
+    margin: 0;
+  }
+
+.cmt-5{
+  margin-top: 9px;
+}
+.cpt-5{
+  padding-top: 0;
+}
+}
+.ele {
+  
+  animation: .9s fadeIn;
+  animation-fill-mode: forwards;
+  
+  visibility: hidden;
+}
+
+
+@keyframes fadeIn {
+  99% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+.mission-margin{
+  display:none; 
+  margin-top: -550px;
+  margin-right: 90px;
+  font-size: 15.8px;
+}
+
+@media only screen and (max-width: 1200px){
+
+.mission-margin{
+  display:none; 
+  margin-top: -460px;
+  margin-right: 60px;
+  font-size: 13.4px;
+}
+.line-mission{
+  margin-top: -135px;
+  margin-left:70px;
+  width: 50%;
+
+
+}
+
+}
+@media only screen and (max-width: 991px){
+  .mission-margin{
+  display:none; 
+  margin-top: 0px;
+  margin-right: 0;
+}
+.ele {
+  
+  animation: none; ;
+  animation-fill-mode: forwards;
+  
+  visibility: visible;
+}
+  .rfp{
+  font-size:15px; 
+  margin-left: 0;
+}
+
+.hide{
+  display: none;
+}
+}

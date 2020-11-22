@@ -190,6 +190,15 @@ class CandidateController extends Controller
             }
         }
     }
+    public function download(table_careers_application $candidate, Request $request)
+    {
+        if ($candidate->careers_app_file) {
+            $file = public_path('assets/files/candidates/candidates_file/' . $candidate->careers_app_file);
+            return response()->download($file);
+        } else {
+            return back()->withErrors(['File does not exist.']);
+        }
+    }
 
     protected function storeValidatedData() {
 

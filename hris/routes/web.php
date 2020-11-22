@@ -643,6 +643,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::patch('/hris/pages/recruitment/candidates/update/{candidate}', 'CandidateController@update');
     /* DELETE CANDIDATE */
     Route::delete('/hris/pages/recruitment/candidates/delete/{candidate}', 'CandidateController@destroy');
+    Route::get('/hris/pages/recruitment/candidates/download/{candidate}', 'CandidateController@download');
 
     /* TIME MANAGEMENT */
 
