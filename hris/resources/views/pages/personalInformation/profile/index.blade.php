@@ -125,7 +125,13 @@
 				<div class="row no-gutters">
 					<div class="col-12 col-md-3">
 						<label>Job Title</label>
-						<p>{{$employee->job_title->name}}</p>
+						<p>
+							@if($employee->job_title)
+							{{$employee->job_title->name}}
+							@else
+							----
+							@endif
+						</p>
 					</div>
 					<div class="col-12 col-md-3">
 						<label>Employment Status</label>

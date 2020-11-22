@@ -80,12 +80,34 @@
         @foreach($overtimes as $overtime)
         <tr>
             <td>FPD ASIA</td>
-            <td>{{ $overtime->employee->employee_number }}</td>
-            <td>{{ $overtime->employee->lastname }}</td>
-            <td>{{ $overtime->employee->firstname }}</td>
             <td>
+                  @if($overtime->employee)
+                  {{ $overtime->employee->employee_number }}
+                  @else
+                  ----
+                  @endif
+            </td>
+            <td>
+                  @if($overtime->employee)
+                  {{ $overtime->employee->lastname }}
+                  @else
+                  ----
+                  @endif
+            </td>
+            <td>
+                  @if($overtime->employee)
+                  {{ $overtime->employee->firstname }}
+                  @else
+                  ----
+                  @endif
+            </td>
+            <td>
+                  @if($overtime->employee)
                   @if($overtime->employee->department)
                   {{ $overtime->employee->department->code }}
+                  @else
+                  ----
+                  @endif
                   @else
                   ----
                   @endif
