@@ -27,10 +27,26 @@ class EmployeeController extends Controller
         $role_id = trim(str_replace(',','',$_SESSION['sys_role_ids']));
         $sys_id = $_SESSION['sys_id'];
         $acc_mode = $_SESSION['sys_account_mode'];
+        /* GET HR OFFICER ROLE ID */
+        $hr_ids = roles::where('role_name', 'HR Officer')->get('id')->toArray();
+        $hr_id = implode(' ', $hr_ids[0]);
+
+        /* GET CURRET USER ROLE ID */
+        if($acc_mode == "employee") {
+            $current_user_level = hris_employee::where('id', $sys_id)->get('role_id')->toArray();
+            $user_level = implode(' ', $current_user_level[0]);
+            $user_level_arr = explode(',', $user_level);
+        }
+
+
         if(isset($_SESSION['sys_dep_id'])){ // if employee have department
             $sys_dep_id = $_SESSION['sys_dep_id'];
             if ($sys_dep_id && $sys_id && $acc_mode == "employee") { // get all subordinate
-                $employees = hris_employee::where('department_id', $sys_dep_id)->where('id', '!=', $sys_id)->where('supervisor', $sys_id)->get();
+                if (in_array($hr_id, $user_level_arr)) {
+                    $employees = hris_employee::get();
+                } else {
+                    $employees = hris_employee::where('department_id', $sys_dep_id)->where('id', '!=', $sys_id)->where('supervisor', $sys_id)->get();
+                }
             } else {
                 $employees = hris_employee::get();
             }

@@ -52,7 +52,7 @@
                     <tr>
                         <td>
                             @if($attendance->id)
-                            <a href="/hris/pages/employees/monitorAttendance/show/{{$attendance->employee_id}}">{{$attendance->firstname.' '.$attendance->lastname}}</a>
+                            <a href="/hris/pages/employees/monitorAttendance/show/{{$attendance->id}}">{{$attendance->firstname.' '.$attendance->lastname}}</a>
                             @else
                             {{$attendance->firstname.' '.$attendance->lastname}}
                             @endif
@@ -126,7 +126,7 @@
 <script>
     $(function() {
         $('.table-data').DataTable({
-            "paging": false,
+            "paging": true,
             "lengthChange": false,
             "searching": true,
             "ordering": true,
