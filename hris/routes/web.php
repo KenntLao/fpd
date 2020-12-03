@@ -648,8 +648,8 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* TIME MANAGEMENT */
 
     /* DAILY TIME RECORDS */
-    Route::get('/hris/pagestime/dailyTimeRecords/getDtr', 'DailyTimeRecordController@getEmployeeAttendance')->name('getDtr.fetch');
-    Route::post('/hris/pagestime/dailyTimeRecords/getMonth', 'DailyTimeRecordController@getEmployeeAttendance')->name('getMonth.fetch');
+    Route::get('/hris/pages/time/dailyTimeRecords/getDtr', 'DailyTimeRecordController@getEmployeeAttendance')->name('getDtr.fetch');
+    Route::post('/hris/pages/time/dailyTimeRecords/getMonth', 'DailyTimeRecordController@getEmployeeAttendance')->name('getMonth.fetch');
     Route::get('/hris/pages/time/dailyTimeRecords/index', 'DailyTimeRecordController@index');
     /* WORKSHIFT MANAGEMENT */
     Route::get('/hris/pages/time/workshiftManagement/index', 'WorkShiftManagementController@index');
