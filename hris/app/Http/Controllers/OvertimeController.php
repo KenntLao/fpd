@@ -97,8 +97,7 @@ class OvertimeController extends Controller
                     $ot_time_in = str_replace(":", "", request('ot_time_in'));
                     $ot_time_out = str_replace(":", "", request('ot_time_out'));
                     $workshift_a = hris_workshift_assignment::where('employee_id', $employee->id)->where('status', '1')->get();
-                    $count = count($workshift_a);
-                    if ( $count > 0 ) {
+                    if ( $workshift_a !== NULL ) {
                         foreach($workshift_a as $wa)
                         {
                             $wa_id[] = $wa->id;
@@ -171,9 +170,8 @@ class OvertimeController extends Controller
                     $date = str_replace("-", "", request('ot_date'));
                     $ot_time_in = str_replace(":", "", request('ot_time_in'));
                     $ot_time_out = str_replace(":", "", request('ot_time_out'));
-                    $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->first();
-                    $count = count($workshift_a);
-                    if ( $count > 0 ) {
+                    $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->get();
+                    if ( $workshift_a != NULL ) {
                         foreach($workshift_a as $wa)
                         {
                             $wa_id[] = $wa->id;
@@ -332,9 +330,8 @@ class OvertimeController extends Controller
             $date = str_replace("-", "", request('ot_date'));
             $ot_time_in = str_replace(":", "", request('ot_time_in'));
             $ot_time_out = str_replace(":", "", request('ot_time_out'));
-            $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->first();
-            $count = count($workshift_a);
-            if ( $count > 0 ) {
+            $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->get();
+            if ( $$workshift_a != NULL ) {
                 foreach($workshift_a as $wa)
                 {
                     $wa_id[] = $wa->id;
