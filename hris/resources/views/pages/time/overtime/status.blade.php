@@ -29,18 +29,6 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="form-group">
-                        <label class="mr-2" for="type">Type: </label>
-                        <span class="badge">Required</span>
-                        <select class="form-control select2 required" name="type" required>
-                            <option disabled default selected>--select one--</option>
-                            @foreach( $types as $type )
-                            <option value="{{$type->id}}">{{$type->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
                         <label class="mr-2" for="supervisor_remarks">Supervisor Remarks: </label>
                         <span class="badge badge-danger">Required</span>
                         <div class="input">
