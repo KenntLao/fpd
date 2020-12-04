@@ -434,306 +434,84 @@ class OvertimeController extends Controller
                 {
                     $shift = $day.'_shift';
                     if ( $day == $ot_day ) {
+                        if ( $ws_m->$shift == 1 ) {
+                            $sd = 1;
+                        } else {
+                            $sd = 0;
+                        }
                         if ( !$overtime->overtime_category ) {
                             $error = 1;
                             $msg = 'Overtime category not found.';
-                        }
-                        if ( $overtime->overtime_category_id == 5 OR $overtime->overtime_category_id == 6 OR $overtime->overtime_category_id == 7 ) {
+                        } elseif ( $overtime->overtime_category_id == 5 OR $overtime->overtime_category_id == 6 OR $overtime->overtime_category_id == 7 ) {
                             $error = 1;
                             $msg = 'Overtime reason : '. $overtime->overtime_category->name .' not yet available.';
-                        }
-                        if ( $overtime->overtime_category_id == 1 OR $overtime->overtime_category_id == 2 OR $overtime->overtime_category_id == 4) {
-                            if ( $ws_m->$shift == 1 ) {
-                                // REGULAR
-                                $model = $overtime;
-                                $this->function->statusSystemLog($this->module,$string,$id);
-                                // NIGHT DIFF
-                                if ( $overtime->ot_time_out < '0559' OR $overtime->ot_time_out >= $nightdiff ) {
-                                    if ( $overtime->ot_time_in < $nightdiff ) {
-                                    // IF NIGHT DIFF IS EQUAL OR LESS THAN 8HRS
-                                        if ( $ot_difference <= 8 ) {
-                                        // IF OT TIME IN IS GREATER THAN 10PM AND LESS THAN 6AM 
-                                            $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                            $reg = $ot_diff;
-                                            $reg_8 = null;
-                                            $nd = $ot_difference - $ot_diff;
-                                        }
-                                        if ( $ot_difference > 8 ) {
-                                            if ( $overtime->ot_time_in < $nightdiff ) {
-                                                $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                                if ( $ot_diff > 8 ) {
-
-                                                    $reg = 8;
-                                                    $reg_8 = $ot_diff-$reg;
-                                                    $nd = $ot_difference - $ot_diff;
-                                                } else {
-                                                    $reg = $ot_diff;
-                                                    $reg_8 = null;
-                                                    $nd = $ot_difference - $ot_diff;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if ( $overtime->ot_time_in == $nightdiff OR $overtime->ot_time_in > $nightdiff ) {
-
-                                            $tomorrow = lcfirst(date("l", strtotime('+1 day', strtotime($overtime->ot_date))));
-                                            $tom_shift = $tomorrow.'_shift';
-                                            $tom_time_in = $tomorrow.'_time_in';
-                                            if ( $ws_m->$tom_shift == 1 ) {
-                                                if ( $overtime->ot_time_out < $ws_m->$tom_time_in ) {
-                                                    $reg = null;
-                                                    $reg_8 = null;
-                                                    $nd = $ot_difference;
-                                                } else {
-                                                    $error = 1;
-                                                    $msg = "Overtime time out invalid. Check workshift for tomorrow.";
-                                                }
-                                            } else {
-                                                $reg = null;
-                                                $reg_8 = null;
-                                                $nd = $ot_difference;
-                                            }
-                                    }
-                                } else {
-                                    // REGULAR HOURS AND NIGHT DIFF
-                                    if ( $overtime->ot_time_in < $nightdiff AND $overtime->ot_time_out <= '0559' ) {
+                        } else {
+                            // REGULAR
+                            $model = $overtime;
+                            $this->function->statusSystemLog($this->module,$string,$id);
+                            // NIGHT DIFF
+                            if ( $overtime->ot_time_out < '0559' OR $overtime->ot_time_out >= $nightdiff ) {
+                                if ( $overtime->ot_time_in < $nightdiff ) {
+                                // IF NIGHT DIFF IS EQUAL OR LESS THAN 8HRS
+                                    if ( $ot_difference <= 8 ) {
+                                    // IF OT TIME IN IS GREATER THAN 10PM AND LESS THAN 6AM 
                                         $ot_diff = (strtotime($nightdiff) - $time1)/3600;
                                         $reg = $ot_diff;
                                         $reg_8 = null;
                                         $nd = $ot_difference - $ot_diff;
                                     }
-                                    if ( $ot_difference <= 8 ) {
-                                        $reg = $ot_difference;
-                                        $reg_8 = null;
-                                        $nd = null;
-                                    } else {
-                                        $reg = 8;
-                                        $reg_8 = $ot_difference-$reg;
-                                        $nd = null;
+                                    if ( $ot_difference > 8 ) {
+                                        if ( $overtime->ot_time_in < $nightdiff ) {
+                                            $ot_diff = (strtotime($nightdiff) - $time1)/3600;
+                                            if ( $ot_diff > 8 ) {
+                                                $reg = 8;
+                                                $reg_8 = $ot_diff-$reg;
+                                                $nd = $ot_difference - $ot_diff;
+                                            } else {
+                                                $reg = $ot_diff;
+                                                $reg_8 = null;
+                                                $nd = $ot_difference - $ot_diff;
+                                            }
+                                        }
                                     }
                                 }
-                                $overtime->REG = $reg;
-                                $overtime->REG_8 = $reg_8;
-                                $overtime->REG_ND1 = $nd;
-                            
+                                if ( $overtime->ot_time_in == $nightdiff OR $overtime->ot_time_in > $nightdiff ) {
+
+                                    $tomorrow = lcfirst(date("l", strtotime('+1 day', strtotime($overtime->ot_date))));
+                                    $tom_shift = $tomorrow.'_shift';
+                                    $tom_time_in = $tomorrow.'_time_in';
+                                    if ( $ws_m->$tom_shift == 1 ) {
+                                        if ( $overtime->ot_time_out < $ws_m->$tom_time_in ) {
+                                            $reg = null;
+                                            $reg_8 = null;
+                                            $nd = $ot_difference;
+                                        } else {
+                                            $error = 1;
+                                            $msg = "Overtime time out invalid. Check workshift for tomorrow.";
+                                        }
+                                    } else {
+                                        $reg = null;
+                                        $reg_8 = null;
+                                        $nd = $ot_difference;
+                                    }
+                                }
                             } else {
-                                // REST DAY
-                                $model = $overtime;
-                                $this->function->statusSystemLog($this->module,$string,$id);
-                                // NIGHT DIFF
-                                if ( $overtime->ot_time_out < '0559' OR $overtime->ot_time_out >= $nightdiff ) {
-                                    if ( $overtime->ot_time_in < $nightdiff ) {
-                                    // IF NIGHT DIFF IS EQUAL OR LESS THAN 8HRS
-                                        if ( $ot_difference <= 8 ) {
-                                        // IF OT TIME IN IS GREATER THAN 10PM AND LESS THAN 6AM 
-                                            $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                            $reg = $ot_diff;
-                                            $reg_8 = null;
-                                            $nd = $ot_difference - $ot_diff;
-                                        }
-                                        if ( $ot_difference > 8 ) {
-                                            if ( $overtime->ot_time_in < $nightdiff ) {
-
-                                                $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                                if ( $ot_diff > 8 ) {
-                                                    $reg = 8;
-                                                    $reg_8 = $ot_diff-$reg;
-                                                    $nd = $ot_difference - $ot_diff;
-                                                } else {
-                                                    $reg = $ot_diff;
-                                                    $reg_8 = null;
-                                                    $nd = $ot_difference - $ot_diff;
-                                                }
-
-                                            }
-                                        }
-                                    }
-                                    if ( $overtime->ot_time_in == $nightdiff OR $overtime->ot_time_in > $nightdiff ) {
-                                            $tomorrow = lcfirst(date("l", strtotime('+1 day', strtotime($overtime->ot_date))));
-                                            $tom_shift = $tomorrow.'_shift';
-                                            $tom_time_in = $tomorrow.'_time_in';
-                                            if ( $ws_m->$tom_shift == 1 ) {
-                                                if ( $overtime->ot_time_out < $ws_m->$tom_time_in ) {
-                                                    $reg = null;
-                                                    $reg_8 = null;
-                                                    $nd = $ot_difference;
-                                                } else {
-                                                    $error = 1;
-                                                    $msg = "Overtime time out invalid. Check workshift for tomorrow.";
-                                                }
-                                            } else {
-                                                $reg = null;
-                                                $reg_8 = null;
-                                                $nd = $ot_difference;
-                                            }
-                                    }
-                                } else {
-                                    // REGULAR HOURS AND NIGHT DIFF
-                                    if ( $overtime->ot_time_in < $nightdiff AND $overtime->ot_time_out <= '0559' ) {
-                                        $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                        $reg = $ot_diff;
-                                        $reg_8 = null;
-                                        $nd = $ot_difference - $ot_diff;
-                                    }
-                                    if ( $ot_difference <= 8 ) {
-                                        $reg = $ot_difference;
-                                        $reg_8 = null;
-                                        $nd = null;
-                                    } else {
-                                        $reg = 8;
-                                        $reg_8 = $ot_difference-$reg;
-                                        $nd = null;
-                                    }
+                                // REGULAR HOURS AND NIGHT DIFF
+                                if ( $overtime->ot_time_in < $nightdiff AND $overtime->ot_time_out <= '0559' ) {
+                                    $ot_diff = (strtotime($nightdiff) - $time1)/3600;
+                                    $reg = $ot_diff;
+                                    $reg_8 = null;
+                                    $nd = $ot_difference - $ot_diff;
                                 }
-                                $overtime->RST = $reg;
-                                $overtime->RST_8 = $reg_8;
-                                $overtime->RST_ND1 = $nd;
-                            }
-                        } elseif ( $overtime->overtime_category_id == 3 ) {
-                            if ( $ws_m->$string == 1 ) {
-                                // REGULAR CLIENT
-                                $model = $overtime;
-                                $this->function->statusSystemLog($this->module,$string,$id);
-                                // NIGHT DIFF
-                                if ( $overtime->ot_time_out < '0559' OR $overtime->ot_time_out >= $nightdiff ) {
-                                    if ( $overtime->ot_time_in < $nightdiff ) {
-                                    // IF NIGHT DIFF IS EQUAL OR LESS THAN 8HRS
-                                        if ( $ot_difference <= 8 ) {
-                                        // IF OT TIME IN IS GREATER THAN 10PM AND LESS THAN 6AM 
-                                            $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                            $reg = $ot_diff;
-                                            $reg_8 = null;
-                                            $nd = $ot_difference - $ot_diff;
-                                        }
-                                        if ( $ot_difference > 8 ) {
-                                            if ( $overtime->ot_time_in < $nightdiff ) {
-                                                $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                                if ( $ot_diff > 8 ) {
-                                                    $reg = 8;
-                                                    $reg_8 = $ot_diff-$reg;
-                                                    $nd = $ot_difference - $ot_diff;
-                                                } else {
-                                                    $reg = $ot_diff;
-                                                    $reg_8 = null;
-                                                    $nd = $ot_difference - $ot_diff;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if ( $overtime->ot_time_in == $nightdiff OR $overtime->ot_time_in > $nightdiff ) {
-
-                                            $tomorrow = lcfirst(date("l", strtotime('+1 day', strtotime($overtime->ot_date))));
-                                            $tom_shift = $tomorrow.'_shift';
-                                            $tom_time_in = $tomorrow.'_time_in';
-                                            if ( $ws_m->$tom_shift == 1 ) {
-                                                if ( $overtime->ot_time_out < $ws_m->$tom_time_in ) {
-                                                    $reg = null;
-                                                    $reg_8 = null;
-                                                    $nd = $ot_difference;
-                                                } else {
-                                                    $error = 1;
-                                                    $msg = "Overtime time out invalid. Check workshift for tomorrow.";
-                                                }
-                                            } else {
-                                                $reg = null;
-                                                $reg_8 = null;
-                                                $nd = $ot_difference;
-                                            }
-                                    }
+                                if ( $ot_difference <= 8 ) {
+                                    $reg = $ot_difference;
+                                    $reg_8 = null;
+                                    $nd = null;
                                 } else {
-                                    // REGULAR HOURS AND NIGHT DIFF
-                                    if ( $overtime->ot_time_in < $nightdiff AND $overtime->ot_time_out <= '0559' ) {
-                                        $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                        $reg = $ot_diff;
-                                        $reg_8 = null;
-                                        $nd = $ot_difference - $ot_diff;
-                                    }
-                                    if ( $ot_difference <= 8 ) {
-                                        $reg = $ot_difference;
-                                        $reg_8 = null;
-                                        $nd = null;
-                                    } else {
-                                        $reg = 8;
-                                        $reg_8 = $ot_difference-$reg;
-                                        $nd = null;
-                                    }
+                                    $reg = 8;
+                                    $reg_8 = $ot_difference-$reg;
+                                    $nd = null;
                                 }
-                                $overtime->REG_CIENT = $reg;
-                                $overtime->REG_CLIENT_8 = $reg_8;
-                                $overtime->REG_CLIENT_ND1 = $nd;
-                            
-                            } else {
-                                // REST DAY CLIENT
-                                $model = $overtime;
-                                $this->function->statusSystemLog($this->module,$string,$id);
-                                // NIGHT DIFF
-                                if ( $overtime->ot_time_out < '0559' OR $overtime->ot_time_out >= $nightdiff ) {
-                                    if ( $overtime->ot_time_in < $nightdiff ) {
-                                    // IF NIGHT DIFF IS EQUAL OR LESS THAN 8HRS
-                                        if ( $ot_difference <= 8 ) {
-                                        // IF OT TIME IN IS GREATER THAN 10PM AND LESS THAN 6AM 
-                                            $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                            $reg = $ot_diff;
-                                            $reg_8 = null;
-                                            $nd = $ot_difference - $ot_diff;
-                                        }
-                                        if ( $ot_difference > 8 ) {
-                                            if ( $overtime->ot_time_in < $nightdiff ) {
-                                                $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                                if ( $ot_diff > 8 ) {
-                                                    $reg = 8;
-                                                    $reg_8 = $ot_diff-$reg;
-                                                    $nd = $ot_difference - $ot_diff;
-                                                } else {
-                                                    $reg = $ot_diff;
-                                                    $reg_8 = null;
-                                                    $nd = $ot_difference - $ot_diff;
-                                                }
-                                            }
-
-                                        }
-                                    }
-                                    if ( $overtime->ot_time_in == $nightdiff OR $overtime->ot_time_in > $nightdiff ) {
-
-                                            $tomorrow = lcfirst(date("l", strtotime('+1 day', strtotime($overtime->ot_date))));
-                                            $tom_shift = $tomorrow.'_shift';
-                                            $tom_time_in = $tomorrow.'_time_in';
-                                            if ( $ws_m->$tom_shift == 1 ) {
-                                                if ( $overtime->ot_time_out < $ws_m->$tom_time_in ) {
-                                                    $reg = null;
-                                                    $reg_8 = null;
-                                                    $nd = $ot_difference;
-                                                } else {
-                                                    $error = 1;
-                                                    $msg = "Overtime time out invalid. Check workshift for tomorrow.";
-                                                }
-                                            } else {
-                                                $reg = null;
-                                                $reg_8 = null;
-                                                $nd = $ot_difference;
-                                            }
-                                    }
-                                } else {
-                                    // REGULAR HOURS AND NIGHT DIFF
-                                    if ( $overtime->ot_time_in < $nightdiff AND $overtime->ot_time_out <= '0559' ) {
-                                        $ot_diff = (strtotime($nightdiff) - $time1)/3600;
-                                        $reg = $ot_diff;
-                                        $reg_8 = null;
-                                        $nd = $ot_difference - $ot_diff;
-                                    }
-                                    if ( $ot_difference <= 8 ) {
-                                        $reg = $ot_difference;
-                                        $reg_8 = null;
-                                        $nd = null;
-                                    } else {
-                                        $reg = 8;
-                                        $reg_8 = $ot_difference-$reg;
-                                        $nd = null;
-                                    }
-                                }
-                                $overtime->RST_CLIENT = $reg;
-                                $overtime->RST_CLIENT_8 = $reg_8;
-                                $overtime->RST_CLIENT_ND1 = $nd;
                             }
                         }
                     }
@@ -741,6 +519,27 @@ class OvertimeController extends Controller
                 if ( $error == 1 ) {
                     return back()->withErrors([$msg]);
                 } else {
+                    if ( $sd == 1 ) {
+                        if ( $overtime->overtime_category_id == 3 ) {
+                            $overtime->REG = $reg;
+                            $overtime->REG_8 = $reg_8;
+                            $overtime->REG_ND1 = $reg;
+                        } else {
+                            $overtime->REG_CLIENT = $reg;
+                            $overtime->REG_CLIENT_8 = $reg_8;
+                            $overtime->REG_CLIENT_ND1 = $nd;
+                        }
+                    } else {
+                        if ( $overtime->overtime_category_id == 3 ) {
+                            $overtime->RST = $reg;
+                            $overtime->RST_8 = $reg_8;
+                            $overtime->RST_ND1 = $reg;
+                        } else {
+                            $overtime->RST_CLIENT = $reg;
+                            $overtime->RST_CLIENT_8 = $reg_8;
+                            $overtime->RST_CLIENT_ND1 = $nd;
+                        }
+                    }
                     $overtime->status = $status;
                     $overtime->approved_by_id = $_SESSION['sys_id'];
                     $overtime->role_id = $_SESSION['sys_role_ids'];
