@@ -339,7 +339,8 @@ class OvertimeController extends Controller
                 $latest_wa_id = max($wa_id);
                 $latest_wa = hris_workshift_assignment::find($latest_wa_id);
                 $workshift_id = $latest_wa->workshift_id;
-                if ( $date >= $latest_wa->date_from && $date <= $latest_wa->date_to ) {
+                if ($date >= $latest_wa->date_from && $date <= $latest_wa->date_to) {
+                    
                     $wm = hris_work_shift_management::find($workshift_id);
                     $week = array('monday','tuesday','wednesday','thursday','friday','saturday','sunday');
                     foreach ($week as $day)
