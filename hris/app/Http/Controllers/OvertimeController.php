@@ -97,7 +97,7 @@ class OvertimeController extends Controller
                     $ot_time_in = str_replace(":", "", request('ot_time_in'));
                     $ot_time_out = str_replace(":", "", request('ot_time_out'));
                     $workshift_a = hris_workshift_assignment::where('employee_id', $employee->id)->where('status', '1')->get();
-                    if ( $workshift_a !== NULL ) {
+                    if ( !empty($workshift_a) ) {
                         foreach($workshift_a as $wa)
                         {
                             $wa_id[] = $wa->id;
@@ -171,7 +171,7 @@ class OvertimeController extends Controller
                     $ot_time_in = str_replace(":", "", request('ot_time_in'));
                     $ot_time_out = str_replace(":", "", request('ot_time_out'));
                     $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->get();
-                    if ( $workshift_a != NULL ) {
+                    if ( !empty($workshift_a) ) {
                         foreach($workshift_a as $wa)
                         {
                             $wa_id[] = $wa->id;
@@ -331,7 +331,7 @@ class OvertimeController extends Controller
             $ot_time_in = str_replace(":", "", request('ot_time_in'));
             $ot_time_out = str_replace(":", "", request('ot_time_out'));
             $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->get();
-            if ( $$workshift_a != NULL ) {
+            if ( !empty($workshift_a) ) {
                 foreach($workshift_a as $wa)
                 {
                     $wa_id[] = $wa->id;
