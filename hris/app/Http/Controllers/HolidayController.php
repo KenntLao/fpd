@@ -59,6 +59,7 @@ class HolidayController extends Controller
             $string = 'App\hris_holidays';
             $holiday->name = request('name');
             $holiday->holiday_date = request('holiday_date');
+            $holiday->ot_type = request('ot_type');
             $holiday->status = request('status');
             $holiday->country = request('country');
             // GET CHANGES
@@ -111,6 +112,7 @@ class HolidayController extends Controller
         return request()->validate([
             'name' => 'required',
             'holiday_date' => 'required',
+            'ot_type' => 'required',
             'status' => 'required',
             'country' => 'nullable'
         ]);

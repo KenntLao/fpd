@@ -15,6 +15,7 @@ use App\hris_overtime_types;
 use App\Notifications\SupervisorNotif;
 use App\hris_work_shift_management;
 use App\hris_workshift_assignment;
+use App\hris_holidays;
 
 class OvertimeController extends Controller
 {
@@ -519,25 +520,71 @@ class OvertimeController extends Controller
                 if ( $error == 1 ) {
                     return back()->withErrors([$msg]);
                 } else {
+                    $holiday = hris_holidays::where('holiday_date', $overtime->ot_date)->first();
                     if ( $sd == 1 ) {
-                        if ( $overtime->overtime_category_id == 3 ) {
-                            $overtime->REG = $reg;
-                            $overtime->REG_8 = $reg_8;
-                            $overtime->REG_ND1 = $reg;
+                        if ( $holiday->ot_type == 1 ) {
+                            if ( $overtime->overtime_category_id == 3 ) {
+                                $overtime->LGL = $reg;
+                                $overtime->LGL_8 = $reg_8;
+                                $overtime->LGL_ND1 = $reg;
+                            } else {
+                                $overtime->LG_CLIENT = $reg;
+                                $overtime->LG_CLIENT_8 = $reg_8;
+                                $overtime->LG_CLIENT_ND1 = $nd;
+                            }
+                        } elseif ( $holiday->ot_type == 2 OR $holiday->ot_type == 3 ) {
+                            if ( $overtime->overtime_category_id == 3 ) {
+                                $overtime->SPL = $reg;
+                                $overtime->SPL_8 = $reg_8;
+                                $overtime->SPL_ND1 = $reg;
+                            } else {
+                                $overtime->SPL_CLIENT = $reg;
+                                $overtime->SPL_CLIENT_8 = $reg_8;
+                                $overtime->SPL_CLIENT_ND1 = $nd;
+                            }
+
                         } else {
-                            $overtime->REG_CLIENT = $reg;
-                            $overtime->REG_CLIENT_8 = $reg_8;
-                            $overtime->REG_CLIENT_ND1 = $nd;
+                            if ( $overtime->overtime_category_id == 3 ) {
+                                $overtime->REG = $reg;
+                                $overtime->REG_8 = $reg_8;
+                                $overtime->REG_ND1 = $reg;
+                            } else {
+                                $overtime->REG_CLIENT = $reg;
+                                $overtime->REG_CLIENT_8 = $reg_8;
+                                $overtime->REG_CLIENT_ND1 = $nd;
+                            }
                         }
                     } else {
-                        if ( $overtime->overtime_category_id == 3 ) {
-                            $overtime->RST = $reg;
-                            $overtime->RST_8 = $reg_8;
-                            $overtime->RST_ND1 = $reg;
+                        if ( $holiday->ot_type == 1 ) {
+                            if ( $overtime->overtime_category_id == 3 ) {
+                                $overtime->LGLRST = $reg;
+                                $overtime->LGLRST_8 = $reg_8;
+                                $overtime->LGLRST_ND1 = $reg;
+                            } else {
+                                $overtime->LGRS_CLIEN = $reg;
+                                $overtime->LGRS_CLIEN_8 = $reg_8;
+                                $overtime->LGRS_CLIEN_ND1 = $nd;
+                            }
+                        } elseif ( $holiday->ot_type == 2 OR $holiday->ot_type == 3 ) {
+                            if ( $overtime->overtime_category_id == 3 ) {
+                                $overtime->SPLRST = $reg;
+                                $overtime->SPLRST_8 = $reg_8;
+                                $overtime->SPLRST_ND1 = $reg;
+                            } else {
+                                $overtime->SPRS_CLIEN = $reg;
+                                $overtime->SPRS_CLIEN_8 = $reg_8;
+                                $overtime->SPRS_CLIEN_ND1 = $nd;
+                            }
                         } else {
-                            $overtime->RST_CLIENT = $reg;
-                            $overtime->RST_CLIENT_8 = $reg_8;
-                            $overtime->RST_CLIENT_ND1 = $nd;
+                            if ( $overtime->overtime_category_id == 3 ) {
+                                $overtime->RST = $reg;
+                                $overtime->RST_8 = $reg_8;
+                                $overtime->RST_ND1 = $reg;
+                            } else {
+                                $overtime->RST_CLIENT = $reg;
+                                $overtime->RST_CLIENT_8 = $reg_8;
+                                $overtime->RST_CLIENT_ND1 = $nd;
+                            }
                         }
                     }
                     $overtime->status = $status;

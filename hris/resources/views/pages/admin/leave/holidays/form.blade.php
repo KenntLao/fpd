@@ -42,4 +42,15 @@
 			</select>
 		</div>
 	</div>
+	<div class="col-12 col-md-6">
+		<div class="form-group">
+			<label class="mr-2" for="ot_type">Type: </label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control required select2" name="ot_type" required>
+				<option value="1" {{ $holiday->ot_type == 1  ? 'selected' : '' }}>Regular</option>
+				<option value="2" {{ $holiday->ot_type == 2  ? 'selected' : '' }}>Special Non Working</option>
+				<option value="3" {{ $holiday->ot_type == 3  ? 'selected' : '' }}>Special Working</option>
+			</select>
+		</div>
+	</div>
 </div>

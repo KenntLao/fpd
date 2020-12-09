@@ -18,6 +18,7 @@ class CreateHrisHolidaysTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->date('holiday_date');
+            $table->integer('ot_type')->nullable();
             $table->string('status');
             $table->string('country')->nullable();
         });
