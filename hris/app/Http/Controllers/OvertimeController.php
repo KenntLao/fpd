@@ -443,9 +443,6 @@ class OvertimeController extends Controller
                         if ( !$overtime->overtime_category ) {
                             $error = 1;
                             $msg = 'Overtime category not found.';
-                        } elseif ( $overtime->overtime_category_id == 5 OR $overtime->overtime_category_id == 6 OR $overtime->overtime_category_id == 7 ) {
-                            $error = 1;
-                            $msg = 'Overtime reason : '. $overtime->overtime_category->name .' not yet available.';
                         } else {
                             // REGULAR
                             $model = $overtime;
@@ -521,8 +518,13 @@ class OvertimeController extends Controller
                     return back()->withErrors([$msg]);
                 } else {
                     $holiday = hris_holidays::where('holiday_date', $overtime->ot_date)->first();
+                    if ( $holiday ) {
+                        $ot_type = $holiday->ot_type;
+                    } else {
+                        $ot_type = 0;
+                    }
                     if ( $sd == 1 ) {
-                        if ( $holiday->ot_type == 1 ) {
+                        if ( $ot_type == 1 ) {
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->LGL = $reg;
                                 $overtime->LGL_8 = $reg_8;
@@ -532,7 +534,7 @@ class OvertimeController extends Controller
                                 $overtime->LG_CLIENT_8 = $reg_8;
                                 $overtime->LG_CLIENT_ND1 = $nd;
                             }
-                        } elseif ( $holiday->ot_type == 2 OR $holiday->ot_type == 3 ) {
+                        } elseif ( $ot_type == 2 OR $ot_type == 3 ) {
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->SPL = $reg;
                                 $overtime->SPL_8 = $reg_8;
@@ -555,7 +557,7 @@ class OvertimeController extends Controller
                             }
                         }
                     } else {
-                        if ( $holiday->ot_type == 1 ) {
+                        if ( $ot_type == 1 ) {
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->LGLRST = $reg;
                                 $overtime->LGLRST_8 = $reg_8;
@@ -565,7 +567,7 @@ class OvertimeController extends Controller
                                 $overtime->LGRS_CLIEN_8 = $reg_8;
                                 $overtime->LGRS_CLIEN_ND1 = $nd;
                             }
-                        } elseif ( $holiday->ot_type == 2 OR $holiday->ot_type == 3 ) {
+                        } elseif ( $ot_type == 2 OR $ot_type == 3 ) {
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->SPLRST = $reg;
                                 $overtime->SPLRST_8 = $reg_8;

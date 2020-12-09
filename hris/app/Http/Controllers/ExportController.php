@@ -15,6 +15,7 @@ class ExportController extends Controller
     public function overtimeExport()
     {
     	if ( $this->validatedData() ) {
+            $report = request('report');
     		$date_from = date(request('date_from'));
 	    	$date_to = date(request('date_to'));
 	    	$str_from = str_replace('-', '', request('date_from'));
@@ -29,6 +30,11 @@ class ExportController extends Controller
                 $employee = hris_employee::find($employee_id);
                 $emp_name = $employee->firstname.'_'.$employee->lastname;
             }
+            if ( $report == 1 ) {
+                $rpt = "FPD";
+            } else {
+                $rpt = "CLIENT";
+            }
             if ( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) ) {
                 $check = hris_overtime::all();
             } else {
@@ -37,7 +43,7 @@ class ExportController extends Controller
             if ( $check->isEmpty() ) {
                 return back()->withErrors(['No data to download.']);
             } else {
-                return Excel::download(new OvertimeExport($date_from,$date_to,$employee_id), 'FPD-OT-FROM-'. $str_from .'-TO-'. $str_to .'-'. $emp_name .'.xlsx');
+                return Excel::download(new OvertimeExport($date_from,$date_to,$employee_id,$report), 'FPD-OT-FROM-'. $str_from .'-TO-'. $str_to .'-'. $emp_name .'-'. $rpt .'.xlsx');
             }
     	} else {
 	    	return back()->withErrors($this->validatedData());

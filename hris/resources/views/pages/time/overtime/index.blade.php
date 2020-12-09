@@ -1118,6 +1118,14 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                     }
                     @endphp
                     <div class="form-group">
+                        <label>REPORT: </label>
+                        <span class="badge badge-danger">Required</span>
+                        <select class="form-control select2 required" name="report">
+                            <option value="1">FPD</option>
+                            <option value="2">Client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="date_from">Date from: </label>
                         <span class="badge badge-danger">Required</span>
                         <div class="input">
