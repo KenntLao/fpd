@@ -1,6 +1,6 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('adminlte::page')
-@section('title', 'HRIS | Recruitment - npa')
+@section('title', 'HRIS | Recruitment - NPA')
 @section('content_header')
 <div class="row no-gutters">
 	<div class="col-12 page-title">
