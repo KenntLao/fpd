@@ -89,6 +89,23 @@
 		</div>
 	</div>
 	<div class="card-body">
+		@if($npa->approve)
+		<div class="row">
+			<div class="col-12 col-md-6">
+				<div class="form-group">
+					<label>Approved by:</label>
+					@if($npa->approve == 'user')
+					@php
+					$user = App\users::find($npa->approve_id);
+					@endphp
+					<p>{{ucfirst($user->firstname)}} {{ucfirst($user->lastname)}}</p>
+					@else
+					<p>[{{$npa->approve->employee_number}}] {{ucfirst($npa->approve->firstname)}} {{ucfirst($npa->approve->lastname)}}</p>
+					@endif
+				</div>
+			</div>
+		</div>
+		@endif
 		<div class="row">
 			<div class="col-12 col-md-6">
 				<div class="form-group">
