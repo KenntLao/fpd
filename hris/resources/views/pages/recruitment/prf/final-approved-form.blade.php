@@ -31,13 +31,16 @@
         @else
         <div class="card-tools">
             @if($prf->initial_status == 1)
-            <p class="badge-success p-1">Processing</p>
+            <p class="badge-primary p-1">Processing</p>
+            @elseif($prf->initial_status == 2)
+            <p class="badge-success p-1">Approved</p>
             @elseif($prf->initial_status == 3)
             <p class="badge-danger p-1">Rejected</p>
             @endif
         </div>
         @endif
         @else
+
         @if(in_array($hr_recruitment_id,$employee_ids))
         @if($prf->initial_status == 3)
         <div class="card-tools">
@@ -57,6 +60,8 @@
         <div class="card-tools">
             @if($prf->initial_status == 1)
             <p class="badge-success p-1">Processing</p>
+            @elseif($prf->initial_status == 2)
+            <p class="badge-success p-1">Approved</p>
             @elseif($prf->initial_status == 3)
             <p class="badge-danger p-1">Rejected</p>
             @endif
