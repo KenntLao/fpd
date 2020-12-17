@@ -35,7 +35,7 @@
 				<thead>
 					<tr>
 						<th>Date</th>
-						<th>Sender</th>
+						<th>requested by</th>
 						<th>Approved by</th>
 						<th>status</th>
 						<th>actions</th>

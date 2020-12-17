@@ -15,7 +15,8 @@ class CreateHrisNpasTable extends Migration
     {
         Schema::create('hris_npas', function (Blueprint $table) {
             $table->id();
-            $table->string('account_mode');
+            $table->string('request_mode');
+            $table->string('approve_mode')->nullable();
             $table->date('request_date');
             $table->string('attention');
             $table->string('ref_no');
