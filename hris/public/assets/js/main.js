@@ -5,6 +5,10 @@ $(document).ready(function () {
         placeholder: "Select Roles",
     });
 
+    $('.select-candidate').select2({
+        placeholder: "Select Candidates",
+    });
+
     $('.select-job-title').select2({
         placeholder: "Select Job Titles",
     });

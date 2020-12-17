@@ -42,7 +42,7 @@ class CreateHrisPrfTable extends Migration
             $table->integer('employment_status_id')->nullable();
             $table->date('duration_from')->nullable();
             $table->date('duration_to')->nullable();
-            $table->string('candidate_name')->nullable();
+            $table->string('candidate_id')->nullable();
             $table->string('candidate_position')->nullable();
             $table->date('candidate_hire_date')->nullable();
             $table->date('candidate_salary')->nullable();

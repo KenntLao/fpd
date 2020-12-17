@@ -77,14 +77,48 @@
 							@endif
 						</td>
 						<td>
+							<!-- IF CURRENT USER IS OM -->
 							@if($prf->employee_id == $_SESSION['sys_id'])
-							@if($prf->initial_status == 0)
-							<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/edit"><i class="fa fa-edit"></i></a>
+								<!-- IF PENDING -->
+								@if($prf->initial_status == 0)
+									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/edit"><i class="fa fa-edit"></i></a>
+								<!-- IF PROCESSING -->
+								@elseif($prf->initial_status == 1)
+									<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
+								<!-- IF HR APPROVED -->
+								@elseif($prf->initial_status == 2)
+									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/showFinal"><i class="fa fa-search"></i></a>
+								<!-- IF REJECTED -->
+								@else
+								<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
+								@endif
+							<!-- IF CURRENT USER IS DIRECTOR -->
+							@elseif($prf->supervisor_id == $_SESSION['sys_id'])
+							<!-- IF PENDING -->
+								@if($prf->initial_status == 0)
+									<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
+								<!-- IF PROCESSING -->
+								@elseif($prf->initial_status == 1)
+									<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
+								<!-- IF HR APPROVED -->
+								@elseif($prf->initial_status == 2)
+									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/showFinal"><i class="fa fa-search"></i></a>
+								<!-- IF REJECTED -->
+								@else
+									<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
+								@endif
+							<!-- IF CURRENT USER IS HR RECRUITMENT -->
 							@else
-							<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
-							@endif
-							@else
-							<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
+								<!-- IF PROCESSING -->
+								@if($prf->initial_status == 1)
+									<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
+								<!-- IF HR APPROVED -->
+								@elseif($prf->initial_status == 2)
+									<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/showFinal"><i class="fa fa-search"></i></a>
+								<!-- IF REJECTED -->
+								@else
+								<a class="btn btn-warning btn-sm" href="/hris/pages/recruitment/prf/{{$prf->id}}/show"><i class="fa fa-search"></i></a>
+								@endif
 							@endif
 						</td>
 					</tr>
