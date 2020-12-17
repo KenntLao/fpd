@@ -76,7 +76,9 @@
 				<option disabled default selected>-- Select Employee --</option>
 				@if(count($employees) > 0)
 				@foreach($employees as $employee)
+				@if( $employee->id != $_SESSION['sys_id'] )
 				<option value="{{$employee->id}}" {{ $npa->employee_id == $employee->id  ? 'selected' : '' }}>[{{$employee->employee_number}}] {{ucfirst($employee->firstname)}} {{ucfirst($employee->lastname)}}</option>
+				@endif
 				@endforeach
 				@endif
 			</select>
