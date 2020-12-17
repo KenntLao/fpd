@@ -728,7 +728,7 @@ return [
                     'text'    => 'Recruitment Setup',
                     'url'     => '#',
                     'icon'    => 'fas fa-fw fa-random',
-                    'can' => ['benefit','education-level','employment-type','experience-level','job-function'],
+                    'can' => ['benefit','education-level','employment-type','experience-level','job-function','npa','prf'],
                     'submenu' => [
                         [
                             'text'    => 'Benefits',
@@ -788,6 +788,13 @@ return [
                     'icon' => 'fas fa-fw fa-user-friends',
                     'active' => ['/hris/pages/recruitment/candidates/create', '/hris/pages/recruitment/candidates/index', '/hris/pages/recruitment/candidates/*/edit', 'regex:@^content/[0-9]+$@'],
                     'can' => 'candidate'
+                ],
+                [
+                    'text' => 'NPA',
+                    'url'  => '/hris/pages/recruitment/npa/index',
+                    'icon' => 'fas fa-fw fa-columns',
+                    'active' => ['/hris/pages/recruitment/npa/create', '/hris/pages/recruitment/npa/index', '/hris/pages/recruitment/npa/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'npa'
                 ],
             
             ],

@@ -664,6 +664,25 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::delete('/hris/pages/recruitment/candidates/delete/{candidate}', 'CandidateController@destroy');
     Route::get('/hris/pages/recruitment/candidates/download/{candidate}', 'CandidateController@download');
 
+    /* NPA PAGE */
+    Route::get('/hris/pages/recruitment/npa/index', 'NpaController@index');
+    /* ADD NPA */
+    Route::get('/hris/pages/recruitment/npa/create', 'NpaController@create');
+    Route::post('/hris/pages/recruitment/npa', 'NpaController@store');
+    /* EDIT NPA */
+    Route::get('/hris/pages/recruitment/npa/{npa}/edit', 'NpaController@edit');
+    /* SHOW NPA */
+    Route::get('/hris/pages/recruitment/npa/{npa}/show', 'NpaController@show');
+    /* UPDATE NPA */
+    Route::patch('/hris/pages/recruitment/npa/update/{npa}', 'NpaController@update');
+    /* APPROVE NPA */
+    Route::get('/hris/pages/recruitment/npa/approve/{npa}', 'NpaController@approve');
+    /* APPROVE NPA */
+    Route::get('/hris/pages/recruitment/npa/reject/{npa}', 'NpaController@reject');
+    Route::patch('/hris/pages/recruitment/npa/reject-submit/{npa}', 'NpaController@rejectSubmit');
+    /* DELETE NPA */
+    Route::delete('/hris/pages/recruitment/npa/delete/{npa}', 'NpaController@destroy');
+
     /* TIME MANAGEMENT */
 
     /* DAILY TIME RECORDS */
