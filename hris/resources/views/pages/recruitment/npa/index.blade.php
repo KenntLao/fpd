@@ -82,12 +82,14 @@
 						</td>
 						<td>
 							@if($npa->status == 0)
+							@if($npa->sender_id == $_SESSION['sys_id'])
 							@if(in_array('npa-edit', $_SESSION['sys_permissions']))
 							<a class="btn btn-success btn-sm" href="/hris/pages/recruitment/npa/{{$npa->id}}/edit"><i class="fa fa-edit"></i></a>
 							@endif
 							@if(in_array('npa-delete', $_SESSION['sys_permissions']))
 							<!-- Button trigger modal -->
 							<button class="btn btn-danger delete-btn btn-sm" type="button" data-toggle="modal" data-target="#modal-{{$npa->id}}" data-name="{{$npa->id}}"><i class="fa fa-trash"></i></button>
+							@endif
 							@endif
 							@endif
 							<a class="btn btn-primary btn-sm" href="/hris/pages/recruitment/npa/{{$npa->id}}/show"><i class="fa fa-search"></i></a>
