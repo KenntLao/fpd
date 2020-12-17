@@ -35,18 +35,6 @@
 		{{ucfirst($npa->sender->firstname)}} {{ucfirst($npa->sender->lastname)}}
 		@endif
 		- NPA Request
-		@if( $npa->status == 0 )
-		<span class="badge badge-secondary">Pending</span>
-		@endif
-		@if( $npa->status == 1 )
-		<span class="badge badge-primary ml-3">Processing</span>
-		@endif
-		@if( $npa->status == 2 )
-		<span class="badge badge-success ml-3">Approved</span>
-		@endif
-		@if( $npa->status == 3 )
-		<span class="badge badge-success ml-3">Rejected</span>
-		@endif
 		</h3>
 		<div class="card-tools">
 			<!-- SUPERVISOR AND SUPER ADMIN -->
@@ -59,13 +47,43 @@
 			@if ( $_SESSION['sys_role_ids'] == ',1,' )
 			<a class="btn btn-danger btn-md mr-1" href="/hris/pages/recruitment/npa/reject/{{$npa->id}}"><i class="fa fa-ban mr-1"></i> Reject</a>
 			<a class="btn btn-success btn-md" href="/hris/pages/recruitment/npa/approve/{{$npa->id}}"><i class="fa fa-check mr-1"></i> Approve</a>
+			@else
+			<span class="badge-primary p-1">Processing</span>
 			@endif
+			@endif
+			@if( $npa->status == 2 )
+			<span class="badge-success p-1">Approved</span>
+			@endif
+			@if( $npa->status == 3 )
+			<span class="badge-success p-1">Rejected</span>
 			@endif
 			<!-- ELSE IF ( HR RECRUITMENT ) -->
 			@elseif ( in_array($hr_id, $sess_roles) )
+			@if( $npa->status == 0 )
+			<span class="badge-secondary p-1">Pending</span>
+			@endif
 			@if($npa->status == 1)
 			<a class="btn btn-danger btn-md mr-1" href="/hris/pages/recruitment/npa/reject/{{$npa->id}}"><i class="fa fa-ban mr-1"></i> Reject</a>
 			<a class="btn btn-success btn-md" href="/hris/pages/recruitment/npa/approve/{{$npa->id}}"><i class="fa fa-check mr-1"></i> Approve</a>
+			@endif
+			@if( $npa->status == 2 )
+			<span class="badge-success p-1">Approved</span>
+			@endif
+			@if( $npa->status == 3 )
+			<span class="badge-success p-1">Rejected</span>
+			@endif
+			@else
+			@if( $npa->status == 0 )
+			<span class="badge-secondary p-1">Pending</span>
+			@endif
+			@if( $npa->status == 1 )
+			<span class="badge-primary p-1">Processing</span>
+			@endif
+			@if( $npa->status == 2 )
+			<span class="badge-success p-1">Approved</span>
+			@endif
+			@if( $npa->status == 3 )
+			<span class="badge-success p-1">Rejected</span>
 			@endif
 			@endif
 		</div>
