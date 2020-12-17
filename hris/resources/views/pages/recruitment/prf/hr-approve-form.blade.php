@@ -96,7 +96,7 @@
 					<div class="form-group">
 						<label class="mr-2" for="roles">Name of Hired Personnel</label>
 						<span class="badge badge-danger">Required</span>
-						<select class="required select-candidate" name="candidates[]" multiple="multiple" required>
+						<select class="required select2" name="candidates[]" multiple="multiple" required>
 							@if(count($candidates) > 0)
 							@foreach($candidates as $candidate)
 							<option value="{{$candidate->id}}">

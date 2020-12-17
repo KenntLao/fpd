@@ -299,8 +299,9 @@
                     $candidate_arr_orig = explode(',',$prf->candidate_id);
                     $candidate_arr = array_slice($candidate_arr_orig, 1, -1);
                     foreach($candidate_arr as $candidate_id) {
-                    $candidate_detail = App\hris_candidates::where('id',$candidate_id)->first();
-                    echo '<p>' . $candidate_detail->careers_app_fname . ' ' . $candidate_detail->careers_app_lname . '</p>';
+                        $candidate_detail = App\hris_candidates::where('id',$candidate_id)->first();
+                        
+                        echo '<p>' . $candidate_detail->careers_app_fname . ' ' . $candidate_detail->careers_app_lname . '</p>';
                     }
                     @endphp
 

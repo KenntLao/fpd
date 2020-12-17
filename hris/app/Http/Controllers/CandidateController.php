@@ -8,6 +8,8 @@ use App\hris_job_positions;
 use App\hris_countries;
 use App\users;
 use App\table_careers_application;
+use App\roles;
+use App\hris_employee;
 
 class CandidateController extends Controller
 {
@@ -21,8 +23,16 @@ class CandidateController extends Controller
     }
     public function index()
     {
-        $candidates = table_careers_application::paginate(10);
-        return view('pages.recruitment.candidates.index', compact('candidates'));
+        $current_user_id = $_SESSION['sys_id'];
+        $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
+
+        // GET CURRENT USER ROLE ID
+        $employee = hris_employee::where('id', $current_user_id)->first();
+        $employee_ids = explode(',', $employee->role_id);
+
+
+        $candidates = table_careers_application::all();
+        return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids'));
     }
 
     public function create(hris_candidates $candidate)
@@ -198,6 +208,12 @@ class CandidateController extends Controller
         } else {
             return back()->withErrors(['File does not exist.']);
         }
+    }
+
+    public function updateStatus(Request $request){
+        $candidate = hris_candidates::where('id',$request->candidate_id)->first();
+        $candidate->status = $request->candidate_status;
+        $candidate->update();
     }
 
     protected function storeValidatedData() {

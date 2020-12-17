@@ -33,14 +33,15 @@
 	<div class="card-body">
 		@if(count($candidates) > 0)
 		<div class="table-responsive">
-			<table class="table table-hover table-bordered table-striped table-condensed">
+			<table class="table table-hover table-bordered table-striped table-condensed table-data">
 				<thead>
 					<tr>
 						<th>position applied</th>
-						<th>first name</th>
-						<th>last name</th>
+						<th>Name</th>
 						<th>email</th>
 						<th>contact</th>
+						<th>Status</th>
+						<th>Status Date</th>
 						<th>file</th>
 					</tr>
 				</thead>
@@ -48,13 +49,28 @@
 					@foreach($candidates as $candidate)
 					<tr>
 						<td>{{$candidate->careers_app_position}}</td>
-						<td>{{$candidate->careers_app_fname}}</td>
-						<td>{{$candidate->careers_app_lname}}</td>
+						<td>{{$candidate->careers_app_fname}} {{$candidate->careers_app_lname}}</td>
 						<td>{{$candidate->careers_app_email}}</td>
 						<td>{{$candidate->careers_app_number}}</td>
+						<td style="width: 10%">
+							@if(in_array($hr_recruitment_id,$employee_ids))
+							<select data-id="{{$candidate->id}}" class="form-control candidate_status" name="status">
+								<option {{$candidate->status == 0 ? 'selected' : ''}} value="0">Pending</option>
+								<option {{$candidate->status == 1 ? 'selected' : ''}} value="1">Hired</option>
+								<option {{$candidate->status == 2 ? 'selected' : ''}} value="2">Denied</option>
+							</select>
+							@else
+								@if($candidate->status == NULL)
+									---
+								@else
+									{{$candidate_status}}
+								@endif
+							@endif
+						</td>
+						<td>{{$candidate->updated_at}}</td>
 						<td><a href="/hris/pages/recruitment/candidates/download/{{$candidate->id}}">{{$candidate->careers_app_file}}</a></td>
 
-						
+
 
 					</tr>
 					@endforeach
@@ -66,7 +82,6 @@
 		@endif
 	</div>
 	<div class="card-footer text-right">
-		{{$candidates->links()}}
 	</div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -103,6 +118,12 @@
 @stop
 @section('js')
 <script>
+	$('.table-data').DataTable({
+		"paging": true,
+		"lengthChange": false,
+		"searching": true,
+		"ordering": false,
+	});
 	$(document).ready(function() {
 		$('.delete-btn').on('click', function() {
 			var get = $('.add-button').attr('href');
@@ -118,6 +139,37 @@
 			var name = $(this).attr('data-name');
 			$('.data-name').text('Are you sure you want to delete ' + name + '?');
 		});
+	});
+</script>
+
+<script>
+	$('.candidate_status').on('change', function() {
+		if ($(this).val() != '') {
+			var candidate_status = $(this).val();
+			var candidate_id = $(this).attr('data-id');
+
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('candidateStatus.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					candidate_status: candidate_status,
+					candidate_id: candidate_id,
+				},
+				success: function(response) {
+					location.reload();
+				},
+				error: function(response) {
+					console.log(response);
+				}
+			});
+		}
 	});
 </script>
 @stop
