@@ -46,7 +46,7 @@
 					<tr>
 						<td>{{date('M d, Y', strtotime($npa->request_date))}}</td>
 						<td>
-							@if($npa->account_mode == 'user')
+							@if($npa->request_mode == 'user')
 							@php
 							$user = App\users::find($npa->sender_id);
 							@endphp
@@ -56,14 +56,29 @@
 							----
 							@endif
 							@else
+							@if($npa->sender)
 							{{ucfirst($npa->sender->firstname)}} {{ucfirst($npa->sender->lastname)}}
+							@else
+							----
+							@endif
 							@endif
 						</td>
 						<td>
+							@if($npa->approve_mode == 'user')
+							@php
+							$user = App\users::find($npa->approve_id);
+							@endphp
+							@if($user)
+							{{ucfirst($user->firstname)}} {{ucfirst($user->lastname)}}
+							@else
+							----
+							@endif
+							@else
 							@if($npa->approve)
 							{{ucfirst($npa->approve->firstname)}} {{ucfirst($npa->approve->lastname)}}
 							@else
 							----
+							@endif
 							@endif
 						</td>
 						<td>
