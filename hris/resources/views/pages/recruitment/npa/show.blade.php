@@ -55,7 +55,7 @@
 			<span class="badge-success p-1">Approved</span>
 			@endif
 			@if( $npa->status == 3 )
-			<span class="badge-success p-1">Rejected</span>
+			<span class="badge-danger p-1">Rejected</span>
 			@endif
 			<!-- ELSE IF ( HR RECRUITMENT ) -->
 			@elseif ( in_array($hr_id, $sess_roles) )
@@ -70,7 +70,7 @@
 			<span class="badge-success p-1">Approved</span>
 			@endif
 			@if( $npa->status == 3 )
-			<span class="badge-success p-1">Rejected</span>
+			<span class="badge-danger p-1">Rejected</span>
 			@endif
 			@else
 			@if( $npa->status == 0 )
@@ -83,7 +83,7 @@
 			<span class="badge-success p-1">Approved</span>
 			@endif
 			@if( $npa->status == 3 )
-			<span class="badge-success p-1">Rejected</span>
+			<span class="badge-danger p-1">Rejected</span>
 			@endif
 			@endif
 		</div>
