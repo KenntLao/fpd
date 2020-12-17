@@ -1997,6 +1997,52 @@ $permissions_arr = array(
 	),
 	array(
 		array(
+			'permission_code' => 'npa',
+			'permission_name' => array(
+				'Notice of Personnel Action Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access notice of personnel action (NPA) list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'npa-add',
+			'permission_name' => array(
+				'Create Notice of Personnel Action (NPA)',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create notice of personnel action (NPA).',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'npa-edit',
+			'permission_name' => array(
+				'Update Notice of Personnel Action (NPA)',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update notice of personnel action (NPA).',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'npa-delete',
+			'permission_name' => array(
+				'Delete Notice of Personnel Action (NPA)',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete notice of personnel action (NPA).',
+				''
+			)
+		),
+	),
+	array(
+		array(
 			'permission_code' => 'candidate',
 			'permission_name' => array(
 				'Candidate Management',
