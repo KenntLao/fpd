@@ -67,7 +67,7 @@ class NpaController extends Controller
 
     public function show(hris_npa $npa)
     {
-        if ( $npa->account_mode == 'user' ) {
+        if ( $npa->request_mode == 'user' ) {
             $supervisor_id = 0;
             $user = users::find($_SESSION['sys_id']);
             $role_ids = explode(',',$user->role_ids);
@@ -100,7 +100,7 @@ class NpaController extends Controller
             if ( $request->project_id == $request->designation_from_id ) {
                 return back()->withErrors(['"Designation from" invalid']);
             } else {
-                $npa->account_mode = $_SESSION['sys_account_mode'];
+                $npa->request_mode = $_SESSION['sys_account_mode'];
                 $npa->request_date = $request->request_date;
                 $npa->attention = $request->attention;
                 $npa->ref_no = $request->ref_no;
@@ -137,7 +137,7 @@ class NpaController extends Controller
 
     public function approve(hris_npa $npa)
     {
-        if ( $npa->account_mode == 'user' ) {
+        if ( $npa->request_mode == 'user' ) {
             $supervisor_id = 0;
             $user = users::find($_SESSION['sys_id']);
             $role_ids = explode(',',$user->role_ids);
@@ -157,6 +157,8 @@ class NpaController extends Controller
             } else {
                 if ( $_SESSION['sys_role_ids'] == ',1,' ) {
                     $npa->status = 2;
+                    $npa->approve_mode = $_SESSION['sys_account_mode'];
+                    $npa->approve_id = $_SESSION['sys_id'];
                     $npa->update();
                     return redirect('/hris/pages/recruitment/npa/index')->with('success','NPA processing!');
                 } else {

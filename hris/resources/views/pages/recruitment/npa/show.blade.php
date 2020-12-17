@@ -22,7 +22,7 @@
 <div class="card" id="create">
 	<div class="card-header">
 		<h3 class="card-title">
-		@if($npa->account_mode == 'user')
+		@if($npa->request_mode == 'user')
 		@php
 		$user = App\users::find($npa->sender_id);
 		@endphp
@@ -32,7 +32,11 @@
 		----
 		@endif
 		@else
+		@if($npa->sender)
 		{{ucfirst($npa->sender->firstname)}} {{ucfirst($npa->sender->lastname)}}
+		@else
+		----
+		@endif
 		@endif
 		- NPA Request
 		</h3>
@@ -89,6 +93,40 @@
 		</div>
 	</div>
 	<div class="card-body">
+		@if($npa->approve_mode == 'user')
+		<div class="row">
+			<div class="col-12 col-md-6">
+				<div class="form-group">
+					<label>Approved by:</label>
+					<p>
+						@php
+						$user = App\users::find($npa->approve_id);
+						@endphp
+						@if($user)
+						{{ucfirst($user->firstname)}} {{ucfirst($user->lastname)}}
+						@else
+						----
+						@endif
+					</p>
+				</div>
+			</div>
+		</div>
+		@elseif($npa->approve_mode == 'employee')
+		<div class="row">
+			<div class="col-12 col-md-6">
+				<div class="form-group">
+					<label>Approved by:</label>
+					<p>
+						@if($npa->approve)
+						{{ucfirst($npa->approve->firstname)}} {{ucfirst($npa->approve->lastname)}}
+						@else
+						----
+						@endif
+					</p>
+				</div>
+			</div>
+		</div>
+		@endif
 		<div class="row">
 			<div class="col-12 col-md-6">
 				<div class="form-group">
