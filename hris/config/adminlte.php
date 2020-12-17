@@ -776,6 +776,13 @@ return [
                     'can' => 'job-position'
                 ],
                 [
+                    'text' => 'PRF',
+                    'url'  => '/hris/pages/recruitment/prf/index',
+                    'icon' => 'fas fa-fw fa-columns',
+                    'active' => ['/hris/pages/recruitment/prf/create', '/hris/pages/recruitment/prf/index', '/hris/pages/recruitment/prf/*/edit', 'regex:@^content/[0-9]+$@'],
+                    'can' => 'prf'
+                ],
+                [
                     'text' => 'Candidates',
                     'url'  => '/hris/pages/recruitment/candidates/index',
                     'icon' => 'fas fa-fw fa-user-friends',

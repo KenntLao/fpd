@@ -2041,6 +2041,53 @@ $permissions_arr = array(
 			)
 		),
 	),
+
+	array(
+		array(
+			'permission_code' => 'prf',
+			'permission_name' => array(
+				'PRF Management',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access prf list.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'prf-add',
+			'permission_name' => array(
+				'Create PRF requests',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access create prf.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'prf-edit',
+			'permission_name' => array(
+				'Update PRF Request',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access update PRF.',
+				''
+			)
+		),
+		array(
+			'permission_code' => 'job-position-delete',
+			'permission_name' => array(
+				'Delete PRF request',
+				''
+			),
+			'permission_description' => array(
+				'Allow account to access delete PRF.',
+				''
+			)
+		),
+	),
 	// HRIS EMPLOYEES ===========================================================================
 	array(
 		array(

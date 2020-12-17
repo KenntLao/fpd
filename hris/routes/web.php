@@ -631,6 +631,25 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE JOB POSITION */
     Route::delete('/hris/pages/recruitment/jobPositions/delete/{jobPosition}', 'JobPositionController@destroy');
 
+    /* PRF PAGE */
+    Route::get('/hris/pages/recruitment/prf/index', 'PrfController@index');
+    /* ADD PRF */
+    Route::get('/hris/pages/recruitment/prf/create', 'PrfController@create');
+    Route::post('/hris/pages/recruitment/prf', 'PrfController@store');
+    /* EDIT PRF */
+    Route::get('/hris/pages/recruitment/prf/{prf}/edit', 'PrfController@edit');
+    /* SHOW PRF */
+    Route::get('/hris/pages/recruitment/prf/{prf}/show', 'PrfController@show');
+    /* UPDATE PRF */
+    Route::patch('/hris/pages/recruitment/prf/update/{prf}', 'PrfController@update');
+    /* APPROVE PRF */
+    Route::get('/hris/pages/recruitment/prf/approve/{prf}', 'PrfController@approve');
+    /* APPROVE PRF */
+    Route::get('/hris/pages/recruitment/prf/reject/{prf}', 'PrfController@reject');
+    Route::patch('/hris/pages/recruitment/prf/reject-submit/{prf}', 'PrfController@rejectSubmit');
+    /* DELETE PRF */
+    Route::delete('/hris/pages/recruitment/prf/delete/{prf}', 'PrfController@destroy');
+
 
     /* CANDIDATES PAGE */
     Route::get('/hris/pages/recruitment/candidates/index', 'CandidateController@index');

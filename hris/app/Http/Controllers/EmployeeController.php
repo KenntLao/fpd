@@ -70,7 +70,7 @@ class EmployeeController extends Controller
     public function store(Request $request, hris_employee $employees, Faker $faker) {
         if($this->validatedData()){
             $exist = 0;
-            if($employees::where('employee_number',$request->employee_number)) {
+            if($employees::where('employee_number',$request->employee_number)->first()) {
                 $exist = 1;
             }
             // check data if valid
@@ -144,7 +144,7 @@ class EmployeeController extends Controller
                 $employees->save();
                 return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully added!');
             } else {
-                return redirect('/hris/pages/employees/employee/create')->with('error', 'Employee already exist!');
+                return back()->with('error', 'Employee already exist!');
             }
         }else { // if data fails
                 return back()->withErrors($this->validatedData());
