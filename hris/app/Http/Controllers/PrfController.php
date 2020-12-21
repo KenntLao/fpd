@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\hris_prf;
 use App\hris_employee;
 use App\roles;
-
-
+use App\hris_employment_statuses;
+use App\hris_candidates;
+use App\hris_company_structures;
+use App\hris_job_titles;
 class PrfController extends Controller
 {
     public function __construct()
@@ -32,17 +34,24 @@ class PrfController extends Controller
             // GET MANAGER_OM ROLE ID
             $manager_om_id = roles::where('role_name', 'manager_om')->pluck('id')->first();
 
+
             if (in_array($director_id, $employee_ids) && in_array($supervisor_id, $employee_ids)) {
+
                 $prfs = hris_prf::where('supervisor_id', $current_user_id)->get();
+
             } elseif (in_array($hr_recruitment_id, $employee_ids)) {
-                $prfs = hris_prf::where('initial_status',2);
+
+                $prfs = hris_prf::where('initial_status','!=',0)->get();
+
             } elseif (in_array($manager_om_id, $employee_ids)) {
+
                 $prfs = hris_prf::where('employee_id', $current_user_id)->get();
+
             } else {
                 return back()->with('error', 'You are not authorized to access this page.');
             }
 
-            return view('pages.recruitment.prf.index', compact('prfs', 'employee_ids', 'manager_om_id'));
+            return view('pages.recruitment.prf.index', compact('prfs', 'employee_ids', 'manager_om_id', 'hr_recruitment_id'));
         } else {
             return back()->with('error', 'You are not authorized to access this page.');
         }
@@ -117,8 +126,15 @@ class PrfController extends Controller
     }
     public function show(hris_prf $prf)
     {
+        $current_user_id = $_SESSION['sys_id'];
+        // GET HR RECRUITMENT ROLE ID
+        $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
+        // GET CURRENT USER ROLE ID
+        $employee_id = hris_employee::where('id', $current_user_id)->first();
+        $employee_ids = explode(',', $employee_id->role_id);
+
         $employee = hris_employee::where('id',$prf->employee_id)->first();
-        return view('pages.recruitment.prf.show', compact('prf','employee'));
+        return view('pages.recruitment.prf.show', compact('prf','employee','hr_recruitment_id','employee_ids'));
     }
 
     public function update(Request $request, hris_prf $prf)
@@ -193,14 +209,57 @@ class PrfController extends Controller
     }
 
     public function approve(Request $request, hris_prf $prf){
-        $prf->initial_status = 1;
-        $prf->update();
-        return redirect('/hris/pages/recruitment/prf/index')->with('success', 'PRF request successfully approved!');
+        $current_user_id = $_SESSION['sys_id'];
+        // GET HR RECRUITMENT ROLE ID
+        $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
+        // GET CURRENT USER ROLE ID
+        $employee_id = hris_employee::where('id', $current_user_id)->first();
+        $employee_ids = explode(',', $employee_id->role_id);
+
+        if(in_array($hr_recruitment_id,$employee_ids)){
+            $employment_status = hris_employment_statuses::all();
+            $employee = hris_employee::where('id', $prf->employee_id)->first();
+            $supervisor = hris_employee::where('id', $prf->supervisor_id)->first();
+            $candidates = hris_candidates::all();
+            $designation = hris_company_structures::where('id',$prf->department_id)->first();
+            $hr_detail = hris_employee::where('id',$current_user_id)->first();
+            $job_positions = hris_job_titles::all();
+            return view('pages.recruitment.prf.hr-approve-form', compact('prf', 'employee','supervisor', 'employment_status','candidates', 'designation', 'hr_detail', 'job_positions'));
+
+        } else {
+            $prf->initial_status = 1;
+            $prf->update();
+            return redirect('/hris/pages/recruitment/prf/index')->with('success', 'PRF request successfully approved!');
+        }
+    }
+
+    public function HrApprove(Request $request, hris_prf $prf){
+        $hr_id = $_SESSION['sys_id'];
+        if($this->hrApproveData()){
+            $prf->action = $request->action;
+            $prf->employment_status_id = $request->employment_status_id;
+            $prf->duration_from = $request->duration_from;
+            $prf->duration_to = $request->duration_to;
+            $prf->initial_status = 2;
+            $candidate_ids = implode(',', $request->candidates);
+            $prf->candidate_id = ','.$candidate_ids.',';
+            $prf->candidate_salary = $request->candidate_salary;
+            $prf->candidate_hire_date = $request->candidate_hire_date;
+            $prf->candidate_position = $request->candidate_position;
+            $prf->hr_id = $hr_id;
+            $prf->pod_date = date('Y-m-d');
+            $prf->pod_receiver_id = $prf->supervisor_id;
+            $prf->pod_type = $request->pod_type;
+            $prf->update();
+            return redirect('/hris/pages/recruitment/prf/index')->with('success', 'PRF request successfully approved!');
+        } else {
+            return back()->withErrors(['Invalid Input.']);
+        }
     }
 
     public function reject(hris_prf $prf){
         $employee = hris_employee::where('id', $prf->employee_id)->first();
-        return view('pages.recruitment.prf.reject-form', compact('prf', 'employee'));
+        return view('pages.recruitment.prf.reject-form', compact('prf','employee'));
     }
     public function rejectSubmit(hris_prf $prf, Request $request){
         if($this->rejectData()){
@@ -211,6 +270,22 @@ class PrfController extends Controller
         } else {
             return back()->withErrors(['Remarks is required']);
         }
+    }
+    public function showFinal(hris_prf $prf){
+        $current_user_id = $_SESSION['sys_id'];
+        // GET HR RECRUITMENT ROLE ID
+        $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
+        // GET CURRENT USER ROLE ID
+        $employee_id = hris_employee::where('id', $current_user_id)->first();
+        $employee_ids = explode(',', $employee_id->role_id);
+
+        $designation = hris_company_structures::where('id', $prf->department_id)->first();
+        $supervisor = hris_employee::where('id', $prf->supervisor_id)->first();
+
+        $hr_detail = hris_employee::where('id',$prf->hr_id)->first();
+
+        $employee = hris_employee::where('id', $prf->employee_id)->first();
+        return view('pages.recruitment.prf.final-approved-form', compact('prf', 'employee', 'hr_recruitment_id', 'employee_ids', 'supervisor', 'designation', 'hr_detail'));
     }
     protected function validatedData()
     {
@@ -237,6 +312,16 @@ class PrfController extends Controller
     {
         return request()->validate([
             'reject_remarks' => 'required',
+        ]);
+    }
+
+    protected function hrApproveData()
+    {
+        return request()->validate([
+            'action' => 'nullable',
+            'employment_status_id' => 'nullable',
+            'duration_from' => 'nullable',
+            'duration_to' => 'nullable',
         ]);
     }
 

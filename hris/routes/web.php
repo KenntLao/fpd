@@ -640,19 +640,26 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::get('/hris/pages/recruitment/prf/{prf}/edit', 'PrfController@edit');
     /* SHOW PRF */
     Route::get('/hris/pages/recruitment/prf/{prf}/show', 'PrfController@show');
+    Route::get('/hris/pages/recruitment/prf/{prf}/showFinal', 'PrfController@showFinal');
     /* UPDATE PRF */
     Route::patch('/hris/pages/recruitment/prf/update/{prf}', 'PrfController@update');
     /* APPROVE PRF */
     Route::get('/hris/pages/recruitment/prf/approve/{prf}', 'PrfController@approve');
+    Route::get('/hris/pages/recruitment/prf/HRapprove/{prf}', 'PrfController@approve');
     /* APPROVE PRF */
     Route::get('/hris/pages/recruitment/prf/reject/{prf}', 'PrfController@reject');
+    /* HR APPROVE PRF */
+    Route::patch('/hris/pages/recruitment/prf/approve-submit/{prf}', 'PrfController@HrApprove');
+    /* REJECT PRF */
     Route::patch('/hris/pages/recruitment/prf/reject-submit/{prf}', 'PrfController@rejectSubmit');
+
     /* DELETE PRF */
     Route::delete('/hris/pages/recruitment/prf/delete/{prf}', 'PrfController@destroy');
 
 
     /* CANDIDATES PAGE */
     Route::get('/hris/pages/recruitment/candidates/index', 'CandidateController@index');
+    Route::post('/hris/pages/recruitment/candidates/getStatus', 'CandidateController@updateStatus')->name('candidateStatus.fetch');
     /* ADD CANDIDATE */
     Route::get('/hris/pages/recruitment/candidates/create', 'CandidateController@create');
     Route::post('/hris/pages/recruitment/candidates', 'CandidateController@store');

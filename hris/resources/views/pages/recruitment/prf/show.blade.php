@@ -23,28 +23,45 @@
 	<div class="card-header">
 		<h3 class="card-title">{{$employee->firstname}} {{$employee->lastname}} - PRF Request</h3>
 		@if($prf->supervisor_id == $_SESSION['sys_id'])
-		@if($prf->initial_status == 0)
-		<div class="card-tools">
-			<a class="btn btn-danger btn-md mr-1" href="/hris/pages/recruitment/prf/reject/{{$prf->id}}"><i class="fa fa-ban mr-1"></i> Reject</a>
-			<a class="btn btn-success btn-md" href="/hris/pages/recruitment/prf/approve/{{$prf->id}}"><i class="fa fa-check mr-1"></i> Approve</a>
-		</div>
-		@else
-		<div class="card-tools">
-			@if($prf->initial_status == 1)
-			<p class="badge-success p-1">Processing</p>
-			@elseif($prf->initial_status == 3)
-			<p class="badge-danger p-1">Rejected</p>
+			@if($prf->initial_status == 0)
+			<div class="card-tools">
+				<a class="btn btn-danger btn-md mr-1" href="/hris/pages/recruitment/prf/reject/{{$prf->id}}"><i class="fa fa-ban mr-1"></i> Reject</a>
+				<a class="btn btn-success btn-md" href="/hris/pages/recruitment/prf/approve/{{$prf->id}}"><i class="fa fa-check mr-1"></i> Approve</a>
+			</div>
+			@else
+			<div class="card-tools">
+				@if($prf->initial_status == 1)
+				<p class="badge-success p-1">Processing</p>
+				@elseif($prf->initial_status == 3)
+				<p class="badge-danger p-1">Rejected</p>
+				@endif
+			</div>
 			@endif
-		</div>
-		@endif
 		@else
-		<div class="card-tools">
-			@if($prf->initial_status == 1)
-			<p class="badge-success p-1">Processing</p>
-			@elseif($prf->initial_status == 3)
-			<p class="badge-danger p-1">Rejected</p>
+			@if(in_array($hr_recruitment_id,$employee_ids))
+				@if($prf->initial_status == 3)
+					<div class="card-tools">
+						<p class="badge-danger p-1">Rejected</p>
+					</div>
+				@elseif($prf->initial_status == 1)
+				<div class="card-tools">
+					<a class="btn btn-danger btn-md mr-1" href="/hris/pages/recruitment/prf/reject/{{$prf->id}}"><i class="fa fa-ban mr-1"></i> Reject</a>
+					<a class="btn btn-success btn-md" href="/hris/pages/recruitment/prf/HRapprove/{{$prf->id}}"><i class="fa fa-check mr-1"></i> Approve</a>
+				</div>
+				@elseif($prf->initial_status == 2)
+					<div class="card-tools">
+						<p class="badge-success p-1">Approved</p>
+					</div>
+				@endif
+			@else
+				<div class="card-tools">
+					@if($prf->initial_status == 1)
+					<p class="badge-success p-1">Processing</p>
+					@elseif($prf->initial_status == 3)
+					<p class="badge-danger p-1">Rejected</p>
+					@endif
+				</div>
 			@endif
-		</div>
 		@endif
 	</div>
 	<div class="card-body">
