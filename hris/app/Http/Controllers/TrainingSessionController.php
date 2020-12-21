@@ -160,7 +160,7 @@ class TrainingSessionController extends Controller
             'delivery_method' => 'required',
             'delivery_location' => 'nullable',
             'attendance_type' => 'required',
-            'attachment' => 'nullable',
+            'attachment' => 'nullable|file|mimes:docx,pdf,xls,xlsx',
             'training_cert_required' => 'required'
         ]);
     }

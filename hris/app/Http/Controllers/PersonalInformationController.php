@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\hris_employee;
+use App\users;
 
 class PersonalInformationController extends Controller
 {
@@ -18,10 +19,12 @@ class PersonalInformationController extends Controller
     }
     public function index()
     {
+        $id = $_SESSION['sys_id'];
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $id = $_SESSION['sys_id'];
             $employee = hris_employee::where('id',$id)->first();
             return view('pages.personalInformation.profile.index', compact('employee'));
+        } else {
+            return back();
         }
     }
 

@@ -51,7 +51,13 @@
 					<tr>
 						<td>{{$course->code}}</td>
 						<td>{{$course->name}}</td>
-						<td>{{$course->coordinator->firstname}} {{$course->coordinator->lastname}}</td>
+						<td>
+							@if($course->coordinator)
+							{{$course->coordinator->firstname}} {{$course->coordinator->lastname}}
+							@else
+							----
+							@endif
+						</td>
 						<td>{{$course->trainer}}</td>
 						<td>{{$course->payment_type}}</td>
 						@if(in_array('course-edit', $_SESSION['sys_permissions']) OR in_array('course-delete', $_SESSION['sys_permissions']))
