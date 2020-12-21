@@ -840,6 +840,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::post('/hris/pages/leaveManagement/leaves', 'LeaveController@store');
     /* UPDATE */
     Route::get('/hris/pages/leaveManagement/leaves/{leaves}/edit', 'LeaveController@edit');
+    Route::get('/hris/pages/leaveManagement/leaves/{leaves}/show', 'LeaveController@show');
     Route::patch('/hris/pages/leaveManagement/leaves/update/{leaves}', 'LeaveController@update');
 
     /* APPROVE */

@@ -74,16 +74,28 @@
                                 <td>{{$s->leave_types->name}}</td>
                                 <td>{{date("Y-m-d", strtotime($s->leave_start_date))}}</td>
                                 <td>{{date("Y-m-d", strtotime($s->leave_end_date))}}</td>
-                                <td>{{$s->approved_by_id}}</td>
-                                <td>{{$s->apporved_date}}</td>
-                                <td>{{$s->reason}}</td>
+                                <td>
+                                    @if(isset($s->supervisor->firstname))
+                                    {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
+                                    @else
+                                    ---
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($s->approved_date == NULL)
+                                    ---
+                                    @else
+                                    {{date("Y-m-d", strtotime($s->approved_date))}}
+                                    @endif
+                                </td>
+                                <td style="width:35%">{{$s->reason}}</td>
                                 <td>
                                     @if($s->status == 0){{'Pending'}}
                                     @elseif($s->status == 1) {{'Approved'}}
                                     @elseif($s->status == 2) {{'Denied'}}
                                     @endif
                                 </td>
-                                <td>
+                                <td style="width: 10%;">
                                     <div class="row no-gutters">
                                         @if($s->status == 1 OR $s->status == 2)
                                         <div class="col-12">
@@ -110,6 +122,7 @@
             </div>
         </div>
     </div>
+    <!--  IF CURRENT USER IS SUPERVISOR -->
     @if(in_array($supervisor_id, $role_ids))
     <div class="tab-pane" id="tabs-2" role="tab-panel">
         <div class="card">
@@ -141,19 +154,27 @@
                                 <td>{{date("Y-m-d", strtotime($leave->leave_start_date))}}</td>
                                 <td>{{date("Y-m-d", strtotime($leave->leave_end_date))}}</td>
                                 <td>
-                                    @if($leave->supervisor)
-                                    {{$leave->supervisor->firstname .' ' . $leave->supervisor->lastname}}
+                                    @if(isset($leave->supervisor->firstname))
+                                    {{$leave->supervisor->firstname}} {{$leave->supervisor->lastname}}
+                                    @else
+                                    ---
                                     @endif
                                 </td>
-                                <td>{{date("Y-m-d", strtotime($leave->approved_date))}}</td>
-                                <td>{{$leave->reason}}</td>
+                                <td>
+                                    @if($leave->approved_date == NULL)
+                                    ---
+                                    @else
+                                    {{date("Y-m-d", strtotime($leave->approved_date))}}
+                                    @endif
+                                </td>
+                                <td style="width:35%">{{$leave->reason}}</td>
                                 <td>
                                     @if($leave->status == 0) <span class="badge badge-primary p-2">{{'Pending'}}</span>
                                     @elseif($leave->status == 1) <span class="badge badge-success p-2">{{'Approved'}}</span>
                                     @elseif($leave->status == 2) <span class="badge badge-danger p-2">{{'Denied'}}</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td style="width: 10%;">
                                     <div class="row no-gutters">
                                         @if($leave->status == 0)
                                         <div class="col-md-6">
@@ -162,8 +183,11 @@
                                         <div class="col-md-6">
                                             <a class="btn btn-danger btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/deny" title="Deny"><i class="fas fa-times"></i></a>
                                         </div>
+                                        @else
+                                        <div class="col-12">
+                                            <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/show"><i class="fas fa-search"></i></a>
+                                        </div>
                                         @endif
-
                                     </div>
                                 </td>
                             </tr>
@@ -183,6 +207,7 @@
     @endif
 </div>
 @else
+<!--  IF CURRENT USER IS SUPERADMIN -->
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Leave Request List</h3>
@@ -216,26 +241,32 @@
                         <td>{{$leave->leave_types->name}}</td>
                         <td>{{date("Y-m-d", strtotime($leave->leave_start_date))}}</td>
                         <td>{{date("Y-m-d", strtotime($leave->leave_end_date))}}</td>
-                        <td>{{$leave->approved_by_id}}</td>
-                        <td>{{$leave->apporved_date}}</td>
-                        <td>{{$leave->reason}}</td>
+                        <td>
+                            @if(isset($leave->supervisor->firstname))
+                            {{$leave->supervisor->firstname}} {{$leave->supervisor->lastname}}
+                            @else
+                            ---
+                            @endif
+                        </td>
+                        <td>
+                            @if($leave->approved_date == NULL)
+                            ---
+                            @else
+                            {{date("Y-m-d", strtotime($leave->approved_date))}}
+                            @endif
+                        </td>
+                        <td style="width:35%">{{$leave->reason}}</td>
                         <td>
                             @if($leave->status == 0){{'Pending'}}
                             @elseif($leave->status == 1) {{'Approved'}}
                             @elseif($leave->status == 2) {{'Denied'}}
                             @endif
                         </td>
-                        <td>
+                        <td style="width: 10%;">
                             <div class="row no-gutters">
-                                @if($leave->status == 1 OR $leave->status == 2)
                                 <div class="col-12">
                                     <a class="btn btn-primary btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/show"><i class="fas fa-search"></i></a>
                                 </div>
-                                @else
-                                <div class="col-md-12">
-                                    <a class="btn btn-success btn-sm" href="/hris/pages/leaveManagement/leaves/{{$leave->id}}/edit" title="Edit"><i class="fas fa-edit"></i></a>
-                                </div>
-                                @endif
                             </div>
                         </td>
                     </tr>
