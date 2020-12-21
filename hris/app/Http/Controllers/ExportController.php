@@ -21,8 +21,11 @@ class ExportController extends Controller
 	    	$str_from = str_replace('-', '', request('date_from'));
 	    	$str_to = str_replace('-', '', request('date_to'));
             $employee_id = request('employee_id');
-            $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
-            $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
+
+            $supervisor = roles::where('role_name', 'supervisor')->first();
+
+            $hr_officer_role_id = roles::where('role_name', 'hr officer')->first();
+            $hr_officer_id = $hr_officer_role_id->id;
             $roles = explode(',', $_SESSION['sys_role_ids']);
             if ( $employee_id == '0' ) {
                 $emp_name = 'ALL';
@@ -35,10 +38,24 @@ class ExportController extends Controller
             } else {
                 $rpt = "CLIENT";
             }
-            if ( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) ) {
-                $check = hris_overtime::all();
-            } else {
-                $check = hris_overtime::all()->where('supervisor_id', $_SESSION['sys_id']);
+            if ( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) AND in_array($supervisor->id, $roles) OR in_array($hr_officer_id, $roles) ) {
+                if ( $employee_id == '0' ) {
+                    $emp_name = 'ALL';
+                    $check = hris_overtime::all();
+                } else {
+                    $employee = hris_employee::find($employee_id);
+                    $emp_name = $employee->firstname.'_'.$employee->lastname;
+                    $check = hris_overtime::where('employee_id', $employee_id)->get();
+                }
+            } elseif ( in_array($supervisor->id, $roles) ) {
+                if ( $employee_id == '0' ) {
+                    $emp_name = 'ALL';
+                    $check = hris_overtime::all()->where('supervisor_id', $_SESSION['sys_id']);
+                } else {
+                    $employee = hris_employee::find($employee_id);
+                    $emp_name = $employee->firstname.'_'.$employee->lastname;
+                    $check = hris_overtime::where('employee_id', $employee_id)->get();
+                }
             }
             if ( $check->isEmpty() ) {
                 return back()->withErrors(['No data to download.']);
