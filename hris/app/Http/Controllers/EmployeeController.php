@@ -55,6 +55,11 @@ class EmployeeController extends Controller
         }
         return view('pages.employees.employee.index', compact('employee','employees','role_id'));
     }
+
+    public function liveSearch(hris_employee $employee, Request $request){
+        
+    }
+
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
     {
         $certifications = hris_certifications::all();

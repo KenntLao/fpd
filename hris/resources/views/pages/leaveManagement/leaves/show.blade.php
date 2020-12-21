@@ -1,9 +1,9 @@
 @extends('adminlte::page')
-@section('title', 'HRIS | Time Management - Overtime')
+@section('title', 'HRIS | Time Management - Leave Management')
 @section('content_header')
 <div class="row no-gutters">
     <div class="col-12 page-title">
-        <h1><i class="fas fa-fw fa-columns"></i> Overtime</h1>
+        <h1><i class="fas fa-fw fa-columns"></i> Leave</h1>
     </div>
 </div>
 @stop
@@ -20,120 +20,75 @@
 @endif
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">overtime request</h3>
+        <h3 class="card-title">
+            leave request
+            @if(isset($leaves->employee->firstname))
+            - {{$leaves->employee->firstname}} {{$leaves->employee->lastname}}
+            @endif
+        </h3>
+        <div class="card-tools">
+            @if($leaves->status == 0)
+            <span class="badge-warning p-1">Pending</span>
+            @elseif($leaves->status == 1)
+            <span class="badge-success p-1">Approved</span>
+            @else
+            <span class="badge-danger p-1">Denied</span>
+            @endif
+        </div>
     </div>
     <div class="card-body">
-        <div class="row mb-4">
-            <div class="col-3 col-sm-2">
-                <div class="profile-image">
-                    <img src="{{ URL::asset('assets/images/employees/employee_photos/') }}/{{$overtime->employee->employee_photo}}">
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label class="mr-2" for="start_date">Leave Type</label>
+                    <p>
+                        @if(isset($leaves->leave_types->name))
+                        {{$leaves->leave_types->name}}
+                        @else
+                        ---
+                        @endif
+                    </p>
                 </div>
             </div>
-            <div class="col-9 col-sm-10">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label>Employee number:</label>
-                            <p>{{$overtime->employee->employee_number}}</p>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label>Department:</label>
-                            <p>{{$overtime->employee->department->name}}</p>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label>Work phone:</label>
-                            <p>{{$overtime->employee->work_phone}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label>Employee name:</label>
-                            <p>{{$overtime->employee->firstname}} {{$overtime->employee->lastname}}</p>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label>Private mail address:</label>
-                            <p>{{$overtime->employee->private_email}}</p>
-                        </div>
-                    </div>
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label class="mr-2" for="start_date">Start Date: </label>
+                    <p>
+                        {{date("Y-m-d", strtotime($leaves->leave_start_date))}}
+                    </p>
                 </div>
             </div>
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label class="mr-2" for="end_date">End Date: </label>
+                    <p>
+                        {{date("Y-m-d", strtotime($leaves->leave_end_date))}}
+                    </p>
+                </div>
+            </div>
+
         </div>
-        <div class="row no-gutters section">
-            <div class="col-12 section-title">
-                <h5>information</h5>
-            </div>
-            <div class="col-12 section-info">
-                <div class="row">
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="created_at">Date and Time: </label>
-                            <p>{{date("M d, Y - h:i:sa", strtotime($overtime->created_at))}}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="type">Type: </label>
-                            <p>{{$overtime->type}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="ot_date">Approved by: </label>
-                            <p>{{$user}}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="ot_date">Approved Date and Time: </label>
-                            <p>{{date("M d, Y - h:i:sa", strtotime($overtime->approved_date))}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="ot_date">Overtime Request Date and Time: </label>
-                            <p>{{date_format(date_create_from_format('m-d-Y', $overtime->ot_date), 'M d, Y')}} {{$overtime->ot_time_in}} - {{$overtime->ot_time_out}}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="status">Status: </label>
-                            <p>
-                                @if($overtime->status == '1')
-                                Approved
-                                @else
-                                Rejected
-                                @endif
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="ot_time_in">Employee remarks: </label>
-                            <p>{{$overtime->employee_remarks}}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="mr-2" for="ot_time_in">Supervisor remarks: </label>
-                            <p>{{$overtime->supervisor_remarks}}</p>
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label class="mr-2" for="end_date">Reason</label>
+                    <p>
+                        {{$leaves->reason}}
+                    </p>
                 </div>
             </div>
+            @if($leaves->approved_by_id != NULL)
+                @if(isset($leaves->supervisor->firstname))
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label class="mr-2">Approved By</label>
+                        <p>
+                            {{$leaves->supervisor->firstname}} {{$leaves->supervisor->lastname}}
+                        </p>
+                    </div>
+                </div>
+                @endif
+            @endif
         </div>
     </div>
     <div class="card-footer text-right">

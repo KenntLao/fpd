@@ -92,9 +92,9 @@ class LeaveController extends Controller
 
     }
 
-    public function show($id)
+    public function show(hris_leaves $leaves)
     {
-
+        return view('pages.leaveManagement.leaves.show', compact('leaves'));
     }
 
     public function edit(hris_leaves $leaves)
@@ -119,7 +119,7 @@ class LeaveController extends Controller
                 return view('pages.leaveManagement.leaves.edit', compact('employee', 'leaves', 'leave_groups_rules'));
             }
         } else {
-            return view('pages.leaveManagement.leaves.edit');
+            return back();
         }
     }
 

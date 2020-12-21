@@ -16,4 +16,8 @@ class hris_leaves extends Model
     {
         return $this->belongsTo('App\hris_employee', 'approved_by_id','id');
     }
+    public function employee()
+    {
+        return $this->belongsTo('App\hris_employee');
+    }
 }
