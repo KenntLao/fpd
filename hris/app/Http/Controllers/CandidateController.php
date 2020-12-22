@@ -23,16 +23,20 @@ class CandidateController extends Controller
     }
     public function index()
     {
-        $current_user_id = $_SESSION['sys_id'];
-        $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
+        if($_SESSION['sys_account_mode'] == "employee") {
+            $current_user_id = $_SESSION['sys_id'];
+            $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
 
-        // GET CURRENT USER ROLE ID
-        $employee = hris_employee::where('id', $current_user_id)->first();
-        $employee_ids = explode(',', $employee->role_id);
+            // GET CURRENT USER ROLE ID
+            $employee = hris_employee::where('id', $current_user_id)->first();
+            $employee_ids = explode(',', $employee->role_id);
 
 
-        $candidates = table_careers_application::all();
-        return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids'));
+            $candidates = table_careers_application::all();
+            return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids'));
+        } else {
+            return back();
+        }
     }
 
     public function create(hris_candidates $candidate)

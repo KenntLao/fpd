@@ -56,10 +56,6 @@ class EmployeeController extends Controller
         return view('pages.employees.employee.index', compact('employee','employees','role_id'));
     }
 
-    public function liveSearch(hris_employee $employee, Request $request){
-        
-    }
-
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
     {
         $certifications = hris_certifications::all();
@@ -347,31 +343,31 @@ class EmployeeController extends Controller
             'lastname' => 'required',
             'job_title' => 'required',
             'work_no' => 'required',
-            'work_phone' => 'required',
-            'work_email' => 'required|email',
+            'work_phone' => 'nullable',
+            'work_email' => 'nullable|email',
             'department' => 'required',
             'supervisor' => 'required',
-            'work_address' => 'required',
+            'work_address' => 'nullable',
             'tin' => 'nullable',
             'sss' => 'nullable',
             'pagibig' => 'nullable',
             'phic' => 'nullable',
-            'joined_date' => 'required|date',
+            'joined_date' => 'nullable|date',
             'employment_status' => 'required',
             'termination_date' => 'nullable|date',
-            'home_address' => 'required',
-            'private_email' => 'required|email',
+            'home_address' => 'nullable',
+            'private_email' => 'nullable|email',
             'home_distance' => 'nullable',
-            'marital_status' => 'required',
-            'emergency_contact' => 'required',
-            'emergency_no' => 'required',
+            'marital_status' => 'nullable',
+            'emergency_contact' => 'nullable',
+            'emergency_no' => 'nullable',
             'cert_level' => 'nullable',
             'field_study' => 'nullable',
             'school' => 'nullable',
-            'gender' => 'required',
-            'nationality' => 'required',
-            'birthday' => 'required|date',
-            'place_birth' => 'required',
+            'gender' => 'nullable',
+            'nationality' => 'nullable',
+            'birthday' => 'nullable|date',
+            'place_birth' => 'nullable',
             'dependant' => 'nullable',
         ]);
     }
