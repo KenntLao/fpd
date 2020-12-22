@@ -47,7 +47,8 @@ class CourseController extends Controller
 
     public function edit(hris_courses $course)
     {
-        return view('pages.admin.training.courses.edit', compact('course'));
+        $employees = hris_employee::all();
+        return view('pages.admin.training.courses.edit', compact('course','employees'));
     }
 
     public function update(hris_courses $course, Request $request)
@@ -57,7 +58,7 @@ class CourseController extends Controller
             $string = 'App\hris_courses';
             $course->code = request('code');
             $course->name = request('name');
-            $course->coordinator = request('coordinator');
+            $course->coordinator_id = request('coordinator_id');
             $course->trainer = request('trainer');
             $course->trainer_details = request('trainer_details');
             $course->payment_type = request('payment_type');

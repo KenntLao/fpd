@@ -24,9 +24,11 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">NPA request list</h3>
+		@if( in_array($m_id, $sess_roles) )
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/recruitment/npa/create"><i class="fa fa-plus mr-1"></i> NPA Request</a>
 		</div>
+		@endif
 	</div>
 	<div class="card-body">
 		@if(count($npas) > 0)
@@ -46,53 +48,31 @@
 					<tr>
 						<td>{{date('M d, Y', strtotime($npa->request_date))}}</td>
 						<td>
-							@if($npa->request_mode == 'user')
-							@php
-							$user = App\users::find($npa->sender_id);
-							@endphp
-							@if($user)
-							{{ucfirst($user->firstname)}} {{ucfirst($user->lastname)}}
-							@else
-							----
-							@endif
-							@else
 							@if($npa->sender)
-							{{ucfirst($npa->sender->firstname)}} {{ucfirst($npa->sender->lastname)}}
+							[{{$npa->sender->employee_number}}] {{ucfirst($npa->sender->firstname)}} {{ucfirst($npa->sender->lastname)}}
 							@else
 							----
-							@endif
 							@endif
 						</td>
 						<td>
-							@if($npa->approve_mode == 'user')
-							@php
-							$user = App\users::find($npa->approve_id);
-							@endphp
-							@if($user)
-							{{ucfirst($user->firstname)}} {{ucfirst($user->lastname)}}
-							@else
-							----
-							@endif
-							@else
 							@if($npa->approve)
-							{{ucfirst($npa->approve->firstname)}} {{ucfirst($npa->approve->lastname)}}
+							[{{$npa->approve->employee_number}}] {{ucfirst($npa->approve->firstname)}} {{ucfirst($npa->approve->lastname)}}
 							@else
 							----
-							@endif
 							@endif
 						</td>
 						<td>
 							@if($npa->status == 0)
-							Pending
+							<span class="badge-secondary p-1">Pending</span>
 							@endif
 							@if($npa->status == 1)
-							Processing
+							<span class="badge-primary p-1">Processing</span>
 							@endif
 							@if($npa->status == 2)
-							Approved
+							<span class="badge-success p-1">Approved</span>
 							@endif
 							@if($npa->status == 3)
-							Rejected
+							<span class="badge-danger p-1">Rejected</span>
 							@endif
 						</td>
 						<td>
@@ -139,7 +119,7 @@
 					@method('DELETE')
 					<div class="form-group">
 						<label for="upass">Enter Password: </label>
-						<input class="form-control" type="password" name="upass" required>
+						<input class="form-control" type="password" name="password" required>
 					</div>
 				</form>
 			</div>

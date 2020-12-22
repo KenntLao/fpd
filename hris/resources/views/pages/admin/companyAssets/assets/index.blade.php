@@ -64,7 +64,11 @@
 					</td>
 					<td>
 						@if($asset->employee)
+						@if($asset->employee->department)
 						{{$asset->employee->department->name}}
+						@else
+						----
+						@endif
 						@else
 						----
 						@endif

@@ -521,7 +521,8 @@ return [
                 [
                     'text' => 'Basic Information',
                     'icon' => 'fas fa-fw fa-user',
-                    'url' => '/hris/pages/personalInformation/profile/index'
+                    'url' => '/hris/pages/personalInformation/profile/index',
+                    'active' => ['/hris/pages/personalInformation/profile/index', '/hris/pages/personalInformation/profile/*/edit', 'regex:@^content/[0-9]+$@'],
                 ],
                 [
                     'text' => 'Qualifications',

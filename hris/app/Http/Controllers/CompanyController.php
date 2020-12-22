@@ -66,6 +66,7 @@ class CompanyController extends Controller
         if ( $this->validatedData() ) {
             $string = 'App\hris_company_structures';
             $company->name = request('name');
+            $company->name = request('code');
             $company->details = request('details');
             $company->address = request('address');
             $company->type = request('type');
@@ -124,6 +125,7 @@ class CompanyController extends Controller
         return request()->validate([
 
             'name'=>'required',
+            'code'=>'required',
             'details'=>'required',
             'address'=>'nullable',
             'type'=>'required',
