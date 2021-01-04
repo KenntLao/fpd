@@ -80,9 +80,6 @@
 		<h4>No data available.</h4>
 		@endif
 	</div>
-	<div class="card-footer">
-		{{$emergencies->links()}}
-	</div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">

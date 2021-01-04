@@ -10,6 +10,7 @@ use App\hris_leaves;
 use App\hris_leave_group_employees;
 use App\hris_leave_rules;
 use App\hris_leave_types;
+use App\hris_leave_entitlement;
 
 class LeaveController extends Controller
 {
@@ -150,18 +151,32 @@ class LeaveController extends Controller
         $reason = $leaves->reason;
 
         return view('pages.leaveManagement.leaves.approve', compact('leaves','employee','leave_name','start_date','end_date','reason','leave_type_id','supervisor_id'));
-
-
     }
     public function approve_submit(Request $request, hris_leaves $leaves)
     {
         $id = $_SESSION['sys_id'];
         if($this->SupervisorValidatedData()){
+            $start_date = strtotime($leaves->leave_start_date);
+            $end_date = strtotime($leaves->leave_end_date);
+            $timeDiff = abs($end_date - $start_date);
+            $days_diff = $timeDiff / 86400;
+            $numberDays = $days_diff + 1;
+
             $leaves->approved_date = date("Ymd");
             $leaves->approved_by_id = $id;
             $leaves->remarks = $request->remarks;
             $leaves->status = 1;
             $leaves->update();
+
+            $leave_entitlement = hris_leave_entitlement::where('employee_id',$request->employee_id)->where('leave_type_id',$request->leave_type)->first();
+            
+            if($leave_entitlement->leave_credit >= $numberDays){
+                $leave_entitlement->leave_credit -= $numberDays;
+                $leave_entitlement->update(); 
+            } else {
+                return back()->withErrors(['Days of leave exceeds leave credits.']);
+            }
+            
             return redirect('/hris/pages/leaveManagement/leaves/index')->with('success', 'Leave Application Approved!');
         }
     }

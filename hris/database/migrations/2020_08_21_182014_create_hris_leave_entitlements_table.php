@@ -15,6 +15,10 @@ class CreateHrisLeaveEntitlementsTable extends Migration
     {
         Schema::create('hris_leave_entitlements', function (Blueprint $table) {
             $table->id();
+            $table->integer('leave_type_id');
+            $table->integer('leave_group_id');
+            $table->integer('leave_credit');
+            $table->integer('employee_id');
             $table->timestamps();
         });
     }

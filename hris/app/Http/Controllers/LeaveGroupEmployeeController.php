@@ -8,6 +8,8 @@ use App\hris_leave_group_employees;
 use App\hris_leave_groups;
 use App\users;
 use App\hris_employee;
+use App\hris_leave_entitlement;
+use App\hris_leave_rules;
 
 class LeaveGroupEmployeeController extends Controller
 {
@@ -35,11 +37,18 @@ class LeaveGroupEmployeeController extends Controller
     {
         if ($this->validatedData()) {
             $data = [];
+            $entitlement_data = [];
             $employee_ids = $request->employee_id;
+            $leave_rules = hris_leave_rules::where('leave_group_id',$request->leave_group_id)->get();
             foreach($employee_ids as $employee_id){
+                foreach($leave_rules as $leave_rule){
+                    $insert_entitlement = ['leave_type_id'=>$leave_rule->leave_type_id, 'leave_group_id'=>$request->leave_group_id,'leave_credit'=>$leave_rule->default_per_year,'employee_id'=>$employee_id];
+                    array_push($entitlement_data,$insert_entitlement);
+                }
                 $insert_data = ['employee_id'=>$employee_id, 'leave_group_id'=>$request->leave_group_id];
                 array_push($data,$insert_data);
             }
+            $leaveEntitlement = hris_leave_entitlement::insert($entitlement_data);
             $leaveGroupEmployees = hris_leave_group_employees::insert($data);
             $id = $leaveGroupEmployee->id;
             $this->function->addSystemLog($this->module,$id);

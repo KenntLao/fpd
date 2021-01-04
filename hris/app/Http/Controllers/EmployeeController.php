@@ -293,14 +293,22 @@ class EmployeeController extends Controller
         $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
         return implode(' ', $supervisor_role_id[0]);
     }
+
+    public function getHRmanager(){
+        $manager_role_id = roles::where('role_name', 'hr manager')->get('id')->toArray();
+        return implode(' ', $manager_role_id[0]);
+    }
+
     public function getEmployeeSupervisors()
     {
         return hris_employee::whereRaw('find_in_set(?,role_id)', [$this->getSupervisorRoleId()])->get('id')->toArray();
     }
     public function renderSupervisor(Request $request){
         $department_id = $request->get('department_id');
+        $hr_manager = hris_employee::whereRaw('find_in_set(?,role_id)', [$this->getHRmanager()])->first();
         $supervisors = hris_employee::whereRaw('find_in_set(?,role_id)', [$this->getSupervisorRoleId()])->where('department_id',$department_id)->get();
         $output = '<option value="">-- select one --</option>';
+        $output .= '<option value="' . $hr_manager->id . '">' . $hr_manager->firstname . ' ' . $hr_manager->lastname . '</option>';
         foreach ($supervisors as $supervisor) {
             $output .= '<option value="' . $supervisor->id . '">' . $supervisor->firstname . ' '. $supervisor->lastname .'</option>';
         }
