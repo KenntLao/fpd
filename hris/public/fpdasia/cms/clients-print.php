@@ -32,7 +32,7 @@ include __DIR__."/config.php";
           </tr>
 		 <?php
 
-      $sql = "SELECT * FROM table_careers_application WHERE deleted_app IS NULL and careers_app_id ORDER BY careers_app_id DESC ";
+      $sql = "SELECT * FROM table_careers_applications WHERE deleted_app IS NULL and id ORDER BY id DESC ";
       $result = mysqli_query($con, $sql);
 
 
@@ -93,7 +93,7 @@ include __DIR__."/config.php";
           </tr>
 		<?php
 
-      $sql = "SELECT * FROM table_careers_application WHERE deleted_app IS NULL and careers_app_id ORDER BY careers_app_id DESC ";
+      $sql = "SELECT * FROM table_careers_applications WHERE deleted_app IS NULL and id ORDER BY id DESC ";
       $result = mysqli_query($con, $sql);
 
 

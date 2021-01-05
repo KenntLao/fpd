@@ -223,7 +223,7 @@
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT * FROM table_careers_application WHERE deleted_app IS NULL and careers_app_id ORDER BY careers_app_id DESC ";
+                                $sql = "SELECT * FROM table_careers_applications WHERE deleted_app IS NULL and id ORDER BY id DESC ";
                                 $result = mysqli_query($con, $sql);
                                 while($fetch = mysqli_fetch_array($result)){
                                 $careers_app_fname = $fetch['careers_app_fname'];
@@ -250,7 +250,7 @@
                                             <a href="../../../career-application/<?php echo $careers_app_file ?>"><?php echo $careers_app_file ?></a>
                                         </td>
                                         <td><?php echo date('F j, Y', strtotime($date_apply)); ?></td>
-                                        <td><?php echo '<a class="btn btn-danger" href="applicants-delete.php?applicant_id=' . $fetch['careers_app_id'] . '">Delete</a>'; ?></td>
+                                        <td><?php echo '<a class="btn btn-danger" href="applicants-delete.php?applicant_id=' . $fetch['id'] . '">Delete</a>'; ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
