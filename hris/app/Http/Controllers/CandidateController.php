@@ -10,6 +10,8 @@ use App\users;
 use App\table_careers_application;
 use App\roles;
 use App\hris_employee;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CandidateImport;
 
 class CandidateController extends Controller
 {
@@ -218,6 +220,23 @@ class CandidateController extends Controller
         $candidate = hris_candidates::where('id',$request->candidate_id)->first();
         $candidate->status = $request->candidate_status;
         $candidate->update();
+    }
+
+    public function import()
+    {
+        if ($this->validateImport()) {
+            Excel::import(new CandidateImport, request()->file('candidateData'));
+            return redirect('/hris/pages/recruitment/candidates/index')->with('success', 'Candidate list successfully uploaded!');
+        } else {
+            return back()->withErrors(['Invalid file!']);
+        }
+    }
+
+    protected function validateImport()
+    {
+        return request()->validate([
+            'candidateData' => 'required|mimes:xlsx,xls',
+        ]);
     }
 
     protected function storeValidatedData() {

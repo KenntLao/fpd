@@ -206,7 +206,6 @@ class EmployeeController extends Controller
                 } else {
                     $role_ids = implode(',', request('role'));
                 }
-
                 $employee->employee_photo = $imageName;
                 $employee->employee_number = request('employee_number');
                 $employee->username = $username;

@@ -114,7 +114,7 @@ class OvertimeController extends Controller
                                 if ( $ot_day == $day ) {
                                     $time_in = $day.'_time_in';
                                     $time_out = $day.'_time_out';
-                                    if ( $ot_time_in < $wm->$time_in && $ot_time_in < $wm->$time_out OR $ot_time_in > $wm->$time_in && $ot_time_in > $wm->$time_out) {
+                                    if ( $ot_time_in > $wm->$time_out && $ot_time_out > $wm->$time_in OR $ot_time_in > $wm->$time_out && $ot_time_out < $wm->$time_in) {
                                         $overtime->acc_mode = $_SESSION['sys_account_mode'];
                                         $overtime->sender_id = $id;
                                         $overtime->employee_id = request('employee_id');
@@ -188,7 +188,7 @@ class OvertimeController extends Controller
                                 if ( $ot_day == $day ) {
                                     $time_in = $day.'_time_in';
                                     $time_out = $day.'_time_out';
-                                    if ( $ot_time_in < $wm->$time_in && $ot_time_in < $wm->$time_out ) {
+                                    if ( $ot_time_in < $wm->$time_in && $ot_time_in > $wm->$time_out ) {
                                         $overtime->acc_mode = $_SESSION['sys_account_mode'];
                                         $overtime->sender_id = $id;
                                         $overtime->employee_id = $id;
@@ -349,7 +349,7 @@ class OvertimeController extends Controller
                         if ( $ot_day == $day ) {
                             $time_in = $day.'_time_in';
                             $time_out = $day.'_time_out';
-                            if ( $ot_time_in < $wm->$time_in && $ot_time_in < $wm->$time_out OR $ot_time_in > $wm->$time_in && $ot_time_in > $wm->$time_out) {
+                            if ($ot_time_in > $wm->$time_out && $ot_time_out > $wm->$time_in or $ot_time_in > $wm->$time_out && $ot_time_out < $wm->$time_in) {
                                 $overtime->ot_date = date('Ymd', strtotime(request('ot_date')));
                                 $overtime->ot_time_in = str_replace(":", "", request('ot_time_in'));
                                 $overtime->ot_time_out = str_replace(":", "", request('ot_time_out'));

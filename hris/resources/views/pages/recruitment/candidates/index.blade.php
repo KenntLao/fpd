@@ -26,6 +26,11 @@
 		<h3 class="card-title">candidates list</h3>
 		@if(in_array('candidate-add', $_SESSION['sys_permissions']))
 		<div class="card-tools">
+			<form class="float-right ml-2" action="/hris/pages/recruitment/candidates/import" method="post" enctype="multipart/form-data">
+				@csrf
+				<input type="file" name="candidateData" id="file" style="display:none;" onchange="this.form.submit()">
+				<button class="btn add-button btn-md" type="button" id="upload-exc" name="button" onclick="thisFileUpload();"><i class="far fa-file-excel mr-1"></i> Upload Excel</button>
+			</form>
 			<!--<a class="btn add-button btn-md" href="/hris/pages/recruitment/candidates/create"><i class="fa fa-plus mr-1"></i> add candidate</a>-->
 		</div>
 		@endif
@@ -60,15 +65,15 @@
 								<option {{$candidate->status == 2 ? 'selected' : ''}} value="2">Denied</option>
 							</select>
 							@else
-								@if($candidate->status == NULL)
-									---
-								@else
-									{{$candidate_status}}
-								@endif
+							@if($candidate->status == NULL)
+							---
+							@else
+							{{$candidate_status}}
+							@endif
 							@endif
 						</td>
 						<td>{{$candidate->updated_at}}</td>
-						<td><a href="/hris/pages/recruitment/candidates/download/{{$candidate->id}}">{{$candidate->careers_app_file}}</a></td>
+						<td><a href="{{$candidate->careers_app_file}}" target="_blank">View File</a></td>
 
 
 
@@ -118,6 +123,9 @@
 @stop
 @section('js')
 <script>
+	function thisFileUpload() {
+		document.getElementById("file").click();
+	};
 	$('.table-data').DataTable({
 		"paging": true,
 		"lengthChange": false,
