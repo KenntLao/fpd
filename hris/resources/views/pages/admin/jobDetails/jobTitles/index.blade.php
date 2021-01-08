@@ -33,7 +33,7 @@
 	<div class="card-body">
 		@if(count($jobTitles) > 0)
 		<div class="table-responsive">
-			<table class="table table-hover table-bordered table-striped table-condensed">
+			<table class="table table-hover table-bordered table-striped table-condensed table-data">
 				<thead>
 					<tr>
 						<th>code</th>
@@ -74,9 +74,6 @@
 		<h4>No data available.</h4>
 		@endif()
 	</div>
-	<div class="card-footer">
-		{{$jobTitles->links()}}
-	</div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -84,7 +81,7 @@
 			<div class="modal-header">
 				<h5 class="modal-title">Delete Confirmation</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -112,8 +109,8 @@
 @stop
 @section('js')
 <script>
-	$(document).ready(function(){
-		$('.delete-btn').on('click', function(){
+	$(document).ready(function() {
+		$('.delete-btn').on('click', function() {
 			var get = $('.add-button').attr('href');
 			var href = get.replace('create', 'delete');
 			var target = $(this).attr('data-target');
@@ -121,12 +118,20 @@
 			var id = target.replace('#modal-', '');
 			$('.modal').attr('id', modal_id);
 			$('.modal').attr('aria-labelledby', modal_id);
-			$('.form-horizontal').attr('action', href+'/'+id);
-			$('.form-horizontal').attr('id', 'form-'+id);
-			$('.modal-footer > button').attr('form', 'form-'+id);
+			$('.form-horizontal').attr('action', href + '/' + id);
+			$('.form-horizontal').attr('id', 'form-' + id);
+			$('.modal-footer > button').attr('form', 'form-' + id);
 			var name = $(this).attr('data-name');
-			$('.data-name').text('Are you sure you want to delete '+name+'?');
+			$('.data-name').text('Are you sure you want to delete ' + name + '?');
 		});
+	});
+</script>
+<script>
+	$('.table-data').DataTable({
+		"paging": true,
+		"lengthChange": false,
+		"searching": true,
+		"ordering": true,
 	});
 </script>
 @stop

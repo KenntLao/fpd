@@ -86,30 +86,30 @@
     <div class="col-md-4">
         <div class="form-group">
             <label class="mr-2" for="work_mobile">Work Mobile </label>
-            <span class="badge badge-danger">Required</span>
+
             <div class="input">
                 <p class="placeholder">Work Mobile</p>
-                <input class="form-control required" type="text" name="work_no" value="{{old('work_no') ?? $employee->work_no}}" required>
+                <input class="form-control required" type="text" name="work_no" value="{{old('work_no') ?? $employee->work_no}}">
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             <label class="mr-2" for="work_phone">Work Phone </label>
-            <span class="badge badge-danger">Required</span>
+       
             <div class="input">
                 <p class="placeholder">Work Phone</p>
-                <input class="form-control required" type="text" name="work_phone" value="{{old('work_phone') ?? $employee->work_phone}}" required>
+                <input class="form-control required" type="text" name="work_phone" value="{{old('work_phone') ?? $employee->work_phone}}">
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             <label class="mr-2" for="work_email">Work Email </label>
-            <span class="badge badge-danger">Required</span>
+    
             <div class="input">
                 <p class="placeholder">Work Phone</p>
-                <input class="form-control required" type="email" name="work_email" value="{{old('work_email') ?? $employee->work_email}}" required>
+                <input class="form-control required" type="email" name="work_email" value="{{old('work_email') ?? $employee->work_email}}" >
             </div>
         </div>
     </div>
@@ -140,7 +140,7 @@
             <span class="badge badge-danger">Required</span>
             <select id="supervisor" class="form-control required select2" name="supervisor" required>
                 @if(isset($supervisor))
-                <option value="{{$supervisor->employee_number}}">{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
+                <option value="{{$supervisor->id}}">{{$supervisor->firstname}} {{$supervisor->lastname}}</option>
                 @else
                 <option default disabled selected>--select one--</option>
                 @endif
@@ -150,10 +150,10 @@
     <div class="col-md-4">
         <div class="form-group">
             <label class="mr-2" for="supervisor">Pay Grade </label>
-            <span class="badge badge-danger">Required</span>
+
             <div class="input">
                 <p class="placeholder">Pay Grade</p>
-                <input class="form-control required" type="text" name="pay_grade" value="{{old('pay_grade') ?? $employee->pay_grade}}" required>
+                <input class="form-control required" type="text" name="pay_grade" value="{{old('pay_grade') ?? $employee->pay_grade}}" >
             </div>
         </div>
     </div>
@@ -174,20 +174,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="mr-2" for="work_address">Work Address </label>
-                            <span class="badge badge-danger">Required</span>
+
                             <div class="input">
                                 <p class="placeholder">Work Address</p>
-                                <input class="form-control required" type="text" name="work_address" value="{{old('work_address') ?? $employee->work_address}}" required>
+                                <input class="form-control required" type="text" name="work_address" value="{{old('work_address') ?? $employee->work_address}}" >
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="mr-2" for="tin">TIN </label>
-                            <span class="badge badge-danger">Required</span>
+
                             <div class="input">
                                 <p class="placeholder">TIN</p>
-                                <input class="form-control required" type="text" name="tin" value="{{old('tin') ?? $employee->tin}}" required>
+                                <input class="form-control required" type="text" name="tin" value="{{old('tin') ?? $employee->tin}}" >
                             </div>
                         </div>
                     </div>
@@ -284,18 +284,18 @@
                         </div>
                         <div class="form-group">
                             <label class="mr-2" for="address">Address </label>
-                            <span class="badge badge-danger">Required</span>
+                      
                             <div class="input">
                                 <p class="placeholder">Address</p>
-                                <input class="form-control required" type="text" name="home_address" value="{{old('home_address') ?? $employee->home_address}}" required>
+                                <input class="form-control required" type="text" name="home_address" value="{{old('home_address') ?? $employee->home_address}}" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="mr-2" for="email">Email </label>
-                            <span class="badge badge-danger">Required</span>
+                           
                             <div class="input">
                                 <p class="placeholder">Email</p>
-                                <input class="form-control required" type="email" name="private_email" value="{{old('private_email') ?? $employee->private_email}}" required>
+                                <input class="form-control required" type="email" name="private_email" value="{{old('private_email') ?? $employee->private_email}}" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -310,8 +310,8 @@
                         </div>
                         <div class="form-group">
                             <label class="mr-2" for="marital_status">Marital Status </label>
-                            <span class="badge badge-danger">Required</span>
-                            <select class="form-control required select2" name="marital_status" required>
+                           
+                            <select class="form-control required select2" name="marital_status" >
                                 @if($employee->marital_status)
                                 <option default selected>{{$employee->marital_status}}</option>
                                 @else
@@ -328,18 +328,18 @@
                         </div>
                         <div class="form-group">
                             <label class="mr-2" for="emergency_contact">Emergency Contact</label>
-                            <span class="badge badge-danger">Required</span>
+                         
                             <div class="input">
                                 <p class="placeholder">Emergeny Contact</p>
-                                <input class="form-control required" type="text" name="emergency_contact" value="{{old('emergency_contact') ?? $employee->emergency_contact}}" required>
+                                <input class="form-control required" type="text" name="emergency_contact" value="{{old('emergency_contact') ?? $employee->emergency_contact}}" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="mr-2" for="emergency_phone">Emergency Phone</label>
-                            <span class="badge badge-danger">Required</span>
+                            
                             <div class="input">
                                 <p class="placeholder">Emergeny Phone</p>
-                                <input class="form-control required" type="text" name="emergency_no" value="{{old('emergency_no') ?? $employee->emergency_no}}" required>
+                                <input class="form-control required" type="text" name="emergency_no" value="{{old('emergency_no') ?? $employee->emergency_no}}" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -381,8 +381,8 @@
                         </div>
                         <div class="form-group">
                             <label class="mr-2" for="nationality">Nationality </label>
-                            <span class="badge badge-danger">Required</span>
-                            <select class="form-control required select2" name="nationality" required>
+                            
+                            <select class="form-control required select2" name="nationality" >
                                 @if($employee->nationality)
                                 <option default selected>{{$employee->nationality}}</option>
                                 @else
@@ -597,17 +597,17 @@
                         </div>
                         <div class="form-group">
                             <label class="mr-2" for="birthday">Date of Birth </label>
-                            <span class="badge badge-danger">Required</span>
+                            
                             <div class="input">
-                                <input class="form-control required" type="date" name="birthday" value="{{old('birthday') ?? $employee->birthday}}" required>
+                                <input class="form-control required" type="date" name="birthday" value="{{old('birthday') ?? $employee->birthday}}" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="mr-2" for="place_birth">Place of Birth </label>
-                            <span class="badge badge-danger">Required</span>
+                           
                             <div class="input">
                                 <p class="placeholder">Place of Birth</p>
-                                <input class="form-control required" type="text" name="place_birth" value="{{old('place_birth') ?? $employee->place_birth}}" required>
+                                <input class="form-control required" type="text" name="place_birth" value="{{old('place_birth') ?? $employee->place_birth}}" >
                             </div>
                         </div>
                         <div class="form-group">

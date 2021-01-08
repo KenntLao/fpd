@@ -141,6 +141,11 @@
         $('.snap-modal').attr("id", modal_id);
         $('.snap-owner-name').text(emp_name + "'s attendance details");
         $('.time-in-snap').attr("src", "{{asset('assets/images/employees/employee_time_in/')}}/" + time_in_snap);
+        if (time_in_snap) {
+            $('.time-in-snap').attr("src", "{{asset('assets/images/employees/employee_time_in/')}}/" + time_in_snap);
+        } else {
+            $('.time-in-snap').attr("src", "{{asset('assets/images/default.jpg')}}");
+        }
         if (time_out_snap) {
             $('.time-out-snap').attr("src", "{{asset('assets/images/employees/employee_time_out/')}}/" + time_out_snap);
         } else {

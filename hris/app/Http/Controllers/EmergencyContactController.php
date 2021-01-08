@@ -21,6 +21,7 @@ class EmergencyContactController extends Controller
     {
         if( $_SESSION['sys_account_mode'] == 'employee' ) {
             $emergencies = hris_emergency_contacts::where('del_status', 0)->paginate(10);
+            $id = $_SESSION['sys_id'];
             return view('pages.personalInformation.emergencyContacts.index', compact('emergencies'));
         } else {
             return back();

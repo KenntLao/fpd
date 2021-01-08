@@ -671,6 +671,8 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::delete('/hris/pages/recruitment/candidates/delete/{candidate}', 'CandidateController@destroy');
     Route::get('/hris/pages/recruitment/candidates/download/{candidate}', 'CandidateController@download');
 
+    Route::post('/hris/pages/recruitment/candidates/import', 'CandidateController@import');
+
     /* NPA PAGE */
     Route::get('/hris/pages/recruitment/npa/index', 'NpaController@index');
     /* ADD NPA */

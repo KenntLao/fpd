@@ -404,13 +404,7 @@ return [
                             'active' => ['/hris/pages/admin/leave/leaveGroupEmployees/create', '/hris/pages/admin/leave/leaveGroupEmployees/index', '/hris/pages/admin/leave/leaveGroupEmployees/*/edit', 'regex:@^content/[0-9]+$@'],
                             'can' => 'leave-group-employee',
                         ],
-                        [
-                            'text' => 'Employee Leave List',
-                            'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/employeeLeaveList/index',
-                            'active' => ['/hris/pages/admin/leave/employeeLeaveList/create', '/hris/pages/admin/leave/employeeLeaveList/index', '/hris/pages/admin/leave/employeeLeaveList/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'employee-leave-list',
-                        ]
+                       
                     ]
                 ],
                 [

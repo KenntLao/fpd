@@ -26,11 +26,15 @@
     </div>
     <div class="card-body">
         <div class="row">
-            @foreach($leave_groups_rules as $lgr)
+            @foreach($leave_entitlements as $entitlement)
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{$lgr->name}} Chart</h3>
+                        <h3 class="card-title">
+                            @if(isset($entitlement->leave_type->name))
+                            {{$entitlement->leave_type->name}} Chart
+                            @endif
+                        </h3>
                     </div>
                     <div class="card-body">
                         <div class="chartjs-size-monitor">
@@ -41,10 +45,11 @@
                                 <div class=""></div>
                             </div>
                         </div>
-                        <canvas id="donutChart{{$lgr->id}}" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 572px;" width="715" height="312" class="chartjs-render-monitor"></canvas>
+                        <canvas id="donutChart{{$entitlement->id}}" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 572px;" width="715" height="312" class="chartjs-render-monitor"></canvas>
                     </div>
                 </div>
             </div>
+
             @endforeach
 
         </div>
@@ -57,54 +62,42 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/admin_custom.css') }}">
 @stop
 @section('js')
+@foreach($leave_entitlements as $entitlement)
 @php
+$id = $_SESSION['sys_id'];
+$numberDays = 0;
+$pending_leaves = App\hris_leaves::where('employee_id',$id)->where('status',0)->where('leave_type_id',$entitlement->leave_type_id)->get();
+$approved_leaves = App\hris_leaves::where('employee_id', $id)->where('status', 1)->where('leave_type_id',$entitlement->leave_type_id)->get();
 
-$emp_id = $_SESSION['sys_id'];
-$leaveGroup_ids = App\hris_leave_group_employees::where('employee_id', $emp_id)->get('leave_group_id');
-
-foreach ($leaveGroup_ids as $leaveGroup_id) {
-$lg_id = $leaveGroup_id->leave_group_id;
-$leave_groups_rules = App\hris_leave_rules::where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
-}
-
-foreach($leave_groups_rules as $leave_group_rule) {
-
-
-if(!isset($leave_groups_rules)) {
-echo 'No available Data. Add Employee to a Leave Group';
-}else {
-
-$approved_leave = App\hris_leaves::where('employee_id',$emp_id)->where('status',1)->where('leave_type_id',$leave_group_rule->leave_type_id)->get();
-$approved_count = count($approved_leave);
-
-
-$denied_leave = App\hris_leaves::where('employee_id', $emp_id)->where('status', 2)->where('leave_type_id', $leave_group_rule->leave_type_id)->get();
-$denied_count = count($denied_leave);
-
-
-$pending_leave = App\hris_leaves::where('employee_id', $emp_id)->where('status', 2)->where('leave_type_id', $leave_group_rule->leave_type_id)->get();
-$pending_count = count($pending_leave);
-
-$total_leave_used = $approved_count + $denied_count + $pending_count;
+foreach($approved_leaves as $approved_leave) {
+    $start_date = strtotime($approved_leave->leave_start_date);
+    $end_date = strtotime($approved_leave->leave_end_date);
+    $timeDiff = abs($end_date - $start_date);
+    $days_diff = $timeDiff / 86400;
+    $numberDays = $days_diff + 1;
 }
 
 
 
+$denied_leaves = App\hris_leaves::where('employee_id', $id)->where('status', 2)->where('leave_type_id',$entitlement->leave_type_id)->get();
 
+$pending_count = count($pending_leaves);
+$approved_count = $numberDays;
+$denied_count = count($denied_leaves);
 
-$total_leave = $leave_group_rule->default_per_year;
-$total_unused = $total_leave - $total_leave_used;
-echo $chart_var = '<script>
-    var donutChartCanvas = $("#donutChart'.$leave_group_rule->id.'").get(0).getContext("2d")
+@endphp
+<script>
+    var donutChartCanvas = $("#donutChart" + JSON.parse("{{ json_encode($entitlement->id) }}")).get(0).getContext("2d")
+
     var donutData = {
         labels: [
-            "Approved Leave Days: '.$approved_count.'",
-            "Pending Leave Days: '.$pending_count.'",
-            "Denied Leave Days: '.$denied_count.'",
-            "Unused Leave Days: '.$total_unused.'",
+            "Approved Leave Days:" + JSON.parse("{{ json_encode($approved_count) }}"),
+            "Pending Leave: " + JSON.parse("{{ json_encode($pending_count) }}"),
+            "Denied Leave: " + JSON.parse("{{ json_encode($denied_count) }}"),
+            "Unused Leave Days: " + JSON.parse("{{ json_encode($entitlement->leave_credit) }}"),
         ],
         datasets: [{
-            data: ['. $approved_count .', '. $pending_count .', '. $denied_count.', '. $total_unused .'],
+            data: [JSON.parse("{{ json_encode($approved_count) }}"), JSON.parse("{{ json_encode($pending_count) }}"), JSON.parse("{{ json_encode($denied_count) }}"), JSON.parse("{{ json_encode($entitlement->leave_credit) }}")],
             backgroundColor: ["#f56954", "#00a65a", "#f39c12", "#00c0ef", "#3c8dbc", "#d2d6de"],
         }]
     }
@@ -117,9 +110,8 @@ echo $chart_var = '<script>
         data: donutData,
         options: donutOptions
     });
-</script>';
-}
-@endphp
+</script>
+@endforeach
 <script>
     $(document).ready(function() {
         $('.delete-btn').on('click', function() {

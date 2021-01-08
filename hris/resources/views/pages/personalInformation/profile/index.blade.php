@@ -141,7 +141,7 @@
 						<label>Supervisor</label>
 						<p>
 							@php
-							if($employee->supervisor) {
+							if(isset($employee->supervisor)) {
 							$supervisor = App\hris_employee::find($employee->supervisor);
 							echo $supervisor->firstname.' '.$supervisor->lastname;
 							} else {

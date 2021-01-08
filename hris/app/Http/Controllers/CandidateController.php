@@ -10,6 +10,8 @@ use App\users;
 use App\table_careers_application;
 use App\roles;
 use App\hris_employee;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CandidateImport;
 
 class CandidateController extends Controller
 {
@@ -23,16 +25,20 @@ class CandidateController extends Controller
     }
     public function index()
     {
-        $current_user_id = $_SESSION['sys_id'];
-        $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
+        if($_SESSION['sys_account_mode'] == "employee") {
+            $current_user_id = $_SESSION['sys_id'];
+            $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
 
-        // GET CURRENT USER ROLE ID
-        $employee = hris_employee::where('del_status', 0)->where('id', $current_user_id)->first();
-        $employee_ids = explode(',', $employee->role_id);
+            // GET CURRENT USER ROLE ID
+            $employee = hris_employee::where('id', $current_user_id)->first();
+            $employee_ids = explode(',', $employee->role_id);
 
 
-        $candidates = table_careers_application::where('del_status', 0)->paginate(10);
-        return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids'));
+            $candidates = table_careers_application::all()->where('del_status', 0);
+            return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids'));
+        } else {
+            return back();
+        }
     }
 
     public function create(hris_candidates $candidate)
@@ -196,6 +202,23 @@ class CandidateController extends Controller
         $candidate = hris_candidates::where('id',$request->candidate_id)->first();
         $candidate->status = $request->candidate_status;
         $candidate->update();
+    }
+
+    public function import()
+    {
+        if ($this->validateImport()) {
+            Excel::import(new CandidateImport, request()->file('candidateData'));
+            return redirect('/hris/pages/recruitment/candidates/index')->with('success', 'Candidate list successfully uploaded!');
+        } else {
+            return back()->withErrors(['Invalid file!']);
+        }
+    }
+
+    protected function validateImport()
+    {
+        return request()->validate([
+            'candidateData' => 'required|mimes:xlsx,xls',
+        ]);
     }
 
     protected function storeValidatedData() {

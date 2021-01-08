@@ -77,15 +77,9 @@ class LeaveRuleController extends Controller
             $leaveRule->leave_type_id = request('leave_type_id');
             $leaveRule->leave_group_id = request('leave_group_id');
             $leaveRule->employment_status_id = request('employment_status_id');
-            $leaveRule->exp_days = request('exp_days');
             $leaveRule->leave_period_id = request('leave_period_id');
             $leaveRule->default_per_year = request('default_per_year');
-            $leaveRule->supervisor_assign_leave = request('supervisor_assign_leave');
             $leaveRule->employee_can_apply = request('employee_can_apply');
-            $leaveRule->apply_beyond_current = request('apply_beyond_current');
-            $leaveRule->leave_accrue = request('leave_accrue');
-            $leaveRule->proportionate_on_joined_date = request('proportionate_on_joined_date');
-            $leaveRule->employee_leave_period = request('employee_leave_period');
             // GET CHANGES
             $changes = $leaveRule->getDirty();
             // GET ORIGINAL DATA
@@ -139,15 +133,9 @@ class LeaveRuleController extends Controller
             'leave_type_id' => 'required',
             'leave_group_id' => 'nullable',
             'employment_status_id' => 'nullable',
-            'exp_days' => 'required',
             'leave_period_id' => 'nullable',
             'default_per_year' => 'required',
-            'supervisor_assign_leave' => 'required',
-            'employee_can_apply' => 'required',
-            'apply_beyond_current' => 'required',
-            'leave_accrue' => 'required',
-            'proportionate_on_joined_date' => 'required',
-            'employee_leave_period' => 'required',            
+            'employee_can_apply' => 'required',     
         ]);
     }
 
