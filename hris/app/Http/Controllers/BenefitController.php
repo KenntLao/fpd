@@ -17,7 +17,7 @@ class BenefitController extends Controller
     }
     public function index()
     {   
-        $benefits = hris_benefits::orderBy('id')->paginate(10);
+        $benefits = hris_benefits::where('del_status', 0)->orderBy('id')->paginate(10);
         return view('pages.recruitment.recruitmentSetup.benefits.index', compact('benefits'));
     }
 
@@ -81,7 +81,8 @@ class BenefitController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $benefit->delete();
+                $benefit->del_status = 1;
+                $benefit->update();
                 $id = $benefit->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success','Benefit successfully deleted!');
@@ -92,7 +93,8 @@ class BenefitController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('password'), $employee->password) ) {
-                $benefit->delete();
+                $benefit->del_status = 1;
+                $benefit->update();
                 $id = $benefit->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/benefits/index')->with('success','Benefit successfully deleted!');

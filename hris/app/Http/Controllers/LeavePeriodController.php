@@ -18,7 +18,7 @@ class LeavePeriodController extends Controller
     }
     public function index()
     {
-        $leavePeriods = hris_leave_periods::paginate(10);
+        $leavePeriods = hris_leave_periods::where('del_status', 0)->paginate(10);
         return view('pages.admin.leave.leavePeriods.index', compact('leavePeriods'));
     }
 
@@ -82,7 +82,8 @@ class LeavePeriodController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $leavePeriod->delete();
+                $leavePeriod->del_status = 1;
+                $leavePeriod->update();
                 $id = $leavePeriod->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully deleted!');
@@ -92,7 +93,8 @@ class LeavePeriodController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $leavePeriod->delete();
+                $leavePeriod->del_status = 1;
+                $leavePeriod->update();
                 $id = $asset->id;
                 $this->leavePeriod->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leavePeriods/index')->with('success', 'Leave period successfully deleted!');

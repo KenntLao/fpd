@@ -18,14 +18,14 @@ class LeaveGroupController extends Controller
     }
     public function index()
     {
-        $leaveGroups = hris_leave_groups::paginate(10);
+        $leaveGroups = hris_leave_groups::where('del_status', 0)->paginate(10);
         
         return view('pages.admin.leave.leaveGroups.index', compact('leaveGroups'));
     }
 
     public function create(hris_leave_groups $leaveGroup)
     {
-        $job_titles = hris_job_titles::all();
+        $job_titles = hris_job_titles::all()->where('del_status', 0);
         $job_title_ids = explode(',',$leaveGroup->job_title_id);
         return view('pages.admin.leave.leaveGroups.create', compact('leaveGroup', 'job_titles', 'job_title_ids'));
     }
@@ -58,7 +58,7 @@ class LeaveGroupController extends Controller
 
     public function edit(hris_leave_groups $leaveGroup)
     {
-        $job_titles = hris_job_titles::all();
+        $job_titles = hris_job_titles::all()->where('del_status', 0);
         $job_title_ids = explode(',', $leaveGroup->job_title_id);
         return view('pages.admin.leave.leaveGroups.edit', compact('leaveGroup','job_titles', 'job_title_ids'));
     }
@@ -100,7 +100,8 @@ class LeaveGroupController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $leaveGroup->delete();
+                $leaveGroup->del_status = 1;
+                $leaveGroup->update();
                 $id = $leaveGroup->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully deleted!');
@@ -110,7 +111,8 @@ class LeaveGroupController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $leaveGroup->delete();
+                $leaveGroup->del_status = 1;
+                $leaveGroup->update();
                 $id = $leaveGroup->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leaveGroups/index')->with('success', 'Leave group successfully deleted!');

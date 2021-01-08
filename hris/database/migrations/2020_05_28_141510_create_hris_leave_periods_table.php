@@ -19,6 +19,7 @@ class CreateHrisLeavePeriodsTable extends Migration
             $table->string('name');
             $table->date('start');
             $table->date('end');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

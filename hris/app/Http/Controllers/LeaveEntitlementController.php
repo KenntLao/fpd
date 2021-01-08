@@ -17,7 +17,7 @@ class LeaveEntitlementController extends Controller
     {
         $leave_group_employee = hris_leave_group_employees::all();
         $emp_id = $_SESSION['sys_id'];
-        $leaveGroup_ids = hris_leave_group_employees::where('employee_id', $emp_id)->get('leave_group_id');
+        $leaveGroup_ids = hris_leave_group_employees::where('del_status', 0)->where('employee_id', $emp_id)->get('leave_group_id');
 
         foreach ($leaveGroup_ids as $leaveGroup_id) {
             $lg_id = $leaveGroup_id->leave_group_id;

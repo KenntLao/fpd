@@ -21,15 +21,15 @@ class EmployeeLoanController extends Controller
     }
     public function index()
     {
-        $employeeLoans = hris_employee_loans::paginate(10);
+        $employeeLoans = hris_employee_loans::where('del_status', 0)->paginate(10);
         return view('pages.admin.loans.employeeLoans.index', compact('employeeLoans'));
     }
 
     public function create(hris_employee_loans $employeeLoan)
     {
-        $types = hris_company_loan_types::all();
-        $currencies = hris_currencies::all();
-        $employees = hris_employee::all();
+        $types = hris_company_loan_types::where('del_status', 0)->get();
+        $currencies = hris_currencies::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         return view('pages.admin.loans.employeeLoans.create', compact('employeeLoan', 'types', 'currencies', 'employees'));
     }
 
@@ -52,9 +52,9 @@ class EmployeeLoanController extends Controller
 
     public function edit(hris_employee_loans $employeeLoan)
     {
-        $types = hris_company_loan_types::all();
-        $currencies = hris_currencies::all();
-        $employees = hris_employee::all();
+        $types = hris_company_loan_types::where('del_status', 0)->get();
+        $currencies = hris_currencies::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         return view('pages.admin.loans.employeeLoans.edit', compact('employeeLoan', 'types', 'currencies', 'employees'));
     }
 
@@ -98,7 +98,8 @@ class EmployeeLoanController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $employeeLoan->delete();
+                $employeeLoan->del_status = 1;
+                $employeeLoan->update();
                 $id = $employeeLoan->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully deleted!');
@@ -108,7 +109,8 @@ class EmployeeLoanController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $employeeLoan->delete();
+                $employeeLoan->del_status = 1;
+                $employeeLoan->update();
                 $id = $employeeLoan->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/loans/employeeLoans/index')->with('success', 'Employee Loan successfully deleted!');

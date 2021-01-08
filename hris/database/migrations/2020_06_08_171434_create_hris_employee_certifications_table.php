@@ -21,6 +21,7 @@ class CreateHrisEmployeeCertificationsTable extends Migration
             $table->string('institute');
             $table->date('granted_on')->nullable();
             $table->date('valid_thru')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

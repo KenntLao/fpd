@@ -20,7 +20,7 @@ class EmergencyContactController extends Controller
     public function index()
     {
         if( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $emergencies = hris_emergency_contacts::paginate(10);
+            $emergencies = hris_emergency_contacts::where('del_status', 0)->paginate(10);
             return view('pages.personalInformation.emergencyContacts.index', compact('emergencies'));
         } else {
             return back();
@@ -106,7 +106,8 @@ class EmergencyContactController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('password'), $employee->password) ) {
-                $emergency->delete();
+                $emergency->del_status = 1;
+                $emergency->update();
                 $id = $emergency->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/personalInformation/emergencyContacts/index')->with('success', 'Emergency contact successfully deleted!');

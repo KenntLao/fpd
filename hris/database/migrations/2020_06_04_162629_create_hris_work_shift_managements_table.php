@@ -38,6 +38,7 @@ class CreateHrisWorkShiftManagementsTable extends Migration
             $table->string('sunday_time_in')->default('0')->nullable();
             $table->string('sunday_time_out')->default('0')->nullable();
             $table->timestamps();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

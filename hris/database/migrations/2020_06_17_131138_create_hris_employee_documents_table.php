@@ -23,6 +23,7 @@ class CreateHrisEmployeeDocumentsTable extends Migration
             $table->string('status');
             $table->longText('details')->nullable();
             $table->string('attachment');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

@@ -22,7 +22,7 @@ class EmployeeEducationController extends Controller
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $employeeEducations = hris_employee_educations::paginate(10);
+            $employeeEducations = hris_employee_educations::where('del_status', 0)->paginate(10);
             return view('pages.personalInformation.educations.index', compact('employeeEducations'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -32,7 +32,7 @@ class EmployeeEducationController extends Controller
     public function create(hris_employee_educations $employeeEducation)
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $educations = hris_educations::all();
+            $educations = hris_educations::where('del_status', 0)->get();
             return view('pages.personalInformation.educations.create', compact('employeeEducation', 'educations'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -65,7 +65,7 @@ class EmployeeEducationController extends Controller
     public function edit(hris_employee_educations $employeeEducation)
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $educations = hris_educations::all();
+            $educations = hris_educations::where('del_status', 0)->get();
             return view('pages.personalInformation.educations.edit', compact('employeeEducation', 'educations'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -108,7 +108,8 @@ class EmployeeEducationController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('password'), $employee->password) ) {
-                $employeeEducation->delete();
+                $employeeEducation->del_status = 1;
+                $employeeEducation->update();
                 $id = $employeeEducation->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/personalInformation/educations/index')->with('success', 'Employee education successfully deleted!');

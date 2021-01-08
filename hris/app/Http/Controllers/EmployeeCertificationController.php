@@ -21,7 +21,7 @@ class EmployeeCertificationController extends Controller
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $employeeCertifications = hris_employee_certifications::paginate(10);
+            $employeeCertifications = hris_employee_certifications::where('del_status', 0)->paginate(10);
             return view('pages.personalInformation.certifications.index', compact('employeeCertifications'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -31,7 +31,7 @@ class EmployeeCertificationController extends Controller
     public function create(hris_employee_certifications $employeeCertification)
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $certifications = hris_certifications::all();
+            $certifications = hris_certifications::where('del_status', 0)->get();
             return view('pages.personalInformation.certifications.create', compact('employeeCertification', 'certifications'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -64,7 +64,7 @@ class EmployeeCertificationController extends Controller
     public function edit(hris_employee_certifications $employeeCertification)
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $certifications = hris_certifications::all();
+            $certifications = hris_certifications::where('del_status', 0)->get();
             return view('pages.personalInformation.certifications.edit', compact('employeeCertification', 'certifications'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -107,7 +107,8 @@ class EmployeeCertificationController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('password'), $employee->password) ) {
-                $employeeCertification->delete();
+                $employeeCertification->del_status = 1;
+                $employeeCertification->update();
                 $id = $employeeCertification->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/personalInformation/certifications/index')->with('success', 'Employee education successfully deleted!');

@@ -20,14 +20,14 @@ class CompanyAssetController extends Controller
     }
     public function index()
     {
-        $assets = hris_company_assets::paginate(10);
+        $assets = hris_company_assets::where('del_status', 0)->paginate(10);
         return view('pages.admin.companyAssets.assets.index', compact('assets'));
     }
 
     public function create(hris_company_assets $asset)
     {
-        $employees = hris_employee::all();
-        $types = hris_company_asset_types::all();
+        $employees = hris_employee::where('del_status', 0)->get();
+        $types = hris_company_asset_types::where('del_status', 0)->get();
         return view('pages.admin.companyAssets.assets.create', compact('asset', 'employees', 'types'));
     }
 
@@ -50,8 +50,8 @@ class CompanyAssetController extends Controller
 
     public function edit(hris_company_assets $asset)
     {
-        $employees = hris_employee::all();
-        $types = hris_company_asset_types::all();
+        $employees = hris_employee::where('del_status', 0)->get();
+        $types = hris_company_asset_types::where('del_status')->get();
         return view('pages.admin.companyAssets.assets.edit', compact('asset', 'employees', 'types'));
     }
 
@@ -89,7 +89,8 @@ class CompanyAssetController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $asset->delete();
+                $asset->del_status = 1;
+                $asset->update();
                 $id = $asset->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/companyAssets/assets/index')->with('success','Company asset successfully deleted!');
@@ -99,7 +100,8 @@ class CompanyAssetController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $asset->delete();
+                $asset->del_status = 1;
+                $asset->update();
                 $id = $asset->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/companyAssets/assets/index')->with('success','Company asset successfully deleted!');

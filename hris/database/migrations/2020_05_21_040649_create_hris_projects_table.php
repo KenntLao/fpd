@@ -20,6 +20,7 @@ class CreateHrisProjectsTable extends Migration
             $table->bigInteger('client_id')->nullable();
             $table->longText('details')->nullable();
             $table->string('status');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

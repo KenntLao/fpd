@@ -25,6 +25,7 @@ class CreateHrisCoursesTable extends Migration
             $table->string('currency');
             $table->integer('cost');
             $table->string('status');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

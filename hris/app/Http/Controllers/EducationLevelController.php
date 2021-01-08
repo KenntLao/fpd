@@ -17,7 +17,7 @@ class EducationLevelController extends Controller
     }
     public function index()
     {   
-        $educationLevels = hris_education_levels::paginate(10);
+        $educationLevels = hris_education_levels::where('del_status', 0)->paginate(10);
         return view('pages.recruitment.recruitmentSetup.educationLevels.index', compact('educationLevels'));
     }
 
@@ -79,7 +79,8 @@ class EducationLevelController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $educationLevel->delete();
+                $educationLevel->del_status = 1;
+                $educationLevel->update();
                 $id = $educationLevel->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');
@@ -89,7 +90,8 @@ class EducationLevelController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $educationLevel->delete();
+                $educationLevel->del_status = 1;
+                $educationLevel->update();
                 $id = $educationLevel->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/educationLevels/index')->with('success','Education level successfully deleted!');

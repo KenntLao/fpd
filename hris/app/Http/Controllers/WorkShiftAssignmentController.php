@@ -31,29 +31,29 @@ class WorkShiftAssignmentController extends Controller
         // CHECK IF SUPERADMIN OR NOT
         // IF SUPERADMIN
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
-            $workshift_assignment = hris_workshift_assignment::paginate(10);
+            $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->paginate(10);
             return view('pages.time.workshiftAssignment.index', compact('workshift_assignment', 'hr_officer_id', 'sys_role_ids'));
         } else {
             // CHECK IF SUPERVISOR OR NOT
             // IF SUPERVISOR AND HR OFFICER
             if ( in_array($supervisor_id, $sys_role_ids) OR in_array($hr_officer_id, $sys_role_ids) ) {
                 if (in_array($hr_officer_id, $sys_role_ids)) {
-                    $subordinate = hris_employee::all();
+                    $subordinate = hris_employee::all()->where('del_status', 0);
                     foreach ($subordinate as $s) {
                         $subordinate_id[] = $s->id;
                     }
                 } else {
-                    $subordinate = hris_employee::where('supervisor', $_SESSION['sys_id'])->get('id');
+                    $subordinate = hris_employee::where('supervisor', $_SESSION['sys_id'])->where('del_status', 0)->get('id');
                     foreach ($subordinate as $s) {
                         $subordinate_id[] = $s->id;
                     }
                 }
-                $self = hris_workshift_assignment::where('employee_id', $_SESSION['sys_id'])->paginate(10);
-                $workshift_assignment = hris_workshift_assignment::whereIn('employee_id', $subordinate_id)->paginate(10);
+                $self = hris_workshift_assignment::where('del_status', 0)->where('employee_id', $_SESSION['sys_id'])->paginate(10);
+                $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->whereIn('employee_id', $subordinate_id)->paginate(10);
                 return view('pages.time.workshiftAssignment.index', compact('workshift_assignment', 'self','supervisor_id','sys_role_ids','hr_officer_id'));
             } else {
                 //IF EMPLOYEE
-                $workshift_assignment = hris_workshift_assignment::where('employee_id', $_SESSION['sys_id'])->paginate(10);
+                $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->where('employee_id', $_SESSION['sys_id'])->paginate(10);
                 return view('pages.time.workshiftAssignment.index', compact('workshift_assignment','supervisor_id', 'sys_role_ids','hr_officer_id'));
             }
         }
@@ -68,8 +68,8 @@ class WorkShiftAssignmentController extends Controller
         // CHECK IF SUPERADMIN OR NOT
         // IF SUPERADMIN
         if ( $_SESSION['sys_role_ids'] == ',1,') {
-            $employees = hris_employee::where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
-            $work_shift = hris_work_shift_management::all();
+            $employees = hris_employee::where('del_status', 0)->where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
+            $work_shift = hris_work_shift_management::all()->where('del_status', 0);
             return view('pages.time.workshiftAssignment.create', compact('workshift_assignment', 'employees', 'work_shift'));
         } else {
             // IF NOT SUPERADMIN CHECK IF SUPERVISOR OR NOT
@@ -80,24 +80,24 @@ class WorkShiftAssignmentController extends Controller
                     $employees_id[] = $_SESSION['sys_id'];
                 }
                 if ( in_array($hr_officer_id, $sys_role_ids) ) {
-                    $subordinates = hris_employee::where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
+                    $subordinates = hris_employee::where('del_status', 0)->where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
                     foreach ($subordinates as $s) {
                         $employees_id[] = $s->id;
                     }
                 } else {
-                    $subordinates = hris_employee::where('supervisor', $_SESSION['sys_id'])->get();
+                    $subordinates = hris_employee::where('del_status', 0)->where('supervisor', $_SESSION['sys_id'])->get();
                     foreach ($subordinates as $s) {
                         $employees_id[] = $s->id;
                     }
                 }
-                $employees = hris_employee::whereIn('id', $employees_id)->get();
-                $work_shift = hris_work_shift_management::all();
+                $employees = hris_employee::where('del_status', 0)->whereIn('id', $employees_id)->get();
+                $work_shift = hris_work_shift_management::all()->where('del_status', 0);
                 return view('pages.time.workshiftAssignment.create', compact('workshift_assignment', 'employees', 'work_shift'));
 
             } else {
                 // IF EMPLOYEE
-                $employees = hris_employee::where('id', $_SESSION['sys_id'])->get();
-                $work_shift = hris_work_shift_management::all();
+                $employees = hris_employee::where('del_status', 0)->where('id', $_SESSION['sys_id'])->get();
+                $work_shift = hris_work_shift_management::all()->where('del_status', 0);
                 return view('pages.time.workshiftAssignment.create', compact('workshift_assignment', 'employees', 'work_shift'));
             }
         }
@@ -183,8 +183,8 @@ class WorkShiftAssignmentController extends Controller
             // CHECK IF SUPERADMIN OR NOT
             // IF SUPERADMIN
             if ( $_SESSION['sys_role_ids'] == ',1,') {
-                $employees = hris_employee::where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
-                $work_shift = hris_work_shift_management::all();
+                $employees = hris_employee::where('del_status', 0)->where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
+                $work_shift = hris_work_shift_management::all()->where('del_status', 0);
                 return view('pages.time.workshiftAssignment.edit', compact('workshift_assignment', 'employees', 'work_shift'));
             } else {
                 // IF NOT SUPERADMIN CHECK IF SUPERVISOR OR NOT
@@ -195,24 +195,24 @@ class WorkShiftAssignmentController extends Controller
                         $employees_id[] = $_SESSION['sys_id'];
                     }
                     if ( in_array($hr_officer_id, $sys_role_ids) ) {
-                        $subordinates = hris_employee::where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
+                        $subordinates = hris_employee::where('del_status', 0)->where('supervisor', '!=', '')->whereNotNull('supervisor')->get();
                         foreach ($subordinates as $s) {
                             $employees_id[] = $s->id;
                         }
                     } else {
-                        $subordinates = hris_employee::where('supervisor', $_SESSION['sys_id'])->get();
+                        $subordinates = hris_employee::where('del_status', 0)->where('supervisor', $_SESSION['sys_id'])->get();
                         foreach ($subordinates as $s) {
                             $employees_id[] = $s->id;
                         }
                     }
-                    $employees = hris_employee::whereIn('id', $employees_id)->get();
-                    $work_shift = hris_work_shift_management::all();
+                    $employees = hris_employee::where('del_status', 0)->whereIn('id', $employees_id)->get();
+                    $work_shift = hris_work_shift_management::all()->where('del_status', 0);
                     return view('pages.time.workshiftAssignment.edit', compact('workshift_assignment', 'employees', 'work_shift'));
 
                 } else {
                     // IF EMPLOYEE
-                    $employees = hris_employee::where('id', $_SESSION['sys_id'])->get();
-                    $work_shift = hris_work_shift_management::all();
+                    $employees = hris_employee::where('del_status', 0)->where('id', $_SESSION['sys_id'])->get();
+                    $work_shift = hris_work_shift_management::all()->where('del_status', 0);
                     return view('pages.time.workshiftAssignment.edit', compact('workshift_assignment', 'employees', 'work_shift'));
                 }
             }
@@ -308,7 +308,8 @@ class WorkShiftAssignmentController extends Controller
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $workshift_assignment->delete();
+                $workshift_assignment->del_status = 1;
+                $workshift_assignment->update();
                 $id = $workshift_assignment->id;
                 $this->function->deleteSystemLog($this->module, $id);
                 return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');
@@ -318,7 +319,8 @@ class WorkShiftAssignmentController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $workshift_assignment->delete();
+                $workshift_assignment->del_status = 1;
+                $workshift_assignment->update();
                 $id = $workshift_assignment->id;
                 $this->function->deleteSystemLog($this->module, $id);
                 return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully deleted!');

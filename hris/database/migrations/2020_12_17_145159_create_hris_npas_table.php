@@ -38,6 +38,7 @@ class CreateHrisNpasTable extends Migration
             $table->integer('process_id')->default(0)->nullable();
             $table->integer('approve_id')->default(0)->nullable();
             $table->timestamps();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

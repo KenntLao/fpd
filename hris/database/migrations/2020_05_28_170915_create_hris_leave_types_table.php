@@ -18,6 +18,7 @@ class CreateHrisLeaveTypesTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('leave_color');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

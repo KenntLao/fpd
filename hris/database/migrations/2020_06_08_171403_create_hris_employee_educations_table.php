@@ -21,6 +21,7 @@ class CreateHrisEmployeeEducationsTable extends Migration
             $table->string('institute');
             $table->date('start_date')->nullable();
             $table->date('completed')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

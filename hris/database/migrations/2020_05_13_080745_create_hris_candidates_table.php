@@ -36,6 +36,7 @@ class CreateHrisCandidatesTable extends Migration
             $table->longText('referees')->nullable();
             $table->string('prefered_industry');
             $table->string('expected_salary')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

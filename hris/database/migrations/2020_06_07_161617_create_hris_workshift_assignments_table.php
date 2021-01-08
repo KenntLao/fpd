@@ -21,6 +21,7 @@ class CreateHrisWorkshiftAssignmentsTable extends Migration
             $table->string('date_to');
             $table->integer('status')->default('0')->nullable();
             $table->timestamps();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

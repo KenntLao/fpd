@@ -29,6 +29,7 @@ class CreateHrisEmployeeExpensesTable extends Migration
             $table->string('attachment_1')->nullable();
             $table->string('attachment_2')->nullable();
             $table->string('status')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

@@ -17,7 +17,7 @@ class JobFunctionController extends Controller
     }
     public function index()
     {   
-        $jobFunctions = hris_job_functions::paginate(10);
+        $jobFunctions = hris_job_functions::where('del_status', 0)->paginate(10);
         return view('pages.recruitment.recruitmentSetup.jobFunctions.index', compact('jobFunctions'));
     }
 
@@ -80,7 +80,8 @@ class JobFunctionController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $jobFunction->delete();
+                $jobFunction->del_status = 1;
+                $jobFunction->update();
                 $id = $jobFunction->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');
@@ -90,7 +91,8 @@ class JobFunctionController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $jobFunction->delete();
+                $jobFunction->del_status = 1;
+                $jobFunction->update();
                 $id = $jobFunction->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/jobFunctions/index')->with('success','Job function successfully deleted!');

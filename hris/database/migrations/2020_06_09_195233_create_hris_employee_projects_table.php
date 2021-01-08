@@ -19,6 +19,7 @@ class CreateHrisEmployeeProjectsTable extends Migration
             $table->bigInteger('employee_id');
             $table->bigInteger('project_id');
             $table->longText('details')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

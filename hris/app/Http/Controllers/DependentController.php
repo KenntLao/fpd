@@ -21,7 +21,7 @@ class DependentController extends Controller
     {
         $id = $_SESSION['sys_id'];
         if ($_SESSION['sys_account_mode'] == 'employee') {
-            $dependents = hris_employee_dependents::where('employee_id', $id)->paginate(10);
+            $dependents = hris_employee_dependents::where('del_status', 0)->where('employee_id', $id)->paginate(10);
             return view('pages.personalInformation.dependents.index', compact('dependents'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -105,7 +105,8 @@ class DependentController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('password'), $employee->password) ) {
-                $dependent->delete();
+                $dependent->del_status = 1;
+                $dependent->update();
                 $id = $dependent->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/personalInformation/dependents/index')->with('success', 'Dependent successfully deleted!');

@@ -22,6 +22,7 @@ class CreateHrisAttendancesTable extends Migration
             $table->bigInteger('time_in');
             $table->bigInteger('time_out')->nullable();
             $table->integer('status')->default('0');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

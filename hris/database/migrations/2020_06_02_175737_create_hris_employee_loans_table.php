@@ -26,6 +26,7 @@ class CreateHrisEmployeeLoansTable extends Migration
             $table->integer('monthly_installment');
             $table->string('status');
             $table->longText('details')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

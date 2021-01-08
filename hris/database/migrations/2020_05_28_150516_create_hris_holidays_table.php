@@ -21,6 +21,7 @@ class CreateHrisHolidaysTable extends Migration
             $table->integer('ot_type')->nullable();
             $table->string('status');
             $table->string('country')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

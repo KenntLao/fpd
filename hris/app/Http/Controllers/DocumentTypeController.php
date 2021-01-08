@@ -19,7 +19,7 @@ class DocumentTypeController extends Controller
 
     public function index()
     {
-        $types = hris_document_types::paginate(10);
+        $types = hris_document_types::where('del_status', 0)->paginate(10);
         return view('pages.employees.documents.types.index', compact('types'));
     }
 
@@ -86,7 +86,8 @@ class DocumentTypeController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $type->delete();
+                $type->del_status = 1;
+                $type->update();
                 $id = $type->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/documents/types/index')->with('success','Document type successfully deleted!');
@@ -96,7 +97,8 @@ class DocumentTypeController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $type->delete();
+                $type->del_status = 1;
+                $type->update();
                 $id = $type->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/documents/types/index')->with('success','Document type successfully deleted!');

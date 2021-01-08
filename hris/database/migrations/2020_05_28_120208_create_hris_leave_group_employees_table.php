@@ -18,6 +18,7 @@ class CreateHrisLeaveGroupEmployeesTable extends Migration
             $table->timestamps();
             $table->bigInteger('employee_id');
             $table->bigInteger('leave_group_id');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

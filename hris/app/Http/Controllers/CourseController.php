@@ -18,13 +18,13 @@ class CourseController extends Controller
     }
     public function index()
     {
-        $courses = hris_courses::paginate(10);
+        $courses = hris_courses::where('del_status', 0)->paginate(10);
         return view('pages.admin.training.courses.index', compact('courses'));
     }
 
     public function create(hris_courses $course)
     {
-        $employees = hris_employee::all();
+        $employees = hris_employee::where('del_status', 0)->get();
         return view('pages.admin.training.courses.create', compact('course','employees'));
     }
 
@@ -47,7 +47,7 @@ class CourseController extends Controller
 
     public function edit(hris_courses $course)
     {
-        $employees = hris_employee::all();
+        $employees = hris_employee::where('del_status')->get();
         return view('pages.admin.training.courses.edit', compact('course','employees'));
     }
 
@@ -90,7 +90,8 @@ class CourseController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $course->delete();
+                $course->del_status = 1;
+                $course->update();
                 $id = $course->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully deleted!');
@@ -100,7 +101,8 @@ class CourseController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $course->delete();
+                $course->del_status = 1;
+                $course->update();
                 $id = $course->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/training/courses/index')->with('success', 'Course successfully deleted!');

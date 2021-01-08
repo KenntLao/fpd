@@ -19,7 +19,7 @@ class WorkShiftManagementController extends Controller
         $this->module = 'Time Management - Work Shift Management';
     }
     public function index(hris_work_shift_management $work_shift){
-        $work_shift = hris_work_shift_management::paginate(10);
+        $work_shift = hris_work_shift_management::where('del_status', 0)->paginate(10);
         return view('pages.time.workshiftManagement.index', compact('work_shift'));
     }
     public function create(hris_work_shift_management $work_shift)
@@ -217,7 +217,8 @@ class WorkShiftManagementController extends Controller
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
         if (Hash::check(request('upass'), $employee->password)) {
-            $work_shift->delete();
+            $work_shift->del_status = 1;
+            $work_shift->update();
             $id = $work_shift->id;
             $this->function->deleteSystemLog($this->module, $id);
             return redirect('/hris/pages/time/workshiftManagement/index')->with('success', 'Work Shift successfully deleted!');

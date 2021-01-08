@@ -21,16 +21,16 @@ class EmployeeExpenseController extends Controller
     }
     public function index()
     {
-        $employeeExpenses = hris_employee_expenses::paginate(10);
+        $employeeExpenses = hris_employee_expenses::where('del_status', 0)->paginate(10);
         return view('pages.admin.benefits.employeeExpenses.index', compact('employeeExpenses'));
     }
 
     public function create(hris_employee_expenses $employeeExpense)
     {
-        $currencies = hris_currencies::all();
-        $paymentMethods = hris_payment_methods::all();
-        $expensesCategories = hris_expenses_categories::all();
-        $employees = hris_employee::all();
+        $currencies = hris_currencies::where('del_status', 0)->get();
+        $paymentMethods = hris_payment_methods::where('del_status', 0)->get();
+        $expensesCategories = hris_expenses_categories::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         return view('pages.admin.benefits.employeeExpenses.create', compact('employeeExpense', 'currencies', 'expensesCategories', 'paymentMethods', 'employees'));
     }
 
@@ -78,10 +78,10 @@ class EmployeeExpenseController extends Controller
 
     public function edit(hris_employee_expenses $employeeExpense)
     {
-        $currencies = hris_currencies::all();
-        $paymentMethods = hris_payment_methods::all();
-        $expensesCategories = hris_expenses_categories::all();
-        $employees = hris_employee::all();
+        $currencies = hris_currencies::where('del_status', 0)->get();
+        $paymentMethods = hris_payment_methods::where('del_status', 0)->get();
+        $expensesCategories = hris_expenses_categories::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         return view('pages.admin.benefits.employeeExpenses.edit', compact('employeeExpense', 'currencies', 'expensesCategories', 'paymentMethods', 'employees'));
     }
 
@@ -183,25 +183,11 @@ class EmployeeExpenseController extends Controller
     public function destroy(hris_employee_expenses $employeeExpense)
     {
         $id = $_SESSION['sys_id'];
-        $path1 = public_path('assets/files/employee_expenses/receipt/');
-        $path2 = public_path('assets/files/employee_expenses/attachment_1/');
-        $path3 = public_path('assets/files/employee_expenses/attachment_2/');
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $employeeExpense->delete();
-                if ($employeeExpense->receipt != '' && $employeeExpense->receipt != NULL) {
-                    $old_file = $path1 . $employeeExpense->receipt;
-                    unlink($old_file);
-                }
-                if ($employeeExpense->attachment_1 != '' && $employeeExpense->attachment_1 != NULL) {
-                    $old_file = $path2 . $employeeExpense->attachment_1;
-                    unlink($old_file);
-                }
-                if ($employeeExpense->attachment_2 != '' && $employeeExpense->attachment_2 != NULL) {
-                    $old_file = $path3 . $employeeExpense->attachment_2;
-                    unlink($old_file);
-                }
+                $employeeExpense->del_status = 1;
+                $employeeExpense->update();
                 $id = $employeeExpense->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully deleted!');
@@ -211,19 +197,8 @@ class EmployeeExpenseController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $employeeExpense->delete();
-                if ($employeeExpense->receipt != '' && $employeeExpense->receipt != NULL) {
-                    $old_file = $path1 . $employeeExpense->receipt;
-                    unlink($old_file);
-                }
-                if ($employeeExpense->attachment_1 != '' && $employeeExpense->attachment_1 != NULL) {
-                    $old_file = $path2 . $employeeExpense->attachment_1;
-                    unlink($old_file);
-                }
-                if ($employeeExpense->attachment_2 != '' && $employeeExpense->attachment_2 != NULL) {
-                    $old_file = $path3 . $employeeExpense->attachment_2;
-                    unlink($old_file);
-                }
+                $employeeExpense->del_status = 1;
+                $employeeExpense->update();
                 $id = $employeeExpense->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/benefits/employeeExpenses/index')->with('success', 'Employee Expense successfully deleted!');

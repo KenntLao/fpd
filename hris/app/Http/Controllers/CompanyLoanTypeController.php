@@ -18,7 +18,7 @@ class CompanyLoanTypeController extends Controller
     }
     public function index()
     {
-        $loanTypes = hris_company_loan_types::paginate(10);
+        $loanTypes = hris_company_loan_types::where('del_status', 0)->paginate(10);
         return view('pages.admin.loans.loanTypes.index', compact('loanTypes'));
     }
 
@@ -81,7 +81,8 @@ class CompanyLoanTypeController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $loanType->delete();
+                $loanType->del_status = 1;
+                $loanType->update();
                 $id = $loanType->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/loans/loanTypes/index')->with('success', 'Company Loan Type successfully deleted!');
@@ -91,7 +92,8 @@ class CompanyLoanTypeController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $loanType->delete();
+                $loanType->del_status = 1;
+                $loanType->update();
                 $id = $loanType->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/loans/loanTypes/index')->with('success', 'Company Loan Type successfully deleted!');

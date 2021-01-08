@@ -19,7 +19,7 @@ class HrDocumentController extends Controller
     }
     public function index()
     {
-        $documents = hris_hrDocument::paginate(10);
+        $documents = hris_hrDocument::where('del_status', 0)->paginate(10);
         return view('pages.documents.hrDocuments.index', compact('documents'));
     }
     public function create(hris_hrDocument $document)
@@ -52,12 +52,8 @@ class HrDocumentController extends Controller
         if ($_SESSION['sys_account_mode'] == 'user') {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ($upass == request('upass')) {
-                $document->delete();
-                $path = public_path('assets/docs/hrdocs/');
-                if ($document->document_name != '' && $document->document_name != NULL) {
-                    $old = $path . $document->document_name;
-                    unlink($old);
-                }
+                $document->del_status = 1;
+                $document->update();
                 $id = $document->id;
                 $this->function->deleteSystemLog($this->module, $id);
                 return redirect('/hris/pages/documents/hrDocuments/index')->with('success', 'document successfully deleted!');
@@ -67,12 +63,8 @@ class HrDocumentController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if (Hash::check(request('upass'), $employee->password)) {
-                $document->delete();
-                $path = public_path('assets/docs/hrdocs/');
-                if ($document->document_name != '' && $document->document_name != NULL) {
-                    $old = $path . $document->document_name;
-                    unlink($old);
-                }
+                $document->del_status = 1;
+                $document->update();
                 $id = $document->id;
                 $this->function->deleteSystemLog($this->module, $id);
                 return redirect('/hris/pages/documents/hrDocuments/index')->with('success', 'document successfully deleted!');

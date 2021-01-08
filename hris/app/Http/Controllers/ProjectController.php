@@ -18,13 +18,13 @@ class ProjectController extends Controller
     }
     public function index()
     {
-        $projects = hris_projects::paginate(10);
+        $projects = hris_projects::where('del_status', 0)->paginate(10);
         return view('pages.admin.properties.projects.index', compact('projects'));
     }
 
     public function create(hris_projects $project)
     {
-        $clients = hris_clients::all();
+        $clients = hris_clients::all()->where('del_status', 0);
         return view('pages.admin.properties.projects.create', compact('project', 'clients'));
     }
 
@@ -47,7 +47,7 @@ class ProjectController extends Controller
 
     public function edit(hris_projects $project)
     {
-        $clients = hris_clients::all();
+        $clients = hris_clients::all()->where('del_status', 0);
         return view('pages.admin.properties.projects.edit', compact('project', 'clients'));
     }
 
@@ -85,7 +85,8 @@ class ProjectController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $project->delete();
+                $project->del_status = 1;
+                $project->update();
                 $id = $project->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully deleted!');
@@ -95,7 +96,8 @@ class ProjectController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $project->delete();
+                $project->del_status = 1;
+                $project->update();
                 $id = $project->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/properties/projects/index')->with('success', 'Project successfully deleted!');

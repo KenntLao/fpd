@@ -21,6 +21,7 @@ class CreateHrisPaidTimeOffsTable extends Migration
             $table->string('leave_period_id');
             $table->string('amount');
             $table->string('note')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

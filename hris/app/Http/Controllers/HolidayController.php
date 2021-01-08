@@ -19,7 +19,7 @@ class HolidayController extends Controller
     }
     public function index()
     {
-        $holidays = hris_holidays::paginate(10);
+        $holidays = hris_holidays::where('del_status', 0)->paginate(10);
         return view('pages.admin.leave.holidays.index', compact('holidays'));
     }
 
@@ -87,7 +87,8 @@ class HolidayController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $holiday->delete();
+                $holiday->del_status = 1;
+                $holiday->update();
                 $id = $holiday->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully deleted!');
@@ -97,7 +98,8 @@ class HolidayController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $holiday->delete();
+                $holiday->del_status = 1;
+                $holiday->update();
                 $id = $holiday->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/holidays/index')->with('success', 'Holiday successfully deleted!');

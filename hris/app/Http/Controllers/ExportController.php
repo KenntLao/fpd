@@ -41,20 +41,20 @@ class ExportController extends Controller
             if ( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) AND in_array($supervisor->id, $roles) OR in_array($hr_officer_id, $roles) ) {
                 if ( $employee_id == '0' ) {
                     $emp_name = 'ALL';
-                    $check = hris_overtime::all();
+                    $check = hris_overtime::where('del_status', 0)->get();
                 } else {
                     $employee = hris_employee::find($employee_id);
                     $emp_name = $employee->firstname.'_'.$employee->lastname;
-                    $check = hris_overtime::where('employee_id', $employee_id)->get();
+                    $check = hris_overtime::where('del_status', 0)->where('employee_id', $employee_id)->get();
                 }
             } elseif ( in_array($supervisor->id, $roles) ) {
                 if ( $employee_id == '0' ) {
                     $emp_name = 'ALL';
-                    $check = hris_overtime::all()->where('supervisor_id', $_SESSION['sys_id']);
+                    $check = hris_overtime::all()->where('supervisor_id', $_SESSION['sys_id'])->where('del_status', 0);
                 } else {
                     $employee = hris_employee::find($employee_id);
                     $emp_name = $employee->firstname.'_'.$employee->lastname;
-                    $check = hris_overtime::where('employee_id', $employee_id)->get();
+                    $check = hris_overtime::where('employee_id', $employee_id)->where('del_status', 0)->get();
                 }
             }
             if ( $check->isEmpty() ) {

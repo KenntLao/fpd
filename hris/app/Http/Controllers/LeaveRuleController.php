@@ -24,19 +24,19 @@ class LeaveRuleController extends Controller
     }
     public function index()
     {
-        $leaveRules = hris_leave_rules::paginate(10);
+        $leaveRules = hris_leave_rules::where('del_status', 0)->paginate(10);
         return view('pages.admin.leave.leaveRules.index', compact('leaveRules'));
     }
 
     public function create(hris_leave_rules $leaveRule)
     {
-        $leaveTypes = hris_leave_types::all();
-        $leaveGroups = hris_leave_groups::all();
-        $leavePeriods = hris_leave_periods::all();
-        $leaveRules = hris_job_titles::all();
-        $employmentStatuses = hris_employment_statuses::all();
-        $employees = hris_employee::all();
-        $jobTitles = hris_job_titles::all();
+        $leaveTypes = hris_leave_types::all()->where('del_status', 0);
+        $leaveGroups = hris_leave_groups::all()->where('del_status', 0);
+        $leavePeriods = hris_leave_periods::all()->where('del_status', 0);
+        $leaveRules = hris_job_titles::all()->where('del_status', 0);
+        $employmentStatuses = hris_employment_statuses::all()->where('del_status', 0);
+        $employees = hris_employee::all()->where('del_status', 0);
+        $jobTitles = hris_job_titles::all()->where('del_status', 0);
         return view('pages.admin.leave.leaveRules.create', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'leaveRules', 'employmentStatuses', 'employees', 'jobTitles'));
     }
 
@@ -59,13 +59,13 @@ class LeaveRuleController extends Controller
 
     public function edit(hris_leave_rules $leaveRule)
     {
-        $leaveTypes = hris_leave_types::all();
-        $leaveGroups = hris_leave_groups::all();
-        $leavePeriods = hris_leave_periods::all();
-        $leaveRules = hris_job_titles::all();
-        $employmentStatuses = hris_employment_statuses::all();
-        $employees = hris_employee::all();
-        $jobTitles = hris_job_titles::all();
+        $leaveTypes = hris_leave_types::all()->where('del_status', 0);
+        $leaveGroups = hris_leave_groups::all()->where('del_status', 0);
+        $leavePeriods = hris_leave_periods::all()->where('del_status', 0);
+        $leaveRules = hris_job_titles::all()->where('del_status', 0);
+        $employmentStatuses = hris_employment_statuses::all()->where('del_status', 0);
+        $employees = hris_employee::all()->where('del_status', 0);
+        $jobTitles = hris_job_titles::all()->where('del_status', 0);
         return view('pages.admin.leave.leaveRules.edit', compact('leaveRule', 'leaveTypes', 'leaveGroups', 'leavePeriods', 'leaveRules', 'employmentStatuses', 'employees', 'jobTitles'));
     }
 
@@ -111,7 +111,8 @@ class LeaveRuleController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $leaveRule->delete();
+                $leaveRule->del_status = 1;
+                $leaveRule->update();
                 $id = $leaveRule->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success','Leave rule successfully deleted!');
@@ -121,7 +122,8 @@ class LeaveRuleController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $leaveRule->delete();
+                $leaveRule->del_status = 1;
+                $leaveRule->update();
                 $id = $leaveRule->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leaveRules/index')->with('success','Leave rule successfully deleted!');

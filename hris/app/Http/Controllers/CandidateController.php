@@ -27,18 +27,18 @@ class CandidateController extends Controller
         $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
 
         // GET CURRENT USER ROLE ID
-        $employee = hris_employee::where('id', $current_user_id)->first();
+        $employee = hris_employee::where('del_status', 0)->where('id', $current_user_id)->first();
         $employee_ids = explode(',', $employee->role_id);
 
 
-        $candidates = table_careers_application::all();
+        $candidates = table_careers_application::where('del_status', 0)->paginate(10);
         return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids'));
     }
 
     public function create(hris_candidates $candidate)
     {   
-        $jobPositions = hris_job_positions::all();
-        $countries = hris_countries::all()->sortBy('name');
+        $jobPositions = hris_job_positions::where('del_status', 0)->get();
+        $countries = hris_countries::where('del_status', 0)->sortBy('name')->get();
         return view('pages.recruitment.candidates.create', compact('candidate', 'jobPositions', 'countries'));
     }
 
@@ -89,8 +89,8 @@ class CandidateController extends Controller
 
     public function edit(hris_candidates $candidate)
     {
-        $jobPositions = hris_job_positions::all()->sortBy('job_title');
-        $countries = hris_countries::all()->sortBy('name');
+        $jobPositions = hris_job_positions::where('del_status', 0)->get();
+        $countries = hris_countries::where('del_status', 0)->sortBy('name')->get();
         return view('pages.recruitment.candidates.edit', compact('candidate', 'countries', 'jobPositions'));
     }
 
@@ -161,17 +161,8 @@ class CandidateController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $candidate->delete();
-                $pathCandidate = public_path('assets/files/candidates/profile_image/');
-                $pathResume = public_path('assets/files/candidates/resume/');
-                if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
-                    $old_file_1 = $pathCandidate . $candidate->profile_image;
-                    unlink($old_file_1);
-                }
-                if ($candidate->resume != '' && $candidate->resume != NULL) {
-                    $old_file_2 = $pathResume . $candidate->resume;
-                    unlink($old_file_2);
-                }
+                $candidate->del_status = 1;
+                $candidate->update();
                 $id = $candidate->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');
@@ -181,17 +172,8 @@ class CandidateController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $candidate->delete();
-                $pathCandidate = public_path('assets/files/candidates/profile_image/');
-                $pathResume = public_path('assets/files/candidates/resume/');
-                if ($candidate->profile_image != '' && $candidate->profile_image != NULL) {
-                    $old_file_1 = $pathCandidate . $candidate->profile_image;
-                    unlink($old_file_1);
-                }
-                if ($candidate->resume != '' && $candidate->resume != NULL) {
-                    $old_file_2 = $pathResume . $candidate->resume;
-                    unlink($old_file_2);
-                }
+                $candidate->del_status = 1;
+                $candidate->update();
                 $id = $candidate->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/candidates/index')->with('success','Candidate successfully deleted!');

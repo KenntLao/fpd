@@ -19,6 +19,7 @@ class CreateHrisEmployeeSkillsTable extends Migration
             $table->bigInteger('employee_id');
             $table->bigInteger('skill_id');
             $table->longText('details')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

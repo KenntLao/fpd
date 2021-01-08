@@ -18,7 +18,7 @@ class OvertimeCategoryController extends Controller
     }
     public function index()
     {
-        $overtimeCategories = hris_overtime_categories::paginate(10);
+        $overtimeCategories = hris_overtime_categories::where('del_status', 0)->paginate(10);
         return view('pages.admin.overtime.overtimeCategories.index', compact('overtimeCategories'));
     }
 
@@ -80,7 +80,8 @@ class OvertimeCategoryController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $overtimeCategory->delete();
+                $overtimeCategory->del_status = 1;
+                $overtimeCategory->update();
                 $id = $overtimeCategory->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully deleted!');
@@ -90,7 +91,8 @@ class OvertimeCategoryController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $overtimeCategory->delete();
+                $overtimeCategory->del_status = 1;
+                $overtimeCategory->update();
                 $id = $overtimeCategory->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/overtime/overtimeCategories/index')->with('success', 'Overtime category successfully deleted!');

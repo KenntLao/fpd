@@ -27,22 +27,22 @@ class JobPositionController extends Controller
 
     public function index()
     {
-        $jobPositions = hris_job_positions::paginate(10);
+        $jobPositions = hris_job_positions::where('del_status', 0)->paginate(10);
 
         return view('pages.recruitment.jobPositions.index', compact('jobPositions'));
     }
 
     public function create(hris_job_positions $jobPosition)
     {
-        $benefits = hris_benefits::all();
-        $employmentTypes = hris_employment_types::all();
-        $educationLevels = hris_education_levels::all();
-        $experienceLevels = hris_experience_levels::all();
-        $jobFunctions = hris_job_functions::all();
-        $jobTitles = hris_job_titles::all();
-        $countries = hris_countries::all()->sortBy('name');
-        $currencies = hris_currencies::all()->sortBy('name');
-        $departments = hris_company_structures::all();
+        $benefits = hris_benefits::all()->where('del_status', 0);
+        $employmentTypes = hris_employment_types::all()->where('del_status', 0);
+        $educationLevels = hris_education_levels::all()->where('del_status', 0);
+        $experienceLevels = hris_experience_levels::all()->where('del_status', 0);
+        $jobFunctions = hris_job_functions::all()->where('del_status', 0);
+        $jobTitles = hris_job_titles::all()->where('del_status', 0);
+        $countries = hris_countries::all()->where('del_status', 0)->sortBy('name');
+        $currencies = hris_currencies::all()->where('del_status', 0)->sortBy('name');
+        $departments = hris_company_structures::all()->where('del_status', 0);
         return view('pages.recruitment.jobPositions.create', compact('benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions', 'countries', 'currencies', 'jobPosition', 'departments', 'jobTitles'));
     }
 
@@ -79,15 +79,15 @@ class JobPositionController extends Controller
 
     public function edit(hris_job_positions $jobPosition)
     {
-        $benefits = hris_benefits::all();
-        $employmentTypes = hris_employment_types::all();
-        $educationLevels = hris_education_levels::all();
-        $experienceLevels = hris_experience_levels::all();
-        $jobFunctions = hris_job_functions::all();
-        $jobTitles = hris_job_titles::all();
-        $countries = hris_countries::all()->sortBy('name');
-        $currencies = hris_currencies::all()->sortBy('name');
-        $departments = hris_company_structures::all();
+        $benefits = hris_benefits::all()->where('del_status', 0);
+        $employmentTypes = hris_employment_types::all()->where('del_status', 0);
+        $educationLevels = hris_education_levels::all()->where('del_status', 0);
+        $experienceLevels = hris_experience_levels::all()->where('del_status', 0);
+        $jobFunctions = hris_job_functions::all()->where('del_status', 0);
+        $jobTitles = hris_job_titles::all()->where('del_status', 0);
+        $countries = hris_countries::all()->where('del_status', 0)->sortBy('name');
+        $currencies = hris_currencies::all()->where('del_status', 0)->sortBy('name');
+        $departments = hris_company_structures::all()->where('del_status', 0);
         return view('pages.recruitment.jobPositions.edit', compact('jobPosition','benefits','employmentTypes', 'educationLevels', 'experienceLevels', 'jobFunctions','countries', 'currencies', 'departments','jobTitles'));
     }
 
@@ -145,11 +145,8 @@ class JobPositionController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $jobPosition->delete();
-                if ($jobPosition->image != '' && $jobPosition->image != NULL) {
-                    $old_file = $imagePath . $jobPosition->image;
-                    unlink($old_file);
-                }
+                $jobPosition->del_status = 1;
+                $jobPosition->update();
                 $id = $jobPosition->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/jobPositions/index')->with('success','Job position successfully deleted!');
@@ -159,12 +156,9 @@ class JobPositionController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $asset->delete();
-                if ($jobPosition->image != '' && $jobPosition->image != NULL) {
-                    $old_file = $imagePath . $jobPosition->image;
-                    unlink($old_file);
-                }
-                $id = $asset->id;
+                $jobPosition->del_status = 1;
+                $jobPosition->update();
+                $id = $jobPosition->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/companyAssets/assets/index')->with('success','Company asset successfully deleted!');
             } else {

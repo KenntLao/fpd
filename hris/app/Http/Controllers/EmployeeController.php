@@ -62,12 +62,12 @@ class EmployeeController extends Controller
 
     public function create(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles)
     {
-        $certifications = hris_certifications::all();
-        $employment_statuses = hris_employment_statuses::all();
+        $certifications = hris_certifications::where('del_status', 0)->get();
+        $employment_statuses = hris_employment_statuses::where('del_status', 0)->get();
         $roles = roles::all();
-        $job_titles = hris_job_titles::all();
-        $departments = hris_company_structures::all();
-        $pay_grades = hris_pay_grades::all();
+        $job_titles = hris_job_titles::where('del_status', 0)->get();
+        $departments = hris_company_structures::where('del_status', 0)->get();
+        $pay_grades = hris_pay_grades::where('del_status', 0)->get();
         $role_ids = explode(',', $employee->role_id);
         return view('pages.employees.employee.create', compact('employee','roles', 'departments','job_titles','role_ids', 'employment_statuses','certifications','pay_grades'));
     }
@@ -157,11 +157,11 @@ class EmployeeController extends Controller
     }
 
     public function edit(hris_employee $employee, roles $roles, hris_company_structures $deparments, hris_job_titles $job_titles){
-            $certifications = hris_certifications::all();
-            $employment_statuses = hris_employment_statuses::all();
-            $job_titles = hris_job_titles::all();
+            $certifications = hris_certifications::where('del_status', 0)->get();
+            $employment_statuses = hris_employment_statuses::where('del_status', 0)->get();
+            $job_titles = hris_job_titles::where('del_status', 0)->get();
             $roles = roles::all();
-            $departments = hris_company_structures::all();
+            $departments = hris_company_structures::where('del_status', 0)->get();
             $role_ids = explode(',',$employee->role_id);
             $supervisor = hris_employee::where('id',$employee->supervisor)->first();
             $pay_grades = hris_pay_grades::all();
@@ -267,28 +267,29 @@ class EmployeeController extends Controller
     public function destroy(hris_employee $employee)
     {
         $id = $_SESSION['sys_id'];
-        $upass = $this->decryptStr(users::find($id)->upass);
-        if ($upass == request('upass')) {
-            $employee->delete();
-            return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully deleted!');
+        if ( $_SESSION['sys_account_mode'] == 'user' ) {
+            $upass = $this->function->decryptStr(users::find($id)->upass);
+            if ( $upass == request('upass') ) {
+                $employee->del_status = 1;
+                $employee->update();
+                $id = $employee->id;
+                $this->function->deleteSystemLog($this->module,$id);
+                return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
+
         } else {
-            return back()->withErrors(['Password does not match.']);
-        }
-    }
-    
-    // decrypt string
-    function decryptStr($str)
-    {
-        $key = '4507';
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher = "AES-128-CBC");
-        $iv = substr($c, 0, $ivlen);
-        $hmac = substr($c, $ivlen, $sha2len = 32);
-        $ciphertext_raw = substr($c, $ivlen + $sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-        $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-        if (hash_equals($hmac, $calcmac)) {
-            return $original_plaintext;
+            $employee = hris_employee::find($id);
+            if ( Hash::check(request('password'), $employee->password) ) {
+                $employee->del_status = 1;
+                $employee->update();
+                $id = $employee->id;
+                $this->function->deleteSystemLog($this->module,$id);            
+                return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully deleted!');
+            } else {
+                return back()->withErrors(['Password does not match.']);
+            }
         }
     }
 

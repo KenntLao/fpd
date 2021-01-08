@@ -14,8 +14,8 @@ class StaffDirectoryController extends Controller
     public function index()
     {
         $employees = hris_employee::orderBy('lastname', 'ASC')->paginate(12);
-        $departments = hris_company_structures::all();
-        $jobTitles = hris_job_titles::all();
+        $departments = hris_company_structures::all()->where('del_status', 0);
+        $jobTitles = hris_job_titles::all()->where('del_status', 0);
         return view('pages.company.staffDirectory.index', compact('employees', 'departments', 'jobTitles'));
     }
 
@@ -26,23 +26,23 @@ class StaffDirectoryController extends Controller
         }
 
         if ( request('department_id') == 0 AND request('job_title_id') != 0 ) {
-            $employees = hris_employee::where('job_title_id', request('job_title_id'))->orderBy('lastname', 'ASC')->paginate(10);
-            $departments = hris_company_structures::all();
-            $jobTitles = hris_job_titles::all();
+            $employees = hris_employee::where('job_title_id', request('job_title_id'))->orderBy('lastname', 'ASC')->where('del_status', 0)->paginate(10);
+            $departments = hris_company_structures::all()->where('del_status', 0);
+            $jobTitles = hris_job_titles::all()->where('del_status', 0);
             return view('pages.company.staffDirectory.index', compact('employees', 'departments', 'jobTitles'));
         }
 
         if ( request('department_id') != 0 AND request('job_title_id') == 0 ) {
-            $employees = hris_employee::where('department_id', request('department_id'))->orderBy('lastname', 'ASC')->paginate(10);
-            $departments = hris_company_structures::all();
-            $jobTitles = hris_job_titles::all();
+            $employees = hris_employee::where('department_id', request('department_id'))->orderBy('lastname', 'ASC')->where('del_status', 0)->paginate(10);
+            $departments = hris_company_structures::all()->where('del_status', 0);
+            $jobTitles = hris_job_titles::all()->where('del_status', 0);
             return view('pages.company.staffDirectory.index', compact('employees', 'departments', 'jobTitles'));
         }
 
         if ( request('department_id') != 0 AND request('job_title_id') != 0 ) {
-            $employees = hris_employee::where('job_title_id', request('job_title_id'))->where('department_id', request('department_id'))->orderBy('lastname', 'ASC')->paginate(10);
-            $departments = hris_company_structures::all();
-            $jobTitles = hris_job_titles::all();
+            $employees = hris_employee::where('job_title_id', request('job_title_id'))->where('department_id', request('department_id'))->orderBy('lastname', 'ASC')->where('del_status', 0)->paginate(10);
+            $departments = hris_company_structures::all()->where('del_status', 0);
+            $jobTitles = hris_job_titles::all()->where('del_status', 0);
             return view('pages.company.staffDirectory.index', compact('employees', 'departments', 'jobTitles'));
         }
     }

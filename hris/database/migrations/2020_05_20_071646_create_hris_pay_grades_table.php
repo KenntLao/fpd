@@ -1,4 +1,4 @@
-<?php
+v<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,6 +20,7 @@ class CreateHrisPayGradesTable extends Migration
             $table->string('currency');
             $table->integer('min_salary');
             $table->integer('max_salary');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

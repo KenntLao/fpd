@@ -21,6 +21,7 @@ class CreateHrisEmployeeDependentsTable extends Migration
             $table->string('relationship');
             $table->string('birthday');
             $table->string('id_number')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

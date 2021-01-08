@@ -17,7 +17,7 @@ class EmploymentTypeController extends Controller
     }
     public function index()
     {
-        $employmentTypes = hris_employment_types::paginate(10);
+        $employmentTypes = hris_employment_types::where('del_status', 0)->paginate(10);
         return view('pages.recruitment.recruitmentSetup.employmentTypes.index', compact('employmentTypes'));
     }
 
@@ -82,7 +82,8 @@ class EmploymentTypeController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $employmentType->delete();
+                $employmentType->del_status = 1;
+                $employmentType->update();
                 $id = $employmentType->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success','Employment type successfully deleted!');
@@ -92,7 +93,8 @@ class EmploymentTypeController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $employmentType->delete();
+                $employmentType->del_status = 1;
+                $employmentType->update();
                 $id = $employmentType->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/employmentTypes/index')->with('success','Employment type successfully deleted!');

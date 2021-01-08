@@ -40,6 +40,7 @@ public function up()
             $table->date('closing_date')->nullable();
             $table->string('image')->nullable();
             $table->string('display_type');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

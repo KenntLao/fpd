@@ -29,7 +29,7 @@ class NpaController extends Controller
         $hr_recruitment = roles::where('role_name', 'hr recruitment')->first();
         $hr_id = $hr_recruitment->id;
         $sess_roles = explode(',', $_SESSION['sys_role_ids']);
-        $npas = hris_npa::latest()->paginate(15);
+        $npas = hris_npa::latest()->where('del_status', 0)->paginate(15);
         if ( in_array($m_id, $sess_roles) OR in_array($d_id, $sess_roles) OR in_array($hr_id, $sess_roles) ) {
             return view('pages.recruitment.npa.index', compact('npas','m_id','sess_roles'));
         } else {
@@ -39,8 +39,8 @@ class NpaController extends Controller
 
     public function create(hris_npa $npa)
     {
-        $projects = hris_projects::all();
-        $employees = hris_employee::all();
+        $projects = hris_projects::all()->where('del_status', 0);
+        $employees = hris_employee::all()->where('del_status', 0);
         $manager_om = roles::where('role_name', 'manager_om')->first();
         $m_id = $manager_om->id;
         $sess_roles = explode(',', $_SESSION['sys_role_ids']);
@@ -116,8 +116,8 @@ class NpaController extends Controller
 
     public function edit(hris_npa $npa)
     {
-        $projects = hris_projects::all();
-        $employees = hris_employee::all();
+        $projects = hris_projects::all()->where('del_status', 0);
+        $employees = hris_employee::all()->where('del_status', 0);
         $manager_om = roles::where('role_name', 'manager_om')->first();
         $m_id = $manager_om->id;
         $sess_roles = explode(',', $_SESSION['sys_role_ids']);
@@ -256,7 +256,8 @@ class NpaController extends Controller
             if ( $_SESSION['sys_account_mode'] == 'user' ) {
                 $upass = $this->function->decryptStr(users::find($id)->upass);
                 if ( $upass == request('upass') ) {
-                    $npa->delete();
+                    $npa->del_status = 1;
+                    $npa->update();
                     $id = $npa->id;
                     $this->function->deleteSystemLog($this->module,$id);
                     return redirect('/hris/pages/recruitment/npa/index')->with('success','NPA successfully deleted!');
@@ -267,7 +268,8 @@ class NpaController extends Controller
             } else {
                 $employee = hris_employee::find($id);
                 if ( Hash::check(request('password'), $employee->password) ) {
-                    $npa->delete();
+                    $npa->del_status = 1;
+                    $npa->update();
                     $id = $npa->id;
                     $this->function->deleteSystemLog($this->module,$id);
                     return redirect('/hris/pages/recruitment/npa/index')->with('success','NPA successfully deleted!');

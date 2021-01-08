@@ -19,13 +19,13 @@ class TrainingSessionController extends Controller
     public function index()
     {
 
-        $trainingSessions = hris_training_sessions::paginate(10);
+        $trainingSessions = hris_training_sessions::where('del_status', 0)->paginate(10);
         return view('pages.admin.training.trainingSessions.index', compact('trainingSessions'));
     }
 
     public function create(hris_training_sessions $trainingSession)
     {
-        $courses = hris_courses::all();
+        $courses = hris_courses::all()->where('del_status', 0);
         return view('pages.admin.training.trainingSessions.create', compact('trainingSession', 'courses'));
     }
 
@@ -63,7 +63,7 @@ class TrainingSessionController extends Controller
 
     public function edit(hris_training_sessions $trainingSession)
     {
-        $courses = hris_courses::all();
+        $courses = hris_courses::all()->where('del_status', 0);
         return view('pages.admin.training.trainingSessions.edit', compact('trainingSession', 'courses'));
     }
 
@@ -121,11 +121,8 @@ class TrainingSessionController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $trainingSession->delete();
-                if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
-                    $old_file = $path . $trainingSession->attachment;
-                    unlink($old_file);
-                }
+                $trainingSession->del_status = 1;
+                $trainingSession->update();
                 $id = $trainingSession->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training session successfully deleted!');
@@ -135,11 +132,8 @@ class TrainingSessionController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $trainingSession->delete();
-                if ($trainingSession->attachment != '' && $trainingSession->attachment != NULL) {
-                    $old_file = $path . $trainingSession->attachment;
-                    unlink($old_file);
-                }
+                $trainingSession->del_status = 1;
+                $trainingSession->update();
                 $id = $trainingSession->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/training/trainingSessions/index')->with('success', 'Training session successfully deleted!');

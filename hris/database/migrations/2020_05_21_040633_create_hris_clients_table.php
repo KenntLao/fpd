@@ -24,6 +24,7 @@ class CreateHrisClientsTable extends Migration
             $table->string('company_url')->nullable();
             $table->string('status');
             $table->date('first_contact_date')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

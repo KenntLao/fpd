@@ -26,6 +26,7 @@ class CreateHrisTrainingSessionsTable extends Migration
             $table->string('attendance_type');
             $table->string('attachment')->nullable();
             $table->string('training_cert_required');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

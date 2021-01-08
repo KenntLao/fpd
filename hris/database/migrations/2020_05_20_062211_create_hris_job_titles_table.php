@@ -20,6 +20,7 @@ class CreateHrisJobTitlesTable extends Migration
             $table->string('name');
             $table->longText('description');
             $table->longText('specification');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

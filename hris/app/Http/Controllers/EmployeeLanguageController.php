@@ -21,7 +21,7 @@ class EmployeeLanguageController extends Controller
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $employeeLanguages = hris_employee_languages::paginate(10);
+            $employeeLanguages = hris_employee_languages::where('del_status', 0)->paginate(10);
             return view('pages.personalInformation.languages.index', compact('employeeLanguages'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -31,7 +31,7 @@ class EmployeeLanguageController extends Controller
     public function create(hris_employee_languages $employeeLanguage)
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $languages = hris_languages::all();
+            $languages = hris_languages::where('del_status', 0)->get();
             return view('pages.personalInformation.languages.create', compact('employeeLanguage', 'languages'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -65,7 +65,7 @@ class EmployeeLanguageController extends Controller
     public function edit(hris_employee_languages $employeeLanguage)
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $languages = hris_languages::all();
+            $languages = hris_languages::where('del_status', 0)->get();
             return view('pages.personalInformation.languages.edit', compact('employeeLanguage', 'languages'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -109,7 +109,8 @@ class EmployeeLanguageController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('password'), $employee->password) ) {
-                $employeeLanguage->delete();
+                $employeeLanguage->del_status = 1;
+                $employeeLanguage->update();
                 $id = $employeeLanguage->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/personalInformation/languages/index')->with('success', 'Employee skill successfully deleted!');

@@ -17,6 +17,7 @@ class CreateHrisHrDocumentsTable extends Migration
             $table->id();
             $table->string('document_name');
             $table->timestamps();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

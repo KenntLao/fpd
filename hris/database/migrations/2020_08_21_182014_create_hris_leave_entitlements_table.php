@@ -16,6 +16,7 @@ class CreateHrisLeaveEntitlementsTable extends Migration
         Schema::create('hris_leave_entitlements', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

@@ -101,6 +101,7 @@ class CreateHrisOvertimesTable extends Migration
             $table->integer('LGLSPL_ND1_2_8')->nullable();
             $table->integer('LGLSPL_ND1_2_ND1')->nullable();
             $table->integer('LGLSPL_ND1_2_ND2')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

@@ -20,14 +20,14 @@ class EmployeeTrainingSessionController extends Controller
     }
     public function index()
     {
-        $employeeTrainingSessions = hris_employee_training_sessions::paginate(10);
+        $employeeTrainingSessions = hris_employee_training_sessions::where('del_status', 0)->paginate(10);
         return view('pages.admin.training.employeeTrainingSessions.index', compact('employeeTrainingSessions'));
     }
 
     public function create(hris_employee_training_sessions $employeeTrainingSession)
     {
-        $employees = hris_employee::all();
-        $trainingSessions = hris_training_sessions::all();
+        $employees = hris_employee::where('del_status', 0)->get();
+        $trainingSessions = hris_training_sessions::where('del_status', 0)->get();
         return view('pages.admin.training.employeeTrainingSessions.create', compact('employeeTrainingSession', 'trainingSessions', 'employees'));
     }
 
@@ -63,8 +63,8 @@ class EmployeeTrainingSessionController extends Controller
 
     public function edit(hris_employee_training_sessions $employeeTrainingSession)
     {
-        $employees = hris_employee::all();
-        $trainingSessions = hris_training_sessions::all();
+        $employees = hris_employee::where('del_status', 0)->get();
+        $trainingSessions = hris_training_sessions::where('del_status', 0)->get();
         return view('pages.admin.training.employeeTrainingSessions.edit', compact('employeeTrainingSession', 'trainingSessions', 'employees'));
     }
 
@@ -106,7 +106,8 @@ class EmployeeTrainingSessionController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $employeeTrainingSession->delete();
+                $employeeTrainingSession->del_status = 1;
+                $employeeTrainingSession->update();
                 $id = $employeeTrainingSession->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully deleted!');
@@ -116,7 +117,8 @@ class EmployeeTrainingSessionController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $employeeTrainingSession->delete();
+                $employeeTrainingSession->del_status = 1;
+                $employeeTrainingSession->update();
                 $id = $employeeTrainingSession->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully deleted!');
@@ -130,7 +132,7 @@ class EmployeeTrainingSessionController extends Controller
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
             return back()->withErrors(['You do not have access in this page.']);
         } else {
-            $employeeTrainingSessions = hris_employee_training_sessions::where('employee_id', $_SESSION['sys_id'])->paginate(10);
+            $employeeTrainingSessions = hris_employee_training_sessions::where('employee_id', $_SESSION['sys_id'])->where('del_status', 0)->paginate(10);
             return view('pages.training.myTraining.index', compact('employeeTrainingSessions'));
         }
     }
@@ -219,8 +221,8 @@ class EmployeeTrainingSessionController extends Controller
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
             return back()->withErrors(['You do not have access in this page.']);
         } else {
-            $courses = hris_courses::where('coordinator_id', $_SESSION['sys_id'])->pluck('id')->toArray();
-            $employeeTrainingSessions = hris_training_sessions::whereIn('course_id', $courses)->paginate(10);
+            $courses = hris_courses::where('del_status', 0)->where('coordinator_id', $_SESSION['sys_id'])->pluck('id')->toArray();
+            $employeeTrainingSessions = hris_training_sessions::where('del_status', 0)->whereIn('course_id', $courses)->paginate(10);
             return view('pages.training.coordinated.index', compact('employeeTrainingSessions'));
         }
 

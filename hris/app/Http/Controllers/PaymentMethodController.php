@@ -17,7 +17,7 @@ class PaymentMethodController extends Controller
     }
     public function index()
     {
-        $paymentMethods = hris_payment_methods::paginate(10);
+        $paymentMethods = hris_payment_methods::where('del_status', 0)->paginate(10);
         return view('pages.admin.benefits.paymentMethods.index', compact('paymentMethods'));
     }
 
@@ -79,7 +79,8 @@ class PaymentMethodController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $paymentMethod->delete();
+                $paymentMethod->del_status = 1;
+                $paymentMethod->update();
                 $id = $paymentMethod->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment method successfully deleted!');
@@ -89,7 +90,8 @@ class PaymentMethodController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $paymentMethod->delete();
+                $paymentMethod->del_status = 1;
+                $paymentMethod->update();
                 $id = $paymentMethod->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/benefits/paymentMethods/index')->with('success', 'Payment method successfully deleted!');

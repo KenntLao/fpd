@@ -18,6 +18,7 @@ class CreateHrisEmploymentStatusesTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->longText('description');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

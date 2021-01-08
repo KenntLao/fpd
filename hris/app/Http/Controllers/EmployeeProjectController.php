@@ -20,14 +20,14 @@ class EmployeeProjectController extends Controller
 
     public function index()
     {
-        $employeeProjects = hris_employee_projects::paginate(10);
+        $employeeProjects = hris_employee_projects::where('del_status', 0)->paginate(10);
         return view('pages.admin.properties.employeeProjects.index', compact('employeeProjects'));
     }
 
     public function create(hris_employee_projects $employeeProject)
     {
-        $projects = hris_projects::all();
-        $employees = hris_employee::all();
+        $projects = hris_projects::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         return view('pages.admin.properties.employeeProjects.create', compact('employeeProject','projects', 'employees'));
     }
 
@@ -51,8 +51,8 @@ class EmployeeProjectController extends Controller
 
     public function edit(hris_employee_projects $employeeProject)
     {
-        $projects = hris_projects::all();
-        $employees = hris_employee::all();
+        $projects = hris_projects::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         return view('pages.admin.properties.employeeProjects.edit', compact('employeeProject', 'projects', 'employees'));
     }
 
@@ -89,7 +89,8 @@ class EmployeeProjectController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $employeeProject->delete();
+                $employeeProject->del_status = 1;
+                $employeeProject->update();
                 $id = $employeeProject->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted');
@@ -99,7 +100,8 @@ class EmployeeProjectController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $employeeProject->delete();
+                $employeeProject->del_status = 1;
+                $employeeProject->update();
                 $id = $employeeProject->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/properties/employeeProjects/index')->with('success', 'Employee Project successfully deleted');

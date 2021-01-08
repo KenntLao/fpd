@@ -19,6 +19,7 @@ class CreateHrisLeaveGroupsTable extends Migration
             $table->string('name');
             $table->string('job_title_id')->nullable();
             $table->string('details')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

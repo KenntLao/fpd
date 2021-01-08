@@ -17,7 +17,7 @@ class PayGradeController extends Controller
     }
     public function index()
     {
-        $payGrades = hris_pay_grades::paginate(10);
+        $payGrades = hris_pay_grades::where('del_status', 0)->paginate(10);
         return view('pages.admin.jobDetails.payGrades.index', compact('payGrades'));
     }
 
@@ -29,7 +29,7 @@ class PayGradeController extends Controller
     public function store(hris_pay_grades $payGrade, Request $request)
     {
         if ($this->validatedData()) {
-            $count = hris_pay_grades::where('name', request('name'))->get()->count();
+            $count = hris_pay_grades::where('name', request('name'))->where('del_status', 0)->get()->count();
             if ( $count == 1 ) {
                 return redirect('hris/pages/admin/jobDetails/payGrades/index')->withErrors(['Pay grade already exists.']);
             } else {
@@ -57,8 +57,8 @@ class PayGradeController extends Controller
     {
         $id = $payGrade->id;
         if($this->validatedData()) {
-            $check = hris_pay_grades::where('name', request('name'))->first();
-            $count = hris_pay_grades::where('name', request('name'))->get()->count();
+            $check = hris_pay_grades::where('name', request('name'))->where('del_status', 0)->first();
+            $count = hris_pay_grades::where('name', request('name'))->where('del_status', 0)->get()->count();
             if ( $count == 1 ) {
                 if ( $check->id == $id ) {
                     $string = 'App\hris_pay_grades';
@@ -115,7 +115,8 @@ class PayGradeController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $payGrade->delete();
+                $payGrade->del_status = 1;
+                $payGrade->update();
                 $id = $payGrade->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully deleted!');
@@ -125,7 +126,8 @@ class PayGradeController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $payGrade->delete();
+                $payGrade->del_status = 1;
+                $payGrade->update();
                 $id = $payGrade->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/jobDetails/payGrades/index')->with('success', 'Pay grade successfully deleted!');

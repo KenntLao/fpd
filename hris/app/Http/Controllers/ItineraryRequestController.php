@@ -27,7 +27,7 @@ class ItineraryRequestController extends Controller
         $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
         $roles = explode(',', $_SESSION['sys_role_ids']);
         if ($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) ) {
-            $itineraryRequests = hris_itinerary_requests::paginate(10);
+            $itineraryRequests = hris_itinerary_requests::where('del_status', 0)->paginate(10);
             return view('pages.employees.itineraryRequests.index', compact('itineraryRequests'));
         } else {
             $roles = roles::all();
@@ -38,16 +38,16 @@ class ItineraryRequestController extends Controller
 
             if ( in_array($supervisor_id, $role_ids) ) {
                 $department = $find->department_id;
-                $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id);
+                $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id)->where('del_status', 0);
                 $employee_id = array();
                 foreach ($employee as $e) {
                     $employee_id[] = $e->id;
                 }
-                $itineraryRequests = hris_itinerary_requests::whereIn('employee_id', $employee_id)->paginate(10);
+                $itineraryRequests = hris_itinerary_requests::whereIn('employee_id', $employee_id)->where('del_status', 0)->paginate(10);
                 $self = hris_itinerary_requests::where('employee_id', $_SESSION['sys_id'])->paginate(10);
                 return view('pages.employees.itineraryRequests.index', compact('itineraryRequests','role_ids', 'supervisor_id', 'self'));
             } else {
-                $itineraryRequests = hris_itinerary_requests::where('employee_id', $id)->paginate(10);
+                $itineraryRequests = hris_itinerary_requests::where('employee_id', $id)->where('del_status', 0)->paginate(10);
                 return view('pages.employees.itineraryRequests.index', compact('itineraryRequests','role_ids', 'supervisor_id'));
             }
 
@@ -56,8 +56,8 @@ class ItineraryRequestController extends Controller
 
     public function create(hris_itinerary_requests $itineraryRequest)
     {
-        $currencies = hris_currencies::all();
-        $employees = hris_employee::all();
+        $currencies = hris_currencies::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
         $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
         $roles = explode(',', $_SESSION['sys_role_ids']);
@@ -188,8 +188,8 @@ class ItineraryRequestController extends Controller
         if ( $id == $itineraryRequest->supervisor_id ) {
             return redirect()->back();
         } else {
-            $currencies = hris_currencies::all();
-            $employees = hris_employee::all();
+            $currencies = hris_currencies::where('del_status', 0)->get();
+            $employees = hris_employee::where('del_status', 0)->get();
             $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
             $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
             $roles = explode(',', $_SESSION['sys_role_ids']);
@@ -357,7 +357,8 @@ class ItineraryRequestController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $itineraryRequest->delete();
+                $itineraryRequest->del_status = 1;
+                $itineraryRequest->update();
                 $id = $itineraryRequest->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/itineraryRequests/index')->with('success','Itenerary request successfully deleted!');
@@ -367,7 +368,8 @@ class ItineraryRequestController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $itineraryRequest->delete();
+                $itineraryRequest->del_status = 1;
+                $itineraryRequest->update();
                 $id = $itineraryRequest->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/itineraryRequests/index')->with('success', 'Itenerary request successfully deleted!');

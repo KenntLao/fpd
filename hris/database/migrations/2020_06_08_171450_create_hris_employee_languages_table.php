@@ -22,6 +22,7 @@ class CreateHrisEmployeeLanguagesTable extends Migration
             $table->string('speaking');
             $table->string('writing');
             $table->string('understanding');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

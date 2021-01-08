@@ -26,6 +26,7 @@ class CreateHrisLeavesTable extends Migration
             $table->longText('reason');
             $table->integer('status');
             $table->timestamps();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

@@ -25,23 +25,23 @@ class LeaveController extends Controller
 
             if (in_array($supervisor_id, $role_ids)) {
                 $department = $find->department_id;
-                $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id);
+                $employee = hris_employee::all()->where('department_id', $department)->where('supervisor', $id)->where('del_status', 0);
                 $employee_id = array();
                 foreach ($employee as $e) {
                     $employee_id[] = $e->id;
                 }
-                $leaves = hris_leaves::whereIn('employee_id', $employee_id)->paginate(10);
+                $leaves = hris_leaves::whereIn('employee_id', $employee_id)->where('del_status', 0)->paginate(10);
 
-                $self = hris_leaves::where('employee_id', $id)->paginate(10);
+                $self = hris_leaves::where('employee_id', $id)->where('del_status', 0)->paginate(10);
                 //$leave_type_name = hris_leaves::where('employee_id', $id)->leftJoin('hris_leave_types', 'hris_leaves.leave_type_id', '=', 'hris_leave_types.id')->get('name');
                 return view('pages.leaveManagement.leaves.index', compact('leaves', 'role_ids', 'supervisor_id', 'self'));
             } else {
-                $self = hris_leaves::where('employee_id', $id)->paginate(10);
+                $self = hris_leaves::where('employee_id', $id)->where('del_status', 0)->paginate(10);
                 // $leave_type_name = hris_leaves::where('employee_id', $id)->leftJoin('hris_leave_types', 'hris_leaves.leave_type_id', '=', 'hris_leave_types.id')->get('name');
                 return view('pages.leaveManagement.leaves.index', compact('self', 'role_ids', 'supervisor_id'));
             }
         } else {
-            $all_leaves = hris_leaves::paginate(10);
+            $all_leaves = hris_leaves::where('del_status', 0)->paginate(10);
             return view('pages.leaveManagement.leaves.index', compact('all_leaves'));
         }
     }
@@ -52,16 +52,16 @@ class LeaveController extends Controller
 
             $id = $_SESSION['sys_id'];
             $employee = hris_employee::find($id);
-            $emp_group = hris_leave_group_employees::where('employee_id', $id)->get();
+            $emp_group = hris_leave_group_employees::where('del_status', 0)->where('employee_id', $id)->get();
             
 
-            $leaveGroup_ids = hris_leave_group_employees::where('employee_id', $id)->get('leave_group_id');
+            $leaveGroup_ids = hris_leave_group_employees::where('del_status', 0)->where('employee_id', $id)->get('leave_group_id');
 
             
 
             foreach ($leaveGroup_ids as $leaveGroup_id) {
                 $lg_id = $leaveGroup_id->leave_group_id;
-                $leave_groups_rules = hris_leave_rules::where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
+                $leave_groups_rules = hris_leave_rules::where('del_status', 0)->where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
             }
 
             if (!isset($leave_groups_rules)) {
@@ -103,14 +103,14 @@ class LeaveController extends Controller
 
             $id = $_SESSION['sys_id'];
             $employee = hris_employee::find($id);
-            $emp_group = hris_leave_group_employees::where('employee_id', $id)->get();
+            $emp_group = hris_leave_group_employees::where('del_status', 0)->where('employee_id', $id)->get();
 
 
-            $leaveGroup_ids = hris_leave_group_employees::where('employee_id', $id)->get('leave_group_id');
+            $leaveGroup_ids = hris_leave_group_employees::where('del_status', 0)->where('employee_id', $id)->get('leave_group_id');
 
             foreach ($leaveGroup_ids as $leaveGroup_id) {
                 $lg_id = $leaveGroup_id->leave_group_id;
-                $leave_groups_rules = hris_leave_rules::where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
+                $leave_groups_rules = hris_leave_rules::where('del_status', 0)->where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
             }
 
             if (!isset($leave_groups_rules)) {

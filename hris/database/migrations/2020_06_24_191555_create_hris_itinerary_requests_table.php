@@ -32,6 +32,7 @@ class CreateHrisItineraryRequestsTable extends Migration
             $table->string('attachment_2')->nullable();
             $table->string('attachment_3')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

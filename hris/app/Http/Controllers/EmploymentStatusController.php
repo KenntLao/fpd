@@ -17,7 +17,7 @@ class EmploymentStatusController extends Controller
     }
     public function index()
     {
-        $employmentStatuses = hris_employment_statuses::paginate(10);
+        $employmentStatuses = hris_employment_statuses::where('del_status', 0)->paginate(10);
         return view('pages.admin.jobDetails.employmentStatuses.index', compact('employmentStatuses'));
     }
 
@@ -80,7 +80,8 @@ class EmploymentStatusController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $employmentStatus->delete();
+                $employmentStatus->del_status = 1;
+                $employmentStatus->update();
                 $id = $employmentStatus->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment status successfully deleted!');
@@ -90,7 +91,8 @@ class EmploymentStatusController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $employmentStatus->delete();
+                $employmentStatus->del_status = 1;
+                $employmentStatus->update();
                 $id = $employmentStatus->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/jobDetails/employmentStatuses/index')->with('success', 'Employment status successfully deleted!');

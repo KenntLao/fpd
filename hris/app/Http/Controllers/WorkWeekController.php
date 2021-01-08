@@ -19,13 +19,13 @@ class WorkWeekController extends Controller
     }
     public function index()
     {
-        $workWeeks = hris_work_weeks::paginate(10);
+        $workWeeks = hris_work_weeks::where('del_status', 0)->paginate(10);
         return view('pages.admin.leave.workWeeks.index', compact('workWeeks'));
     }
 
     public function create(hris_work_weeks $workWeek)
     {
-        $countries = hris_countries::all();
+        $countries = hris_countries::all()->where('del_status', 0);
         return view('pages.admin.leave.workWeeks.create', compact('workWeek', 'countries'));
     }
 
@@ -48,7 +48,7 @@ class WorkWeekController extends Controller
 
     public function edit(hris_work_weeks $workWeek)
     {
-        $countries = hris_countries::all();
+        $countries = hris_countries::all()->where('del_status', 0);
         return view('pages.admin.leave.workWeeks.edit', compact('workWeek', 'countries'));
     }
 
@@ -85,7 +85,8 @@ class WorkWeekController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $workWeek->delete();
+                $workWeek->del_status = 1;
+                $workWeek->update();
                 $id = $workWeek->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully deleted!');
@@ -95,7 +96,8 @@ class WorkWeekController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $workWeek->delete();
+                $workWeek->del_status = 1;
+                $workWeek->update();
                 $id = $workWeek->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/workWeeks/index')->with('success', 'Work Week successfully deleted!');

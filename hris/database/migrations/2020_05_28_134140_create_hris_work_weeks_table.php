@@ -19,6 +19,7 @@ class CreateHrisWorkWeeksTable extends Migration
             $table->string('day');
             $table->string('status');
             $table->string('country')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

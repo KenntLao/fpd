@@ -22,6 +22,7 @@ class CreateHrisEmployeeTrainingSessionsTable extends Migration
             $table->longText('feedback')->nullable();
             $table->integer('status')->nullable();
             $table->integer('signup')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

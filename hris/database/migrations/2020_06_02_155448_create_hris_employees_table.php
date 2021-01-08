@@ -58,6 +58,7 @@ class CreateHrisEmployeesTable extends Migration
             $table->bigInteger('last_login')->default(0);
             $table->string('status')->default('active')->nullable();
             $table->timestamps();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

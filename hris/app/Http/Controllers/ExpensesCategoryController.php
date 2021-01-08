@@ -17,7 +17,7 @@ class ExpensesCategoryController extends Controller
     }
     public function index()
     {
-        $expensesCategories = hris_expenses_categories::paginate(10);
+        $expensesCategories = hris_expenses_categories::where('del_status', 0)->paginate(10);
         return view('pages.admin.benefits.expensesCategories.index', compact('expensesCategories'));
     }
 
@@ -79,7 +79,8 @@ class ExpensesCategoryController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $expensesCategory->delete();
+                $expensesCategory->del_status = 1;
+                $expensesCategory->update();
                 $id = $expensesCategory->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully deleted!');
@@ -89,7 +90,8 @@ class ExpensesCategoryController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $expensesCategory->delete();
+                $expensesCategory->del_status = 1;
+                $expensesCategory->update();
                 $id = $expensesCategory->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/benefits/expensesCategories/index')->with('success', 'Expenses category successfully deleted!');

@@ -17,7 +17,7 @@ class SkillController extends Controller
     }
     public function index()
     {
-        $skills = hris_skills::paginate(10);
+        $skills = hris_skills::where('del_status', 0)->paginate(10);
         return view('pages.admin.qualifications.skills.index', compact('skills'));
     }
 
@@ -80,7 +80,8 @@ class SkillController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $skill->delete();
+                $skill->del_status = 1;
+                $skill->update();
                 $id = $skill->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully deleted!');
@@ -90,7 +91,8 @@ class SkillController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $skill->delete();
+                $skill->del_status = 1;
+                $skill->update();
                 $id = $skill->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/qualifications/skills/index')->with('success', 'Skill successfully deleted!');

@@ -22,6 +22,7 @@ class CreateHrisEmergencyContactsTable extends Migration
             $table->string('home_phone')->nullable();
             $table->string('work_phone')->nullable();
             $table->string('mobile_phone')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

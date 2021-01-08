@@ -28,6 +28,7 @@ class CreateHrisLeaveRulesTable extends Migration
             $table->string('leave_accrue');
             $table->string('proportionate_on_joined_date');
             $table->string('employee_leave_period');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

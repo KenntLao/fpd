@@ -21,7 +21,7 @@ class EmployeeSkillController extends Controller
     public function index()
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $employeeSkills = hris_employee_skills::paginate(10);
+            $employeeSkills = hris_employee_skills::where('del_status', 0)->paginate(10);
             return view('pages.personalInformation.skills.index', compact('employeeSkills'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -31,7 +31,7 @@ class EmployeeSkillController extends Controller
     public function create(hris_employee_skills $employeeSkill)
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $skills = hris_skills::all();
+            $skills = hris_skills::where('del_status', 0)->get();
             return view('pages.personalInformation.skills.create', compact('employeeSkill', 'skills'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -62,7 +62,7 @@ class EmployeeSkillController extends Controller
     public function edit(hris_employee_skills $employeeSkill)
     {
         if ( $_SESSION['sys_account_mode'] == 'employee' ) {
-            $skills = hris_skills::all();
+            $skills = hris_skills::where('del_status', 0)->get();
             return view('pages.personalInformation.skills.edit', compact('employeeSkill', 'skills'));
         } else {
             return back()->with(['You do not have access in this page.']);
@@ -103,7 +103,8 @@ class EmployeeSkillController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('password'), $employee->password) ) {
-                $employeeSkill->delete();
+                $employeeSkill->del_status = 1;
+                $employeeSkill->update();
                 $id = $employeeSkill->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/personalInformation/skills/index')->with('success', 'Employee skill successfully deleted!');

@@ -37,8 +37,8 @@ class OvertimeController extends Controller
         $employees = hris_employee::all();
         $types = hris_overtime_types::all();
         if ($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $roles) ) {
-            $overtimes = hris_overtime::latest()->paginate(10);
-            $self = hris_overtime::where('employee_id', $id)->latest()->paginate(10);
+            $overtimes = hris_overtime::latest()->where('del_status', 0)->paginate(10);
+            $self = hris_overtime::where('employee_id', $id)->where('del_status', 0)->latest()->paginate(10);
             return view('pages.time.overtime.index', compact('overtimes', 'employees', 'types', 'hr_officer_id', 'roles', 'supervisor_id', 'self'));
         } else {
             $roles = roles::all();
@@ -47,16 +47,16 @@ class OvertimeController extends Controller
 
             if ( in_array($supervisor_id, $role_ids) ) {
                 $department = $find->department_id;
-                $employee = hris_employee::all()->where('supervisor', $id);
+                $employee = hris_employee::all()->where('supervisor', $id)->where('del_status', 0);
                 $employee_id = array();
                 foreach ($employee as $e) {
                     $employee_id[] = $e->id;
                 }
-                $overtimes = hris_overtime::whereIn('employee_id', $employee_id)->latest()->paginate(10);
-                $self = hris_overtime::where('employee_id', $id)->latest()->paginate(10);
+                $overtimes = hris_overtime::where('del_status', 0)->whereIn('employee_id', $employee_id)->latest()->paginate(10);
+                $self = hris_overtime::where('del_status', 0)->where('employee_id', $id)->latest()->paginate(10);
                 return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id', 'self', 'employees', 'types'));
             } else {
-                $overtimes = hris_overtime::where('employee_id', $id)->latest()->paginate(10);
+                $overtimes = hris_overtime::where('del_status', 0)->where('employee_id', $id)->latest()->paginate(10);
                 return view('pages.time.overtime.index', compact('overtimes','role_ids', 'supervisor_id'));
             }
 
@@ -66,9 +66,9 @@ class OvertimeController extends Controller
     {
         $id = $_SESSION['sys_id'];
         $employee = hris_employee::find($id);
-        $categories = hris_overtime_categories::all();
-        $types = hris_overtime_types::all();
-        $departments = hris_company_structures::all();
+        $categories = hris_overtime_categories::all()->where('del_status', 0);
+        $types = hris_overtime_types::all()->where('del_status', 0);
+        $departments = hris_company_structures::all()->where('del_status', 0);
         $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
         $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
         $roles = explode(',', $_SESSION['sys_role_ids']);
@@ -97,7 +97,7 @@ class OvertimeController extends Controller
                     $date = str_replace("-", "", request('ot_date'));
                     $ot_time_in = str_replace(":", "", request('ot_time_in'));
                     $ot_time_out = str_replace(":", "", request('ot_time_out'));
-                    $workshift_a = hris_workshift_assignment::where('employee_id', $employee->id)->where('status', '1')->get();
+                    $workshift_a = hris_workshift_assignment::where('employee_id', $employee->id)->where('status', '1')->where('del_status', 0)->get();
                     if ( !empty($workshift_a) ) {
                         foreach($workshift_a as $wa)
                         {
@@ -171,7 +171,7 @@ class OvertimeController extends Controller
                     $date = str_replace("-", "", request('ot_date'));
                     $ot_time_in = str_replace(":", "", request('ot_time_in'));
                     $ot_time_out = str_replace(":", "", request('ot_time_out'));
-                    $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->get();
+                    $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->where('del_status', 0)->get();
                     if ( !empty($workshift_a) ) {
                         foreach($workshift_a as $wa)
                         {
@@ -281,7 +281,7 @@ class OvertimeController extends Controller
     public function edit(hris_overtime $overtime)
     {
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
-            $categories = hris_overtime_categories::all();
+            $categories = hris_overtime_categories::all()->where('del_status', 0);
             $roles = explode(',', $_SESSION['sys_role_ids']);
             $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
             $supervisor_id = implode(' ', $supervisor_role_id[0]);
@@ -290,7 +290,7 @@ class OvertimeController extends Controller
                 return view('pages.time.overtime.edit', compact('overtime','categories','hr_officer_id', 'roles'));
         } else {
             $id = $_SESSION['sys_id'];
-            $categories = hris_overtime_categories::all();
+            $categories = hris_overtime_categories::all()->where('del_status', 0);
             $employee_id = $overtime->employee_id;
             $employee = hris_employee::find($id);
             $roles = explode(',', $_SESSION['sys_role_ids']);
@@ -331,7 +331,7 @@ class OvertimeController extends Controller
             $date = str_replace("-", "", request('ot_date'));
             $ot_time_in = str_replace(":", "", request('ot_time_in'));
             $ot_time_out = str_replace(":", "", request('ot_time_out'));
-            $workshift_a = hris_workshift_assignment::latest()->where('employee_id', $employee->id)->where('status','1')->get();
+            $workshift_a = hris_workshift_assignment::latest()->where('del_status', 0)->where('employee_id', $employee->id)->where('status','1')->get();
             if ( !empty($workshift_a) ) {
                 foreach($workshift_a as $wa)
                 {
@@ -407,9 +407,9 @@ class OvertimeController extends Controller
         $es_id = array();
         $error = 0;
         if ( $_SESSION['sys_role_ids'] != ',1,' ) {
-            $department_employee = hris_employee::all()->where('department_id', $employee->department_id);
+            $department_employee = hris_employee::all()->where('department_id', $employee->department_id)->where('del_status', 0);
         } else {
-            $department_employee = hris_employee::all();
+            $department_employee = hris_employee::all()->where('del_status', 0);
         }
         foreach ($department_employee as $de) {
             $e_rid = explode(',', $de->role_id);
@@ -428,7 +428,7 @@ class OvertimeController extends Controller
                 } else {
                     return back()->withErrors(['Invalid status.']);
                 }
-                $workshift = hris_workshift_assignment::latest()->where('employee_id', $overtime->employee_id)->where('status','1')->first();
+                $workshift = hris_workshift_assignment::latest()->where('employee_id', $overtime->employee_id)->where('status','1')->where('del_status', 0)->first();
                 $ws_m = hris_work_shift_management::find($workshift->workshift_id);
                 $week = array('monday','tuesday','wednesday','thursday','friday','saturday','sunday');
                 foreach ( $week as $day )
@@ -607,7 +607,7 @@ class OvertimeController extends Controller
     }
     public function renderEmployee(Request $request){
         $department_id = $request->get('department_id');
-        $employees = hris_employee::where('department_id',$department_id)->get();
+        $employees = hris_employee::where('department_id',$department_id)->where('del_status', 0)->get();
         $output = '<option value="">-- select one --</option>';
         foreach ($employees as $employee) {
             $output .= '<option value="' . $employee->id . '">' . $employee->firstname . ' '. $employee->lastname .'</option>';
@@ -701,7 +701,8 @@ class OvertimeController extends Controller
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $overtime->delete();
+                $overtime->del_status = 1;
+                $overtime->update();
                 $id = $overtime->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/time/overtime/index')->with('success','Overtime request successfully deleted!');
@@ -711,7 +712,8 @@ class OvertimeController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $overtime->delete();
+                $overtime->del_status = 1;
+                $overtime->update();
                 $id = $overtime->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/time/overtime/index')->with('success', 'Overtime request successfully deleted!');

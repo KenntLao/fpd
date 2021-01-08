@@ -20,14 +20,14 @@ class LeaveGroupEmployeeController extends Controller
     }
     public function index()
     {
-        $leaveGroupEmployees = hris_leave_group_employees::paginate(10);
+        $leaveGroupEmployees = hris_leave_group_employees::where('del_status', 0)->paginate(10);
         return view('pages.admin.leave.leaveGroupEmployees.index', compact('leaveGroupEmployees'));
     }
 
     public function create(hris_leave_group_employees $leaveGroupEmployee)
     {
-        $leaveGroups = hris_leave_groups::all();
-        $employees = hris_employee::all();
+        $leaveGroups = hris_leave_groups::all()->where('del_status', 0);
+        $employees = hris_employee::all()->where('del_status', 0);
         return view('pages.admin.leave.leaveGroupEmployees.create', compact('leaveGroupEmployee', 'leaveGroups', 'employees'));
     }
 
@@ -56,8 +56,8 @@ class LeaveGroupEmployeeController extends Controller
 
     public function edit(hris_leave_group_employees $leaveGroupEmployee)
     {
-        $leaveGroups = hris_leave_groups::all();
-        $employees = hris_employee::all();
+        $leaveGroups = hris_leave_groups::all()->where('del_status', 0);
+        $employees = hris_employee::all()->where('del_status', 0);
         return view('pages.admin.leave.leaveGroupEmployees.edit', compact('leaveGroupEmployee', 'leaveGroups', 'employees'));
     }
 
@@ -99,7 +99,8 @@ class LeaveGroupEmployeeController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $leaveGroupEmployee->delete();
+                $leaveGroupEmployee->del_status = 1;
+                $leaveGroupEmployee->update();
                 $id = $leaveGroupEmployee->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully deleted!');
@@ -109,7 +110,8 @@ class LeaveGroupEmployeeController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $leaveGroupEmployee->delete();
+                $leaveGroupEmployee->del_status = 1;
+                $leaveGroupEmployee->update();
                 $id = $leaveGroupEmployee->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leaveGroupEmployees/index')->with('success', 'Leave group employee successfully deleted!');

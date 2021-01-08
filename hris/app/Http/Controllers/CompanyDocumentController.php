@@ -26,8 +26,8 @@ class CompanyDocumentController extends Controller
 
     public function create(hris_company_documents $document)
     {
-        $departments = hris_company_structures::all();
-        $employees = hris_employee::all();
+        $departments = hris_company_structures::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         $department_id = array();
         $employee_id = array();
         return view('pages.employees.documents.companyDocuments.create', compact('document', 'departments', 'employees', 'department_id', 'employee_id'));
@@ -72,8 +72,8 @@ class CompanyDocumentController extends Controller
 
     public function edit(hris_company_documents $document)
     {
-        $departments = hris_company_structures::all();
-        $employees = hris_employee::all();
+        $departments = hris_company_structures::where('del_status', 0)->get();
+        $employees = hris_employee::where('del_status', 0)->get();
         if ($document->department_id != NULL) {
             $department_id = explode(',', $document->department_id);
         } else {
@@ -142,12 +142,8 @@ class CompanyDocumentController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $document->delete();
-                $path = public_path('/assets/files/employees/documents/company_documents/');
-                if ($document->attachment != '' && $document->attachment != NULL) {
-                    $old = $path . $document->attachment;
-                    unlink($old);
-                }
+                $document->del_status = 1;
+                $document->update();
                 $id = $document->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success','Company document successfully deleted!');
@@ -157,12 +153,8 @@ class CompanyDocumentController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $document->delete();
-                $path = public_path('/assets/files/employees/documents/company_documents/');
-                if ($document->attachment != '' && $document->attachment != NULL) {
-                    $old = $path . $document->attachment;
-                    unlink($old);
-                }
+                $document->del_status = 1;
+                $document->update();
                 $id = $document->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/documents/companyDocuments/index')->with('success','Company document successfully deleted!');

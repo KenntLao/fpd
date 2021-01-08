@@ -20,6 +20,7 @@ class CreateHrisCompanyAssetsTable extends Migration
             $table->bigInteger('asset_type_id');
             $table->bigInteger('employee_id')->nullable();
             $table->longText('description');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

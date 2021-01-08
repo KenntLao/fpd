@@ -52,6 +52,7 @@ class CreateHrisPrfTable extends Migration
             $table->string('pod_type')->nullable();
             $table->string('reject_remarks')->nullable();
             $table->timestamps();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

@@ -18,6 +18,7 @@ class CreateHrisTimeProjectsTable extends Migration
             $table->timestamps();
             $table->string('project');
             $table->string('details')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

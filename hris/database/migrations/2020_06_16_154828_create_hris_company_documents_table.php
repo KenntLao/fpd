@@ -22,6 +22,7 @@ class CreateHrisCompanyDocumentsTable extends Migration
             $table->string('attachment');
             $table->bigInteger('department_id')->nullable();
             $table->bigInteger('employee_id')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

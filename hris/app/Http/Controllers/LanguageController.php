@@ -17,7 +17,7 @@ class LanguageController extends Controller
     }
     public function index()
     {
-        $languages = hris_languages::paginate(10);
+        $languages = hris_languages::where('del_status', 0)->paginate(10);
         return view('pages.admin.qualifications.languages.index', compact('languages'));
     }
 
@@ -86,7 +86,8 @@ class LanguageController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $language->delete();
+                $language->del_status = 1;
+                $language->update();
                 $id = $language->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');
@@ -96,7 +97,8 @@ class LanguageController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $language->delete();
+                $language->del_status = 1;
+                $language->update();
                 $id = $language->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/qualifications/languages/index')->with('success', 'Language successfully deleted!');

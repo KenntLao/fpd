@@ -18,7 +18,7 @@ class JobTitleController extends Controller
     }
     public function index()
     {   
-        $jobTitles = hris_job_titles::paginate(10);
+        $jobTitles = hris_job_titles::where('del_status', 0)->paginate(10);
         return view('pages.admin.jobDetails.jobTitles.index', compact('jobTitles'));
     }
 
@@ -85,7 +85,8 @@ class JobTitleController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $jobTitle->delete();
+                $jobTitle->del_status = 1;
+                $jobTitle->update();
                 $id = $jobTitle->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully deleted!');
@@ -95,7 +96,8 @@ class JobTitleController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $jobTitle->delete();
+                $jobTitle->del_status = 1;
+                $jobTitle->update();
                 $id = $jobTitle->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/jobDetails/jobTitles/index')->with('success', 'Job title successfully deleted!');

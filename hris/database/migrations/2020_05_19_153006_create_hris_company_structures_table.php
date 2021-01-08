@@ -24,6 +24,7 @@ class CreateHrisCompanyStructuresTable extends Migration
             $table->string('country')->nullable();
             $table->string('timezone');
             $table->string('parent_structure')->nullable();
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

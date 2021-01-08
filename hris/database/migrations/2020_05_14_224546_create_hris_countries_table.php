@@ -18,6 +18,7 @@ class CreateHrisCountriesTable extends Migration
             $table->timestamps();
             $table->string('code');
             $table->string('name');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 

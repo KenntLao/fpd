@@ -20,14 +20,14 @@ class EmployeeDocumentController extends Controller
     }
     public function index()
     {
-        $documents = hris_employee_documents::paginate(10);
+        $documents = hris_employee_documents::where('del_status', 0)->paginate(10);
         return view('pages.employees.documents.employeeDocuments.index', compact('documents'));
     }
 
     public function create(hris_employee_documents $document)
     {
-        $employees = hris_employee::all();
-        $types = hris_document_types::all();
+        $employees = hris_employee::where('del_status', 0)->get();
+        $types = hris_document_types::where('del_status', 0)->get();
         return view('pages.employees.documents.employeeDocuments.create', compact('document', 'employees', 'types'));
     }
 
@@ -63,8 +63,8 @@ class EmployeeDocumentController extends Controller
 
     public function edit(hris_employee_documents $document)
     {
-        $employees = hris_employee::all();
-        $types = hris_document_types::all();
+        $employees = hris_employee::where('del_status', 0)->get();
+        $types = hris_document_types::where('del_status', 0)->get();
         return view('pages.employees.documents.employeeDocuments.edit', compact('document', 'employees', 'types'));
     }
 
@@ -116,13 +116,9 @@ class EmployeeDocumentController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $document->delete();
-                $path = public_path('/assets/files/employees/documents/employee_documents/');
-                if ($document->attachment != '' && $document->attachment != NULL) {
-                    $old = $path . $document->attachment;
-                    unlink($old);
-                }
-                $id = $document->id;
+                $document->del_status = 1;
+                $document->update();
+                $id =documentdocument->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully deleted!');
             } else {
@@ -131,12 +127,8 @@ class EmployeeDocumentController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $document->delete();
-                $path = public_path('/assets/files/employees/documents/employee_documents/');
-                if ($document->attachment != '' && $document->attachment != NULL) {
-                    $old = $path . $document->attachment;
-                    unlink($old);
-                }
+                $document->del_status = 1;
+                $document->update();
                 $id = $document->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully deleted!');

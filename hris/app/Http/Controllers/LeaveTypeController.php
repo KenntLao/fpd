@@ -19,13 +19,13 @@ class LeaveTypeController extends Controller
     }
     public function index()
     {
-        $leaveTypes = hris_leave_types::paginate(10);
+        $leaveTypes = hris_leave_types::where('del_status', 0)->paginate(10);
         return view('pages.admin.leave.leaveTypes.index', compact('leaveTypes'));
     }
 
     public function create(hris_leave_types $leaveType)
     {
-        $leaveGroups = hris_leave_groups::all();
+        $leaveGroups = hris_leave_groups::all()->where('del_status', 0);
         return view('pages.admin.leave.leaveTypes.create', compact('leaveType', 'leaveGroups'));
     }
 
@@ -48,7 +48,7 @@ class LeaveTypeController extends Controller
 
     public function edit(hris_leave_types $leaveType)
     {
-        $leaveGroups = hris_leave_groups::all();
+        $leaveGroups = hris_leave_groups::all()->where('del_status', 0);
         return view('pages.admin.leave.leaveTypes.edit', compact('leaveType', 'leaveGroups'));
     }
 
@@ -84,7 +84,8 @@ class LeaveTypeController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $leaveType->delete();
+                $leaveType->del_status = 1;
+                $leaveType->update();
                 $id = $leaveType->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully deleted!');
@@ -95,7 +96,8 @@ class LeaveTypeController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $leaveType->delete();
+                $leaveType->del_status = 1;
+                $leaveType->update();
                 $id = $leaveType->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully deleted!');

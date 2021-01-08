@@ -18,7 +18,7 @@ class ExperienceLevelController extends Controller
 
     public function index()
     {   
-        $experienceLevels = hris_experience_levels::paginate(10);
+        $experienceLevels = hris_experience_levels::where('del_status', 0)->paginate(10);
         return view('pages.recruitment.recruitmentSetup.experienceLevels.index', compact('experienceLevels'));
     }
 
@@ -81,7 +81,8 @@ class ExperienceLevelController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $experienceLevel->delete();
+                $experienceLevel->del_status = 1;
+                $experienceLevel->update();
                 $id = $experienceLevel->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success','Experience level deleted!');
@@ -91,7 +92,8 @@ class ExperienceLevelController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $experienceLevel->delete();
+                $experienceLevel->del_status = 1;
+                $experienceLevel->update();
                 $id = $experienceLevel->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/recruitment/recruitmentSetup/experienceLevels/index')->with('success','Experience level deleted!');

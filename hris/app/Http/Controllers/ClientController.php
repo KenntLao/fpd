@@ -17,7 +17,7 @@ class ClientController extends Controller
     }
     public function index()
     {
-        $clients = hris_clients::paginate(10);
+        $clients = hris_clients::where('del_status', 0)->paginate(10);
         return view('pages.admin.properties.clients.index', compact('clients'));
     }
 
@@ -86,7 +86,8 @@ class ClientController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $client->delete();
+                $client->del_status = 1;
+                $client->update();
                 $id = $client->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully deleted!');
@@ -96,7 +97,8 @@ class ClientController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $client->delete();
+                $client->del_status = 1;
+                $client->update();
                 $id = $client->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/properties/clients/index')->with('success', 'Client successfully deleted!');

@@ -29,7 +29,7 @@ class CompanyController extends Controller
     {
         $countries = hris_countries::all()->sortBy('name');
         $timezones = hris_time_zones::all()->sortBy('name');
-        $companies = hris_company_structures::all();
+        $companies = hris_company_structures::where('del_status', 0)->get();
         return view('pages.admin.company.create', compact('company', 'companies', 'countries', 'timezones'));
     }
 
@@ -56,7 +56,7 @@ class CompanyController extends Controller
     {
         $countries = hris_countries::all();
         $timezones = hris_time_zones::all();
-        $companies = hris_company_structures::all();
+        $companies = hris_company_structures::where('del_status', 0)->get();
         return view('pages.admin.company.edit', compact('company', 'countries', 'timezones', 'companies'));
     }
 
@@ -99,7 +99,8 @@ class CompanyController extends Controller
         if ( $_SESSION['sys_account_mode'] == 'user' ) {
             $upass = $this->function->decryptStr(users::find($id)->upass);
             if ( $upass == request('upass') ) {
-                $company->delete();
+                $company->del_status = 1;
+                $company->update();
                 $id = $company->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully deleted');
@@ -109,7 +110,8 @@ class CompanyController extends Controller
         } else {
             $employee = hris_employee::find($id);
             if ( Hash::check(request('upass'), $employee->password) ) {
-                $company->delete();
+                $company->del_status = 1;
+                $company->update();
                 $id = $company->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/admin/company/index')->with('success', 'Company structure successfully deleted');

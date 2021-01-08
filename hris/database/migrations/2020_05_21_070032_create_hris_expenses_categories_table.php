@@ -17,6 +17,7 @@ class CreateHrisExpensesCategoriesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
+            $table->integer('del_status')->default(0)->nullable();
         });
     }
 
