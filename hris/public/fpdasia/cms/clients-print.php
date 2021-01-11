@@ -2,7 +2,7 @@
 include __DIR__ . "/config.php";
 $website_name = "CRM";
 $page_title = "PRINT CLIENTS";
-$filename = "fpd applicants" . date('Y-m-d') . '-' . time();
+$filename = "fpd-applicants" . date('Y-m-d') . '-' . time();
 ?>
 <!DOCTYPE html>
 <html>
@@ -160,7 +160,7 @@ $filename = "fpd applicants" . date('Y-m-d') . '-' . time();
         $("table.table").table2excel({
           name: "CRM Clients",
           filename: filename,
-          fileext: ".xls"
+          fileext: ".xlsx"
         });
       });
     </script>

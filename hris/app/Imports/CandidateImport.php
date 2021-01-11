@@ -16,7 +16,7 @@ class CandidateImport implements ToModel, WithStartRow
 
     public function startRow(): int
     {
-        return 2;
+        return 3;
     }
     public function model(array $row)
     {
