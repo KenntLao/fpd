@@ -56,6 +56,7 @@ class CompanyDocumentController extends Controller
             $document->department_id = $department_id;
             $document->employee_id = $employee_id;
             $request->attachment->move(public_path('assets/files/employees/documents/company_documents'), $attachment);
+            $document->del_status = 0;
             $document->save();
             $id = $document->id;
             $this->function->addSystemLog($this->module,$id);

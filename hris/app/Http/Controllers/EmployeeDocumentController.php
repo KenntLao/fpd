@@ -46,6 +46,7 @@ class EmployeeDocumentController extends Controller
             $document->status = request('status');
             $document->details = request('details');
             $document->attachment = $attachment;
+            $document->del_status = 0;
             $document->save();
             $id = $document->id;
             $this->function->addSystemLog($this->module,$id);

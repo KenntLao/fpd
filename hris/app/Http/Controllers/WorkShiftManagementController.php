@@ -94,7 +94,7 @@ class WorkShiftManagementController extends Controller
             $work_shift->sunday_shift = $sunday_shift;
             $work_shift->sunday_time_in = str_replace(":", "", request('sunday_time_in'));
             $work_shift->sunday_time_out = str_replace(":", "", request('sunday_time_out'));
-
+            $work_shift->del_status = 0;
             $work_shift->save();
             $id = $work_shift->id;
             $this->function->AddSystemLog($this->module,$action,$id);

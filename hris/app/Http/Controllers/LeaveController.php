@@ -87,6 +87,7 @@ class LeaveController extends Controller
             $leaves->supervisor_id = $request->supervisor_id;
             $leaves->reason = $request->reason;
             $leaves->status = 0;
+            $leaves->del_status = 0;
             $leaves->save();
             return redirect('/hris/pages/leaveManagement/leaves/index')->with('success', 'Leave Application submitted!');
         }

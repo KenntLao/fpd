@@ -62,6 +62,7 @@ class EmployeeExpenseController extends Controller
             $employeeExpense->currency = request('currency');
             $employeeExpense->amount = request('amount');
             $employeeExpense->status = '0';
+            $employeeExpense->del_status = 0;
             $employeeExpense->save();
             $id = $employeeExpense->id;
             $this->function->addSystemLog($this->module,$id);

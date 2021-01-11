@@ -79,6 +79,7 @@ class CandidateController extends Controller
             $candidate->referees = request('referees');
             $candidate->prefered_industry = request('prefered_industry');
             $candidate->expected_salary = request('expected_salary');
+            $candidate->del_status = 0;
             $candidate->save();
             $id = $candidate->id;
             $this->function->addSystemLog($this->module,$id);

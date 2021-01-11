@@ -47,6 +47,7 @@ class EmployeeCertificationController extends Controller
             $employeeCertification->institute = request('institute');
             $employeeCertification->granted_on = request('granted_on');
             $employeeCertification->valid_thru = request('valid_thru');
+            $employeeCertification->del_status = 0;
             $employeeCertification->save();
             $id = $employeeCertification->id;
             $this->function->addSystemLog($this->module,$id);

@@ -62,6 +62,7 @@ class JobPositionController extends Controller
                     }
                 }
             }
+            $jobPosition->del_status = 0;
             $id = $jobPosition->id;
             $this->function->addSystemLog($this->module,$id);
             $jobPosition->save();

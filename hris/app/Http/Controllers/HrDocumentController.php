@@ -37,6 +37,7 @@ class HrDocumentController extends Controller
             $file->move($path, $file_name);
             
             $document->document_name = $file_name;
+            $document->del_status = 0;
             $document->save();
             return redirect('/hris/pages/documents/hrDocuments/index')->with('success', 'Documents successfully added!');
         }

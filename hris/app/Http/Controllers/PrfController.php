@@ -89,6 +89,7 @@ class PrfController extends Controller
             $prf->department_id = $user_department;
             $prf->employee_department_id = $user_department;
             $prf->initial_status = 0; //0 pending 1 initially approved 2 final approval 3 rejected
+            $prf->del_status = 0;
             $prf->supervisor_id = $user_supervisor;
 
 

@@ -18,7 +18,7 @@ class CompanyAssetTypeController extends Controller
     }
     public function index()
     {
-        $types = hris_company_asset_types::paginate(10);
+        $types = hris_company_asset_types::where('del_status', 0)->paginate(10);
         return view('pages.admin.companyAssets.types.index', compact('types'));
     }
 
@@ -37,6 +37,7 @@ class CompanyAssetTypeController extends Controller
             }
             $type->name = request('name');
             $type->description = request('description');
+            $type->del_status = 0;
             $type->save();
             $id = $type->id;
             $this->function->addSystemLog($this->module,$id);

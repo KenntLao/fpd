@@ -86,6 +86,7 @@ class OvertimeController extends Controller
         $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
         $roles = explode(',', $_SESSION['sys_role_ids']);
         $ot_difference = ($time2 - $time1)/3600;
+        $overtime->del_status = 0;
         if ( $_SESSION['sys_role_ids'] == ',1,'  OR in_array($hr_officer_id, $roles) ) {
             $employee = hris_employee::find(request('employee_id'));
             if ( $employee->supervisor == NULL ) {

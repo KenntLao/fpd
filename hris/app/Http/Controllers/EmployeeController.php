@@ -142,6 +142,7 @@ class EmployeeController extends Controller
                 $employees->place_birth = request('place_birth');
                 $employees->dependant = request('dependant');
                 $employees->pay_grade = request('pay_grade');
+                $employees->del_status = 0;
                 $employees->save();
                 return redirect('/hris/pages/employees/employee/index')->with('success', 'Employee successfully added!');
             } else {

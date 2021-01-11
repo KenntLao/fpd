@@ -47,6 +47,7 @@ class TrainingSessionController extends Controller
             $trainingSession->delivery_location = request('delivery_location');
             $trainingSession->attendance_type = request('attendance_type');
             $trainingSession->training_cert_required = request('training_cert_required');
+            $trainingSession->del_status = 0;
             $trainingSession->save();
             $id = $trainingSession->id;
             $this->function->addSystemLog($this->module,$id);

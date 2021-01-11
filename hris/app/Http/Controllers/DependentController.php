@@ -46,6 +46,7 @@ class DependentController extends Controller
             $dependent->relationship = request('relationship');
             $dependent->birthday = request('birthday');
             $dependent->id_number = request('id_number');
+            $dependend->del_status = 0;
             $dependent->save();
             $id = $dependent->id;
             $this->function->addSystemLog($this->module,$id);

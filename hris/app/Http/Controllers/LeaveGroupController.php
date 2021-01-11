@@ -39,6 +39,7 @@ class LeaveGroupController extends Controller
             $leaveGroup->name = request('name');
             $leaveGroup->job_title_id = ','.$job_title_ids.',';
             $leaveGroup->details = request('details');
+            $leaveGroup->del_status = 0;
             $leaveGroup->save();
 
             $id = $leaveGroup->id;

@@ -47,6 +47,7 @@ class EmergencyContactController extends Controller
             $emergency->home_phone = request('home_phone');
             $emergency->work_phone = request('work_phone');
             $emergency->mobile_phone = request('mobile_phone');
+            $emergency->del_status = 0;
             $emergency->save();
             $id = $emergency->id;
             $this->function->addSystemLog($this->module,$id);

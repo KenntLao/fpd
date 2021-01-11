@@ -79,6 +79,7 @@ class NpaController extends Controller
                     $npa->cola_from = $request->cola_from;
                     $npa->cola_to = $request->cola_to;
                     $npa->effectivity_date = $request->effectivity_date;
+                    $npa->del_status = 0;
                     $npa->save();
                     $id = $npa->id;
                     $this->function->addSystemLog($this->module,$id);

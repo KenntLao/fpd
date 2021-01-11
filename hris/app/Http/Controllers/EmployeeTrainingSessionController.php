@@ -50,6 +50,7 @@ class EmployeeTrainingSessionController extends Controller
                 } else {
                    $employeeTrainingSession->signup = '1';
                 }
+                $employeeTrainingSession->del_status = 0;
                 $employeeTrainingSession->save();
                 $id = $employeeTrainingSession->id;
                 $this->function->addSystemLog($this->module,$id);

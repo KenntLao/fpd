@@ -102,6 +102,7 @@ class ItineraryRequestController extends Controller
                     $itineraryRequest->currency_id = request('currency_id');
                     $itineraryRequest->total_funding_proposed = request('total_funding_proposed');
                     $itineraryRequest->status = '0';
+                    $itineraryRequest->del_status = 0;
                     $itineraryRequest->save();
 
                     /* SYSTEM LOG */

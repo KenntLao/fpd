@@ -48,6 +48,7 @@ class EmployeeEducationController extends Controller
             $employeeEducation->institute = request('institute');
             $employeeEducation->start_date = request('start_date');
             $employeeEducation->completed = request('completed');
+            $employeeEducation->del_status = 0;
             $employeeEducation->save();
             $id = $employeeEducation->id;
             $this->function->addSystemLog($this->module,$id);

@@ -45,6 +45,7 @@ class EmployeeSkillController extends Controller
             $employeeSkill->employee_id = $employee_id;
             $employeeSkill->skill_id = request('skill_id');
             $employeeSkill->details = request('details');
+            $employeeSkill->del_status = 0;
             $employeeSkill->save();
             $id = $employeeSkill->id;
             $this->function->addSystemLog($this->module,$id);

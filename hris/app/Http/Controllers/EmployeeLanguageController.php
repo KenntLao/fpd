@@ -48,6 +48,7 @@ class EmployeeLanguageController extends Controller
             $employeeLanguage->speaking = request('speaking');
             $employeeLanguage->writing = request('writing');
             $employeeLanguage->understanding = request('understanding');
+            $employeeLanguage->del_status = 0;
             $employeeLanguage->save();
             $id = $employeeLanguage->id;
             $this->function->addSystemLog($this->module,$id);
