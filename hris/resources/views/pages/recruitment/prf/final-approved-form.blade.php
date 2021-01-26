@@ -299,9 +299,13 @@
                     $candidate_arr_orig = explode(',',$prf->candidate_id);
                     $candidate_arr = array_slice($candidate_arr_orig, 1, -1);
                     foreach($candidate_arr as $candidate_id) {
-                        $candidate_detail = App\hris_candidates::where('id',$candidate_id)->first();
-                        
+                    $candidate_detail = App\hris_candidates::where('id',$candidate_id)->first();
+                        if(isset($candidate_detail->careers_app_fname)) {
                         echo '<p>' . $candidate_detail->careers_app_fname . ' ' . $candidate_detail->careers_app_lname . '</p>';
+                        } else {
+                            echo '---';
+                        }
+
                     }
                     @endphp
 

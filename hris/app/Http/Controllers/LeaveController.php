@@ -62,7 +62,7 @@ class LeaveController extends Controller
 
             foreach ($leaveGroup_ids as $leaveGroup_id) {
                 $lg_id = $leaveGroup_id->leave_group_id;
-                $leave_groups_rules = hris_leave_rules::where('del_status', 0)->where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
+                $leave_groups_rules = hris_leave_rules::where('hris_leave_rules.del_status', 0)->where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
             }
 
             if (!isset($leave_groups_rules)) {
