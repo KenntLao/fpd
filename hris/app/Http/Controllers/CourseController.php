@@ -47,7 +47,7 @@ class CourseController extends Controller
 
     public function edit(hris_courses $course)
     {
-        $employees = hris_employee::where('del_status')->get();
+        $employees = hris_employee::where('del_status',0)->get();
         return view('pages.admin.training.courses.edit', compact('course','employees'));
     }
 
