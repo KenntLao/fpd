@@ -83,18 +83,20 @@ class OvertimeExport implements FromView,ShouldAutoSize
         } else {
             $overtimes = $overtimes->where('overtime_category_id', '!=' ,3);
         }
-        if ( in_array($supervisor->id, $role_ids) AND in_array($hr_officer->id, $role_ids) OR in_array($hr_officer->id, $role_ids) OR in_array($supervisor->id, $role_ids) AND in_array($hr_manager->id, $role_ids) OR in_array($hr_manager->id, $role_ids) OR $_SESSION['sys_role_ids'] == ',1,'  ) {
+        if ( in_array($hr_officer->id, $role_ids) OR in_array($hr_manager->id, $role_ids) OR $_SESSION['sys_role_ids'] == ',1,'  ) {
             if ( $this->employee_id != 0 ) {
                 $overtimes = $overtimes->where('employee_id', $this->employee_id);
             }
-        }
-        if ( in_array($supervisor->id, $role_ids) AND !in_array($hr_officer->id, $role_ids) OR  in_array($supervisor->id, $role_ids) AND !in_array($hr_manager->id, $role_ids) ) {
-            if ( $this->employee_id != 0 ) {
-                $overtimes = $overtimes->where('employee_id', $this->employee_id);
-            } else {
-                $overtimes = $overtimes->where('supervisor_id', $_SESSION['sys_id']);
+        } else {
+            if ( in_array($supervisor->id, $role_ids) ) {
+                if ( $this->employee_id != 0 ) {
+                    $overtimes = $overtimes->where('employee_id', $this->employee_id);
+                } else {
+                    $overtimes = $overtimes->where('supervisor_id', $_SESSION['sys_id']);
+                }
             }
         }
+        
         $overtimes = $overtimes->get();
         return view('pages.time.overtime.table', compact('overtimes'));
     }
