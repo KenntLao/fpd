@@ -21,6 +21,7 @@ class OvertimeExport implements FromView,ShouldAutoSize
     {
         $supervisor = roles::where('role_name', 'supervisor')->first();
         $hr_officer = roles::where('role_name', 'hr officer')->first();
+        $hr_manager = roles::where('role_name', 'hr manager')->first();
         $role_ids = explode(',', $_SESSION['sys_role_ids']);
 
         $overtimes = hris_overtime::groupBy('employee_id')->selectRaw(
@@ -82,16 +83,16 @@ class OvertimeExport implements FromView,ShouldAutoSize
         } else {
             $overtimes = $overtimes->where('overtime_category_id', '!=' ,3);
         }
-        if ( in_array($supervisor->id, $role_ids)  ) {
+        if ( in_array($supervisor->id, $role_ids) AND in_array($hr_officer->id, $role_ids) OR in_array($hr_officer->id, $role_ids) OR in_array($supervisor->id, $role_ids) AND in_array($hr_manager->id, $role_ids) OR in_array($hr_manager->id, $role_ids) OR $_SESSION['sys_role_ids'] == ',1,'  ) {
+            if ( $this->employee_id != 0 ) {
+                $overtimes = $overtimes->where('employee_id', $this->employee_id);
+            }
+        }
+        if ( in_array($supervisor->id, $role_ids) AND !in_array($hr_officer->id, $role_ids) OR  in_array($supervisor->id, $role_ids) AND !in_array($hr_manager->id, $role_ids) ) {
             if ( $this->employee_id != 0 ) {
                 $overtimes = $overtimes->where('employee_id', $this->employee_id);
             } else {
                 $overtimes = $overtimes->where('supervisor_id', $_SESSION['sys_id']);
-            }
-        }
-        if ( in_array($supervisor->id, $role_ids) AND in_array($hr_officer->id, $role_ids) OR in_array($hr_officer->id, $role_ids) OR $_SESSION['sys_role_ids'] == ',1,'  ) {
-            if ( $this->employee_id != 0 ) {
-                $overtimes = $overtimes->where('employee_id', $this->employee_id);
             }
         }
         $overtimes = $overtimes->get();
