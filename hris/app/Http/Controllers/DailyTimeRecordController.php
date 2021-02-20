@@ -106,8 +106,6 @@ class DailyTimeRecordController extends Controller
                 // define array for emp time in sessions
                 
                 $day_sessions_arr = array();
-
-
                 // convert time in/out to EPOCH
                 $day_time_in = strtotime($date_code.' '.$day_time_in);
                 $date_code = date('Ymd', strtotime($date_code . ' -1 days'));

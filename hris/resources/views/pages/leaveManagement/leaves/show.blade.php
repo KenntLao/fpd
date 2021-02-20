@@ -52,6 +52,19 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-group">
+                    <label class="mr-2" for="start_date">Half-Day: </label>
+                    <p>
+                        @if($leaves->half_day == 0) 
+                            No
+                        @else
+                            Yes
+                        @endif
+                    </p>
+                </div>
+            </div>
+            @if($leaves->half_day == 0)
+            <div class="col-12 col-md-4">
+                <div class="form-group">
                     <label class="mr-2" for="start_date">Start Date: </label>
                     <p>
                         {{date("Y-m-d", strtotime($leaves->leave_start_date))}}
@@ -66,6 +79,16 @@
                     </p>
                 </div>
             </div>
+            @else
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label class="mr-2" for="start_date">Date: </label>
+                    <p>
+                        {{date("Y-m-d", strtotime($leaves->short_date))}}
+                    </p>
+                </div>
+            </div>
+            @endif
 
         </div>
         <div class="row">
@@ -78,16 +101,16 @@
                 </div>
             </div>
             @if($leaves->approved_by_id != NULL)
-                @if(isset($leaves->supervisor->firstname))
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label class="mr-2">Approved By</label>
-                        <p>
-                            {{$leaves->supervisor->firstname}} {{$leaves->supervisor->lastname}}
-                        </p>
-                    </div>
+            @if(isset($leaves->supervisor->firstname))
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label class="mr-2">Approved By</label>
+                    <p>
+                        {{$leaves->supervisor->firstname}} {{$leaves->supervisor->lastname}}
+                    </p>
                 </div>
-                @endif
+            </div>
+            @endif
             @endif
         </div>
     </div>

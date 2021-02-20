@@ -15,6 +15,14 @@
 	<p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
 </div>
 @endif
+
+@if ($message = Session::get('error'))
+<div class="alert alert-success alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<p><i class="fas fa-fw fa-check-circle"></i>{!! $message !!}</p>
+</div>
+@endif
+
 @if($errors->any())
 <div class="alert alert-danger alert-block">
 	<button type="button" class="close" data-dismiss="alert">×</button>
@@ -38,15 +46,19 @@
 	<div class="card-body">
 		@if(count($candidates) > 0)
 		<div class="table-responsive">
+			<!-- If current user is hr recruitment-->
+			@if(in_array($hr_recruitment_id,$employee_ids))
 			<table class="table table-hover table-bordered table-striped table-condensed table-data">
 				<thead>
 					<tr>
 						<th>position applied</th>
 						<th>Name</th>
-						<th>email</th>
-						<th>contact</th>
 						<th>Status</th>
 						<th>Status Date</th>
+						<th>Manager</th>
+						<th>Assigned Date</th>
+						<th>Result</th>
+						<th>Result Date</th>
 						<th>file</th>
 					</tr>
 				</thead>
@@ -54,25 +66,69 @@
 					@foreach($candidates as $candidate)
 					<tr>
 						<td>{{$candidate->careers_app_position}}</td>
-						<td>{{$candidate->careers_app_fname}} {{$candidate->careers_app_lname}}</td>
-						<td>{{$candidate->careers_app_email}}</td>
-						<td>{{$candidate->careers_app_number}}</td>
-						<td style="width: 10%">
+						<td><a href="/hris/pages/recruitment/candidates/show/{{$candidate->id}}">{{$candidate->careers_app_fname}} {{$candidate->careers_app_lname}}</a></td>
+						@if($candidate->status != 7)
+						<td style="width: 15%">
 							@if(in_array($hr_recruitment_id,$employee_ids))
 							<select data-id="{{$candidate->id}}" class="form-control candidate_status" name="status">
 								<option {{$candidate->status == 0 ? 'selected' : ''}} value="0">Pending</option>
-								<option {{$candidate->status == 1 ? 'selected' : ''}} value="1">Hired</option>
-								<option {{$candidate->status == 2 ? 'selected' : ''}} value="2">Denied</option>
+								<option {{$candidate->status == 1 ? 'selected' : ''}} value="1">Initial Interview</option>
+								<option {{$candidate->status == 2 ? 'selected' : ''}} value="2">Manager Interview</option>
+								<option {{$candidate->status == 3 ? 'selected' : ''}} value="3">Client Interview</option>
+								<option {{$candidate->status == 4 ? 'selected' : ''}} value="4">Pre-Employment</option>
+								<option {{$candidate->status == 5 ? 'selected' : ''}} value="5">Employment Request</option>
+								<option {{$candidate->status == 6 ? 'selected' : ''}} value="6">Failed</option>
 							</select>
 							@else
 							@if($candidate->status == NULL)
 							---
 							@else
-							{{$candidate_status}}
+							{{$candidate->status}}
 							@endif
 							@endif
 						</td>
-						<td>{{$candidate->updated_at}}</td>
+						@else
+						<td>Employed</td>
+						@endif
+
+						<td>{{$candidate->status_updated_at}}</td>
+						@if($candidate->status != 7)
+						<td style="width: 15%">
+							@if(in_array($hr_recruitment_id,$employee_ids))
+
+							<select data-id="{{$candidate->id}}" class="form-control manager_dropdown" name="status">
+								<option>-- select --</option>
+								@foreach($oms as $om)
+								<option value="{{$om->id}}" {{$candidate->manager_id == $om->id ? 'selected' : ''}}>{{$om->firstname}} {{$om->lastname}}</option>
+								@endforeach
+							</select>
+
+							@endif
+						</td>
+						@else
+						@foreach($oms as $om)
+							@if($candidate->manager_id == $om->id)
+							<td>{{$om->firstname}} {{$om->lastname}}</td>
+							@endif
+							@endforeach
+						@endif
+						<td>{{$candidate->manager_updated_at}}</td>
+						<td>
+							@if($candidate->manager_result == 0)
+							Pending
+							@elseif($candidate->manager_result == 1)
+							Qualified
+							@else
+							Not Qualified
+							@endif
+						</td>
+						<td>
+							@if($candidate->manager_result_date == NULL)
+							---
+							@else
+							{{$candidate->manager_result_date}}
+							@endif
+						</td>
 						<td><a href="{{$candidate->careers_app_file}}" target="_blank">View File</a></td>
 
 
@@ -81,6 +137,107 @@
 					@endforeach
 				</tbody>
 			</table>
+			<!-- If current user is OM-->
+			@elseif(in_array($om_id,$employee_ids))
+			<table class="table table-hover table-bordered table-striped table-condensed table-data">
+				<thead>
+					<tr>
+						<th>position applied</th>
+						<th>Name</th>
+						<th>Assigned Date</th>
+						<th>Result</th>
+						<th>Result Date</th>
+						<th>file</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($candidates as $candidate)
+					<tr>
+						<td>{{$candidate->careers_app_position}}</td>
+						<td><a href="/hris/pages/recruitment/candidates/show/{{$candidate->id}}">{{$candidate->careers_app_fname}} {{$candidate->careers_app_lname}}</a></td>
+						<td>{{$candidate->manager_updated_at}}</td>
+						<td>
+							<select data-id="{{$candidate->id}}" class="form-control manager_result" name="status">
+								<option default hidden>--select--</option>
+								<option {{$candidate->manager_result == 0 ? 'selected' : ''}} value="0">Pending</option>
+								<option {{$candidate->manager_result == 1 ? 'selected' : ''}} value="1">Qualified</option>
+								<option {{$candidate->manager_result == 2 ? 'selected' : ''}} value="2">Not Qualified</option>
+							</select>
+						</td>
+						<td>
+							@if($candidate->manager_result_date == NULL)
+							---
+							@else
+							{{$candidate->manager_result_date}}
+							@endif
+						</td>
+						<td><a href="{{$candidate->careers_app_file}}" target="_blank">View File</a></td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+			@elseif($approval_requests != NULL)
+			<table class="table table-hover table-bordered table-striped table-condensed table-data">
+				<thead>
+					<tr>
+						<th>position applied</th>
+						<th>Name</th>
+						<th>Status</th>
+						<th>Status Date</th>
+						<th>Manager</th>
+						<th>Assigned Date</th>
+						<th>Result</th>
+						<th>Result Date</th>
+						<th>file</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($approval_requests as $candidate)
+					<tr>
+						<td>{{$candidate->careers_app_position}}</td>
+						<td><a href="/hris/pages/recruitment/candidates/show/{{$candidate->id}}">{{$candidate->careers_app_fname}} {{$candidate->careers_app_lname}}</a></td>
+						<td style="width: 15%">
+							<select data-id="{{$candidate->id}}" class="form-control candidate_status" name="status">
+								<option hidden disabled selected>Employment Request</option>
+								<option {{$candidate->status == 6 ? 'selected' : ''}} value="6">Failed</option>
+								<option {{$candidate->status == 7 ? 'selected' : ''}} value="7">Employed</option>
+							</select>
+						</td>
+
+						<td>{{$candidate->status_updated_at}}</td>
+						<td style="width: 15%">
+							@foreach($oms as $om)
+							@if($candidate->manager_id == $om->id)
+							{{$om->firstname}} {{$om->lastname}}
+							@endif
+							@endforeach
+						</td>
+						<td>{{$candidate->manager_updated_at}}</td>
+						<td>
+							@if($candidate->manager_result == 0)
+							Pending
+							@elseif($candidate->manager_result == 1)
+							Qualified
+							@else
+							Not Qualified
+							@endif
+						</td>
+						<td>
+							@if($candidate->manager_result_date == NULL)
+							---
+							@else
+							{{$candidate->manager_result_date}}
+							@endif
+						</td>
+						<td><a href="{{$candidate->careers_app_file}}" target="_blank">View File</a></td>
+
+
+
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+			@endif
 		</div>
 		@else
 		<h4>No data available.</h4>
@@ -168,6 +325,62 @@
 				data: {
 					_token: _token,
 					candidate_status: candidate_status,
+					candidate_id: candidate_id,
+				},
+				success: function(response) {
+					location.reload();
+				},
+				error: function(response) {
+					console.log(response);
+				}
+			});
+		}
+	});
+	$('.manager_dropdown').on('change', function() {
+		if ($(this).val() != '') {
+			var manager_dropdown = $(this).val();
+			var candidate_id = $(this).attr('data-id');
+
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('candidateManager.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					manager_id: manager_dropdown,
+					candidate_id: candidate_id,
+				},
+				success: function(response) {
+					location.reload();
+				},
+				error: function(response) {
+					console.log(response);
+				}
+			});
+		}
+	});
+	$('.manager_result').on('change', function() {
+		if ($(this).val() != '') {
+			var manager_result = $(this).val();
+			var candidate_id = $(this).attr('data-id');
+
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('managerResult.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					manager_result: manager_result,
 					candidate_id: candidate_id,
 				},
 				success: function(response) {

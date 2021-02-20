@@ -11,6 +11,7 @@ use App\table_careers_application;
 use App\roles;
 use App\hris_employee;
 use Maatwebsite\Excel\Facades\Excel;
+use App\hris_candidate_logs;
 use App\Imports\CandidateImport;
 
 class CandidateController extends Controller
@@ -26,6 +27,8 @@ class CandidateController extends Controller
     public function index()
     {
         if($_SESSION['sys_account_mode'] == "employee") {
+            $approval_requests = NULL;
+
             $current_user_id = $_SESSION['sys_id'];
             $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
 
@@ -33,9 +36,26 @@ class CandidateController extends Controller
             $employee = hris_employee::where('id', $current_user_id)->first();
             $employee_ids = explode(',', $employee->role_id);
 
+            // GET HR RECRUITMENT SUPERVISOR 
+            $hr_supervisors_id = hris_employee::whereRaw('find_in_set(?,role_id)', [$hr_recruitment_id])->get('supervisor');
+            foreach($hr_supervisors_id as $hr_supervisor_id){
+                if ($current_user_id == $hr_supervisor_id->supervisor) {
+                    $approval_requests = $candidates = table_careers_application::where('hr_supervisor_id',$current_user_id)->orderBy('id', 'DESC')->get();
+                }
+            }
+            
 
-            $candidates = table_careers_application::all()->where('del_status', 0);
-            return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids'));
+            // GET OPERATION MANAGERS IDS
+            $om_id = roles::where('role_name', 'Manager_OM')->pluck('id')->first();
+            $oms = hris_employee::whereRaw('find_in_set(?,role_id)', $om_id)->get();
+
+            if(in_array($hr_recruitment_id, $employee_ids)){
+                $candidates = table_careers_application::where('del_status', 0)->orderBy('id', 'DESC')->get();
+            }else if(in_array($om_id,$employee_ids)) {
+                $candidates = table_careers_application::where('manager_id', $current_user_id)->orderBy('id', 'DESC')->get();
+            }
+
+            return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids','oms','om_id', 'approval_requests'));
         } else {
             return back();
         }
@@ -89,9 +109,10 @@ class CandidateController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(hris_candidates $candidate)
     {
-        //
+        $candidate_log = hris_candidate_logs::where('candidate_id',$candidate->id)->orderBy('created_at','desc')->get();
+        return view('pages.recruitment.candidates.show', compact('candidate','candidate_log'));
     }
 
     public function edit(hris_candidates $candidate)
@@ -199,17 +220,79 @@ class CandidateController extends Controller
         }
     }
 
-    public function updateStatus(Request $request){
+    public function updateStatus(Request $request, hris_candidate_logs $candidate_log){
+        $current_id = $_SESSION['sys_id'];
+
+        
         $candidate = hris_candidates::where('id',$request->candidate_id)->first();
+
+        if ($request->candidate_status == 5) {
+            // get current user supervisor
+            $hr_supervisor_id = hris_employee::where('id', $current_id)->pluck('supervisor')->first();
+            $candidate->hr_supervisor_id = $hr_supervisor_id;
+            $candidate_log->hr_supervisor_id =  $hr_supervisor_id;
+        }
         $candidate->status = $request->candidate_status;
+        $candidate->status_updated_at = date("Y-m-d H:i:s");
         $candidate->update();
+
+        
+
+        $candidate_log->date_type = "status";
+        $candidate_log->status_val = $request->candidate_status;
+        $candidate_log->hr_id = $current_id;
+        $candidate_log->candidate_id = $request->candidate_id;
+        $candidate_log->save();
+        
+    }
+    public function updateManager(Request $request, hris_candidate_logs $candidate_log)
+    {
+        $current_id = $_SESSION['sys_id'];
+
+        $candidate = hris_candidates::where('id', $request->candidate_id)->first();
+        $candidate->manager_id = $request->manager_id;
+        $candidate->manager_updated_at = date("Y-m-d H:i:s");
+        $candidate->update();
+
+        $candidate_log->date_type = "assign";
+        $candidate_log->hr_id = $current_id;
+        $candidate_log->candidate_id = $request->candidate_id;
+        $candidate_log->manager_id = $request->manager_id;
+        $candidate_log->save();
+    }
+    public function updateManagerResult(Request $request, hris_candidate_logs $candidate_log)
+    {
+        $current_id = $_SESSION['sys_id'];
+
+        $candidate = hris_candidates::where('id', $request->candidate_id)->first();
+        $candidate->manager_result = $request->manager_result;
+        $candidate->manager_result_date = date("Y-m-d H:i:s");
+        $candidate->update();
+
+        $candidate_log->date_type = "result";
+        $candidate_log->candidate_id = $request->candidate_id;
+        $candidate_log->manager_id = $current_id;
+        $candidate_log->save();
     }
 
     public function import()
     {
         if ($this->validateImport()) {
-            Excel::import(new CandidateImport, request()->file('candidateData'));
-            return redirect('/hris/pages/recruitment/candidates/index')->with('success', 'Candidate list successfully uploaded!');
+            $import = new CandidateImport();
+            $import->import(request()->file('candidateData'));
+            if(empty($import->failures())) {
+                return redirect('/hris/pages/recruitment/candidates/index')->with('success', 'Candidate list successfully uploaded!');
+            } else {
+                $errors = '';
+                foreach ($import->failures() as $failure) {
+                    $failure->row(); // row that went wrong
+                    $failure->errors(); // Actual error messages from Laravel validator
+                    foreach($failure->errors() as $err) {
+                        $errors .= $err.' at ROW: '.$failure->row() .'<br>';
+                    }
+                }
+                return redirect('/hris/pages/recruitment/candidates/index')->with('error', 'Candidate list successfully uploaded! <br>'. $errors);
+            }
         } else {
             return back()->withErrors(['Invalid file!']);
         }

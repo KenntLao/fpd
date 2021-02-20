@@ -62,7 +62,7 @@ class LeaveController extends Controller
 
             foreach ($leaveGroup_ids as $leaveGroup_id) {
                 $lg_id = $leaveGroup_id->leave_group_id;
-                $leave_groups_rules = hris_leave_rules::where('del_status', 0)->where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
+                $leave_groups_rules = hris_leave_rules::where('hris_leave_rules.del_status', 0)->where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
             }
 
             if (!isset($leave_groups_rules)) {
@@ -84,6 +84,8 @@ class LeaveController extends Controller
             $leaves->employee_id = $request->employee_id;
             $leaves->leave_start_date = date("Ymd", strtotime($request->start_date));
             $leaves->leave_end_date = date("Ymd", strtotime($request->end_date));
+            $leaves->half_day = $request->half_day;
+            $leaves->short_date = date("Ymd", strtotime($request->short_date));
             $leaves->supervisor_id = $request->supervisor_id;
             $leaves->reason = $request->reason;
             $leaves->status = 0;
@@ -112,7 +114,7 @@ class LeaveController extends Controller
 
             foreach ($leaveGroup_ids as $leaveGroup_id) {
                 $lg_id = $leaveGroup_id->leave_group_id;
-                $leave_groups_rules = hris_leave_rules::where('del_status', 0)->where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
+                $leave_groups_rules = hris_leave_rules::where('hris_leave_rules.del_status', 0)->where('leave_group_id', $lg_id)->leftJoin('hris_leave_types', 'hris_leave_rules.leave_type_id', '=', 'hris_leave_types.id')->get();
             }
 
             if (!isset($leave_groups_rules)) {
@@ -132,9 +134,12 @@ class LeaveController extends Controller
             $leaves->employee_id = $request->employee_id;
             $leaves->leave_start_date = date("Ymd", strtotime($request->start_date));
             $leaves->leave_end_date = date("Ymd", strtotime($request->end_date));
+            $leaves->half_day = $request->half_day;
+            $leaves->short_date = date("Ymd", strtotime($request->short_date));
             $leaves->supervisor_id = $request->supervisor_id;
             $leaves->reason = $request->reason;
             $leaves->status = 0;
+            $leaves->del_status = 0;
             $leaves->update();
             return redirect('/hris/pages/leaveManagement/leaves/index')->with('success', 'Leave Application submitted!');
         }
@@ -149,9 +154,11 @@ class LeaveController extends Controller
         $leave_name = hris_leave_types::where('id',$leave_type_id)->first('name');
         $start_date = $leaves->leave_start_date;
         $end_date = $leaves->leave_end_date;
+        $short_date = $leaves->short_date;
+        $half_day = $leaves->half_day;
         $reason = $leaves->reason;
 
-        return view('pages.leaveManagement.leaves.approve', compact('leaves','employee','leave_name','start_date','end_date','reason','leave_type_id','supervisor_id'));
+        return view('pages.leaveManagement.leaves.approve', compact('leaves','employee','leave_name','half_day','short_date','start_date','end_date','reason','leave_type_id','supervisor_id'));
     }
     public function approve_submit(Request $request, hris_leaves $leaves)
     {
@@ -162,7 +169,6 @@ class LeaveController extends Controller
             $timeDiff = abs($end_date - $start_date);
             $days_diff = $timeDiff / 86400;
             $numberDays = $days_diff + 1;
-
             $leaves->approved_date = date("Ymd");
             $leaves->approved_by_id = $id;
             $leaves->remarks = $request->remarks;
@@ -191,9 +197,11 @@ class LeaveController extends Controller
         $leave_name = hris_leave_types::where('id', $leave_type_id)->first('name');
         $start_date = $leaves->leave_start_date;
         $end_date = $leaves->leave_end_date;
+        $short_date = $leaves->short_date;
+        $half_day = $leaves->half_day;
         $reason = $leaves->reason;
 
-        return view('pages.leaveManagement.leaves.deny', compact('leaves', 'employee', 'leave_name', 'start_date', 'end_date', 'reason', 'leave_type_id', 'supervisor_id'));
+        return view('pages.leaveManagement.leaves.deny', compact('leaves', 'employee','half_day','short_date', 'leave_name', 'start_date', 'end_date', 'reason', 'leave_type_id', 'supervisor_id'));
     }
 
     public function deny_submit(Request $request, hris_leaves $leaves)
@@ -220,8 +228,10 @@ class LeaveController extends Controller
             'employee_id' => 'required',
             'supervisor_id' => 'required',
             'leave_type' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'start_date' => 'nullable',
+            'end_date' => 'nullable',
+            'half_day' => 'required',
+            'short_date' => 'nullable',
             'reason' => 'required',
         ]);
     }

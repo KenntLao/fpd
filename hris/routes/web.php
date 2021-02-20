@@ -659,7 +659,10 @@ Route::middleware([CheckUserID::class])->group(function(){
 
     /* CANDIDATES PAGE */
     Route::get('/hris/pages/recruitment/candidates/index', 'CandidateController@index');
+    Route::get('/hris/pages/recruitment/candidates/show/{candidate}', 'CandidateController@show');
     Route::post('/hris/pages/recruitment/candidates/getStatus', 'CandidateController@updateStatus')->name('candidateStatus.fetch');
+    Route::post('/hris/pages/recruitment/candidates/getManager', 'CandidateController@updateManager')->name('candidateManager.fetch');
+    Route::post('/hris/pages/recruitment/candidates/getManagerResult', 'CandidateController@updateManagerResult')->name('managerResult.fetch');
     /* ADD CANDIDATE */
     Route::get('/hris/pages/recruitment/candidates/create', 'CandidateController@create');
     Route::post('/hris/pages/recruitment/candidates', 'CandidateController@store');

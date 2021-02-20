@@ -6,7 +6,7 @@
 		<div class="form-group">
 			<label class="mr-2" for="start_date">Leave Type</label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control select2" name="leave_type">
+			<select class="form-control select2 required" name="leave_type">
 				<option selected default disabled>-- select one --</option>
 				@foreach($leave_groups_rules as $leave_groups_rule)
 				<option value="{{$leave_groups_rule->leave_type_id}}" {{$leave_groups_rule->leave_type_id == $leaves->leave_type_id ? 'selected' : ''}}>{{$leave_groups_rule->name}}</option>
@@ -16,6 +16,25 @@
 	</div>
 	<div class="col-12 col-md-4">
 		<div class="form-group">
+			<label class="mr-2" for="half_day">Half-Day</label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control half_day required" name="half_day">
+				<option default value="0">No</option>
+				<option value="1">Yes</option>
+			</select>
+		</div>
+	</div>
+	<div class="col-12 col-md-4 short_leave_date">
+		<div class="form-group">
+			<label class="mr-2" for="start_date">Date: </label>
+			<span class="badge badge-danger">Required</span>
+			<div class="input">
+				<input class="form-control required leave_date required" type="text" name="short_date" value="@if($leaves->short_date) {{date("Y-m-d", strtotime($leaves->short_date))}} @else{{old('short_date')}}@endif" required>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-4 long_leave_date">
+		<div class="form-group">
 			<label class="mr-2" for="start_date">Start Date: </label>
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
@@ -23,7 +42,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-12 col-md-4">
+	<div class="col-12 col-md-4 long_leave_date">
 		<div class="form-group">
 			<label class="mr-2" for="end_date">End Date: </label>
 			<span class="badge badge-danger">Required</span>

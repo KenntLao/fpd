@@ -9,6 +9,7 @@
 @stop
 
 @section('content')
+
 @stop
 
 @section('css')

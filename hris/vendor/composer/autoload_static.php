@@ -680,6 +680,7 @@ class ComposerStaticInit6c181881bffc77215f481f707d408bf5
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Imports\\CandidateImport' => __DIR__ . '/../..' . '/app/Imports/CandidateImport.php',
         'App\\Imports\\EmployeeImport' => __DIR__ . '/../..' . '/app/Imports/EmployeeImport.php',
         'App\\MenuFilter' => __DIR__ . '/../..' . '/app/MenuFilter.php',
         'App\\Notifications\\SupervisorNotif' => __DIR__ . '/../..' . '/app/Notifications/SupervisorNotif.php',

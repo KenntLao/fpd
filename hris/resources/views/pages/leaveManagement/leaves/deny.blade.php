@@ -39,6 +39,16 @@
                 </div>
                 <div class="col-12 col-md-4">
                     <div class="form-group">
+                        <label class="mr-2" for="half_day">Half-Day</label>
+                        <span class="badge badge-danger">Required</span>
+                        <select class="form-control half_day required" name="half_day" readonly>
+                            <option default value="{{$half_day}}">No</option>
+                        </select>
+                    </div>
+                </div>
+                @if($half_day == 0)
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
                         <label class="mr-2" for="start_date">Start Date: </label>
                         <span class="badge badge-danger">Required</span>
                         <div class="input">
@@ -55,6 +65,17 @@
                         </div>
                     </div>
                 </div>
+                @else
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label class="mr-2" for="end_date">Date: </label>
+                        <span class="badge badge-danger">Required</span>
+                        <div class="input">
+                            <input class="form-control required leave_date" type="text" name="short_date" value="{{date("Y-m-d", strtotime($short_date))}}" required readonly>
+                        </div>
+                    </div>
+                </div>
+                @endif
 
             </div>
             <div class="row">

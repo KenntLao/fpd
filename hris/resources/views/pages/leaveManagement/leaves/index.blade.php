@@ -72,8 +72,13 @@
                             <tr>
                                 <td>{{$s->created_at}}</td>
                                 <td>{{$s->leave_types->name}}</td>
+                                @if($s->half_day == 0)
                                 <td>{{date("Y-m-d", strtotime($s->leave_start_date))}}</td>
                                 <td>{{date("Y-m-d", strtotime($s->leave_end_date))}}</td>
+                                @else
+                                <td>{{date("Y-m-d", strtotime($s->short_date))}}</td>
+                                <td>{{date("Y-m-d", strtotime($s->short_date))}}</td>
+                                @endif
                                 <td>
                                     @if(isset($s->supervisor->firstname))
                                     {{$s->supervisor->firstname}} {{$s->supervisor->lastname}}
@@ -151,8 +156,13 @@
                             <tr>
                                 <td>{{$leave->created_at}}</td>
                                 <td>{{$leave->leave_types->name}}</td>
+                                @if($leave->half_day == 0)
                                 <td>{{date("Y-m-d", strtotime($leave->leave_start_date))}}</td>
                                 <td>{{date("Y-m-d", strtotime($leave->leave_end_date))}}</td>
+                                @else
+                                <td>{{date("Y-m-d", strtotime($leave->short_date))}}</td>
+                                <td>{{date("Y-m-d", strtotime($leave->short_date))}}</td>
+                                @endif
                                 <td>
                                     @if(isset($leave->supervisor->firstname))
                                     {{$leave->supervisor->firstname}} {{$leave->supervisor->lastname}}
@@ -239,8 +249,13 @@
                     <tr>
                         <td>{{$leave->created_at}}</td>
                         <td>{{$leave->leave_types->name}}</td>
+                        @if($leave->half_day == 0)
                         <td>{{date("Y-m-d", strtotime($leave->leave_start_date))}}</td>
                         <td>{{date("Y-m-d", strtotime($leave->leave_end_date))}}</td>
+                        @else
+                        <td>{{date("Y-m-d", strtotime($leave->short_date))}}</td>
+                        <td>{{date("Y-m-d", strtotime($leave->short_date))}}</td>
+                        @endif
                         <td>
                             @if(isset($leave->supervisor->firstname))
                             {{$leave->supervisor->firstname}} {{$leave->supervisor->lastname}}
