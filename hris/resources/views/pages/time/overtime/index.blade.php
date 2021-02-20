@@ -1075,13 +1075,11 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                 <form class="form-horizontal" method="post" action="/hris/pages/time/overtime/download" id="form">
                     @csrf
                     @php
-                    $roles = App\roles::all();
-                    $supervisor_role_id = App\roles::where('role_name', 'supervisor')->get('id')->toArray();
-                    $supervisor_id = implode(' ', $supervisor_role_id[0]);
-                    $hr_officer_role_id = App\roles::where('role_name', 'hr officer')->get('id')->toArray();
-                    $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
+                    $supervisor = App\roles::where('role_name', 'supervisor')->first();
+                    $hr_officer = App\roles::where('role_name', 'hr officer')->first();
+                    $hr_manager = App\roles::where('role_name', 'hr manager')->first();
                     $roles = explode(',', $_SESSION['sys_role_ids']);
-                    if ( $_SESSION['sys_role_ids'] == ',1,' ) {
+                    if ( $_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer->id, $roles) OR in_array($hr_manager->id, $roles) ) {
                     echo '<div class="form-group">
                         <label for="employee_id">Employee: </label>
                         <span class="badge badge-danger">Required</span>
@@ -1097,7 +1095,7 @@ $roles = explode(',', $_SESSION['sys_role_ids']);
                         echo '</select>
                     </div>';
                     } else {
-                    if (in_array($supervisor_id, $roles)) {
+                    if (in_array($supervisor->id, $roles)) {
                     $emp = App\hris_employee::find($_SESSION['sys_id']);
                     $employees = App\hris_employee::where('supervisor', $emp->id)->get();
                     echo '<div class="form-group">

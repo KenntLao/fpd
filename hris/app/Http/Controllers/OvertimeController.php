@@ -529,7 +529,7 @@ class OvertimeController extends Controller
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->LGL = $reg;
                                 $overtime->LGL_8 = $reg_8;
-                                $overtime->LGL_ND1 = $reg;
+                                $overtime->LGL_ND1 = $nd;
                             } else {
                                 $overtime->LG_CLIENT = $reg;
                                 $overtime->LG_CLIENT_8 = $reg_8;
@@ -539,7 +539,7 @@ class OvertimeController extends Controller
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->SPL = $reg;
                                 $overtime->SPL_8 = $reg_8;
-                                $overtime->SPL_ND1 = $reg;
+                                $overtime->SPL_ND1 = $nd;
                             } else {
                                 $overtime->SPL_CLIENT = $reg;
                                 $overtime->SPL_CLIENT_8 = $reg_8;
@@ -550,7 +550,7 @@ class OvertimeController extends Controller
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->REG = $reg;
                                 $overtime->REG_8 = $reg_8;
-                                $overtime->REG_ND1 = $reg;
+                                $overtime->REG_ND1 = $nd;
                             } else {
                                 $overtime->REG_CLIENT = $reg;
                                 $overtime->REG_CLIENT_8 = $reg_8;
@@ -562,7 +562,7 @@ class OvertimeController extends Controller
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->LGLRST = $reg;
                                 $overtime->LGLRST_8 = $reg_8;
-                                $overtime->LGLRST_ND1 = $reg;
+                                $overtime->LGLRST_ND1 = $nd;
                             } else {
                                 $overtime->LGRS_CLIEN = $reg;
                                 $overtime->LGRS_CLIEN_8 = $reg_8;
@@ -572,7 +572,7 @@ class OvertimeController extends Controller
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->SPLRST = $reg;
                                 $overtime->SPLRST_8 = $reg_8;
-                                $overtime->SPLRST_ND1 = $reg;
+                                $overtime->SPLRST_ND1 = $nd;
                             } else {
                                 $overtime->SPRS_CLIEN = $reg;
                                 $overtime->SPRS_CLIEN_8 = $reg_8;
@@ -582,7 +582,7 @@ class OvertimeController extends Controller
                             if ( $overtime->overtime_category_id == 3 ) {
                                 $overtime->RST = $reg;
                                 $overtime->RST_8 = $reg_8;
-                                $overtime->RST_ND1 = $reg;
+                                $overtime->RST_ND1 = $nd;
                             } else {
                                 $overtime->RST_CLIENT = $reg;
                                 $overtime->RST_CLIENT_8 = $reg_8;

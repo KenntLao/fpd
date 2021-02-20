@@ -38,23 +38,28 @@ class EmployeeTrainingSessionController extends Controller
 
     public function store(hris_employee_training_sessions $employeeTrainingSession, Request $request)
     {
+        $trainingSession = hris_training_sessions::find($request->training_session_id);
         if($this->validatedData()) {
-            $employeeTrainingSession->employee_id = request('employee_id');
-            $employeeTrainingSession->training_session_id = request('training_session_id');
-            $employeeTrainingSession->status = '0';
-            if ( $employeeTrainingSession->training_session->course->coordinator->id == request('employee_id') ) {
-                return back()->withErrors(['Cannot add training session to employee with same coordinator.']);
-            } else {
-                if ( $employeeTrainingSession->training_session->attendance_type == 'Sign Up' ) {
-                    $employeeTrainingSession->signup = '0';
+            if ( $trainingSession->course->coordinator ) {
+                if ( $trainingSession->course->coordinator->id == request('employee_id') ) {
+                    return back()->withErrors(['Cannot add training session to employee with same coordinator.']);
                 } else {
-                   $employeeTrainingSession->signup = '1';
+                    if ( $trainingSession->attendance_type == 'Sign Up' ) {
+                        $employeeTrainingSession->signup = '0';
+                    } else {
+                       $employeeTrainingSession->signup = '1';
+                    }
+                    $employeeTrainingSession->employee_id = request('employee_id');
+                    $employeeTrainingSession->training_session_id = request('training_session_id');
+                    $employeeTrainingSession->status = '0';
+                    $employeeTrainingSession->del_status = 0;
+                    $employeeTrainingSession->save();
+                    $id = $employeeTrainingSession->id;
+                    $this->function->addSystemLog($this->module,$id);
+                    return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully added!');
                 }
-                $employeeTrainingSession->del_status = 0;
-                $employeeTrainingSession->save();
-                $id = $employeeTrainingSession->id;
-                $this->function->addSystemLog($this->module,$id);
-                return redirect('/hris/pages/admin/training/employeeTrainingSessions/index')->with('success', 'Employee training session successfully added!');
+            } else {
+                return back()->withErrors(['No coordinator for this course.']);
             }
 
         } else {

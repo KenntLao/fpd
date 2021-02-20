@@ -18,7 +18,7 @@ class JobTitleController extends Controller
     }
     public function index()
     {   
-        $jobTitles = hris_job_titles::where('del_status', 0)->paginate(10);
+        $jobTitles = hris_job_titles::where('del_status', 0)->get();
         return view('pages.admin.jobDetails.jobTitles.index', compact('jobTitles'));
     }
 
