@@ -23,11 +23,6 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Monitor Attendance</h3>
-        @if($hr_officer)
-        <div class="card-tools">
-            <button class="btn add-button btn-md" data-toggle="modal" data-target="#export-modal"><i class="far fa-file-excel mr-1"></i> Export</button>
-        </div>
-        @endif
     </div>
     <div class="card-body">
         @if(!empty($attendances))
@@ -120,40 +115,6 @@
         @else
         <h4>No data available.</h4>
         @endif
-    </div>
-</div>
-<div class="modal fade" id="export-modal" tabindex="-1" role="dialog" aria-labelledby="export-label" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="export-label">Download Excel File</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" method="post" action="/hris/pages/employees/monitorAttendance/download" id="form">
-                    <div class="form-group">
-                        <label for="date_from">Date from: </label>
-                        <span class="badge badge-danger">Required</span>
-                        <div class="input">
-                            <input type="date" name="date_from" class="form-control required" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="date_to">Date To: </label>
-                        <span class="badge badge-danger">Required</span>
-                        <div class="input">
-                            <input type="date" name="date_to" class="form-control required" required>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button class="btn btn-success" type="submit" form="form"><i class="far fa-file-excel mr-1"></i> Download Excel File</button>
-            </div>
-        </div>
     </div>
 </div>
 
