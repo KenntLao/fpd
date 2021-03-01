@@ -23,6 +23,11 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Monitor Attendance</h3>
+        @if($hr_officer)
+        <div class="card-tools">
+            <button class="btn add-button btn-md" data-toggle="modal" data-target="#export-modal"><i class="far fa-file-excel mr-1"></i> Export</button>
+        </div>
+        @endif
     </div>
     <div class="card-body">
         @if(!empty($attendances))

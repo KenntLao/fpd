@@ -56,7 +56,7 @@ class ItineraryRequestController extends Controller
 
     public function create(hris_itinerary_requests $itineraryRequest)
     {
-        $currencies = hris_currencies::all();
+        $currencies = hris_currencies::where('del_status', 0)->get();
         $employees = hris_employee::where('del_status', 0)->get();
         $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
         $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
@@ -189,7 +189,7 @@ class ItineraryRequestController extends Controller
         if ( $id == $itineraryRequest->supervisor_id ) {
             return redirect()->back();
         } else {
-            $currencies = hris_currencies::all();
+            $currencies = hris_currencies::where('del_status', 0)->get();
             $employees = hris_employee::where('del_status', 0)->get();
             $hr_officer_role_id = roles::where('role_name', 'hr officer')->get('id')->toArray();
             $hr_officer_id = implode(' ', $hr_officer_role_id[0]);
