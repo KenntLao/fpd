@@ -440,6 +440,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::get('/hris/pages/employees/monitorAttendance/index', 'MonitorAttendanceController@index');
     Route::get('/hris/pages/employees/monitorAttendance/', 'MonitorAttendanceController@search')->name('monitor_attendance.search');
     Route::get('/hris/pages/employees/monitorAttendance/show/{employee}', 'MonitorAttendanceController@show');
+    Route::post('/hris/pages/employees/monitorAttendance/download', 'MonitorAttendanceController@exportAttendance');
     
     // GET AJAX DATA FOR SUPERVISOR
     Route::post('/hris/pages/employees/employee/getSupervisor', 'EmployeeController@renderSupervisor')->name('getSupervisor.fetch');
@@ -673,8 +674,11 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* DELETE CANDIDATE */
     Route::delete('/hris/pages/recruitment/candidates/delete/{candidate}', 'CandidateController@destroy');
     Route::get('/hris/pages/recruitment/candidates/download/{candidate}', 'CandidateController@download');
-
+    /* CANDIDATE IMPORT */
     Route::post('/hris/pages/recruitment/candidates/import', 'CandidateController@import');
+    /* CANDIDATE ATTACHED FILE */
+    Route::patch('/hris/pages/recruitment/candidates/fileUpload', 'CandidateController@fileUpload');
+    Route::patch('/hris/pages/recruitment/candidates/removeFileUpload', 'CandidateController@removeFileUpload');
 
     /* NPA PAGE */
     Route::get('/hris/pages/recruitment/npa/index', 'NpaController@index');

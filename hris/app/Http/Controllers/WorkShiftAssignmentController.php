@@ -31,7 +31,7 @@ class WorkShiftAssignmentController extends Controller
         // CHECK IF SUPERADMIN OR NOT
         // IF SUPERADMIN
         if ( $_SESSION['sys_role_ids'] == ',1,' ) {
-            $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->paginate(10);
+            $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->orderBy('id', 'DESC')->get();
             return view('pages.time.workshiftAssignment.index', compact('workshift_assignment', 'hr_officer_id', 'sys_role_ids'));
         } else {
             // CHECK IF SUPERVISOR OR NOT
@@ -48,12 +48,12 @@ class WorkShiftAssignmentController extends Controller
                         $subordinate_id[] = $s->id;
                     }
                 }
-                $self = hris_workshift_assignment::where('del_status', 0)->where('employee_id', $_SESSION['sys_id'])->paginate(10);
-                $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->whereIn('employee_id', $subordinate_id)->paginate(10);
+                $self = hris_workshift_assignment::where('del_status', 0)->where('employee_id', $_SESSION['sys_id'])->orderBy('id', 'DESC')->get();
+                $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->whereIn('employee_id', $subordinate_id)->orderBy('id', 'DESC')->get();
                 return view('pages.time.workshiftAssignment.index', compact('workshift_assignment', 'self','supervisor_id','sys_role_ids','hr_officer_id'));
             } else {
                 //IF EMPLOYEE
-                $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->where('employee_id', $_SESSION['sys_id'])->paginate(10);
+                $workshift_assignment = hris_workshift_assignment::where('del_status', 0)->where('employee_id', $_SESSION['sys_id'])->orderBy('id', 'DESC')->get();
                 return view('pages.time.workshiftAssignment.index', compact('workshift_assignment','supervisor_id', 'sys_role_ids','hr_officer_id'));
             }
         }
@@ -110,16 +110,19 @@ class WorkShiftAssignmentController extends Controller
         $supervisor_role_id = roles::where('role_name', 'supervisor')->get('id')->toArray();
         $supervisor_id = implode(' ', $supervisor_role_id[0]);
         $sys_role_ids = explode(',', $_SESSION['sys_role_ids']);
-
+        $date_approve = date("Y-m-d");
         if ($this->validatedData()) {
             $data = [];
             $employee_ids = $request->employee_id;
             foreach($employee_ids as $employee_id){
+                $current_workshift = false;
                 $e = hris_employee::find($employee_id);
                 if ( $e->supervisor != NULL ) {
                     if ($_SESSION['sys_role_ids'] == ',1,' OR in_array($hr_officer_id, $sys_role_ids) OR in_array($supervisor_id, $sys_role_ids)) {
-                        if ( $_SESSION['sys_id'] == $e->id ) {
-                            $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>0];
+                        $current_workshift = hris_workshift_assignment::where('employee_id', $employee_id)->where('current', 1)->first();
+
+                        if ($_SESSION['sys_id'] == $e->id) {
+                            $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>0,'current'=>1,'date_approve'=>$date_approve];
                             array_push($data,$insert_data);
                             if ( $_SESSION['sys_role_ids'] == ',1,' ) {
                                 // WORKSHIFT NOTIFICATION
@@ -133,7 +136,7 @@ class WorkShiftAssignmentController extends Controller
                                 $employee_receiver->notify(new WorkShiftNotif($sender));
                             }
                         } else {
-                            $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>1];
+                            $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>1, 'current' =>1, 'date_approve' => $date_approve];
                             array_push($data,$insert_data);
                             if ( $_SESSION['sys_role_ids'] == ',1,' ) {
                                 // WORKSHIFT NOTIFICATION
@@ -149,8 +152,7 @@ class WorkShiftAssignmentController extends Controller
                         }
 
                     } else {
-
-                        $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=>0];
+                        $insert_data = ['employee_id'=>$employee_id, 'workshift_id'=>$request->workshift_id, 'date_from'=>date('Ymd', strtotime($request->date_from)),'date_to'=>date('Ymd', strtotime($request->date_to)),'status'=> 0, 'current' => 2];
                         array_push($data,$insert_data);
                         // WORKSHIFT NOTIFICATION
                         $sender = hris_employee::find($_SESSION['sys_id']);
@@ -162,6 +164,11 @@ class WorkShiftAssignmentController extends Controller
                 }
             }
             if ( $data != NULL ) {
+                if($current_workshift){
+                    $current_workshift->current = 0;
+                    $current_workshift->update();
+                }
+
                 $workshift_assignment = hris_workshift_assignment::insert($data);
                 return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', 'Work Shift successfully assigned!');
             } else {
@@ -235,6 +242,8 @@ class WorkShiftAssignmentController extends Controller
             $workshift_assignment->workshift_id = $request->workshift_id;
             $workshift_assignment->date_from = date('Ymd', strtotime($request->date_from));
             $workshift_assignment->date_to = date('Ymd', strtotime($request->date_to));
+            $workshift_assignment->current = 0;
+            $workshift_assignment->date_approve = date("Y-m-d");
 
             //DO systemLog function FROM SystemLogController
             // GET CHANGES
@@ -274,24 +283,47 @@ class WorkShiftAssignmentController extends Controller
             if ( array_intersect($sys_role_ids, $access_roles) ) {
                 if ( $_SESSION['sys_role_ids'] == ',1,' ) {
                     $workshift_assignment->status = $status;
-                    $workshift_assignment->update();
+                    // get current ws
+                    $current_workshift = hris_workshift_assignment::where('employee_id', $workshift_assignment->employee_id)->where('current', 1)->first();
                     if ( $status == 1 ) {
+                        // change current ws to old
+                        if ($current_workshift) {
+                            $current_workshift->current = 0;
+                            $current_workshift->update();
+                        }
+                        
+                        $workshift_assignment->current = 1;
+                        $workshift_assignment->date_approve = date("Y-m-d");
+                        
                         $msg = 'Work shift approved.';
                     } else {
                         $msg = 'Work shift denied.';
                     }
+
+                    $workshift_assignment->update();
                     return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', $msg);
                 } else {
                     if ( $workshift_assignment->employee_id == $_SESSION['sys_id'] ) {
                         return back()->withErrors(['You do not have access in this page.']);
                     } else {
+                        // get current ws
+                        $current_workshift = hris_workshift_assignment::where('employee_id', $workshift_assignment->employee_id)->where('current', 1)->first();
                         $workshift_assignment->status = $status;
-                        $workshift_assignment->update();
+                        $workshift_assignment->current = 1;
+                        $workshift_assignment->date_approve = date("Y-m-d");
                         if ( $status == 1 ) {
+                            $workshift_assignment->current = 1;
+                            $workshift_assignment->date_approve = date("Y-m-d");
+                            // change current ws to old
+                            if ($current_workshift) {
+                                $current_workshift->current = 0;
+                                $current_workshift->update();
+                            }
                             $msg = 'Work shift approved.';
                         } else {
                             $msg = 'Work shift denied.';
                         }
+                        $workshift_assignment->update();
                         return redirect('/hris/pages/time/workshiftAssignment/index')->with('success', $msg);
                     }
                 }

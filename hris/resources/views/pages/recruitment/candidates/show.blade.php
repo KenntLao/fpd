@@ -14,6 +14,16 @@
     <p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
 </div>
 @endif
+@if (count($errors))
+<div class="alert alert-danger">
+    <strong>Whoops!</strong> There were some problems with your input.
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <div class="card mb-5">
     <div class="card-header">
         <h3 class="card-title">Profile</h3>
@@ -133,6 +143,43 @@
     </div>
 </div>
 
+<div class="card mb-5">
+    <div class="card-header">
+        <h3 class="card-title">File</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                @if($candidate->file_attach == NULL)
+                <form class="form-horizontal" method="post" action="/hris/pages/recruitment/candidates/fileUpload" enctype="multipart/form-data" id="form">
+                    @method('PATCH')
+                    @csrf
+                    <label>Upload Attachment</label>
+                    <input type="hidden" value="{{$candidate->id}}" name="candidate_id">
+                    <div class="custom-file mb-2">
+                        <input type="file" class="custom-file-input" id="customFile" name="file_attach" required>
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                    <button class="btn btn-default"><i class="fa fa-upload mr-2"></i> Upload</button>
+                </form>
+                @else
+                <a target="_blank" href="/hris/pages/recruitment/candidates/download/{{$candidate->id}}">{{$candidate->file_attach}}</a>
+                <form class="form-horizontal mt-3" method="post" action="/hris/pages/recruitment/candidates/removeFileUpload" enctype="multipart/form-data">
+                    @method('PATCH')
+                    @csrf
+                    <input type="hidden" value="{{$candidate->id}}" name="candidate_id">
+                    <button class="btn btn-danger"><i class="fa fa-trash mr-2"></i> Remove</button>
+                </form>
+
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-right">
+        <a class="btn btn-default mr-1" href="/hris/pages/recruitment/candidates/index"><i class="fa fa-arrow-left mr-1"></i> back</a>
+    </div>
+</div>
+
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Candidate Logs</h3>
@@ -142,53 +189,53 @@
         <div class="row">
             <div class="col-md-12">
                 @if($log->date_type == "status")
-                    @if(isset($log->hr->firstname))
-                        <p>
-                            <span class="badge-pill badge-primary">{{$log->hr->firstname}} {{$log->hr->lastname}}</span> changed the candidate status to
-                            @if($log->status_val != NULL )
-                                @if($log->status_val == 0)
-                                <span class="badge-pill badge-dark">Pending</span>
-                                @elseif($log->status_val == 1)
-                                <span class="badge-pill badge-dark">Initial Interview</span>
-                                @elseif($log->status_val == 2)
-                                <span class="badge-pill badge-dark">Manager Interview</span>
-                                @elseif($log->status_val == 3)
-                                <span class="badge-pill badge-dark">Client Interview</span>
-                                @elseif($log->status_val == 4)
-                                <span class="badge-pill badge-dark">Pre-Employment</span>
-                                @elseif($log->status_val == 5)
-                                <span class="badge-pill badge-dark">Employment Request</span>
-                                @elseif($log->status_val == 6)
-                                <span class="badge-pill badge-dark">Failed</span>
-                                @elseif($log->status_val == 7)
-                                <span class="badge-pill badge-dark">Employed</span>
-                                @endif
-                            @endif
-                            on <span class="badge-pill badge-success">{{$log->created_at}}</span>
-                        </p>
+                @if(isset($log->hr->firstname))
+                <p>
+                    <span class="badge-pill badge-primary">{{$log->hr->firstname}} {{$log->hr->lastname}}</span> changed the candidate status to
+                    @if($log->status_val != NULL )
+                    @if($log->status_val == 0)
+                    <span class="badge-pill badge-dark">Pending</span>
+                    @elseif($log->status_val == 1)
+                    <span class="badge-pill badge-dark">Initial Interview</span>
+                    @elseif($log->status_val == 2)
+                    <span class="badge-pill badge-dark">Manager Interview</span>
+                    @elseif($log->status_val == 3)
+                    <span class="badge-pill badge-dark">Client Interview</span>
+                    @elseif($log->status_val == 4)
+                    <span class="badge-pill badge-dark">Pre-Employment</span>
+                    @elseif($log->status_val == 5)
+                    <span class="badge-pill badge-dark">Employment Request</span>
+                    @elseif($log->status_val == 6)
+                    <span class="badge-pill badge-dark">Failed</span>
+                    @elseif($log->status_val == 7)
+                    <span class="badge-pill badge-dark">Employed</span>
                     @endif
+                    @endif
+                    on <span class="badge-pill badge-success">{{$log->created_at}}</span>
+                </p>
+                @endif
                 @elseif($log->date_type == "assign")
-                    @if(isset($log->hr->firstname) && isset($log->manager->firstname))
-                        <p>
-                            <span class="badge-pill badge-primary">{{$log->hr->firstname}} {{$log->hr->lastname}}</span> assigned the candidate to
-                            <span class="badge-pill badge-warning">{{$log->manager->firstname}} {{$log->manager->lastname}}</span>
-                            on <span class="badge-pill badge-success">{{$log->created_at}}</span>
-                        </p>
-                    @endif
+                @if(isset($log->hr->firstname) && isset($log->manager->firstname))
+                <p>
+                    <span class="badge-pill badge-primary">{{$log->hr->firstname}} {{$log->hr->lastname}}</span> assigned the candidate to
+                    <span class="badge-pill badge-warning">{{$log->manager->firstname}} {{$log->manager->lastname}}</span>
+                    on <span class="badge-pill badge-success">{{$log->created_at}}</span>
+                </p>
+                @endif
                 @elseif($log->date_type == "result")
-                    <p>
-                        <span class="badge-pill badge-warning">{{$log->manager->firstname}} {{$log->manager->lastname}}</span> Interview Result: 
-                        @if($log->candidate->manager_result != NULL )
-                                @if($log->candidate->manager_result == 0)
-                                <span class="badge-pill badge-dark">Pending</span>
-                                @elseif($log->candidate->manager_result == 1)
-                                <span class="badge-pill badge-dark">Qualified</span>
-                                @else
-                                <span class="badge-pill badge-dark">Not Qualified</span>
-                                @endif
-                        @endif
-                        on <span class="badge-pill badge-success">{{$log->created_at}}</span>
-                    </p>
+                <p>
+                    <span class="badge-pill badge-warning">{{$log->manager->firstname}} {{$log->manager->lastname}}</span> Interview Result:
+                    @if($log->candidate->manager_result != NULL )
+                    @if($log->candidate->manager_result == 0)
+                    <span class="badge-pill badge-dark">Pending</span>
+                    @elseif($log->candidate->manager_result == 1)
+                    <span class="badge-pill badge-dark">Qualified</span>
+                    @else
+                    <span class="badge-pill badge-dark">Not Qualified</span>
+                    @endif
+                    @endif
+                    on <span class="badge-pill badge-success">{{$log->created_at}}</span>
+                </p>
                 @endif
             </div>
         </div>
@@ -204,6 +251,9 @@
 @stop
 @section('js')
 <script>
-    console.log('Hi!');
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
 </script>
 @stop

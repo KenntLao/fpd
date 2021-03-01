@@ -213,10 +213,41 @@ class CandidateController extends Controller
     public function download(table_careers_application $candidate, Request $request)
     {
         if ($candidate->careers_app_file) {
-            $file = public_path('assets/files/candidates/candidates_file/' . $candidate->careers_app_file);
+            $file = public_path('assets/files/candidates/candidate_attachment/' . $candidate->file_attach);
             return response()->download($file);
         } else {
             return back()->withErrors(['File does not exist.']);
+        }
+    }
+
+    public function fileUpload(Request $request) {
+        $candidate = table_careers_application::where('id',$request->candidate_id)->first();
+        $path = public_path('assets/files/candidates/candidate_attachment');
+        if ($this->fileValidation()) {
+            $file = $request->file_attach;
+
+            $file_name = uniqid() . '_' . trim($file->getClientOriginalName());
+            $file->move($path, $file_name);
+
+            $candidate->file_attach = $file_name;
+            $candidate->update();
+            return back()->with('success', 'Attachment successfully uploaded!');
+        } else {
+            return back()->withErrors(['Invalid File.']);
+        }
+    }
+
+    public function removeFileUpload(Request $request){
+        $path = public_path('assets/files/candidates/candidate_attachment/');
+        $candidate = table_careers_application::where('id', $request->candidate_id)->first();
+
+        if(file_exists($path.$candidate->file_attach)) {
+            unlink($path.$candidate->file_attach);
+            $candidate->file_attach = NULL;
+            $candidate->update();
+            return back()->with('success', 'Attachment successfully removed!');
+        } else {
+            return back()->withErrors(['File not available']);
         }
     }
 
@@ -302,6 +333,12 @@ class CandidateController extends Controller
     {
         return request()->validate([
             'candidateData' => 'required|mimes:xlsx,xls',
+        ]);
+    }
+
+    protected function fileValidation(){
+        return request()->validate([
+            'file_attach' => 'required|mimes:pdf',
         ]);
     }
 

@@ -51,7 +51,7 @@
 			<table class="table table-hover table-bordered table-striped table-condensed table-data">
 				<thead>
 					<tr>
-						<th>position applied</th>
+						<th>position</th>
 						<th>Name</th>
 						<th>Status</th>
 						<th>Status Date</th>
@@ -59,6 +59,7 @@
 						<th>Assigned Date</th>
 						<th>Result</th>
 						<th>Result Date</th>
+						<th>Date</th>
 						<th>file</th>
 					</tr>
 				</thead>
@@ -80,11 +81,11 @@
 								<option {{$candidate->status == 6 ? 'selected' : ''}} value="6">Failed</option>
 							</select>
 							@else
-							@if($candidate->status == NULL)
-							---
-							@else
-							{{$candidate->status}}
-							@endif
+								@if($candidate->status == NULL)
+								---
+								@else
+								{{$candidate->status}}
+								@endif
 							@endif
 						</td>
 						@else
@@ -93,24 +94,29 @@
 
 						<td>{{$candidate->status_updated_at}}</td>
 						@if($candidate->status != 7)
-						<td style="width: 15%">
-							@if(in_array($hr_recruitment_id,$employee_ids))
+							<td style="width: 15%">
+								@if(in_array($hr_recruitment_id,$employee_ids))
 
-							<select data-id="{{$candidate->id}}" class="form-control manager_dropdown" name="status">
-								<option>-- select --</option>
+								<select data-id="{{$candidate->id}}" class="form-control manager_dropdown" name="status">
+									<option>-- select --</option>
+									@foreach($oms as $om)
+									<option value="{{$om->id}}" {{$candidate->manager_id == $om->id ? 'selected' : ''}}>{{$om->firstname}} {{$om->lastname}}</option>
+									@endforeach
+								</select>
+
+								@endif
+							</td>
+							@else
+							@if($candidate->manager_id != NULL)
 								@foreach($oms as $om)
-								<option value="{{$om->id}}" {{$candidate->manager_id == $om->id ? 'selected' : ''}}>{{$om->firstname}} {{$om->lastname}}</option>
+									@if($candidate->manager_id == $om->id)
+									<td>{{$om->firstname}} {{$om->lastname}}</td>
+									@endif
 								@endforeach
-							</select>
-
+							@else
+							<td>N/A</td>
 							@endif
-						</td>
-						@else
-						@foreach($oms as $om)
-							@if($candidate->manager_id == $om->id)
-							<td>{{$om->firstname}} {{$om->lastname}}</td>
-							@endif
-							@endforeach
+						
 						@endif
 						<td>{{$candidate->manager_updated_at}}</td>
 						<td>
@@ -129,6 +135,7 @@
 							{{$candidate->manager_result_date}}
 							@endif
 						</td>
+						<td>{{$candidate->date_apply}}</td>
 						<td><a href="{{$candidate->careers_app_file}}" target="_blank">View File</a></td>
 
 
@@ -147,6 +154,7 @@
 						<th>Assigned Date</th>
 						<th>Result</th>
 						<th>Result Date</th>
+						<th>Date</th>
 						<th>file</th>
 					</tr>
 				</thead>
@@ -171,6 +179,7 @@
 							{{$candidate->manager_result_date}}
 							@endif
 						</td>
+						<td>{{$candidate->date_apply}}</td>
 						<td><a href="{{$candidate->careers_app_file}}" target="_blank">View File</a></td>
 					</tr>
 					@endforeach
@@ -188,6 +197,7 @@
 						<th>Assigned Date</th>
 						<th>Result</th>
 						<th>Result Date</th>
+						<th>Date</th>
 						<th>file</th>
 					</tr>
 				</thead>
@@ -229,6 +239,7 @@
 							{{$candidate->manager_result_date}}
 							@endif
 						</td>
+						<td>{{$candidate->date_apply}}</td>
 						<td><a href="{{$candidate->careers_app_file}}" target="_blank">View File</a></td>
 
 

@@ -6,6 +6,8 @@ use App\hris_attendances;
 use App\hris_employee;
 use App\roles;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AttendanceExport;
 
 class MonitorAttendanceController extends Controller
 {
@@ -58,5 +60,23 @@ class MonitorAttendanceController extends Controller
         $emp_attendances = hris_attendances::where('employee_id',$employee->id)->leftJoin('hris_employees', 'hris_attendances.employee_id', '=', 'hris_employees.id')->orderBy('hris_attendances.created_at', 'desc')->paginate(10);
         return view('pages.employees.monitorAttendance.show', compact('emp_attendances'));
     }
+    
+    public function exportAttendance(Request $request){
+        if($this->validatedData()) {
+            $date_from = $request->date_from;
+            $date_to = $request->date_to;
+            return Excel::download(new AttendanceExport($date_from, $date_to), 'attendances.xlsx');
+        }
+    }
+
+    public function validatedData()
+    {
+        return request()->validate([
+            'date_from' => 'required|date_format:Y-m-d',
+            'date_to' => 'required|date_format:Y-m-d|after:date_from',
+        ]);
+    }
+
+
     
 }

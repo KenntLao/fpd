@@ -41,6 +41,8 @@
                         <th>Date from</th>
                         <th>Date to</th>
                         <th>Status</th>
+                        <th>Active</th>
+                        <th>Date Approved</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -63,6 +65,16 @@
                             @endif
                         </td>
                         <td>
+                            @if($assignment->current == 0)
+                            <span class="badge badge-danger">Old</span>
+                            @elseif($assignment->current == 2)
+                            ---
+                            @else
+                            <span class="badge badge-success">Active</span>
+                            @endif
+                        </td>
+                        <td>{{$assignment->date_approve}}</td>
+                        <td>
                             @if($assignment->status == 0)
                             <a class="btn btn-success btn-sm" href="/hris/pages/time/workshiftAssignment/{{$assignment->id}}/edit" style="margin: 0 3px"><i class="fas fa-edit"></i></a>
                             <!-- Button trigger modal -->
@@ -81,9 +93,6 @@
         @else
         <h4>No data available.</h4>
         @endif()
-    </div>
-    <div class="card-footer">
-        {{$workshift_assignment->links()}}
     </div>
 </div>
 @else
@@ -120,7 +129,9 @@
                                 <th>Date from</th>
                                 <th>Date to</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Active</th>
+                                <th>Date Approved</th>
+                                <th?>Action</th?>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,6 +154,16 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if($s->current == 0)
+                                    <span class="badge badge-danger">Old</span>
+                                    @elseif($s->current == 2)
+                                    ---
+                                    @else
+                                    <span class="badge badge-success">Active</span>
+                                    @endif
+                                </td>
+                                <td>{{$s->date_approve}}</td>
+                                <td>
                                     @if($s->status == 0)
                                     <a class="btn btn-success btn-sm" href="/hris/pages/time/workshiftAssignment/{{$s->id}}/edit" style="margin: 0 3px"><i class="fas fa-edit"></i></a>
                                     <!-- Button trigger modal -->
@@ -159,9 +180,6 @@
                 @else
                 <h4>No data available.</h4>
                 @endif()
-            </div>
-            <div class="card-footer">
-                {{$self->links()}}
             </div>
         </div>
     </div>
@@ -181,6 +199,8 @@
                                 <th>Date from</th>
                                 <th>Date to</th>
                                 <th>Status</th>
+                                <th>Active</th>
+                                <th>Date Approved</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -203,6 +223,16 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if($assignment->current == 0)
+                                    <span class="badge badge-danger">Old</span>
+                                    @elseif($assignment->current == 2)
+                                    ---
+                                    @else
+                                    <span class="badge badge-success">Active</span>
+                                    @endif
+                                </td>
+                                <td>{{$assignment->date_approve}}</td>
+                                <td>
                                     @if($assignment->status == 0)
                                     <a class="btn btn-success btn-sm" href="/hris/pages/time/workshiftAssignment/{{$assignment->id}}/edit" style="margin: 0 3px"><i class="fas fa-edit"></i></a>
                                     <!-- Button trigger modal -->
@@ -221,9 +251,6 @@
                 @else
                 <h4>No data available.</h4>
                 @endif()
-            </div>
-            <div class="card-footer">
-                {{$workshift_assignment->links()}}
             </div>
         </div>
     </div>
@@ -249,6 +276,8 @@
                         <th>Date from</th>
                         <th>Date to</th>
                         <th>Status</th>
+                        <th>Active</th>
+                        <th>Date Approved</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -271,6 +300,16 @@
                             @endif
                         </td>
                         <td>
+                            @if($assignment->current == 0)
+                            <span class="badge badge-danger">Old</span>
+                            @elseif($assignment->current == 2)
+                            ---
+                            @else
+                            <span class="badge badge-success">Active</span>
+                            @endif
+                        </td>
+                        <td>{{$assignment->date_approve}}</td>
+                        <td>
                             @if($assignment->status == 0)
                             <a class="btn btn-success btn-sm" href="/hris/pages/time/workshiftAssignment/{{$assignment->id}}/edit" style="margin: 0 3px"><i class="fas fa-edit"></i></a>
                             <!-- Button trigger modal -->
@@ -287,9 +326,6 @@
         @else
         <h4>No data available.</h4>
         @endif()
-    </div>
-    <div class="card-footer">
-        {{$workshift_assignment->links()}}
     </div>
 </div>
 @endif
@@ -330,7 +366,7 @@
 <script>
     $(function() {
         $('.table-data').DataTable({
-            "paging": false,
+            "paging": true,
             "lengthChange": false,
             "searching": true,
             "ordering": true,

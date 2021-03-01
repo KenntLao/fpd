@@ -133,6 +133,7 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" method="post" action="/hris/pages/employees/monitorAttendance/download" id="form">
+                @csrf
                     <div class="form-group">
                         <label for="date_from">Date from: </label>
                         <span class="badge badge-danger">Required</span>

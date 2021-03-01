@@ -77,7 +77,6 @@ class DailyTimeRecordController extends Controller
             $date_code_day = strtolower(date('l', strtotime($date_code)));
 
             $counter = 0;
-
             $day_shift = 0;
             $day_time_in = 0;
             $day_time_out = 0;
