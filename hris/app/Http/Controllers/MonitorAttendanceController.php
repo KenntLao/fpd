@@ -29,9 +29,8 @@ class MonitorAttendanceController extends Controller
             if(in_array($sup_id, $user_level_arr)) {
                 
                 if (in_array($hr_id, $user_level_arr)) {
-                    $hr_officer = 1;
                     $attendances = hris_employee::leftJoin('hris_attendances', 'hris_employees.id', '=', 'hris_attendances.employee_id')->first()->get();
-                    return view('pages.employees.monitorAttendance.index', compact('attendances','hr_officer'));
+                    return view('pages.employees.monitorAttendance.index', compact('attendances'));
                 } else {
                     $attendances = collect();
                     $subordinates = hris_employee::where('supervisor', $sys_id)->get();

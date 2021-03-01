@@ -119,7 +119,7 @@ class EmployeeDocumentController extends Controller
             if ( $upass == request('upass') ) {
                 $document->del_status = 1;
                 $document->update();
-                $id =documentdocument->id;
+                $id = $document->id;
                 $this->function->deleteSystemLog($this->module,$id);
                 return redirect('/hris/pages/employees/documents/employeeDocuments/index')->with('success','Employee document successfully deleted!');
             } else {
