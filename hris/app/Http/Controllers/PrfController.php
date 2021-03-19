@@ -60,7 +60,20 @@ class PrfController extends Controller
 
     public function create(hris_prf $prf)
     {
-        return view('pages.recruitment.prf.create', compact('prf'));
+       $data = hris_prf::all();
+        if(!$prf){
+            $ctr_number = $this->getSequence(1);
+        } else {
+
+            $control_number = $prf::orderByDesc('id')->pluck('control_no')->first() + 1;
+            $ctr_number = $this->getSequence($control_number);
+
+        }
+        return view('pages.recruitment.prf.create', compact('prf','ctr_number'));
+    }
+
+    public function getSequence($num) {
+        return sprintf("%'.06d\n", $num);
     }
 
     public function store(Request $request, hris_prf $prf){
@@ -76,12 +89,10 @@ class PrfController extends Controller
             $prf->education = $request->education;
             $prf->work_exp = $request->work_exp;
             $prf->skills = $request->skills;
-            $prf->age = $request->age;
             $prf->duty_desc = $request->duty_desc;
             $prf->reason = $request->reason;
             $prf->basic_rate = $request->basic_rate;
             $prf->allowance = $request->allowance;
-            $prf->cola = $request->cola;
             $prf->project_based = $request->project_based;
             $prf->cmo_based = $request->cmo_based;
             $prf->employee_id = $user_id;
@@ -152,12 +163,10 @@ class PrfController extends Controller
             $prf->education = $request->education;
             $prf->work_exp = $request->work_exp;
             $prf->skills = $request->skills;
-            $prf->age = $request->age;
             $prf->duty_desc = $request->duty_desc;
             $prf->reason = $request->reason;
             $prf->basic_rate = $request->basic_rate;
             $prf->allowance = $request->allowance;
-            $prf->cola = $request->cola;
             $prf->project_based = $request->project_based;
             $prf->cmo_based = $request->cmo_based;
             $prf->employee_id = $user_id;

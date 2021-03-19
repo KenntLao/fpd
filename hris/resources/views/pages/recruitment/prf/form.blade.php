@@ -6,7 +6,7 @@
 			<span class="badge badge-danger">Required</span>
 			<div class="input">
 				<p class="placeholder">Enter Control No.</p>
-				<input class="form-control required" name="control_no" type="text" required value="{{old('control_no') ?? $prf->control_no}}" />
+				<input class="form-control required" name="control_no" type="text" required value="{{$ctr_number}}" readonly/>
 			</div>
 		</div>
 	</div>
@@ -39,18 +39,6 @@
 			<div class="input">
 				<p class="placeholder">Enter Skills</p>
 				<textarea class="form-control required" name="skills" required>{{$prf->skills ?? ''}}</textarea>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-12 col-md-6 col-xl-3">
-		<div class="form-group">
-			<label class="mr-2" for="first_name">Age: </label>
-			<span class="badge badge-danger">Required</span>
-			<div class="input">
-				<p class="placeholder">Enter Age</p>
-				<input class="form-control required" name="age" type="number" required value="{{old('age') ?? $prf->age}}" />
 			</div>
 		</div>
 	</div>
@@ -103,15 +91,6 @@
 			<div class="input">
 				<p class="placeholder">Allowance (PHP)</p>
 				<input class="form-control required" name="allowance" type="number" required value="{{old('allowance') ?? $prf->allowance}}" />
-			</div>
-		</div>
-	</div>
-	<div class="col-12 col-md-6 col-xl-4">
-		<div class="form-group">
-			<label class="mr-2" for="cola">COLA (If Applicable) (VAT exclusive): </label>
-			<div class="input">
-				<p class="placeholder">COLA (PHP)</p>
-				<input class="form-control required" name="cola" type="number" value="{{old('cola') ?? $prf->cola}}" />
 			</div>
 		</div>
 	</div>

@@ -113,17 +113,7 @@
                 <div class="form-group">
                     <label class="mr-2" for="first_name">Skills: </label>
                     <div class="input">
-                        <p>{{$prf->skill}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-3 mb-3">
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="form-group">
-                    <label class="mr-2" for="first_name">Age: </label>
-                    <div class="input">
-                        <p>{{$prf->age}}</p>
+                        <p>{{$prf->skills}}</p>
                     </div>
                 </div>
             </div>
@@ -162,14 +152,6 @@
                     <label class="mr-2" for="allowance">Allowance: </label>
                     <div class="input">
                         <p>{{$prf->allowance}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="form-group">
-                    <label class="mr-2" for="cola">COLA (If Applicable) (VAT exclusive): </label>
-                    <div class="input">
-                        <p>{{$prf->cola}}</p>
                     </div>
                 </div>
             </div>
