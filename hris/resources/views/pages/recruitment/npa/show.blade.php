@@ -124,10 +124,10 @@
 		<div class="row">
 			<div class="col-12 col-md-6">
 				<div class="form-group">
-					<label>Project:</label>
+					<label>Project From:</label>
 					<p>
-						@if($npa->project)
-						{{$npa->project->name}}
+						@if($npa->project_from)
+						{{$npa->project_from->name}}
 						@else
 						----
 						@endif
@@ -136,7 +136,19 @@
 			</div>
 			<div class="col-12 col-md-6">
 				<div class="form-group">
-					<label>Project:</label>
+					<label>Project to:</label>
+					<p>
+						@if($npa->project_to)
+						{{$npa->project_to->name}}
+						@else
+						----
+						@endif
+					</p>
+				</div>
+			</div>
+			<div class="col-12 col-md-6">
+				<div class="form-group">
+					<label>Reason:</label>
 					<p>{{$npa->reason}}</p>
 				</div>
 			</div>

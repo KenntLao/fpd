@@ -90,24 +90,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group">
-						<label class="mr-2" for="roles">Name of Hired Personnel</label>
-						<span class="badge badge-danger">Required</span>
-						<select class="required select2" name="candidates[]" multiple="multiple" required>
-							@if(count($candidates) > 0)
-							@foreach($candidates as $candidate)
-							<option value="{{$candidate->id}}">
-								{{$candidate->careers_app_fname}} {{$candidate->careers_app_lname}}
-							</option>
-							@endforeach
-							@endif
-						</select>
-					</div>
-				</div>
-			</div>
 			<div class="row">
 				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
@@ -118,30 +100,9 @@
 				</div>
 				<div class="col-12 col-md-6 col-xl-3">
 					<div class="form-group">
-						<label class="mr-2" for="date_hired">Job Position: </label>
-						<span class="badge badge-danger">Required</span>
-						<select class="required select2" name="candidate_position" required>
-							<option default hidden disabled selected>-- Choose Job Title --</option>
-							@foreach($job_positions as $job_position)
-							<option value="{{$job_position->id}}">
-								{{$job_position->name}}
-							</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-				<div class="col-12 col-md-6 col-xl-3">
-					<div class="form-group">
 						<label class="mr-2" for="date_hired">Salary Offered: </label>
 						<span class="badge badge-danger">Required</span>
 						<input type="number" class="form-control required" name="candidate_salary" required>
-					</div>
-				</div>
-				<div class="col-12 col-md-6 col-xl-3">
-					<div class="form-group">
-						<label class="mr-2" for="date_hired">Date Hired: </label>
-						<span class="badge badge-danger">Required</span>
-						<input type="date" class="form-control required" name="candidate_hire_date" required>
 					</div>
 				</div>
 			</div>

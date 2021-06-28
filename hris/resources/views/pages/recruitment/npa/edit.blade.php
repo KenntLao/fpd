@@ -40,4 +40,56 @@
 @stop
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
+<script>
+	$('.employee_id').on('change', function() {
+		if ($(this).val() != '') {
+			var employee_id = $(this).val();
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('getJobTitle.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					employee_id: employee_id,
+				},
+				success: function(response) {
+					$('.designation_from').html(response);
+				},
+				error: function(response) {
+					console.log(response);
+				}
+			});
+		}
+	});
+	$('.employee_id').on('change', function() {
+		if ($(this).val() != '') {
+			var employee_id = $(this).val();
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('getProject.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					employee_id: employee_id,
+				},
+				success: function(response) {
+					$('.project_from').html(response);
+				},
+				error: function(response) {
+					console.log(response);
+				}
+			});
+		}
+	});
+</script>
 @stop

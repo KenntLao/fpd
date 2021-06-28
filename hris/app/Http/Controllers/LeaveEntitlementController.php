@@ -15,9 +15,10 @@ class LeaveEntitlementController extends Controller
     {
         if($_SESSION['sys_account_mode'] == 'employee'){
             $id = $_SESSION['sys_id'];
-            $leave_entitlements = hris_leave_entitlement::where('employee_id',$id)->get();
-            
-            return view('pages.leaveManagement.leaveEntitlements.index', compact('leave_entitlements'));
+            $sl_credits = hris_employee::where('id',$id)->pluck('sl_credit')->first();
+            $vl_credits = hris_employee::where('id',$id)->pluck('vl_credit')->first();
+
+            return view('pages.leaveManagement.leaveEntitlements.index', compact('sl_credits','vl_credits'));
         } else {
             return back()->withErrors('Please add Employee to a Leave Group');
         }

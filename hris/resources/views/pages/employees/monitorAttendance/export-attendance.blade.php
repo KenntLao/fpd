@@ -16,8 +16,6 @@
     </thead>
 
     <tbody>
-
-
         @foreach($employees as $employee)
         <!-- $employee->id == workshift id , $employee->employee_id == employee id -->
         @php
@@ -33,7 +31,9 @@
 
             //GET EMPLOYEE WORKSHIFT
             $employee_workshift = \App\hris_work_shift_management::where('id',$employee->workshift_id)->first();
-
+            // GET EMPLOYEE LEAVES
+            $employee_leaves = \App\hris_leaves::where('employee_id',$employee->employee_id)->where('leave_start_date', '>=', date('Ymd',strtotime($date_from)))->where('leave_end_date', '<=', date('Ymd',strtotime($date_to)))->where('status', '=', 1)->get();
+            //@dd($employee_leaves)
         @endphp
         @for($i = $begin; $i <= $end; $i->modify('+1 day'))
             @php
@@ -106,18 +106,35 @@
 
                     
                 @endforeach
-
                 @if($day_sessions_arr == [])
                     @php
-                        $session_attendance_time_in = "Absent";
-                        $session_attendance_time_out = "Absent";
+                        $session_attendance_time_in = 'Absent';
+                        $session_attendance_time_out = 'Absent';
                     @endphp
+                    @if($employee_leaves)
+                        @foreach($employee_leaves as $employee_leave)
+                            @php
+                                $leave_name = \App\hris_leave_types::where('id','=',$employee_leave->leave_type_id)->pluck('name')->first();
+                                $leave_start_date = $employee_leave->leave_start_date;
+                                $leave_end_date = $employee_leave->leave_end_date;
+
+                                for($lv = $leave_start_date; $lv < $leave_end_date; $lv++) {
+                                    if($lv == $date_code) {
+                                        $session_attendance_time_in = $leave_name;
+                                        $session_attendance_time_out = $leave_name;
+                                    }
+                                }
+                                
+                            @endphp
+                        @endforeach
+                    @endif
                 @else
                     @php
                         $session_attendance_time_in = date('H:i',$day_sessions_arr[0]['time_in']);
                         $session_attendance_time_out = date('H:i',$day_sessions_arr[count($day_sessions_arr) - 1]['time_out']);
                     @endphp
                 @endif
+                
                 @if($employee_workshift->{$date_code_day.'_shift'} != 0)
                 <td>{{$session_attendance_time_in}}</td>
                 <td>{{$session_attendance_time_out}}</td>

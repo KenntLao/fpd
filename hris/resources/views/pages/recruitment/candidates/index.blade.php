@@ -51,6 +51,7 @@
 			<table class="table table-hover table-bordered table-striped table-condensed table-data">
 				<thead>
 					<tr>
+						<th>PRF</th>
 						<th>position</th>
 						<th>Name</th>
 						<th>Status</th>
@@ -66,6 +67,20 @@
 				<tbody>
 					@foreach($candidates as $candidate)
 					<tr>
+						<td>
+							@if($candidate->status == 7)
+								@if($candidate->prf_id != NULL)
+									@php
+										$selected_prf = \App\hris_prf::where('id',$candidate->prf_id)->first();
+									@endphp
+									<a href="/hris/pages/recruitment/prf/{{$selected_prf->id}}/showFinal">{{$selected_prf->control_no}}</a>
+								@else 
+								---
+								@endif
+							@else
+								---
+							@endif
+						</td>
 						<td>{{$candidate->careers_app_position}}</td>
 						<td><a href="/hris/pages/recruitment/candidates/show/{{$candidate->id}}">{{$candidate->careers_app_fname}} {{$candidate->careers_app_lname}}</a></td>
 						@if($candidate->status != 7)
@@ -79,6 +94,7 @@
 								<option {{$candidate->status == 4 ? 'selected' : ''}} value="4">Pre-Employment</option>
 								<option {{$candidate->status == 5 ? 'selected' : ''}} value="5">Employment Request</option>
 								<option {{$candidate->status == 6 ? 'selected' : ''}} value="6">Failed</option>
+								<option {{$candidate->status == 6 ? 'selected' : ''}} value="7">Employed</option>
 							</select>
 							@else
 								@if($candidate->status == NULL)
@@ -149,6 +165,7 @@
 			<table class="table table-hover table-bordered table-striped table-condensed table-data">
 				<thead>
 					<tr>
+						<th>PRF</th>
 						<th>position applied</th>
 						<th>Name</th>
 						<th>Assigned Date</th>
@@ -159,18 +176,46 @@
 					</tr>
 				</thead>
 				<tbody>
+					
 					@foreach($candidates as $candidate)
+					
 					<tr>
+						<td>
+							<select data-id="{{$candidate->id}}" class="form-control select2 prf_assignment" name="prf_id">
+								<option default hidden disabled selected>--select--</option>
+								@php
+									$selected_prf = \App\hris_prf::where('id',$candidate->prf_id)->first();
+								@endphp
+
+								@if($selected_prf != NULL)
+									<option selected>{{$selected_prf->control_no}}</option>
+								@endif
+									
+								@foreach($prfs as $prf)
+									<option value="{{$prf->id}}">{{$prf->control_no}}</option>
+								@endforeach
+							</select>
+						</td>
 						<td>{{$candidate->careers_app_position}}</td>
 						<td><a href="/hris/pages/recruitment/candidates/show/{{$candidate->id}}">{{$candidate->careers_app_fname}} {{$candidate->careers_app_lname}}</a></td>
 						<td>{{$candidate->manager_updated_at}}</td>
 						<td>
-							<select data-id="{{$candidate->id}}" class="form-control manager_result" name="status">
-								<option default hidden>--select--</option>
-								<option {{$candidate->manager_result == 0 ? 'selected' : ''}} value="0">Pending</option>
-								<option {{$candidate->manager_result == 1 ? 'selected' : ''}} value="1">Qualified</option>
-								<option {{$candidate->manager_result == 2 ? 'selected' : ''}} value="2">Not Qualified</option>
-							</select>
+							@if($candidate->status == 7)
+								@if($candidate->manager_result == 0)
+									Pending
+								@elseif($candidate->manager_result == 1)
+									Qualified
+								@else
+									Not Qualified
+								@endif
+							@else
+								<select data-id="{{$candidate->id}}" class="form-control manager_result" name="status">
+									<option default hidden>--select--</option>
+									<option {{$candidate->manager_result == 0 ? 'selected' : ''}} value="0">Pending</option>
+									<option {{$candidate->manager_result == 1 ? 'selected' : ''}} value="1">Qualified</option>
+									<option {{$candidate->manager_result == 2 ? 'selected' : ''}} value="2">Not Qualified</option>
+								</select>
+							@endif
 						</td>
 						<td>
 							@if($candidate->manager_result_date == NULL)
@@ -291,6 +336,7 @@
 @stop
 @section('js')
 <script>
+	 $('.select2').select2();
 	function thisFileUpload() {
 		document.getElementById("file").click();
 	};
@@ -298,7 +344,7 @@
 		"paging": true,
 		"lengthChange": false,
 		"searching": true,
-		"ordering": false,
+		"ordering": true,
 	});
 	$(document).ready(function() {
 		$('.delete-btn').on('click', function() {
@@ -392,6 +438,34 @@
 				data: {
 					_token: _token,
 					manager_result: manager_result,
+					candidate_id: candidate_id,
+				},
+				success: function(response) {
+					location.reload();
+				},
+				error: function(response) {
+					console.log(response);
+				}
+			});
+		}
+	});
+	$('.prf_assignment').on('change', function() {
+		if ($(this).val() != '') {
+			var prf_id = $(this).val();
+			var candidate_id = $(this).attr('data-id');
+
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('prf.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+					prf_id: prf_id,
 					candidate_id: candidate_id,
 				},
 				success: function(response) {

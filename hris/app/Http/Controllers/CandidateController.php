@@ -10,6 +10,7 @@ use App\users;
 use App\table_careers_application;
 use App\roles;
 use App\hris_employee;
+use App\hris_prf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\hris_candidate_logs;
 use App\Imports\CandidateImport;
@@ -31,7 +32,7 @@ class CandidateController extends Controller
 
             $current_user_id = $_SESSION['sys_id'];
             $hr_recruitment_id = roles::where('role_name', 'hr recruitment')->pluck('id')->first();
-
+            $prfs = hris_prf::where('initial_status',2)->where('close_status',0)->get();
             // GET CURRENT USER ROLE ID
             $employee = hris_employee::where('id', $current_user_id)->first();
             $employee_ids = explode(',', $employee->role_id);
@@ -40,7 +41,7 @@ class CandidateController extends Controller
             $hr_supervisors_id = hris_employee::whereRaw('find_in_set(?,role_id)', [$hr_recruitment_id])->get('supervisor');
             foreach($hr_supervisors_id as $hr_supervisor_id){
                 if ($current_user_id == $hr_supervisor_id->supervisor) {
-                    $approval_requests = $candidates = table_careers_application::where('hr_supervisor_id',$current_user_id)->orderBy('id', 'DESC')->get();
+                    $approval_requests = table_careers_application::where('hr_supervisor_id',$current_user_id)->orderBy('id', 'DESC')->get();
                 }
             }
             
@@ -53,9 +54,11 @@ class CandidateController extends Controller
                 $candidates = table_careers_application::where('del_status', 0)->orderBy('id', 'DESC')->get();
             }else if(in_array($om_id,$employee_ids)) {
                 $candidates = table_careers_application::where('manager_id', $current_user_id)->orderBy('id', 'DESC')->get();
+            } else {
+                return back();
             }
 
-            return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids','oms','om_id', 'approval_requests'));
+            return view('pages.recruitment.candidates.index', compact('candidates', 'hr_recruitment_id', 'employee_ids','oms','om_id', 'approval_requests','prfs'));
         } else {
             return back();
         }
@@ -301,6 +304,39 @@ class CandidateController extends Controller
         $candidate->update();
 
         $candidate_log->date_type = "result";
+        $candidate_log->candidate_id = $request->candidate_id;
+        $candidate_log->manager_id = $current_id;
+        $candidate_log->save();
+    }
+
+    public function updatePrf(Request $request, hris_candidate_logs $candidate_log)
+    {
+        $current_id = $_SESSION['sys_id'];
+
+        $candidate = hris_candidates::where('id', $request->candidate_id)->first();
+        $prf_old = hris_prf::where('candidate_id',$request->candidate_id)->first();
+
+        // remove candidate from prf if updated
+        if($prf_old != NULL) {
+            $prf_old->candidate_id = NULL;
+            $prf_old->candidate_hire_date = NULL;
+            $prf_old->close_status = 0;
+            $prf_old->update();
+        }
+        // get new prf from prf module
+        $prf = hris_prf::where('id',$request->prf_id)->first();
+        $prf->candidate_id = $request->candidate_id;
+        $prf->candidate_hire_date = date("Y-m-d H:i:s");
+        $prf->close_status = 1;
+        $prf->update();
+
+        // assign prf to candidate in candidate module
+        $candidate->prf_id = $request->prf_id;
+        $candidate->prf_date = date("Y-m-d H:i:s");
+        $candidate->update();
+
+        // update candidate logs
+        $candidate_log->date_type = "prf";
         $candidate_log->candidate_id = $request->candidate_id;
         $candidate_log->manager_id = $current_id;
         $candidate_log->save();

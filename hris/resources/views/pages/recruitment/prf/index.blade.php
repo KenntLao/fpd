@@ -25,7 +25,7 @@
 	<div class="card-header">
 		<h3 class="card-title">Prf request list</h3>
 		<div class="card-tools">
-			@if(in_array($manager_om_id, $employee_ids))
+			@if(in_array($manager_om_id, $employee_ids) OR in_array($op_assistant_id, $employee_ids))
 			<a class="btn add-button btn-md" href="/hris/pages/recruitment/prf/create"><i class="fa fa-plus mr-1"></i> Request</a>
 			@endif
 		</div>
@@ -42,6 +42,7 @@
 						<th>Date Filed</th>
 						<th>Reason</th>
 						<th>Status</th>
+						<th>Availability</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -74,6 +75,15 @@
 							<span class="badge badge-success p-2">Approved</span>
 							@elseif($prf->initial_status == 3)
 							<span class="badge badge-danger p-2">Rejected</span>
+							@endif
+						</td>
+						<td>
+							@if($prf->close_status == 0)
+								<span class="badge badge-warning p-2">Open</span>
+							@elseif($prf->close_status == 1)
+								<span class="badge badge-primary p-2">Processing</span>
+							@else
+								<span class="badge badge-success p-2">Closed</span>
 							@endif
 						</td>
 						<td>

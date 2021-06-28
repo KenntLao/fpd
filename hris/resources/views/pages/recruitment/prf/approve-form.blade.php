@@ -71,6 +71,18 @@
 			</select>
 		</div>
 	</div>
+	<div class="col-12 col-md-6 col-xl-4">
+		<div class="form-group">
+			<label class="mr-2" for="gender">Job Position: </label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control required select2" name="job_title_id" required>
+				<option default hidden disabled selected>-- Choose Job Position --</option>
+				@foreach($job_titles as $job_title)
+					<option value="{{$job_title->id}}" @if($prf->job_title_id == $job_title->id) selected @endif>{{$job_title->name}}</option>
+				@endforeach
+			</select>
+		</div>
+	</div>
 </div>
 
 <div class="row">

@@ -10,7 +10,8 @@ use App\hris_employee;
 use App\hris_projects;
 use App\hris_npa;
 use App\roles;
-
+use App\hris_job_titles;
+use App\hris_employee_projects;
 class NpaController extends Controller
 {
     private $function;
@@ -28,10 +29,13 @@ class NpaController extends Controller
         $d_id = $director->id;
         $hr_recruitment = roles::where('role_name', 'hr recruitment')->first();
         $hr_id = $hr_recruitment->id;
+        $op_assistant_id = roles::where('role_name','operation assistant')->pluck('id')->first();
         $sess_roles = explode(',', $_SESSION['sys_role_ids']);
         $npas = hris_npa::latest()->where('del_status', 0)->paginate(15);
-        if ( in_array($m_id, $sess_roles) OR in_array($d_id, $sess_roles) OR in_array($hr_id, $sess_roles) ) {
-            return view('pages.recruitment.npa.index', compact('npas','m_id','sess_roles'));
+        $job_titles = hris_job_titles::all();
+        
+        if ( in_array($m_id, $sess_roles) OR in_array($d_id, $sess_roles) OR in_array($hr_id, $sess_roles) OR in_array($op_assistant_id, $sess_roles) ) {
+            return view('pages.recruitment.npa.index', compact('npas','m_id','sess_roles','job_titles','op_assistant_id'));
         } else {
             return back()->withErrors(['You are not authorized to access this page.']);
         }
@@ -43,9 +47,11 @@ class NpaController extends Controller
         $employees = hris_employee::all()->where('del_status', 0);
         $manager_om = roles::where('role_name', 'manager_om')->first();
         $m_id = $manager_om->id;
+        $op_assistant_id = roles::where('role_name','operation assistant')->pluck('id')->first();
         $sess_roles = explode(',', $_SESSION['sys_role_ids']);
-        if ( in_array($m_id, $sess_roles) ) {
-            return view('pages.recruitment.npa.create', compact('npa','employees','projects'));
+        $job_titles = hris_job_titles::all();
+        if ( in_array($m_id, $sess_roles) OR in_array($op_assistant_id, $sess_roles) ) {
+            return view('pages.recruitment.npa.create', compact('npa','employees','projects','job_titles'));
         } else {
             return back()->withErrors(['You are not authorized to access this page.']);
         }
@@ -59,19 +65,21 @@ class NpaController extends Controller
             } else {
                 $manager_om = roles::where('role_name', 'manager_om')->first();
                 $m_id = $manager_om->id;
+                $op_assistant_id = roles::where('role_name','operation assistant')->pluck('id')->first();
                 $sess_roles = explode(',', $_SESSION['sys_role_ids']);
 
-                if ( in_array($m_id, $sess_roles) ) {
+                if ( in_array($m_id, $sess_roles) OR in_array($op_assistant_id, $sess_roles) ) {
                     $npa->request_mode = $_SESSION['sys_account_mode'];
                     $npa->request_date = $request->request_date;
                     $npa->attention = $request->attention;
                     $npa->ref_no = $request->ref_no;
                     $npa->sender_id = $_SESSION['sys_id'];
-                    $npa->project_id = $request->project_id;
+                    $npa->project_from_id = $request->project_from_id;
+                    $npa->project_to_id = $request->project_to_id;
                     $npa->employee_id = $request->employee_id;
                     $npa->reason = $request->reason;
                     $npa->designation_from_id = $request->designation_from_id;
-                    $npa->designation_to_id = $request->project_id;
+                    $npa->designation_to_id = $request->designation_to_id;
                     $npa->bs_from = $request->bs_from;
                     $npa->bs_to = $request->bs_to;
                     $npa->a_from = $request->a_from;
@@ -106,9 +114,10 @@ class NpaController extends Controller
         $hr_id = $hr_recruitment->id;
         $director = roles::where('role_name', 'director')->first();
         $d_id = $director->id;
-        
-        if ( in_array($m_id, $sess_roles) OR in_array($d_id, $sess_roles) OR in_array($hr_id, $sess_roles) ) {
-            return view('pages.recruitment.npa.show', compact('npa','supervisor_id','hr_id', 'role_ids', 'sess_roles','d_id'));
+        $op_assistant_id = roles::where('role_name','operation assistant')->pluck('id')->first();
+        $job_titles = hris_job_titles::all();
+        if ( in_array($m_id, $sess_roles) OR in_array($d_id, $sess_roles) OR in_array($hr_id, $sess_roles) OR in_array($op_assistant_id, $sess_roles) ) {
+            return view('pages.recruitment.npa.show', compact('npa','supervisor_id','hr_id', 'role_ids', 'sess_roles','d_id','job_titles'));
         } else {
             return back()->withErrors(['You are not authorized to access this page.']);
         }
@@ -121,9 +130,11 @@ class NpaController extends Controller
         $employees = hris_employee::all()->where('del_status', 0);
         $manager_om = roles::where('role_name', 'manager_om')->first();
         $m_id = $manager_om->id;
+        $op_assistant_id = roles::where('role_name','operation assistant')->pluck('id')->first();
         $sess_roles = explode(',', $_SESSION['sys_role_ids']);
-        if ( in_array($m_id, $sess_roles) ) {
-            return view('pages.recruitment.npa.edit', compact('npa','employees','projects'));
+        $job_titles = hris_job_titles::all();
+        if ( in_array($m_id, $sess_roles) OR in_array($op_assistant_id, $sess_roles) ) {
+            return view('pages.recruitment.npa.edit', compact('npa','employees','projects','job_titles'));
         } else {
             return back()->withErrors(['You are not authorized to access this page.']);
         }
@@ -155,18 +166,20 @@ class NpaController extends Controller
             } else {
                 $manager_om = roles::where('role_name', 'manager_om')->first();
                 $m_id = $manager_om->id;
+                $op_assistant_id = roles::where('role_name','operation assistant')->pluck('id')->first();
                 $sess_roles = explode(',', $_SESSION['sys_role_ids']);
 
-                if ( in_array($m_id, $sess_roles) ) {
+                if ( in_array($m_id, $sess_roles) OR in_array($op_assistant_id, $sess_roles) ) {
                     $npa->request_mode = $_SESSION['sys_account_mode'];
                     $npa->request_date = $request->request_date;
                     $npa->attention = $request->attention;
                     $npa->ref_no = $request->ref_no;
                     $npa->sender_id = $_SESSION['sys_id'];
-                    $npa->project_id = $request->project_id;
+                    $npa->project_from_id = $request->project_from_id;
+                    $npa->project_to_id = $request->project_to_id;
                     $npa->reason = $request->reason;
                     $npa->designation_from_id = $request->designation_from_id;
-                    $npa->designation_to_id = $request->project_id;
+                    $npa->designation_to_id = $request->designation_to_id;
                     $npa->bs_from = $request->bs_from;
                     $npa->bs_to = $request->bs_to;
                     $npa->a_from = $request->a_from;
@@ -251,9 +264,10 @@ class NpaController extends Controller
         $id = $_SESSION['sys_id'];
         $manager_om = roles::where('role_name', 'manager_om')->first();
         $m_id = $manager_om->id;
+        $op_assistant_id = roles::where('role_name','operation assistant')->pluck('id')->first();
         $sess_roles = explode(',', $_SESSION['sys_role_ids']);
 
-        if ( in_array($m_id, $sess_roles) ) {
+        if ( in_array($m_id, $sess_roles) OR in_array($op_assistant_id, $sess_roles) ) {
             if ( $_SESSION['sys_account_mode'] == 'user' ) {
                 $upass = $this->function->decryptStr(users::find($id)->upass);
                 if ( $upass == request('upass') ) {
@@ -282,6 +296,36 @@ class NpaController extends Controller
             return back()->withErrors(['You are not authorized to access this page.']);
         }
     }
+
+    public function getJobTitle(Request $request){
+        $employee_id = $request->get('employee_id');
+        $employee_job_title_id = hris_employee::where('id',$employee_id)->pluck('job_title_id')->first();
+        if($employee_job_title_id != 0) {
+            $job_title = hris_job_titles::find($employee_job_title_id)->first();
+            $output = '<option value="' . $job_title->id . '">' . $job_title->name . '</option>';
+            
+        } else {
+            $output = '<option value="0">None</option>';
+        }
+        echo $output;
+        
+    }
+
+    public function getProject(Request $request){
+        $employee_id = $request->get('employee_id');
+        $employee_project_id = hris_employee_projects::where('employee_id',$employee_id)->pluck('id')->first();
+        $project = hris_projects::where('id',$employee_project_id)->first();
+        
+        if($project) {
+            $output = '<option value="' . $project->id . '">' . $project->name . '</option>';
+            
+        } else {
+            $output = '<option value="0">None</option>';
+        }
+        echo $output;
+        
+    }
+
     protected function validatedData()
     {
         return request()->validate([
@@ -290,7 +334,8 @@ class NpaController extends Controller
             'ref_no' => 'required',
             'sender_id' => 'nullable',
             'employee_id' => 'required',
-            'project_id' => 'required',
+            'project_from_id' => 'required',
+            'project_to_id' => 'required',
             'reason' => 'required',
             'designation_from_id' => 'required',
             'designation_to_id' => 'nullable',

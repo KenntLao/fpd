@@ -32,7 +32,9 @@ class LeaveTypeController extends Controller
     public function store(hris_leave_types $leaveType, Request $request)
     {
         if($this->validatedData()) {
-            $leaveType = hris_leave_types::create($this->validatedData());
+            $leaveType->name = strtolower($request->name);
+            $leaveType->leave_color = $request->name;
+            $leaveType->save();
             $id = $leaveType->id;
             $this->function->addSystemLog($this->module,$id);
             return redirect('/hris/pages/admin/leave/leaveTypes/index')->with('success', 'Leave Type successfully added!');

@@ -46,12 +46,14 @@
 	$('.half_day').on('change', function() {
 		var half_day_val = $('.half_day').val();
 		if (half_day_val == 0) {
+			$('.long_leave_date').show();
 			$('.long_leave_date > .form-group > .input').children(":input").prop("disabled", false);
+			
+			$('.short_leave_date').hide();
 			$('.short_leave_date > .form-group > .input').children(":input").prop("disabled", true);
 		} else {
 			$('.long_leave_date').hide();
 			$('.long_leave_date > .form-group > .input').children(":input").prop("disabled", true);
-
 
 			$('.short_leave_date').show();
 			$('.short_leave_date > .form-group > .input').children(":input").prop("disabled", false);

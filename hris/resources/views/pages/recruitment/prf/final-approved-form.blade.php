@@ -31,45 +31,69 @@
         @else
         <div class="card-tools">
             @if($prf->initial_status == 1)
-            <p class="badge-primary p-1">Processing</p>
+            <p class="badge badge-primary p-1">Processing</p>
             @elseif($prf->initial_status == 2)
-            <p class="badge-success p-1">Approved</p>
+            <p class="badge badge-success p-1">Approved</p>
             @elseif($prf->initial_status == 3)
-            <p class="badge-danger p-1">Rejected</p>
+            <p class="badge badge-danger p-1">Rejected</p>
+            @endif
+
+            @if($prf->close_status == 0)
+            <p class="badge badge-warning p-1">Open</p>
+            @elseif($prf->close_status == 1)
+            <p class="badge badge-primary p-1">Processing</p>
+            @else
+            <p class="badge badge-success p-1">Closed</p>
             @endif
         </div>
         @endif
         @else
 
         @if(in_array($hr_recruitment_id,$employee_ids))
-        @if($prf->initial_status == 3)
-        <div class="card-tools">
-            <p class="badge-danger p-1">Rejected</p>
-        </div>
-        @elseif($prf->initial_status == 1)
-        <div class="card-tools">
-            <a class="btn btn-danger btn-md mr-1" href="/hris/pages/recruitment/prf/reject/{{$prf->id}}"><i class="fa fa-ban mr-1"></i> Reject</a>
-            <a class="btn btn-success btn-md" href="/hris/pages/recruitment/prf/HRapprove/{{$prf->id}}"><i class="fa fa-check mr-1"></i> Approve</a>
-        </div>
-        @elseif($prf->initial_status == 2)
-        <div class="card-tools">
-            <p class="badge-success p-1">Approved</p>
-        </div>
-        @endif
-        @else
-        <div class="card-tools">
-            @if($prf->initial_status == 1)
-            <p class="badge-success p-1">Processing</p>
-            @elseif($prf->initial_status == 2)
-            <p class="badge-success p-1">Approved</p>
-            @elseif($prf->initial_status == 3)
-            <p class="badge-danger p-1">Rejected</p>
+            @if($prf->initial_status == 3)
+                <div class="card-tools">
+                    <p class="badge badge-danger p-1">Rejected</p>
+                </div>
+                @elseif($prf->initial_status == 1)
+                <div class="card-tools">
+                    <a class="btn btn-danger btn-md mr-1" href="/hris/pages/recruitment/prf/reject/{{$prf->id}}"><i class="fa fa-ban mr-1"></i> Reject</a>
+                    <a class="btn btn-success btn-md" href="/hris/pages/recruitment/prf/HRapprove/{{$prf->id}}"><i class="fa fa-check mr-1"></i> Approve</a>
+                </div>
+                @elseif($prf->initial_status == 2)
+                <div class="card-tools">
+                    <p class="badge badge-success p-1">Approved</p>
+                    @if($prf->close_status == 0)
+                        <p class="badge badge-warning p-1">Open</p>
+                    @elseif($prf->close_status == 1)
+					<p class="badge badge-primary p-1">Processing</p>
+					@else
+					<p class="badge badge-success p-1">Closed</p>
+                    @endif
+                </div>
+                @endif
+                @else
+                <div class="card-tools">
+                    @if($prf->initial_status == 1)
+                    <p class="badge badge-success p-1">Processing</p>
+                    @elseif($prf->initial_status == 2)
+                    <p class="badge badge-success p-1">Approved</p>
+                    @elseif($prf->initial_status == 3)
+                    <p class="badge badge-danger p-1">Rejected</p>
+                    @endif
+
+                    @if($prf->close_status == 0)
+                    <p class="badge badge-warning p-1">Open</p>
+                    @elseif($prf->close_status == 1)
+					<p class="badge badge-primary p-1">Processing</p>
+					@else
+					<p class="badge badge-success p-1">Closed</p>
+                    @endif
+                </div>
             @endif
-        </div>
-        @endif
         @endif
     </div>
     <div class="card-body">
+        <input id="prf_id" type="hidden" value="{{$prf->id}}">
         @if($prf->initial_status == 3)
         <div class="row mt-3 mb-3">
             <div class="col-12 col-md-6 col-xl-4">
@@ -134,6 +158,16 @@
                 <div class="form-group">
                     <label class="mr-2" for="gender">Reason: </label>
                     <p>{{$prf->reason}}</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group">
+                    <label class="mr-2" for="gender">Job Position: </label>
+                    <p>
+                    @if(isset($prf->jobTitle->name))
+                        {{$prf->jobTitle->name}}
+                    @endif
+                    </p>
                 </div>
             </div>
         </div>
@@ -233,15 +267,21 @@
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="form-group">
                     <label class="mr-2" for="gender">Action: </label>
-                    <p>
-                        @if($prf->action == 1)
-                        For Sourcing
-                        @elseif($prf->action == 2)
-                        For NPA
-                        @else
-                        Other
-                        @endif
-                    </p>
+                    <span class="badge badge-danger">Required</span>
+                    <select class="form-control required select2 action_approve" name="action" required>
+                        <option default hidden disabled selected>
+                            @if($prf->action == 1)
+                                For Sourcing
+                            @elseif($prf->action == 2)
+                                For NPA
+                            @elseif($prf->action == 3)
+                                Other
+                            @else
+                                For Job Offer
+                            @endif
+                        </option>
+                        <option value="4">For Job Offer</option>
+                    </select>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-xl-4">
@@ -277,20 +317,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="mr-2" for="roles">Name of Hired Personnel</label>
-                    @php
-                    $candidate_arr_orig = explode(',',$prf->candidate_id);
-                    $candidate_arr = array_slice($candidate_arr_orig, 1, -1);
-                    foreach($candidate_arr as $candidate_id) {
-                    $candidate_detail = App\hris_candidates::where('id',$candidate_id)->first();
-                        if(isset($candidate_detail->careers_app_fname)) {
-                        echo '<p>' . $candidate_detail->careers_app_fname . ' ' . $candidate_detail->careers_app_lname . '</p>';
-                        } else {
-                            echo '---';
-                        }
-
-                    }
-                    @endphp
-
+                    <p>
+                        @if(isset($prf->candidate->careers_app_fname))
+                        {{$prf->candidate->careers_app_fname}} {{$prf->candidate->careers_app_lname}}
+                    </p>
+                    @else
+                        <p></p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -361,4 +394,34 @@
 @stop
 @section('js')
 <script src="{{ URL::asset('assets/js/main.js') }}"></script>
+<script>
+    $('.action_approve').on('change', function() {
+		if ($(this).val() != '') {
+			var action = $(this).val();
+            var prf_id = $('#prf_id').val();
+
+			var _token = $('input[name="_token"]').val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('prfAction.fetch')}}",
+				method: "POST",
+				data: {
+					_token: _token,
+                    prf_id: prf_id,
+					action: action,
+				},
+				success: function(response) {
+					location.reload();
+				},
+				error: function(response) {
+					console.log(response);
+				}
+			});
+		}
+	});
+</script>
 @stop

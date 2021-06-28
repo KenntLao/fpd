@@ -12,6 +12,12 @@ $_SESSION['return_page'] = URL::previous();
 </div>
 @stop
 @section('content')
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <p><i class="fas fa-fw fa-check-circle"></i>{{ $message }}</p>
+</div>
+@endif
 @if (count($errors))
 <div class="alert alert-danger">
     <strong>Whoops!</strong> There were some problems with your input.
@@ -83,5 +89,22 @@ $_SESSION['return_page'] = URL::previous();
             URL.revokeObjectURL(output.src) // free memory
         }
     };
+    $(function(){
+        var employee_type_val = $('#employee_type').val();
+		if(employee_type_val == 1) {
+            $('#employee_agency_con').hide();
+        } else {
+            $('#employee_agency_con').show();
+        }
+		
+		$('#employee_type').change(function(){
+			if(this.value == 2){
+				$('#employee_agency_con').show();
+			}else {
+				$('#employee_agency_con').hide();
+			}
+			
+		});
+	});
 </script>
 @stop

@@ -24,7 +24,7 @@
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">NPA request list</h3>
-		@if( in_array($m_id, $sess_roles) )
+		@if( in_array($m_id, $sess_roles) OR in_array($op_assistant_id, $sess_roles))
 		<div class="card-tools">
 			<a class="btn add-button btn-md" href="/hris/pages/recruitment/npa/create"><i class="fa fa-plus mr-1"></i> NPA Request</a>
 		</div>

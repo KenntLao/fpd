@@ -31,17 +31,20 @@
 			@else
 			<div class="card-tools">
 				@if($prf->initial_status == 1)
-				<p class="badge-success p-1">Processing</p>
+				<p class="badge badge-success p-1">Processing</p>
 				@elseif($prf->initial_status == 3)
-				<p class="badge-danger p-1">Rejected</p>
+				<p class="badge badge-danger p-1">Rejected</p>
+				<p class="badge badge-success p-1">Closed</p>
 				@endif
 			</div>
 			@endif
 		@else
 			@if(in_array($hr_recruitment_id,$employee_ids))
+				
 				@if($prf->initial_status == 3)
 					<div class="card-tools">
-						<p class="badge-danger p-1">Rejected</p>
+						<p class="badge badge-danger p-1">Rejected</p>
+						<p class="badge badge-success p-1">Closed</p>
 					</div>
 				@elseif($prf->initial_status == 1)
 				<div class="card-tools">
@@ -50,15 +53,30 @@
 				</div>
 				@elseif($prf->initial_status == 2)
 					<div class="card-tools">
-						<p class="badge-success p-1">Approved</p>
+						<p class="badge badge-success p-1">Approved</p>
+						@if($prf->close_status == 0)
+						<p class="badge badge-warning p-1">Open</p>
+						@elseif($prf->close_status == 1)
+						<p class="badge badge-primary p-1">Processing</p>
+						@else
+						<p class="badge badge-success p-1">Closed</p>
+						@endif
 					</div>
 				@endif
 			@else
 				<div class="card-tools">
 					@if($prf->initial_status == 1)
-					<p class="badge-success p-1">Processing</p>
+					<p class="badge badge-success p-1">Processing</p>
 					@elseif($prf->initial_status == 3)
-					<p class="badge-danger p-1">Rejected</p>
+					<p class="badge badge-danger p-1">Rejected</p>
+					@endif
+
+					@if($prf->close_status == 0)
+					<p class="badge badge-warning p-1">Open</p>
+					@elseif($prf->close_status == 1)
+					<p class="badge badge-primary p-1">Processing</p>
+					@else
+					<p class="badge badge-success p-1">Closed</p>
 					@endif
 				</div>
 			@endif
@@ -127,8 +145,21 @@
 		<div class="row">
 			<div class="col-12 col-md-6 col-xl-4">
 				<div class="form-group">
-					<label class="mr-2" for="gender">Reason: </label>
+					<label class="mr-2">Reason: </label>
 					<p>{{$prf->reason}}</p>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-6 col-xl-4">
+				<div class="form-group">
+					<label class="mr-2">Job Position: </label>
+					<p>
+						@if($prf->jobTitle)
+						{{$prf->jobTitle->name}}
+						@else
+							--
+						@endif
+					</p>
 				</div>
 			</div>
 		</div>

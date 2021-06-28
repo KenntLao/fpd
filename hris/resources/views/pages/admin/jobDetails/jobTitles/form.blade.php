@@ -43,3 +43,16 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+	<div class="col-12 col-md-6">
+		<div class="form-group">
+			<label class="mr-2" for="job_title">Job Grade</label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control required" name="job_grade" required>
+				<option value="1" {{ $jobTitle->job_grade == 1 ? 'selected' : '' }}>Rank and File</option>
+				<option value="2" {{ $jobTitle->job_grade == 2 ? 'selected' : '' }}>Manager</option>
+				<option value="3" {{ $jobTitle->job_grade == 3 ? 'selected' : '' }}>Director</option>
+			</select>
+		</div>
+	</div>
+</div>

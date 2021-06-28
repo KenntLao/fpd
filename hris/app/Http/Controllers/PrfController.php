@@ -34,6 +34,9 @@ class PrfController extends Controller
             // GET MANAGER_OM ROLE ID
             $manager_om_id = roles::where('role_name', 'manager_om')->pluck('id')->first();
 
+            // GET OPERATION ASSISTANT ID
+            $op_assistant_id = roles::where('role_name','operation assistant')->pluck('id')->first();
+
 
             if (in_array($director_id, $employee_ids) && in_array($supervisor_id, $employee_ids)) {
 
@@ -43,7 +46,7 @@ class PrfController extends Controller
 
                 $prfs = hris_prf::where('initial_status','!=',0)->get();
 
-            } elseif (in_array($manager_om_id, $employee_ids)) {
+            } elseif (in_array($manager_om_id, $employee_ids) OR in_array($op_assistant_id, $employee_ids)) {
 
                 $prfs = hris_prf::where('employee_id', $current_user_id)->get();
 
@@ -51,8 +54,8 @@ class PrfController extends Controller
                 return back()->with('error', 'You are not authorized to access this page.');
             }
 
-            return view('pages.recruitment.prf.index', compact('prfs', 'employee_ids', 'manager_om_id', 'hr_recruitment_id'));
-        } else {
+            return view('pages.recruitment.prf.index', compact('prfs', 'employee_ids', 'manager_om_id', 'hr_recruitment_id', 'op_assistant_id'));
+        } else { // ADD SUPER ADMIN ACCESS HERE -----
             return back()->with('error', 'You are not authorized to access this page.');
         }
         
@@ -60,7 +63,9 @@ class PrfController extends Controller
 
     public function create(hris_prf $prf)
     {
+    
        $data = hris_prf::all();
+       $job_titles = hris_job_titles::all();
         if(!$prf){
             $ctr_number = $this->getSequence(1);
         } else {
@@ -69,7 +74,7 @@ class PrfController extends Controller
             $ctr_number = $this->getSequence($control_number);
 
         }
-        return view('pages.recruitment.prf.create', compact('prf','ctr_number'));
+        return view('pages.recruitment.prf.create', compact('prf','ctr_number','job_titles'));
     }
 
     public function getSequence($num) {
@@ -90,6 +95,7 @@ class PrfController extends Controller
             $prf->work_exp = $request->work_exp;
             $prf->skills = $request->skills;
             $prf->duty_desc = $request->duty_desc;
+            $prf->job_title_id = $request->job_title_id;
             $prf->reason = $request->reason;
             $prf->basic_rate = $request->basic_rate;
             $prf->allowance = $request->allowance;
@@ -134,7 +140,13 @@ class PrfController extends Controller
 
     public function edit(hris_prf $prf)
     {
-        return view('pages.recruitment.prf.edit', compact('prf'));
+        $job_titles = hris_job_titles::all();
+        if(!$prf){
+            $ctr_number = $this->getSequence(1);
+        } else {
+            $ctr_number = $prf::orderByDesc('id')->pluck('control_no')->first();
+        }
+        return view('pages.recruitment.prf.edit', compact('prf','job_titles','ctr_number'));
     }
     public function show(hris_prf $prf)
     {
@@ -251,11 +263,7 @@ class PrfController extends Controller
             $prf->duration_from = $request->duration_from;
             $prf->duration_to = $request->duration_to;
             $prf->initial_status = 2;
-            $candidate_ids = implode(',', $request->candidates);
-            $prf->candidate_id = ','.$candidate_ids.',';
             $prf->candidate_salary = $request->candidate_salary;
-            $prf->candidate_hire_date = $request->candidate_hire_date;
-            $prf->candidate_position = $request->candidate_position;
             $prf->hr_id = $hr_id;
             $prf->pod_date = date('Y-m-d');
             $prf->pod_receiver_id = $prf->supervisor_id;
@@ -275,6 +283,7 @@ class PrfController extends Controller
         if($this->rejectData()){
             $prf->initial_status = 3;
             $prf->reject_remarks = $request->reject_remarks;
+            $prf->close_status = 1;
             $prf->update();
             return redirect('/hris/pages/recruitment/prf/index')->with('success', 'PRF request successfully rejected!');
         } else {
@@ -296,6 +305,13 @@ class PrfController extends Controller
 
         $employee = hris_employee::where('id', $prf->employee_id)->first();
         return view('pages.recruitment.prf.final-approved-form', compact('prf', 'employee', 'hr_recruitment_id', 'employee_ids', 'supervisor', 'designation', 'hr_detail'));
+    }
+
+    public function updatePrfAction(Request $request){
+        $prf = hris_prf::where('id',$request->prf_id)->first();
+        $prf->action = $request->action;
+        $prf->close_status = 2;
+        $prf->update();
     }
     protected function validatedData()
     {

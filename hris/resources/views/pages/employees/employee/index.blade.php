@@ -78,10 +78,14 @@
                         </td>
                         <td>
                             @if($employee->employeeProject)
-                            @php
-                            $emp_project = App\hris_projects::where('id',$employee->employeeProject->id)->first();
-                            echo $emp_project['name'];
-                            @endphp
+                                @php
+                                    $emp_project = App\hris_projects::where('id',$employee->employeeProject->id)->first();
+                                    if($emp_project){
+                                       echo $emp_project['name'];
+                                    } else {
+                                        echo '--';
+                                    }
+                                @endphp
                             @endif
                         </td>
                         <td>

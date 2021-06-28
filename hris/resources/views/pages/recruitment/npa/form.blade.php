@@ -44,13 +44,15 @@
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="gender">Project: </label>
+			<label class="mr-2" for="employee_id">Employee: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="project_id" required>
-				<option disabled default selected>-- Select Project --</option>
-				@if(count($projects) > 0)
-				@foreach($projects as $project)
-				<option value="{{$project->id}}" {{ $npa->project_id == $project->id  ? 'selected' : '' }}>{{ $project->name }}</option>
+			<select class="form-control required select2 employee_id" name="employee_id" required>
+				<option disabled default selected>-- Select Employee --</option>
+				@if(count($employees) > 0)
+				@foreach($employees as $employee)
+				@if( $employee->id != $_SESSION['sys_id'] )
+				<option value="{{$employee->id}}" {{ $npa->employee_id == $employee->id  ? 'selected' : '' }}>[{{$employee->employee_number}}] {{ucfirst($employee->firstname)}} {{ucfirst($employee->lastname)}}</option>
+				@endif
 				@endforeach
 				@endif
 			</select>
@@ -67,35 +69,55 @@
 		</div>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
-			<label class="mr-2" for="employee_id">Employee: </label>
+			<label class="mr-2" for="gender">Project From: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="employee_id" required>
-				<option disabled default selected>-- Select Employee --</option>
-				@if(count($employees) > 0)
-				@foreach($employees as $employee)
-				@if( $employee->id != $_SESSION['sys_id'] )
-				<option value="{{$employee->id}}" {{ $npa->employee_id == $employee->id  ? 'selected' : '' }}>[{{$employee->employee_number}}] {{ucfirst($employee->firstname)}} {{ucfirst($employee->lastname)}}</option>
-				@endif
+			<select class="form-control required select2 project_from" name="project_from_id" required>
+				<option disabled default selected>-- Select Project --</option>
+			</select>
+		</div>
+	</div>
+	<div class="col-12 col-md-6">
+		<div class="form-group">
+			<label class="mr-2" for="gender">Project To: </label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control required select2" name="project_to_id" required>
+				<option disabled default selected>-- Select Project --</option>
+				@if(count($projects) > 0)
+				@foreach($projects as $project)
+				<option value="{{$project->id}}" {{ $npa->project_id == $project->id  ? 'selected' : '' }}>{{ $project->name }}</option>
 				@endforeach
 				@endif
 			</select>
 		</div>
 	</div>
+	
 </div>
+
+<!-- DESIGNATION == JOB TITLES -->
 <div class="row">
 	<div class="col-12 col-md-6">
 		<div class="form-group">
 			<label class="mr-2" for="designation_from_id">Designation from: </label>
 			<span class="badge badge-danger">Required</span>
-			<select class="form-control required select2" name="designation_from_id" required>
-				<option disabled default selected>-- Select Project --</option>
-				<option value="0" {{ $npa->designation_from_id == 0  ? 'selected' : '' }}>None</option>
-				@if(count($projects) > 0)
-				@foreach($projects as $project)
-				<option value="{{$project->id}}" {{ $npa->designation_from_id == $project->id  ? 'selected' : '' }}>{{ $project->name }}</option>
+			<select class="form-control required select2 designation_from" name="designation_from_id" required>
+				<option disabled default selected>None</option>
+			</select>
+		</div>
+	</div>
+	<div class="col-12 col-md-6">
+		<div class="form-group">
+			<label class="mr-2" for="designation_from_id">Designation to: </label>
+			<span class="badge badge-danger">Required</span>
+			<select class="form-control required select2" name="designation_to_id" required>
+				<option disabled default selected>-- Select Job Position --</option>
+				<option value="0" {{ $npa->designation_to_id == 0  ? 'selected' : '' }}>None</option>
+				@if(count($job_titles) > 0)
+				@foreach($job_titles as $job_title)
+				<option value="{{$job_title->id}}" {{ $npa->designation_to_id == $job_title->id  ? 'selected' : '' }}>{{ $job_title->name }}</option>
 				@endforeach
 				@endif
 			</select>

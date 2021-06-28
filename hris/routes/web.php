@@ -654,6 +654,8 @@ Route::middleware([CheckUserID::class])->group(function(){
     /* REJECT PRF */
     Route::patch('/hris/pages/recruitment/prf/reject-submit/{prf}', 'PrfController@rejectSubmit');
 
+    Route::post('/hris/pages/recruitment/prf/updatePrf', 'PrfController@updatePrfAction')->name('prfAction.fetch');
+
     /* DELETE PRF */
     Route::delete('/hris/pages/recruitment/prf/delete/{prf}', 'PrfController@destroy');
 
@@ -664,6 +666,7 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::post('/hris/pages/recruitment/candidates/getStatus', 'CandidateController@updateStatus')->name('candidateStatus.fetch');
     Route::post('/hris/pages/recruitment/candidates/getManager', 'CandidateController@updateManager')->name('candidateManager.fetch');
     Route::post('/hris/pages/recruitment/candidates/getManagerResult', 'CandidateController@updateManagerResult')->name('managerResult.fetch');
+    Route::post('/hris/pages/recruitment/candidates/getPRF', 'CandidateController@updatePrf')->name('prf.fetch');
     /* ADD CANDIDATE */
     Route::get('/hris/pages/recruitment/candidates/create', 'CandidateController@create');
     Route::post('/hris/pages/recruitment/candidates', 'CandidateController@store');
@@ -698,6 +701,9 @@ Route::middleware([CheckUserID::class])->group(function(){
     Route::patch('/hris/pages/recruitment/npa/reject-submit/{npa}', 'NpaController@rejectSubmit');
     /* DELETE NPA */
     Route::delete('/hris/pages/recruitment/npa/delete/{npa}', 'NpaController@destroy');
+    /* GET JOB TITLE FOR NPA FORM */
+    Route::post('/hris/pages/recruitment/npa/getJobTitle', 'NpaController@getJobTitle')->name('getJobTitle.fetch');
+    Route::post('/hris/pages/recruitment/npa/getProject', 'NpaController@getProject')->name('getProject.fetch');
 
     /* TIME MANAGEMENT */
 

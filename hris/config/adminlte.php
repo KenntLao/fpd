@@ -210,12 +210,10 @@ return [
     'menu' => [
         [
             'header' => 'ADMINISTRATION',
-            'can' => ['admin-module']
         ],
         [
             'text' => 'Admin',
             'icon' => 'fas fa-fw fa-cubes',
-            'can' => ['admin-module'],
             'submenu' => [
                 [   
                     'text' => 'Company Structure',
@@ -355,56 +353,8 @@ return [
                             'active' => ['/hris/pages/admin/leave/leaveTypes/create', '/hris/pages/admin/leave/leaveTypes/index', '/hris/pages/admin/leave/leaveTypes/*/edit', 'regex:@^content/[0-9]+$@'],
                             'can' => 'leave-type',
                         ],
-                        [
-                            'text' => 'Leave Period',
-                            'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/leavePeriods/index',
-                            'active' => ['/hris/pages/admin/leave/leavePeriods/create', '/hris/pages/admin/leave/leavePeriods/index', '/hris/pages/admin/leave/leavePeriods/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'leave-period',
-                        ],
-                        [
-                            'text' => 'Work Week',
-                            'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/workWeeks/index',
-                            'active' => ['/hris/pages/admin/leave/workWeeks/create', '/hris/pages/admin/leave/workWeeks/index', '/hris/pages/admin/leave/workWeeks/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'work-week',
-                        ],
-                        [
-                            'text' => 'Holidays',
-                            'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/holidays/index',
-                            'active' => ['/hris/pages/admin/leave/holidays/create', '/hris/pages/admin/leave/holidays/index', '/hris/pages/admin/leave/holidays/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'holiday',
-                        ],
-                        [
-                            'text' => 'Leave Rules',
-                            'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/leaveRules/index',
-                            'active' => ['/hris/pages/admin/leave/leaveRules/create', '/hris/pages/admin/leave/leaveRules/index', '/hris/pages/admin/leave/leaveRules/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'leave-rule',
-                        ],
-                        [
-                            'text' => 'Paid Time Off',
-                            'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/paidTimeOffs/index',
-                            'active' => ['/hris/pages/admin/leave/paidTimeOffs/create', '/hris/pages/admin/leave/paidTimeOffs/index', '/hris/pages/admin/leave/paidTimeOffs/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'paid-time-off',
-                        ],
-                        [
-                            'text' => 'Leave Groups',
-                            'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/leaveGroups/index',
-                            'active' => ['/hris/pages/admin/leave/leaveGroups/create', '/hris/pages/admin/leave/leaveGroups/index', '/hris/pages/admin/leave/leaveGroups/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'leave-group',
-                        ],
-                        [
-                            'text' => 'Leave Group Employee',
-                            'icon' => 'fas fa-fw fa-pause',
-                            'url' => '/hris/pages/admin/leave/leaveGroupEmployees/index',
-                            'active' => ['/hris/pages/admin/leave/leaveGroupEmployees/create', '/hris/pages/admin/leave/leaveGroupEmployees/index', '/hris/pages/admin/leave/leaveGroupEmployees/*/edit', 'regex:@^content/[0-9]+$@'],
-                            'can' => 'leave-group-employee',
-                        ],
-                       
+                        
+                    
                     ]
                 ],
                 [

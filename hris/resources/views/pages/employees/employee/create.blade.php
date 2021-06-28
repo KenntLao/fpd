@@ -78,5 +78,18 @@
 			URL.revokeObjectURL(output.src) // free memory
 		}
 	};
+
+	$(function(){
+		$('#employee_agency_con').hide();
+		
+		$('#employee_type').change(function(){
+			if(this.value == 2){
+				$('#employee_agency_con').show();
+			}else {
+				$('#employee_agency_con').hide();
+			}
+			
+		});
+	});
 </script>
 @stop

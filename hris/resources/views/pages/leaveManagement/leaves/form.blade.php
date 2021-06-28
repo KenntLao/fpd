@@ -8,8 +8,8 @@
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control select2 required" name="leave_type">
 				<option selected default disabled>-- select one --</option>
-				@foreach($leave_groups_rules as $leave_groups_rule)
-				<option value="{{$leave_groups_rule->leave_type_id}}" {{$leave_groups_rule->leave_type_id == $leaves->leave_type_id ? 'selected' : ''}}>{{$leave_groups_rule->name}}</option>
+				@foreach($leave_types as $leave_type)
+				<option value="{{$leave_type->id}}" {{$leave_type->id == $leaves->leave_type_id ? 'selected' : ''}}>{{$leave_type->name}}</option>
 				@endforeach
 			</select>
 		</div>
@@ -19,8 +19,9 @@
 			<label class="mr-2" for="half_day">Half-Day</label>
 			<span class="badge badge-danger">Required</span>
 			<select class="form-control half_day required" name="half_day">
-				<option default value="0">No</option>
-				<option value="1">Yes</option>
+				
+				<option  default value="0" {{$leaves->half_day == 0 ? 'selected' : ''}}>No</option>
+				<option value="1" {{$leaves->half_day == 1 ? 'selected' : ''}}>Yes</option>
 			</select>
 		</div>
 	</div>

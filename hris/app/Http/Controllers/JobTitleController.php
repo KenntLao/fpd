@@ -60,6 +60,7 @@ class JobTitleController extends Controller
             $jobTitle->name = request('name');
             $jobTitle->description = request('description');
             $jobTitle->specification = request('specification');
+            $jobTitle->job_grade = request('job_grade');
             // GET CHANGES
             $changes = $jobTitle->getDirty();
             // GET ORIGINAL DATA
@@ -113,7 +114,8 @@ class JobTitleController extends Controller
             'code' => 'required',
             'name' => 'required',
             'description' => 'required',
-            'specification' => 'required'
+            'specification' => 'required',
+            'job_grade' => 'required'
         ]);
 
     }

@@ -63,11 +63,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label class="mr-2" for="job_title">Job Title</label>
                     <span class="badge badge-danger">Required</span>
-                    <select class="form-control required select2" name="job_title" required>
+                    <select class="form-control required select2" name="job_title_id" required>
                         @if($employee->job_title_id)
                         <option value="{{$employee->job_title->id}}" default selected>{{$employee->job_title->name}}</option>
                         @else
@@ -76,6 +76,30 @@
                         @foreach($job_titles as $job_title)
                         <option value="{{$job_title->id}}">{{$job_title->name}}</option>
                         @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mr-2" for="employee_type">Employee Type</label>
+                    <span class="badge badge-danger">Required</span>
+                    <select id="employee_type" class="form-control required select2" name="employee_type" required>
+                        <option default hidden disabled selected>-- select employee type -- </option>
+                        <option value="1" {{$employee->employee_type == 1 ? 'selected' : ''}}>Direct</option>
+                        <option value="2" {{$employee->employee_type == 2 ? 'selected' : ''}}>Outsource</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4" id="employee_agency_con">
+                <div class="form-group">
+                    <label class="mr-2" for="agency">Agency</label>
+                    <span class="badge badge-danger">Required</span>
+                    <select class="form-control required select2" name="employee_agency" required>
+                        <option default hidden disabled selected>-- select agency -- </option>
+                        <option value="apw" {{$employee->employee_agency == 'apw' ? 'selected' : ''}}>APW</option>
+                        <option value="ums" {{$employee->employee_agency == 'ums' ? 'selected' : ''}}>UMS</option>
+                        <option value="ssa" {{$employee->employee_agency == 'ssa' ? 'selected' : ''}}>SSA</option>
+                        <option value="polystar" {{$employee->employee_agency == 'polystar' ? 'selected' : ''}}>Polystar</option>
                     </select>
                 </div>
             </div>
@@ -119,7 +143,7 @@
         <div class="form-group">
             <label class="mr-2" for="department">Department </label>
             <span class="badge badge-danger">Required</span>
-            <select id="department_dropdown" class="form-control required select2" name="department" required>
+            <select id="department_dropdown" class="form-control required select2" name="department_id" required>
 
                 @if($employee->department)
                 @foreach($departments as $department)
